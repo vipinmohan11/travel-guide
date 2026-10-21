@@ -922,6 +922,7 @@ nav.tabbar button[aria-current="page"]{color:var(--accent)}
   <label for="fsr">Text size <output id="fsv"></output></label>
   <input type="range" id="fsr" min="12" max="22" step="1">
   <button class="btn" id="fsreset" style="width:100%">Reset size</button>
+  <label class="f">Appearance</label><div class="seg" id="appr" role="group"><button data-t="auto">Auto</button><button data-t="light">Light</button><button data-t="dark">Dark</button></div>
   <label class="f">Colour theme</label><div class="dots" id="dots"></div>
   </div>
 <div class="menu" id="daymenu" hidden></div>
@@ -1402,7 +1403,10 @@ $("fsr").addEventListener("input",function(e){FS=+e.target.value;applyFs()});
 $("fsreset").addEventListener("click",function(){FS=16;applyFs()});
 function applyAcc(){var a=store.accent;if(!THEMES.some(function(t){return t[0]===a}))a="blue";store.accent=a;document.body.setAttribute("data-accent",a);renderDots()}
 function renderDots(){var b=$("dots");if(!b)return;b.innerHTML="";THEMES.forEach(function(t){var x=el("button","dotb");x.style.background=t[2];x.setAttribute("aria-label",t[1]);x.setAttribute("aria-pressed",store.accent===t[0]?"true":"false");x.addEventListener("click",function(){store.accent=t[0];save();applyAcc();if(screen==="plan")drawPins(false)});b.appendChild(x)})}
-applyFs();applyAcc();
+function applyTheme(){var t=store.theme;if(t!=="light"&&t!=="dark")t="auto";store.theme=t;var r=document.documentElement;if(t==="auto"){r.removeAttribute("data-theme");r.style.colorScheme=""}else{r.setAttribute("data-theme",t);r.style.colorScheme=t}
+  Array.prototype.forEach.call(document.querySelectorAll("#appr button"),function(b){b.setAttribute("aria-pressed",String(b.getAttribute("data-t")===t))})}
+Array.prototype.forEach.call(document.querySelectorAll("#appr button"),function(b){b.addEventListener("click",function(){store.theme=b.getAttribute("data-t");save();applyTheme()})});
+applyFs();applyAcc();applyTheme();
 function closeMenus(except){["pop","daymenu","mepop"].forEach(function(id){if(id!==except)$(id).hidden=true})}
 function toggleMenu(id){var m=$(id),open=m.hidden;closeMenus(id);m.hidden=!open;return open}
 document.addEventListener("click",function(e){["pop","daymenu","mepop"].forEach(function(id){var m=$(id);if(!m.hidden&&!m.contains(e.target))m.hidden=true})});
