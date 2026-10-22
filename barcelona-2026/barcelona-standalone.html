@@ -930,6 +930,18 @@ nav.tabbar button[aria-current="page"]{color:var(--accent)}
 #axbtn[aria-pressed="true"]{background:var(--accent);color:var(--on-accent)}
 .alegend{bottom:calc(var(--acar,0px) + 34px)}
 .ddot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:5px;vertical-align:middle}
+
+.tstar{position:absolute;top:-7px;right:-7px;width:17px;height:17px;border-radius:50%;background:#ffc400;color:#4a3300;font-size:11px;line-height:17px;text-align:center;font-style:normal;box-shadow:0 1px 3px rgba(0,0,0,.4);z-index:2;pointer-events:none}
+.pinsvg.top svg{filter:drop-shadow(0 0 2px #ffc400) drop-shadow(0 0 5px #ffc400)}
+.topb{display:inline-block;background:#ffc400;color:#4a3300;border-radius:8px;padding:1px 7px;font-size:.7rem;font-weight:800;margin-right:6px;text-transform:none;letter-spacing:0}
+.tstar2{color:#e0a800}
+.achip.topc[aria-pressed="true"]{background:#ffc400;color:#3d2b00;opacity:1}
+.achip.topc{color:var(--fg)}
+.alist{position:absolute;z-index:500;left:12px;right:12px;bottom:12px;max-height:36%;overflow:auto;background:var(--glass);-webkit-backdrop-filter:saturate(180%) blur(22px);backdrop-filter:saturate(180%) blur(22px);border-radius:20px;box-shadow:var(--shadow);padding:6px}
+.alt{font-weight:800;font-size:.9rem;padding:8px 10px 4px}
+.arow{display:flex;gap:10px;align-items:center;width:100%;min-height:44px;border:0;background:none;text-align:left;padding:4px 8px;border-radius:12px;color:var(--fg);font-weight:600;cursor:pointer;font-size:.92rem}
+.arow b{flex:none;width:26px;height:26px;border-radius:50%;background:#ffc400;color:#3d2b00;display:grid;place-items:center;font-size:.8rem}
+.arow small{margin-left:auto;color:var(--muted);font-weight:400;white-space:nowrap}
 </style></head><body>
 <div class="menu" id="pop" hidden>
   <label for="fsr">Text size <output id="fsv"></output></label>
@@ -984,6 +996,7 @@ nav.tabbar button[aria-current="page"]{color:var(--accent)}
     <div class="legend alegend" aria-label="Map key">
       <span><svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="17" fill="var(--accent)" stroke="#fff" stroke-width="3"/></svg> See</span><span><svg viewBox="0 0 40 40"><rect x="4" y="4" width="32" height="32" rx="9" fill="var(--accent)" stroke="#fff" stroke-width="3"/></svg> Eat</span><span><svg viewBox="0 0 40 40"><polygon points="20,2 38,20 20,38 2,20" fill="var(--accent)" stroke="#fff" stroke-width="3"/></svg> Play</span><span><svg viewBox="0 0 40 40"><polygon points="20,2 35.5,11 35.5,29 20,38 4.5,29 4.5,11" fill="var(--accent)" stroke="#fff" stroke-width="3"/></svg> Viewpoint</span><span><svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="16" fill="#fff" stroke="var(--accent)" stroke-width="3.5" stroke-dasharray="6 4"/></svg> Extra</span><span><svg viewBox="0 0 40 40"><rect x="4" y="4" width="32" height="32" rx="8" fill="#1d1d1f" stroke="#fff" stroke-width="3"/><text x="20" y="27" text-anchor="middle" font-size="20" font-weight="800" fill="#fff">H</text></svg> Hotel</span><span><svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="14" fill="#00b8ff" stroke="#fff" stroke-width="4"/></svg> You</span>
     </div>
+    <div class="alist" id="alist" hidden></div>
     <div class="one" id="acard" hidden></div>
   </section>
   <section class="screen" id="s-day" hidden></section>
@@ -1220,6 +1233,7 @@ D.push(
 var P={},ALL=[];
 D.forEach(function(d,di){d.stops.forEach(function(s,i){s.day=di;s.loc=d.loc;s.idx=i;P[s.id]=s;ALL.push(s)});d.extras.forEach(function(s,i){s.day=di;s.loc=d.loc;s.idx=-1;s.x=true;s.t="If you have time";P[s.id]=s;ALL.push(s)})});
 var TRANSIT={"d7:m2":"Walk 5 min, then the funicular (about 5 min)","d7:m3":"Funicular down, then walk about 10 min","d7:m5":"Walk about 20 min along the path","d4:arc":"FGC + metro L1 to Arc de Triomf, ~30 min","d6:castle":"Bus 150 up to the castle (or the cable car)"};
+var TOP=["sagrada","guell","batllo","milla","rambla","boq","cath","smm","picasso","castle","fountain","mnac","beach","bunkers","santpau"];TOP.forEach(function(id,i){if(P[id])P[id].top=i+1});
 var KIND={see:"See",eat:"Eat",play:"Play",view:"Viewpoint"};
 /* ================= PLACE DETAILS (inside · time · entry · facilities · metro) ================= */
 function I(i,t,e,f,m,p){return {i:i,t:t,e:e,f:f,m:m,p:p}}
@@ -1553,7 +1567,7 @@ function drawPins(fit){
   list.forEach(function(s,i){
     var isSel=s===sel,done=!!store.done[s.id];
     var sz=isSel?44:(s.x?20:32),lab=s.x?(isSel?"+":""):String(i+1);
-    var html='<div class="pinsvg'+(isSel?' sel':'')+'">'+pinSVG(s,lab,done)+(isSel?'<span class="pl">'+esc(s.n.replace(/\s*\(.*?\)/g,""))+'</span>':'')+'</div>';
+    var html='<div class="pinsvg'+(isSel?' sel':'')+(s.top?' top':'')+'">'+pinSVG(s,lab,done)+(s.top?'<b class="tstar">★</b>':'')+(isSel?'<span class="pl">'+esc(s.n.replace(/\s*\(.*?\)/g,""))+'</span>':'')+'</div>';
     var m=L.marker([s.lat,s.lng],{icon:pinIcon(html,sz),zIndexOffset:isSel?1000:(s.x?0:100),keyboard:false,title:s.n});
     m.on("click",function(){pinTap(i)});m.addTo(pinLayer)});
   if(hasPin())L.marker([store.hotel.lat,store.hotel.lng],{icon:pinIcon('<div class="hpin">H</div>',30),zIndexOffset:500,title:"Hotel"}).addTo(pinLayer);
@@ -1578,7 +1592,7 @@ function planCard(s,i,d,withClose){
   else if(i===0)leg="Start: "+d.start;
   else{var tr=TRANSIT[d.id+":"+s.id],k=walk(d.stops[i-1],s);leg=(tr?tr:"Walk "+mins(k)+" min · "+fmtKm(k))+' · <a href="'+mapsDir(d.stops[i-1],s,"transit")+'" target="_blank" rel="noopener">Transit ↗</a>'}
   if(hasMe()&&!s.x){var km2=walk(store.me,s);leg+=' · <b>You: '+fmtKm(km2)+'</b>'}
-  c.innerHTML='<div class="pt"><span class="'+numCls(s)+'">'+(s.x?"+":i+1)+'</span><div><span class="tg">'+(s.x?s.cat:KIND[s.k]+" · "+s.t)+'</span><span class="nm">'+s.n+'</span></div><button class="chk" aria-label="Visited '+esc(s.n)+'" aria-pressed="'+(store.done[s.id]?"true":"false")+'">✓</button></div>'+
+  c.innerHTML='<div class="pt"><span class="'+numCls(s)+'">'+(s.x?"+":i+1)+'</span><div><span class="tg">'+(s.top?'<span class="topb">★ Top '+s.top+'</span>':'')+(s.x?s.cat:KIND[s.k]+" · "+s.t)+'</span><span class="nm">'+s.n+'</span></div><button class="chk" aria-label="Visited '+esc(s.n)+'" aria-pressed="'+(store.done[s.id]?"true":"false")+'">✓</button></div>'+
     (s.x?'':'<span class="cs">'+s.c+'</span>')+'<p class="why">'+s.why+'</p><div class="leg2">'+leg+'</div><div class="btnrow"><button class="btn solid wide" data-d="1">Details</button><a class="btn wide" href="'+mapsPlace(s)+'" target="_blank" rel="noopener">Maps ↗</a>'+(withClose?'<button class="btn" data-x="1" aria-label="Close">✕</button>':'')+'</div>';
   if(withClose)c.querySelector("[data-x]").addEventListener("click",closeOne);
   c.querySelector(".chk").addEventListener("click",function(){setDone(s,!store.done[s.id])});
@@ -1654,32 +1668,41 @@ function allSVG(s,lab,col,done){
   return '<svg viewBox="0 0 40 40" aria-hidden="true">'+sh+(lab?'<text x="20" y="26.5" text-anchor="middle" font-size="18" font-weight="700" fill="#fff" font-family="-apple-system,Segoe UI,Roboto,sans-serif">'+lab+'</text>':'')+'</svg>'}
 function dayOn(i){return !store.aOff[D[i].id]}
 function drawAll(fit){
-  if(!amap)return;alayer.clearLayers();var pts=[];
+  if(!amap)return;alayer.clearLayers();var pts=[],top=!!store.aTop;
   D.forEach(function(d,di){
-    if(!dayOn(di))return;var col=DAYCOL[di];
-    var list=d.stops.concat(store.aX===false?[]:d.extras);
+    if(!top&&!dayOn(di))return;var col=DAYCOL[di];
+    var list=top?d.stops.filter(function(s){return s.top}):d.stops.concat(store.aX===false?[]:d.extras);
     list.forEach(function(s,i){
       var isSel=asel===s.id,done=!!store.done[s.id];
-      var sz=isSel?42:(s.x?18:28),lab=s.x?"":String(i+1);
+      var sz=(isSel?42:(s.x?18:28))+(s.top&&!isSel?4:0),lab=s.x?"":String(top?s.top:d.stops.indexOf(s)+1);
       if(!s.x)pts.push([s.lat,s.lng]);
-      var html='<div class="pinsvg'+(isSel?' sel':'')+'">'+allSVG(s,lab,col,done)+(isSel?'<span class="pl">'+esc(s.n.replace(/\s*\(.*?\)/g,""))+'</span>':'')+'</div>';
-      var m=L.marker([s.lat,s.lng],{icon:pinIcon(html,sz),zIndexOffset:isSel?1000:(s.x?0:100+di),keyboard:false,title:s.n});
+      var html='<div class="pinsvg'+(isSel?' sel':'')+(s.top?' top':'')+'">'+allSVG(s,lab,col,done)+(s.top?'<b class="tstar">★</b>':'')+(isSel?'<span class="pl">'+esc(s.n.replace(/\s*\(.*?\)/g,""))+'</span>':'')+'</div>';
+      var m=L.marker([s.lat,s.lng],{icon:pinIcon(html,sz),zIndexOffset:isSel?1000:(s.top?300:(s.x?0:100+di)),keyboard:false,title:s.n});
       m.on("click",function(e){if(e&&e.originalEvent)L.DomEvent.stopPropagation(e);showAllCard(s)});m.addTo(alayer)})});
   if(hasPin())L.marker([store.hotel.lat,store.hotel.lng],{icon:pinIcon('<div class="hpin">H</div>',30),zIndexOffset:500,title:"Hotel"}).addTo(alayer);
-  if(fit&&pts.length)amap.fitBounds(L.latLngBounds(pts),{paddingTopLeft:[36,120],paddingBottomRight:[36,70],maxZoom:16,animate:false})}
+  if(fit&&pts.length)amap.fitBounds(L.latLngBounds(pts),{paddingTopLeft:[36,120],paddingBottomRight:[36,70+(parseInt(getComputedStyle(document.documentElement).getPropertyValue('--acar'))||0)+70],maxZoom:16,animate:false})}
 function drawAllMe(){
   if(!amap)return;ameLayer.clearLayers();if(!hasMe())return;var m=store.me;
   if(m.acc&&m.acc<400)L.circle([m.lat,m.lng],{radius:m.acc,color:"#00b8ff",weight:1,fillColor:"#00b8ff",fillOpacity:.1,interactive:false}).addTo(ameLayer);
   L.marker([m.lat,m.lng],{icon:pinIcon('<div class="medot"><i></i><span class="pl you">You</span></div>',28),zIndexOffset:2000,interactive:false}).addTo(ameLayer)}
+function topList(){return TOP.map(function(id){return P[id]})}
+function renderTopList(){
+  var box=$("alist");
+  if(!store.aTop||!$("acard").hidden){box.hidden=true;box.innerHTML="";if($("acard").hidden)document.documentElement.style.setProperty("--acar","0px");return}
+  box.innerHTML='<div class="alt">★ Top 15 must-see in Barcelona</div>';
+  topList().forEach(function(s){var d=D[s.day];var b=el("button","arow",'<b>'+s.top+'</b><span>'+esc(s.n.replace(/\s*\(.*?\)/g,""))+'</span><small><i class="ddot" style="background:'+DAYCOL[s.day]+'"></i>'+d.dow+' '+d.date.split(" ")[0]+'</small>');
+    b.addEventListener("click",function(){showAllCard(s)});box.appendChild(b)});
+  box.hidden=false;document.documentElement.style.setProperty("--acar",box.offsetHeight+"px")}
 function renderAChips(){
   var w=$("achips");w.innerHTML="";
   var allOn=D.every(function(d,i){return dayOn(i)}),cityOn=D.every(function(d,i){return d.reg?!dayOn(i):dayOn(i)}),regOn=D.every(function(d,i){return d.reg?dayOn(i):!dayOn(i)});
-  function grp(lab,on,fn){var b=el("button","achip grp",lab);b.setAttribute("aria-pressed",String(on));b.addEventListener("click",function(){fn();save();closeAllCard(true);renderAChips();drawAll(true)});w.appendChild(b)}
+  var tb=el("button","achip topc","★ Top 15");tb.setAttribute("aria-pressed",String(!!store.aTop));tb.addEventListener("click",function(){store.aTop=!store.aTop;save();closeAllCard(true);renderAChips();renderTopList();drawAll(true)});w.appendChild(tb);
+  function grp(lab,on,fn){var b=el("button","achip grp",lab);b.setAttribute("aria-pressed",String(on&&!store.aTop));b.addEventListener("click",function(){store.aTop=false;fn();save();closeAllCard(true);renderAChips();renderTopList();drawAll(true)});w.appendChild(b)}
   grp("All",allOn,function(){store.aOff={}});
   grp("City",cityOn,function(){store.aOff={};D.forEach(function(d){if(d.reg)store.aOff[d.id]=true})});
   grp("Regional",regOn,function(){store.aOff={};D.forEach(function(d){if(!d.reg)store.aOff[d.id]=true})});
-  D.forEach(function(d,i){var b=el("button","achip",'<i style="background:'+DAYCOL[i]+'"></i>'+d.dow+" "+d.date.split(" ")[0]);b.setAttribute("aria-pressed",String(dayOn(i)));
-    b.addEventListener("click",function(){if(dayOn(i))store.aOff[d.id]=true;else delete store.aOff[d.id];save();closeAllCard(true);renderAChips();drawAll(true)});w.appendChild(b)});
+  D.forEach(function(d,i){var b=el("button","achip",'<i style="background:'+DAYCOL[i]+'"></i>'+d.dow+" "+d.date.split(" ")[0]);b.setAttribute("aria-pressed",String(dayOn(i)&&!store.aTop));
+    b.addEventListener("click",function(){if(store.aTop){store.aTop=false;store.aOff={};D.forEach(function(x){if(x.id!==d.id)store.aOff[x.id]=true})}else if(dayOn(i))store.aOff[d.id]=true;else delete store.aOff[d.id];save();closeAllCard(true);renderAChips();drawAll(true)});w.appendChild(b)});
   $("axbtn").setAttribute("aria-pressed",String(store.aX!==false))}
 function showAllCard(s){
   asel=s.id;var box=$("acard"),c=planCard(s,s.idx>=0?s.idx:0,D[s.day],false);
@@ -1687,11 +1710,11 @@ function showAllCard(s){
   var x=el("button","btn","✕");x.setAttribute("aria-label","Close");x.addEventListener("click",function(){closeAllCard()});c.querySelector(".btnrow").appendChild(x);
   box.innerHTML="";box.appendChild(c);box.hidden=false;
   document.documentElement.style.setProperty("--acar",box.offsetHeight+"px");
-  drawAll(false);amap.setView([s.lat,s.lng],Math.max(amap.getZoom(),14),{animate:true})}
-function closeAllCard(quiet){var box=$("acard");if(box.hidden&&!quiet)return;box.hidden=true;box.innerHTML="";asel=null;document.documentElement.style.setProperty("--acar","0px");if(!quiet)drawAll(false)}
+  drawAll(false);renderTopList();amap.setView([s.lat,s.lng],Math.max(amap.getZoom(),14),{animate:true})}
+function closeAllCard(quiet){var box=$("acard");if(box.hidden&&!quiet)return;box.hidden=true;box.innerHTML="";asel=null;document.documentElement.style.setProperty("--acar","0px");if(!quiet){drawAll(false);renderTopList()}}
 function renderAll(){
   allInit();renderAChips();closeAllCard(true);
-  requestAnimationFrame(function(){if(amap){amap.invalidateSize();drawAll(true);drawAllMe()}})}
+  requestAnimationFrame(function(){if(amap){amap.invalidateSize();renderTopList();drawAll(true);drawAllMe()}})}
 $("axbtn").addEventListener("click",function(){store.aX=store.aX===false;save();renderAChips();drawAll(false)});
 $("afit").addEventListener("click",function(){if(amap){closeAllCard(true);drawAll(true)}});
 
@@ -1699,7 +1722,7 @@ $("afit").addEventListener("click",function(){if(amap){closeAllCard(true);drawAl
 function fact(l,t){return t?'<div class="fact"><b>'+l+'</b><span>'+t+'</span></div>':''}
 function openDetail(s){
   var f=INFO[s.id]||{},d=D[s.day],box=$("detail");
-  var h='<div class="dbar k-'+s.k+'"><button class="rb" id="d-x" aria-label="Back">‹</button><div class="dt"><span class="tg">'+d.dow+' · '+(s.x?s.cat:KIND[s.k]+" · "+s.t)+'</span><span class="nm">'+s.n+'</span></div><button class="chk" id="d-chk" aria-label="Visited" aria-pressed="'+(store.done[s.id]?"true":"false")+'">✓</button></div><div class="dbody"><div class="card2"><div class="facts"><div><b style="font-size:1.1rem">'+s.c+'</b></div><div>'+s.why+'</div>';
+  var h='<div class="dbar k-'+s.k+'"><button class="rb" id="d-x" aria-label="Back">‹</button><div class="dt"><span class="tg">'+d.dow+' · '+(s.x?s.cat:KIND[s.k]+" · "+s.t)+'</span><span class="nm">'+s.n+'</span></div><button class="chk" id="d-chk" aria-label="Visited" aria-pressed="'+(store.done[s.id]?"true":"false")+'">✓</button></div><div class="dbody"><div class="card2"><div class="facts">'+(s.top?'<div><span class="topb">★ Must-see · Top '+s.top+' of 15</span></div>':'')+'<div><b style="font-size:1.1rem">'+s.c+'</b></div><div>'+s.why+'</div>';
   if(f.i)h+='<div class="fact"><b>Inside / what to see</b><ol class="ins">'+f.i.map(function(t){return"<li>"+t+"</li>"}).join("")+'</ol></div>';
   h+=fact("Time needed · best time",f.t)+fact("Tickets & rules",(s.h?"Hours: "+s.h+". ":"")+(f.e||""))+fact("Nearby facilities",f.f)+fact(d.reg?"Nearest station or stop":"Nearest metro",f.m)+fact("Local tip",f.p===undefined?s.tip:f.p);
   h+='<details class="kd"><summary>For kids</summary><p>'+s.kid+'</p></details></div>';
@@ -1740,7 +1763,7 @@ function renderDay(){
   h+='<details class="acc"><summary>For kids</summary><div class="c"><b>Facts</b><ul>'+d.facts.map(function(f){return"<li>"+f+"</li>"}).join("")+'</ul><b style="display:block;margin-top:10px">Spot list</b><ul class="spot" id="spot"></ul></div></details>';
   box.innerHTML=h;bindHotel();bindAa();renderChips();
   function prog(){var n=d.stops.filter(function(s){return store.done[s.id]}).length;$("prog").textContent=n+" of "+d.stops.length+" visited";$("pbar").style.width=(n/d.stops.length*100)+"%"}
-  function row(s,lab){var b=el("button","rowb k-"+s.k+(store.done[s.id]?" done":""),'<span class="'+numCls(s)+'">'+lab+'</span><span class="rt"><b>'+s.n+'</b><small>'+(s.x?s.cat:KIND[s.k]+" · "+s.t)+' · '+s.c+'</small></span>');b.addEventListener("click",function(){openDetail(s)});return b}
+  function row(s,lab){var b=el("button","rowb k-"+s.k+(store.done[s.id]?" done":""),'<span class="'+numCls(s)+'">'+lab+'</span><span class="rt"><b>'+(s.top?'<span class="tstar2">★</span> ':'')+s.n+'</b><small>'+(s.x?s.cat:KIND[s.k]+" · "+s.t)+' · '+s.c+'</small></span>');b.addEventListener("click",function(){openDetail(s)});return b}
   d.stops.forEach(function(s,i){$("rows").appendChild(row(s,String(i+1)))});
   d.extras.forEach(function(s){$("xrows").appendChild(row(s,"+"))});
   prog();
