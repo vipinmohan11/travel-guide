@@ -942,6 +942,22 @@ nav.tabbar button[aria-current="page"]{color:var(--accent)}
 .arow{display:flex;gap:10px;align-items:center;width:100%;min-height:44px;border:0;background:none;text-align:left;padding:4px 8px;border-radius:12px;color:var(--fg);font-weight:600;cursor:pointer;font-size:.92rem}
 .arow b{flex:none;width:26px;height:26px;border-radius:50%;background:#ffc400;color:#3d2b00;display:grid;place-items:center;font-size:.8rem}
 .arow small{margin-left:auto;color:var(--muted);font-weight:400;white-space:nowrap}
+
+.alt{display:flex;align-items:center;gap:6px;position:sticky;top:-6px;background:var(--glass);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);z-index:1}
+.alt span{flex:1}
+.amin{flex:none;width:36px;height:36px;border:0;border-radius:50%;background:var(--line);color:var(--fg);font-size:1.1rem;font-weight:700;cursor:pointer}
+.alist.vis{max-height:46%}
+.arow.dn{opacity:.55}
+.vday{display:flex;align-items:center;gap:8px;padding:10px 10px 2px;font-weight:800;font-size:.85rem}
+.vday span{flex:1}
+.vall{border:0;background:var(--accent-soft);color:var(--accent);border-radius:980px;padding:0 12px;min-height:32px;font-weight:700;font-size:.78rem;cursor:pointer}
+.vrow{display:flex;align-items:center;gap:10px;width:100%;min-height:42px;border:0;background:none;text-align:left;padding:2px 10px;border-radius:10px;color:var(--fg);font-size:.9rem;font-weight:500;cursor:pointer}
+.vchk{flex:none;width:24px;height:24px;border-radius:50%;border:2px solid var(--muted);display:grid;place-items:center;font-size:.8rem;font-weight:800;color:#fff}
+.vrow.dn .vchk{background:#30a46c;border-color:#30a46c}
+.vrow.dn>span:last-child{opacity:.6}
+.abub{position:absolute;z-index:520;left:12px;bottom:12px;min-height:44px;padding:0 18px;border:0;border-radius:980px;background:var(--glass);-webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);box-shadow:var(--shadow);font-weight:800;font-size:.9rem;color:var(--fg);cursor:pointer}
+.abub.top{background:#ffc400;color:#3d2b00}
+#avbtn[aria-pressed="true"]{background:var(--accent);color:var(--on-accent)}
 </style></head><body>
 <div class="menu" id="pop" hidden>
   <label for="fsr">Text size <output id="fsv"></output></label>
@@ -984,7 +1000,7 @@ nav.tabbar button[aria-current="page"]{color:var(--accent)}
     <div id="map2" aria-label="Map of all places"></div>
     <div class="topbar">
       <div class="tl"><div class="achips" id="achips"></div>
-        <div class="trow"><button class="pill" id="axbtn" aria-pressed="true">Extras</button><button class="pill" id="afit">Fit all</button></div></div>
+        <div class="trow"><button class="pill" id="axbtn" aria-pressed="true">Extras</button><button class="pill" id="afit">Fit all</button><button class="pill" id="avbtn" aria-pressed="false">✓ Visited</button></div></div>
       <div class="tr">
         <button class="rb sm" data-fs="-2" aria-label="Smaller text">A−</button>
         <button class="rb sm" data-fs="2" aria-label="Larger text">A+</button>
@@ -997,6 +1013,7 @@ nav.tabbar button[aria-current="page"]{color:var(--accent)}
       <span><svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="17" fill="var(--accent)" stroke="#fff" stroke-width="3"/></svg> See</span><span><svg viewBox="0 0 40 40"><rect x="4" y="4" width="32" height="32" rx="9" fill="var(--accent)" stroke="#fff" stroke-width="3"/></svg> Eat</span><span><svg viewBox="0 0 40 40"><polygon points="20,2 38,20 20,38 2,20" fill="var(--accent)" stroke="#fff" stroke-width="3"/></svg> Play</span><span><svg viewBox="0 0 40 40"><polygon points="20,2 35.5,11 35.5,29 20,38 4.5,29 4.5,11" fill="var(--accent)" stroke="#fff" stroke-width="3"/></svg> Viewpoint</span><span><svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="16" fill="#fff" stroke="var(--accent)" stroke-width="3.5" stroke-dasharray="6 4"/></svg> Extra</span><span><svg viewBox="0 0 40 40"><rect x="4" y="4" width="32" height="32" rx="8" fill="#1d1d1f" stroke="#fff" stroke-width="3"/><text x="20" y="27" text-anchor="middle" font-size="20" font-weight="800" fill="#fff">H</text></svg> Hotel</span><span><svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="14" fill="#00b8ff" stroke="#fff" stroke-width="4"/></svg> You</span>
     </div>
     <div class="alist" id="alist" hidden></div>
+    <button class="abub" id="abub" hidden></button>
     <div class="one" id="acard" hidden></div>
   </section>
   <section class="screen" id="s-day" hidden></section>
@@ -1685,18 +1702,41 @@ function drawAllMe(){
   if(!amap)return;ameLayer.clearLayers();if(!hasMe())return;var m=store.me;
   if(m.acc&&m.acc<400)L.circle([m.lat,m.lng],{radius:m.acc,color:"#00b8ff",weight:1,fillColor:"#00b8ff",fillOpacity:.1,interactive:false}).addTo(ameLayer);
   L.marker([m.lat,m.lng],{icon:pinIcon('<div class="medot"><i></i><span class="pl you">You</span></div>',28),zIndexOffset:2000,interactive:false}).addTo(ameLayer)}
-function topList(){return TOP.map(function(id){return P[id]})}
+var avis=false,amin=false;
+function setAcar(px){document.documentElement.style.setProperty("--acar",px+"px")}
+function doneCount(){var n=0;ALL.forEach(function(s){if(store.done[s.id])n++});return n}
+function topDone(){var n=0;TOP.forEach(function(id){if(store.done[id])n++});return n}
 function renderTopList(){
-  var box=$("alist");
-  if(!store.aTop||!$("acard").hidden){box.hidden=true;box.innerHTML="";if($("acard").hidden)document.documentElement.style.setProperty("--acar","0px");return}
-  box.innerHTML='<div class="alt">★ Top 15 must-see in Barcelona</div>';
-  topList().forEach(function(s){var d=D[s.day];var b=el("button","arow",'<b>'+s.top+'</b><span>'+esc(s.n.replace(/\s*\(.*?\)/g,""))+'</span><small><i class="ddot" style="background:'+DAYCOL[s.day]+'"></i>'+d.dow+' '+d.date.split(" ")[0]+'</small>');
-    b.addEventListener("click",function(){showAllCard(s)});box.appendChild(b)});
-  box.hidden=false;document.documentElement.style.setProperty("--acar",box.offsetHeight+"px")}
+  var box=$("alist"),bub=$("abub"),vb=$("avbtn");
+  vb.innerHTML="✓ Visited · "+doneCount();vb.setAttribute("aria-pressed",String(avis));
+  var panel=avis?"vis":(store.aTop?"top":null),cardOpen=!$("acard").hidden;
+  if(!panel||cardOpen){box.hidden=true;bub.hidden=true;if(!cardOpen)setAcar(0);return}
+  if(amin){box.hidden=true;bub.hidden=false;bub.className="abub"+(panel==="top"?" top":"");
+    bub.textContent=panel==="top"?"★ Top 15 · "+topDone()+"/15":"✓ Visited · "+doneCount()+"/"+ALL.length;setAcar(56);return}
+  bub.hidden=true;var sc=box.scrollTop;box.className="alist"+(panel==="vis"?" vis":"");box.innerHTML="";
+  function head(t,withClose){var h=el("div","alt");h.appendChild(el("span",null,t));var m=el("button","amin","–");m.setAttribute("aria-label","Hide to a bubble");m.addEventListener("click",function(){amin=true;renderTopList()});h.appendChild(m);
+    if(withClose){var x=el("button","amin","✕");x.setAttribute("aria-label","Close");x.addEventListener("click",function(){avis=false;renderTopList()});h.appendChild(x)}box.appendChild(h)}
+  if(panel==="top"){
+    head("★ Top 15 must-see · "+topDone()+" of 15 visited",false);
+    TOP.forEach(function(id){var s=P[id],d=D[s.day],dn=!!store.done[id];
+      var b=el("button","arow"+(dn?" dn":""),'<b>'+s.top+'</b><span>'+esc(s.n.replace(/\s*\(.*?\)/g,""))+'</span><small>'+(dn?'✓ ':'')+'<i class="ddot" style="background:'+DAYCOL[s.day]+'"></i>'+d.dow+' '+d.date.split(" ")[0]+'</small>');
+      b.addEventListener("click",function(){showAllCard(s)});box.appendChild(b)})}
+  else{
+    head("Mark visited · "+doneCount()+" of "+ALL.length,true);
+    D.forEach(function(d,di){
+      var allDone=d.stops.every(function(s){return store.done[s.id]});
+      var dh=el("div","vday",'<i class="ddot" style="background:'+DAYCOL[di]+'"></i><span>'+d.dow+' '+d.date.split(" ")[0]+' · '+esc(d.area)+'</span>');
+      var db=el("button","vall",allDone?"Clear day":"Mark day");db.addEventListener("click",function(){d.stops.forEach(function(s){store.done[s.id]=!allDone});save();drawAll(false);renderTopList()});dh.appendChild(db);box.appendChild(dh);
+      d.stops.concat(d.extras).forEach(function(s){var dn=!!store.done[s.id];
+        var r=el("button","vrow"+(dn?" dn":""),'<span class="vchk">'+(dn?"✓":"")+'</span><span>'+(s.x?"+ ":"")+(s.top?'<span class="tstar2">★</span> ':'')+esc(s.n.replace(/\s*\(.*?\)/g,""))+'</span>');
+        r.addEventListener("click",function(){store.done[s.id]=!dn;save();drawAll(false);renderTopList()});box.appendChild(r)})})}
+  box.hidden=false;box.scrollTop=sc;setAcar(box.offsetHeight)}
+$("abub").addEventListener("click",function(){amin=false;renderTopList()});
+$("avbtn").addEventListener("click",function(){avis=!avis;amin=false;closeAllCard(true);renderTopList()});
 function renderAChips(){
   var w=$("achips");w.innerHTML="";
   var allOn=D.every(function(d,i){return dayOn(i)}),cityOn=D.every(function(d,i){return d.reg?!dayOn(i):dayOn(i)}),regOn=D.every(function(d,i){return d.reg?dayOn(i):!dayOn(i)});
-  var tb=el("button","achip topc","★ Top 15");tb.setAttribute("aria-pressed",String(!!store.aTop));tb.addEventListener("click",function(){store.aTop=!store.aTop;save();closeAllCard(true);renderAChips();renderTopList();drawAll(true)});w.appendChild(tb);
+  var tb=el("button","achip topc","★ Top 15");tb.setAttribute("aria-pressed",String(!!store.aTop));tb.addEventListener("click",function(){store.aTop=!store.aTop;avis=false;amin=false;save();closeAllCard(true);renderAChips();renderTopList();drawAll(true)});w.appendChild(tb);
   function grp(lab,on,fn){var b=el("button","achip grp",lab);b.setAttribute("aria-pressed",String(on&&!store.aTop));b.addEventListener("click",function(){store.aTop=false;fn();save();closeAllCard(true);renderAChips();renderTopList();drawAll(true)});w.appendChild(b)}
   grp("All",allOn,function(){store.aOff={}});
   grp("City",cityOn,function(){store.aOff={};D.forEach(function(d){if(d.reg)store.aOff[d.id]=true})});
@@ -1710,7 +1750,7 @@ function showAllCard(s){
   var x=el("button","btn","✕");x.setAttribute("aria-label","Close");x.addEventListener("click",function(){closeAllCard()});c.querySelector(".btnrow").appendChild(x);
   box.innerHTML="";box.appendChild(c);box.hidden=false;
   document.documentElement.style.setProperty("--acar",box.offsetHeight+"px");
-  drawAll(false);renderTopList();amap.setView([s.lat,s.lng],Math.max(amap.getZoom(),14),{animate:true})}
+  renderTopList();drawAll(false);amap.setView([s.lat,s.lng],Math.max(amap.getZoom(),14),{animate:true})}
 function closeAllCard(quiet){var box=$("acard");if(box.hidden&&!quiet)return;box.hidden=true;box.innerHTML="";asel=null;document.documentElement.style.setProperty("--acar","0px");if(!quiet){drawAll(false);renderTopList()}}
 function renderAll(){
   allInit();renderAChips();closeAllCard(true);
