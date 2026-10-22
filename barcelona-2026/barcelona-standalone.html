@@ -818,8 +818,8 @@ ol.ins li{margin:4px 0}
 .badge{display:inline-block;font-size:.66rem;font-weight:700;padding:2px 8px;border-radius:999px;background:var(--good-soft);color:var(--good);vertical-align:2px;margin-left:4px}
 
 /* Map screen (full bleed) */
-#s-plan{position:fixed;left:0;right:0;top:0;bottom:calc(var(--nav-h) + env(safe-area-inset-bottom,0px))}
-#map{position:absolute;inset:0;background:var(--bg);-webkit-touch-callout:none;-webkit-user-select:none;user-select:none}
+#s-plan,#s-all{position:fixed;left:0;right:0;top:0;bottom:calc(var(--nav-h) + env(safe-area-inset-bottom,0px))}
+#map,#map2{position:absolute;inset:0;background:var(--bg);-webkit-touch-callout:none;-webkit-user-select:none;user-select:none}
 .topbar{position:absolute;z-index:500;left:max(12px,env(safe-area-inset-left,0px));right:max(12px,env(safe-area-inset-right,0px));top:calc(env(safe-area-inset-top,0px) + 10px);display:flex;justify-content:space-between;align-items:flex-start;gap:10px;pointer-events:none}
 .topbar>*{pointer-events:auto}
 .tl{display:flex;flex-direction:column;align-items:flex-start;gap:8px;min-width:0}
@@ -917,6 +917,19 @@ nav.tabbar button[aria-current="page"]{color:var(--accent)}
 .legend svg{width:15px;height:15px;overflow:visible}
 
 .mhead{font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding:12px 10px 4px}
+
+#s-all .leaflet-control-attribution{margin-bottom:6px!important}
+#s-all .tl{flex:1;min-width:0}
+.achips{display:flex;gap:6px;overflow-x:auto;max-width:100%;padding:2px 2px 4px;scrollbar-width:none}
+.achips::-webkit-scrollbar{display:none}
+.achip{flex:none;display:inline-flex;align-items:center;gap:6px;min-height:38px;padding:0 12px;border:0;border-radius:980px;background:var(--glass);-webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);box-shadow:var(--shadow);font-weight:600;font-size:.82rem;color:var(--fg);cursor:pointer;white-space:nowrap}
+.achip i{width:12px;height:12px;border-radius:50%;display:inline-block}
+.achip[aria-pressed="false"]{opacity:.5}
+.achip[aria-pressed="false"] i{background:transparent!important;box-shadow:inset 0 0 0 2px var(--muted)}
+.achip.grp[aria-pressed="true"]{background:var(--accent);color:var(--on-accent);opacity:1}
+#axbtn[aria-pressed="true"]{background:var(--accent);color:var(--on-accent)}
+.alegend{bottom:calc(var(--acar,0px) + 34px)}
+.ddot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:5px;vertical-align:middle}
 </style></head><body>
 <div class="menu" id="pop" hidden>
   <label for="fsr">Text size <output id="fsv"></output></label>
@@ -955,6 +968,24 @@ nav.tabbar button[aria-current="page"]{color:var(--accent)}
     <div class="car" id="car" aria-label="Stops, swipe sideways"></div>
     <div class="one" id="one" hidden></div>
   </section>
+  <section class="screen" id="s-all" hidden>
+    <div id="map2" aria-label="Map of all places"></div>
+    <div class="topbar">
+      <div class="tl"><div class="achips" id="achips"></div>
+        <div class="trow"><button class="pill" id="axbtn" aria-pressed="true">Extras</button><button class="pill" id="afit">Fit all</button></div></div>
+      <div class="tr">
+        <button class="rb sm" data-fs="-2" aria-label="Smaller text">A−</button>
+        <button class="rb sm" data-fs="2" aria-label="Larger text">A+</button>
+        <button class="rb aa" aria-label="Colours and text size"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a9 9 0 1 0 0 18c1.5 0 2-1 2-2s-.6-1.6-.6-2.6c0-1 .8-1.4 1.8-1.4H17a4 4 0 0 0 4-4c0-4.4-4-8-9-8Z"/><circle cx="7.5" cy="11" r="1"/><circle cx="10" cy="7" r="1"/><circle cx="15" cy="7.5" r="1"/></svg></button>
+        <button class="rb" id="azin" aria-label="Zoom in">+</button>
+        <button class="rb" id="azout" aria-label="Zoom out">−</button>
+      </div>
+    </div>
+    <div class="legend alegend" aria-label="Map key">
+      <span><svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="17" fill="var(--accent)" stroke="#fff" stroke-width="3"/></svg> See</span><span><svg viewBox="0 0 40 40"><rect x="4" y="4" width="32" height="32" rx="9" fill="var(--accent)" stroke="#fff" stroke-width="3"/></svg> Eat</span><span><svg viewBox="0 0 40 40"><polygon points="20,2 38,20 20,38 2,20" fill="var(--accent)" stroke="#fff" stroke-width="3"/></svg> Play</span><span><svg viewBox="0 0 40 40"><polygon points="20,2 35.5,11 35.5,29 20,38 4.5,29 4.5,11" fill="var(--accent)" stroke="#fff" stroke-width="3"/></svg> Viewpoint</span><span><svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="16" fill="#fff" stroke="var(--accent)" stroke-width="3.5" stroke-dasharray="6 4"/></svg> Extra</span><span><svg viewBox="0 0 40 40"><rect x="4" y="4" width="32" height="32" rx="8" fill="#1d1d1f" stroke="#fff" stroke-width="3"/><text x="20" y="27" text-anchor="middle" font-size="20" font-weight="800" fill="#fff">H</text></svg> Hotel</span><span><svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="14" fill="#00b8ff" stroke="#fff" stroke-width="4"/></svg> You</span>
+    </div>
+    <div class="one" id="acard" hidden></div>
+  </section>
   <section class="screen" id="s-day" hidden></section>
   <section class="screen" id="s-reg" hidden></section>
   <section class="screen" id="s-exp" hidden></section>
@@ -968,6 +999,7 @@ nav.tabbar button[aria-current="page"]{color:var(--accent)}
   <button data-s="plan" aria-current="page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4 3.5 6v14L9 18l6 2 5.5-2V4L15 6 9 4Z"/><path d="M9 4v14M15 6v14"/></svg>Map</button>
   <button data-s="day"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5" width="17" height="15.5" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg>Day</button>
   <button data-s="reg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m3 19 6.5-11 3.5 5 2-3L21 19H3Z"/></svg>Regional</button>
+  <button data-s="all"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.2 7-11.5A7 7 0 0 0 5 9.5C5 14.8 12 21 12 21Z"/><circle cx="12" cy="9.5" r="2.6"/></svg>All</button>
   <button data-s="exp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="m15.5 8.5-2 5-5 2 2-5 5-2Z"/></svg>Explore</button>
   <button data-s="tips"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 11v5.5M12 7.5v.5"/></svg>Tips</button>
 </div></nav>
@@ -1402,7 +1434,7 @@ function fsStep(d){var o=FS;FS+=d;applyFs();toast(FS===o?"Text size limit reache
 $("fsr").addEventListener("input",function(e){FS=+e.target.value;applyFs()});
 $("fsreset").addEventListener("click",function(){FS=16;applyFs()});
 function applyAcc(){var a=store.accent;if(!THEMES.some(function(t){return t[0]===a}))a="blue";store.accent=a;document.body.setAttribute("data-accent",a);renderDots()}
-function renderDots(){var b=$("dots");if(!b)return;b.innerHTML="";THEMES.forEach(function(t){var x=el("button","dotb");x.style.background=t[2];x.setAttribute("aria-label",t[1]);x.setAttribute("aria-pressed",store.accent===t[0]?"true":"false");x.addEventListener("click",function(){store.accent=t[0];save();applyAcc();if(screen==="plan")drawPins(false)});b.appendChild(x)})}
+function renderDots(){var b=$("dots");if(!b)return;b.innerHTML="";THEMES.forEach(function(t){var x=el("button","dotb");x.style.background=t[2];x.setAttribute("aria-label",t[1]);x.setAttribute("aria-pressed",store.accent===t[0]?"true":"false");x.addEventListener("click",function(){store.accent=t[0];save();applyAcc();if(screen==="plan")drawPins(false);if(screen==="all")drawAll(false)});b.appendChild(x)})}
 function applyTheme(){var t=store.theme;if(t!=="light"&&t!=="dark")t="auto";store.theme=t;var r=document.documentElement;if(t==="auto"){r.removeAttribute("data-theme");r.style.colorScheme=""}else{r.setAttribute("data-theme",t);r.style.colorScheme=t}
   Array.prototype.forEach.call(document.querySelectorAll("#appr button"),function(b){b.setAttribute("aria-pressed",String(b.getAttribute("data-t")===t))})}
 Array.prototype.forEach.call(document.querySelectorAll("#appr button"),function(b){b.addEventListener("click",function(){store.theme=b.getAttribute("data-t");save();applyTheme()})});
@@ -1528,6 +1560,7 @@ function drawPins(fit){
   if(fit){var pts=d.stops.map(function(p){return[p.lat,p.lng]});if(hasMe()&&km(store.me,d.stops[0])<25)pts.push([store.me.lat,store.me.lng]);
     map.fitBounds(L.latLngBounds(pts),{paddingTopLeft:[40,90],paddingBottomRight:[40,bottomH()+30],maxZoom:16,animate:false})}}
 function drawMe(){
+  try{drawAllMe()}catch(e){}
   if(!map)return;meLayer.clearLayers();if(!hasMe())return;var m=store.me;
   if(m.acc&&m.acc<400)L.circle([m.lat,m.lng],{radius:m.acc,color:"#00b8ff",weight:1,fillColor:"#00b8ff",fillOpacity:.1,interactive:false}).addTo(meLayer);
   L.marker([m.lat,m.lng],{icon:pinIcon('<div class="medot"><i></i><span class="pl you">You</span></div>',28),zIndexOffset:2000,interactive:false}).addTo(meLayer)}
@@ -1537,7 +1570,7 @@ function focusLatLng(lat,lng,minZoom){
 function focusSel(){var s=planList()[plan.idx];if(s)focusLatLng(s.lat,s.lng,15.5)}
 function focusMe(){if(hasMe())focusLatLng(store.me.lat,store.me.lng,16)}
 function numCls(s){return "num k-"+s.k+(s.x?" x":"")}
-function setDone(s,v){store.done[s.id]=v;save();var c=document.querySelector('.pc[data-id="'+s.id+'"]');if(c){c.classList.toggle("done",v);var b=c.querySelector(".chk");if(b)b.setAttribute("aria-pressed",v?"true":"false")}if(screen==="plan")drawPins(false)}
+function setDone(s,v){store.done[s.id]=v;save();var c=document.querySelector('.pc[data-id="'+s.id+'"]');if(c){c.classList.toggle("done",v);var b=c.querySelector(".chk");if(b)b.setAttribute("aria-pressed",v?"true":"false")}if(screen==="plan")drawPins(false);if(screen==="all")drawAll(false)}
 function planCard(s,i,d,withClose){
   var c=el("div","pc k-"+s.k+(store.done[s.id]?" done":""));c.setAttribute("data-i",i);c.setAttribute("data-id",s.id);
   var leg;
@@ -1597,6 +1630,70 @@ $("locbtn").addEventListener("click",function(e){e.stopPropagation();closeMenus(
   if(hasMe()){store.meOn=false;save();drawMe();rebuildCards();updateLocBtn();toast("My location hidden")}
   else{store.meOn=true;save();drawMe();rebuildCards();updateLocBtn();toast("My location shown");if(store.me.src==="GPS")meGps();else focusMe()}});
 $("locmore").addEventListener("click",function(e){e.stopPropagation();if(toggleMenu("mepop"))refreshMePanels()});
+
+/* ================= ALL PLACES MAP ================= */
+var DAYCOL=["#e5484d","#f76b15","#b88a00","#30a46c","#12a594","#0091ff","#5b5bd6","#ab4aba","#d6409f","#7c6f64"];
+var amap=null,alayer=null,ameLayer=null,asel=null;
+if(!store.aOff)store.aOff={};
+function allInit(){
+  if(amap||typeof L==="undefined")return;
+  amap=L.map("map2",{zoomControl:false,attributionControl:true,zoomSnap:.5,tap:true}).setView([41.39,2.17],11);
+  amap.attributionControl.setPrefix(false);
+  L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,attribution:"© OpenStreetMap"}).addTo(amap);
+  alayer=L.layerGroup().addTo(amap);ameLayer=L.layerGroup().addTo(amap);
+  amap.on("click",function(){closeAllCard()});
+  $("azin").addEventListener("click",function(){amap.zoomIn()});
+  $("azout").addEventListener("click",function(){amap.zoomOut()})}
+function allSVG(s,lab,col,done){
+  var fill=s.x?"#fff":(done?"#8e8e93":col),stroke=s.x?col:"#fff",dash=s.x?' stroke-dasharray="6 4"':'';
+  var st='fill="'+fill+'" stroke="'+stroke+'" stroke-width="3.5"'+dash,sh;
+  if(s.k==="eat")sh='<rect x="4" y="4" width="32" height="32" rx="9" '+st+'/>';
+  else if(s.k==="play")sh='<polygon points="20,2 38,20 20,38 2,20" '+st+'/>';
+  else if(s.k==="view")sh='<polygon points="20,2 35.5,11 35.5,29 20,38 4.5,29 4.5,11" '+st+'/>';
+  else sh='<circle cx="20" cy="20" r="17" '+st+'/>';
+  return '<svg viewBox="0 0 40 40" aria-hidden="true">'+sh+(lab?'<text x="20" y="26.5" text-anchor="middle" font-size="18" font-weight="700" fill="#fff" font-family="-apple-system,Segoe UI,Roboto,sans-serif">'+lab+'</text>':'')+'</svg>'}
+function dayOn(i){return !store.aOff[D[i].id]}
+function drawAll(fit){
+  if(!amap)return;alayer.clearLayers();var pts=[];
+  D.forEach(function(d,di){
+    if(!dayOn(di))return;var col=DAYCOL[di];
+    var list=d.stops.concat(store.aX===false?[]:d.extras);
+    list.forEach(function(s,i){
+      var isSel=asel===s.id,done=!!store.done[s.id];
+      var sz=isSel?42:(s.x?18:28),lab=s.x?"":String(i+1);
+      if(!s.x)pts.push([s.lat,s.lng]);
+      var html='<div class="pinsvg'+(isSel?' sel':'')+'">'+allSVG(s,lab,col,done)+(isSel?'<span class="pl">'+esc(s.n.replace(/\s*\(.*?\)/g,""))+'</span>':'')+'</div>';
+      var m=L.marker([s.lat,s.lng],{icon:pinIcon(html,sz),zIndexOffset:isSel?1000:(s.x?0:100+di),keyboard:false,title:s.n});
+      m.on("click",function(e){if(e&&e.originalEvent)L.DomEvent.stopPropagation(e);showAllCard(s)});m.addTo(alayer)})});
+  if(hasPin())L.marker([store.hotel.lat,store.hotel.lng],{icon:pinIcon('<div class="hpin">H</div>',30),zIndexOffset:500,title:"Hotel"}).addTo(alayer);
+  if(fit&&pts.length)amap.fitBounds(L.latLngBounds(pts),{paddingTopLeft:[36,120],paddingBottomRight:[36,70],maxZoom:16,animate:false})}
+function drawAllMe(){
+  if(!amap)return;ameLayer.clearLayers();if(!hasMe())return;var m=store.me;
+  if(m.acc&&m.acc<400)L.circle([m.lat,m.lng],{radius:m.acc,color:"#00b8ff",weight:1,fillColor:"#00b8ff",fillOpacity:.1,interactive:false}).addTo(ameLayer);
+  L.marker([m.lat,m.lng],{icon:pinIcon('<div class="medot"><i></i><span class="pl you">You</span></div>',28),zIndexOffset:2000,interactive:false}).addTo(ameLayer)}
+function renderAChips(){
+  var w=$("achips");w.innerHTML="";
+  var allOn=D.every(function(d,i){return dayOn(i)}),cityOn=D.every(function(d,i){return d.reg?!dayOn(i):dayOn(i)}),regOn=D.every(function(d,i){return d.reg?dayOn(i):!dayOn(i)});
+  function grp(lab,on,fn){var b=el("button","achip grp",lab);b.setAttribute("aria-pressed",String(on));b.addEventListener("click",function(){fn();save();closeAllCard(true);renderAChips();drawAll(true)});w.appendChild(b)}
+  grp("All",allOn,function(){store.aOff={}});
+  grp("City",cityOn,function(){store.aOff={};D.forEach(function(d){if(d.reg)store.aOff[d.id]=true})});
+  grp("Regional",regOn,function(){store.aOff={};D.forEach(function(d){if(!d.reg)store.aOff[d.id]=true})});
+  D.forEach(function(d,i){var b=el("button","achip",'<i style="background:'+DAYCOL[i]+'"></i>'+d.dow+" "+d.date.split(" ")[0]);b.setAttribute("aria-pressed",String(dayOn(i)));
+    b.addEventListener("click",function(){if(dayOn(i))store.aOff[d.id]=true;else delete store.aOff[d.id];save();closeAllCard(true);renderAChips();drawAll(true)});w.appendChild(b)});
+  $("axbtn").setAttribute("aria-pressed",String(store.aX!==false))}
+function showAllCard(s){
+  asel=s.id;var box=$("acard"),c=planCard(s,s.idx>=0?s.idx:0,D[s.day],false);
+  var dd=D[s.day],tg=c.querySelector(".tg");if(tg)tg.innerHTML='<i class="ddot" style="background:'+DAYCOL[s.day]+'"></i>'+dd.dow+" "+dd.date.split(" ")[0]+" · "+tg.innerHTML;
+  var x=el("button","btn","✕");x.setAttribute("aria-label","Close");x.addEventListener("click",function(){closeAllCard()});c.querySelector(".btnrow").appendChild(x);
+  box.innerHTML="";box.appendChild(c);box.hidden=false;
+  document.documentElement.style.setProperty("--acar",box.offsetHeight+"px");
+  drawAll(false);amap.setView([s.lat,s.lng],Math.max(amap.getZoom(),14),{animate:true})}
+function closeAllCard(quiet){var box=$("acard");if(box.hidden&&!quiet)return;box.hidden=true;box.innerHTML="";asel=null;document.documentElement.style.setProperty("--acar","0px");if(!quiet)drawAll(false)}
+function renderAll(){
+  allInit();renderAChips();closeAllCard(true);
+  requestAnimationFrame(function(){if(amap){amap.invalidateSize();drawAll(true);drawAllMe()}})}
+$("axbtn").addEventListener("click",function(){store.aX=store.aX===false;save();renderAChips();drawAll(false)});
+$("afit").addEventListener("click",function(){if(amap){closeAllCard(true);drawAll(true)}});
 
 /* ================= DETAIL (full-screen page for one place) ================= */
 function fact(l,t){return t?'<div class="fact"><b>'+l+'</b><span>'+t+'</span></div>':''}
@@ -1685,18 +1782,19 @@ function renderTips(){
 
 /* ================= NAVIGATION ================= */
 var screen="plan";
-function go(s){screen=s;["plan","day","reg","exp","tips"].forEach(function(n){$("s-"+n).hidden=n!==s});
-  document.body.classList.toggle("plan",s==="plan");
+function go(s){screen=s;["plan","day","reg","exp","tips","all"].forEach(function(n){$("s-"+n).hidden=n!==s});
+  document.body.classList.toggle("plan",s==="plan"||s==="all");
   Array.prototype.forEach.call(document.querySelectorAll("nav.tabbar button"),function(b){if(b.getAttribute("data-s")===s)b.setAttribute("aria-current","page");else b.removeAttribute("aria-current")});
   closeDetail();closeMenus();window.scrollTo({top:0});
   if(s==="plan")renderPlan();
+  if(s==="all")renderAll();
   if(s==="day"){if(D[cur].reg)setDay(lastCity);renderDay()}
   if(s==="reg"){if(!D[cur].reg)setDay(lastReg);renderDay()}
   if(s==="exp"){expDay=cur;renderExp()}
   if(s==="tips")renderTips()}
 Array.prototype.forEach.call(document.querySelectorAll("nav.tabbar button"),function(b){b.addEventListener("click",function(){go(b.getAttribute("data-s"))})});
 bindAa();initMap();
-var h0=location.hash.replace("#","");go(["day","reg","exp","tips"].indexOf(h0)>-1?h0:"plan");
+var h0=location.hash.replace("#","");go(["day","reg","exp","tips","all"].indexOf(h0)>-1?h0:"plan");
 loadWx();
 })();
 </script>
