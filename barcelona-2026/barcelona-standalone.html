@@ -958,6 +958,13 @@ nav.tabbar button[aria-current="page"]{color:var(--accent)}
 .abub{position:absolute;z-index:520;left:12px;bottom:12px;min-height:44px;padding:0 18px;border:0;border-radius:980px;background:var(--glass);-webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);box-shadow:var(--shadow);font-weight:800;font-size:.9rem;color:var(--fg);cursor:pointer}
 .abub.top{background:#ffc400;color:#3d2b00}
 #avbtn[aria-pressed="true"]{background:var(--accent);color:var(--on-accent)}
+
+.rtg{flex:none;align-self:center;font-size:.68rem;font-weight:700;padding:5px 10px;border-radius:12px;white-space:nowrap;cursor:pointer}
+.r-m{background:rgba(255,138,0,.18);color:#c25e00}
+.r-g{background:rgba(10,132,255,.16);color:#0a6fd6}
+.r-o{background:rgba(128,128,128,.2);color:var(--muted)}
+.rkey{font-size:.8rem;color:var(--muted);line-height:1.45;margin:6px 2px 10px}
+.rkey b{font-weight:700}
 </style></head><body>
 <div class="menu" id="pop" hidden>
   <label for="fsr">Text size <output id="fsv"></output></label>
@@ -1018,6 +1025,7 @@ nav.tabbar button[aria-current="page"]{color:var(--accent)}
   </section>
   <section class="screen" id="s-day" hidden></section>
   <section class="screen" id="s-reg" hidden></section>
+  <section class="screen" id="s-sit" hidden></section>
   <section class="screen" id="s-exp" hidden></section>
   <section class="screen" id="s-tips" hidden></section>
 </main>
@@ -1029,6 +1037,7 @@ nav.tabbar button[aria-current="page"]{color:var(--accent)}
   <button data-s="plan" aria-current="page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4 3.5 6v14L9 18l6 2 5.5-2V4L15 6 9 4Z"/><path d="M9 4v14M15 6v14"/></svg>Map</button>
   <button data-s="day"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5" width="17" height="15.5" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg>Day</button>
   <button data-s="reg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m3 19 6.5-11 3.5 5 2-3L21 19H3Z"/></svg>Regional</button>
+  <button data-s="sit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.5"/><path d="M12 2v1M4.5 8h1M18.5 8h1M3 16c2 0 2-1.5 4.5-1.5S10 16 12 16s2.5-1.5 4.5-1.5S19 16 21 16M3 20c2 0 2-1.5 4.5-1.5S10 20 12 20s2.5-1.5 4.5-1.5S19 20 21 20"/></svg>Sitges</button>
   <button data-s="all"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.2 7-11.5A7 7 0 0 0 5 9.5C5 14.8 12 21 12 21Z"/><circle cx="12" cy="9.5" r="2.6"/></svg>All</button>
   <button data-s="exp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="m15.5 8.5-2 5-5 2 2-5 5-2Z"/></svg>Explore</button>
   <button data-s="tips"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 11v5.5M12 7.5v.5"/></svg>Tips</button>
@@ -1212,7 +1221,7 @@ D.push(
  rain:["Cathedral, Sant Feliu and the Art Museum are all indoors (combined ticket).","Museu del Cinema (€5) is a great rainy-day stop.","Arab Baths for a short indoor visit."],
  facts:["The cathedral steps appeared in Game of Thrones, season 6.","Eiffel's company built the red bridge in 1877.","El Call is the old Jewish quarter, with narrow lanes and stone steps."],
  spot:["A red iron bridge","A house with green shutters","A 90-step staircase","A tower on the wall","A cat on a doorstep"]},
-{id:"d9",reg:true,jt:"40 min",loc:"Sitges",dow:"Tue",date:"27 Oct",title:"Sitges: white town by the sea",area:"Sitges",start:"Barcelona Sants or Passeig de Gràcia, R2 Sud toward Vilanova or Sant Vicenç (about 40 min)",startPt:{n:"Barcelona Sants station",lat:41.3791,lng:2.1400},back:"Sitges station to Sants or Passeig de Gràcia (R2 Sud)",budget:"€90",budgetNote:"Train about €4 each way per adult · museums €12 per adult, under 16 free · ~€45 food",
+{id:"d9",reg:true,sit:true,jt:"40 min",loc:"Sitges",dow:"Tue",date:"27 Oct",title:"Sitges: white town by the sea",area:"Sitges",start:"Barcelona Sants or Passeig de Gràcia, R2 Sud toward Vilanova or Sant Vicenç (about 40 min)",startPt:{n:"Barcelona Sants station",lat:41.3791,lng:2.1400},back:"Sitges station to Sants or Passeig de Gràcia (R2 Sud)",budget:"€90",budgetNote:"Train about €4 each way per adult · museums €12 per adult, under 16 free · ~€45 food",
  lede:"A white seaside town with a baroque church on the point, two art museums and long beaches. Easy: 40 min by train and everything is walkable.",
  wxNote:"Forecast shown is for Barcelona. Sitges is on the coast: similar, a bit breezier.",
  getting:["R2 Sud from Sants, Passeig de Gràcia or Estació de França toward Vilanova i la Geltrú or Sant Vicenç de Calders: about 35–45 min, every 15–20 min. Single ticket about €4.20–4.60 per adult (check the child fare). Buy at the station machines.","Sit on the left side of the train for sea views near Garraf.","Sitges station to the seafront is a short walk (about 10 min). Check the last train back before dinner.","Check rodalies.gencat.cat for works or strikes the evening before."],
@@ -1566,13 +1575,13 @@ function loadWx(){
   if(c&&Date.now()-c.t<3*3600*1000){wxRefresh();return}
   try{fetch(WX_URL).then(function(r){return r.json()}).then(function(j){if(j&&j.daily){WX=j;wxState="live";try{localStorage.setItem("bcn26wx2",JSON.stringify({t:Date.now(),d:j}))}catch(e){}}else wxState=WX?"cached":"err";wxRefresh()}).catch(function(){wxState=WX?"cached":"err";wxRefresh()})}
   catch(e){wxState=WX?"cached":"err";wxRefresh()}}
-function wxRefresh(){updateTop();renderDayMenu();if(screen==="day"||screen==="reg")renderDay()}
+function wxRefresh(){updateTop();renderDayMenu();if(screen==="day"||screen==="reg"||screen==="sit")renderDay()}
 
 /* ================= MAP (Leaflet + OpenStreetMap) ================= */
 var cur=0;var nd=new Date(),ymd=nd.getFullYear()*10000+(nd.getMonth()+1)*100+nd.getDate();
 if(ymd>=20261019&&ymd<=20261028)cur=ymd-20261019;else if(typeof store.day==="number"&&store.day<D.length)cur=store.day;
-var lastCity=cur<6?cur:5,lastReg=cur>=6?cur:6;
-function setDay(i){cur=i;if(D[i].reg)lastReg=i;else lastCity=i;store.day=i;save()}
+var lastCity=cur<6?cur:5,lastReg=(cur>=6&&!D[cur].sit)?cur:6;
+function setDay(i){cur=i;if(D[i].sit){}else if(D[i].reg)lastReg=i;else lastCity=i;store.day=i;save()}
 var plan={idx:0,want:null,lock:0},map=null,pinLayer=null,meLayer=null,tileErr=0;
 function planList(){var d=D[cur];return d.stops.concat(d.extras)}
 function carH(){return $("car").offsetHeight||190}
@@ -1681,7 +1690,7 @@ Array.prototype.forEach.call($("modesw").querySelectorAll("button"),function(b){
   if(car.scrollLeft>=car.scrollWidth-car.clientWidth-3)best=cs.length-1;
   if(best!==plan.idx){plan.idx=best;drawPins(false);focusSel()}},120)},{passive:true})})();
 $("daybtn").addEventListener("click",function(e){e.stopPropagation();toggleMenu("daymenu")});
-$("wxbtn").addEventListener("click",function(){go(D[cur].reg?"reg":"day")});
+$("wxbtn").addEventListener("click",function(){go(D[cur].sit?"sit":D[cur].reg?"reg":"day")});
 $("locbtn").addEventListener("click",function(e){e.stopPropagation();closeMenus();
   if(!meSaved()){meGps();toast("Finding you…");return}
   if(hasMe()){store.meOn=false;save();drawMe();rebuildCards();updateLocBtn();toast("My location hidden")}
@@ -1797,20 +1806,22 @@ function openDetail(s){
   h+='</div></div>';
   box.innerHTML=h;box.hidden=false;box.scrollTop=0;
   $("d-x").addEventListener("click",closeDetail);
-  $("d-chk").addEventListener("click",function(){var v=!store.done[s.id];setDone(s,v);$("d-chk").setAttribute("aria-pressed",v?"true":"false");if(screen==="day"||screen==="reg")renderDay()});
+  $("d-chk").addEventListener("click",function(){var v=!store.done[s.id];setDone(s,v);$("d-chk").setAttribute("aria-pressed",v?"true":"false");if(screen==="day"||screen==="reg"||screen==="sit")renderDay()});
   $("d-map").addEventListener("click",function(){closeDetail();setDay(s.day);plan.want=s.id;go("plan")})}
 function closeDetail(){$("detail").hidden=true}
 
 /* ================= DAY ================= */
-function renderChips(){var w=$("chips2");if(!w)return;w.innerHTML="";var rv=screen==="reg";D.forEach(function(d,i){if(!!d.reg!==rv)return;var x=wxDay(i);var b=el("button",null,"<b>"+d.dow+" "+d.date.split(" ")[0]+"</b><small>"+(x?wxIcon(x.code)+" "+rnd(x.hi)+"° · ":"")+d.area+"</small>");b.setAttribute("aria-pressed",i===cur?"true":"false");b.addEventListener("click",function(){setDay(i);renderDay()});w.appendChild(b)});
+var sitF="all",RL={m:"Must see",g:"Good to see",o:"Optional"},RDEF={s1:"m",s2:"m",s3:"m",s4:"g",s5:"g","x-sfragata":"g","x-slanes":"g","x-saig":"o","x-sirena":"g","x-raco":"o","x-baluard":"g","x-muralla":"o","x-palau":"o","x-mercat":"o","x-carbonell":"o","x-romantic":"o","x-terramar":"o","x-costadorada":"g","x-cable":"o","x-izarra":"o","x-flors":"o"};
+function rateOf(s){return (store.rate&&store.rate[s.id])||RDEF[s.id]||"o"}
+function renderChips(){var w=$("chips2");if(!w)return;w.innerHTML="";var rv=screen==="reg";D.forEach(function(d,i){if(!!d.reg!==rv||d.sit)return;var x=wxDay(i);var b=el("button",null,"<b>"+d.dow+" "+d.date.split(" ")[0]+"</b><small>"+(x?wxIcon(x.code)+" "+rnd(x.hi)+"° · ":"")+d.area+"</small>");b.setAttribute("aria-pressed",i===cur?"true":"false");b.addEventListener("click",function(){setDay(i);renderDay()});w.appendChild(b)});
   var on=w.querySelector('[aria-pressed="true"]');if(on&&on.scrollIntoView&&w.offsetParent)on.scrollIntoView({inline:"center",block:"nearest"})}
 function dayKm(d){var t=0;for(var i=1;i<d.stops.length;i++){if(!TRANSIT[d.id+":"+d.stops[i].id])t+=walk(d.stops[i-1],d.stops[i])}return t}
 function routeLinks(d){var st=d.stops,parts=[],i=0;while(i<st.length-1){parts.push(st.slice(i,i+5));i+=4}
   return parts.map(function(seg,pi){var u="https://www.google.com/maps/dir/?api=1&travelmode=walking&origin="+q(seg[0].n,seg[0].loc)+"&destination="+q(seg[seg.length-1].n,seg[seg.length-1].loc);var mid=seg.slice(1,-1);if(mid.length)u+="&waypoints="+mid.map(function(s){return q(s.n,s.loc)}).join("%7C");
   return '<a class="btn wide'+(pi===0?" solid":"")+'" href="'+u+'" target="_blank" rel="noopener">Walking route '+(pi+1)+'/'+parts.length+' ↗</a>'}).join("")}
 function renderDay(){
-  var d=D[cur],rv=!!d.reg&&screen==="reg",box=$(rv?"s-reg":"s-day"),w=wxDay(cur);$(rv?"s-day":"s-reg").innerHTML="";
-  var h=pageHead(rv?"Regional":"Day overview",d.dow+" "+d.date+" · "+d.area)+'<div class="chips" id="chips2"></div>';
+  var d=D[cur],st=screen==="sit"&&!!d.sit,rv=!!d.reg&&(screen==="reg"||st),box=$(st?"s-sit":rv?"s-reg":"s-day"),w=wxDay(cur);["s-day","s-reg","s-sit"].forEach(function(n){if(n!==box.id)$(n).innerHTML=""});
+  var h=pageHead(st?"Sitges":rv?"Regional":"Day overview",d.dow+" "+d.date+" · "+d.area)+(st?'':'<div class="chips" id="chips2"></div>');
   h+='<div class="hero"><h2>'+d.title+'</h2><p>'+d.lede+'</p><div class="stats">'+(d.jt?'<div class="stat"><b>'+d.jt+'</b><span>each way</span></div>':'<div class="stat"><b>'+dayKm(d).toFixed(1)+' km</b><span>walking</span></div>')+'<div class="stat"><b>'+d.stops.length+'</b><span>stops</span></div><div class="stat"><b>'+d.budget+'</b><span>est. cost</span></div></div>'+
     '<div class="cstat">'+d.budgetNote+'. For 2 adults and 1 child.</div><div class="startline"><span class="k">Start</span><span>'+d.start+'</span></div><div class="btnrow">'+routeLinks(d)+'</div></div>';
   h+='<div class="panel"><b class="t">Weather</b>';
@@ -1823,15 +1834,19 @@ function renderDay(){
   if(d.getting)h+='<div class="panel"><b class="t">Getting there and back</b><ul>'+d.getting.map(function(r){return"<li>"+r+"</li>"}).join("")+'</ul></div>';
   h+=hotelPanel(d);
   if(BOOK[d.id])h+='<div class="panel"><b class="t">Book ahead</b><ul>'+BOOK[d.id].map(function(r){return"<li>"+r+"</li>"}).join("")+'</ul></div>';
-  h+='<div class="sec"><h3>Route</h3><span id="prog"></span></div><div class="bar"><i id="pbar"></i></div><div id="rows"></div>';
-  h+='<div class="sec"><h3>If you have time</h3><span>'+d.extras.length+' extras</span></div><div id="xrows"></div>';
+  if(st){var cnt={m:0,g:0,o:0};d.stops.concat(d.extras).forEach(function(s){cnt[rateOf(s)]++});
+    h+='<div class="sec"><h3>Rated places</h3><span>'+(d.stops.length+d.extras.length)+' places</span></div><div class="seg" id="rf" role="group" aria-label="Filter by rating"><button data-r="all">All</button><button data-r="m">Must see '+cnt.m+'</button><button data-r="g">Good '+cnt.g+'</button><button data-r="o">Optional '+cnt.o+'</button></div><div class="rkey"><b>Must see:</b> worth planning around. <b>Good to see:</b> nice if time allows. <b>Optional:</b> skip it and you miss nothing. Tap a tag on any place to change its rating.</div>';}
+  h+='<div class="sec"><h3>'+(st?"Main route":"Route")+'</h3><span id="prog"></span></div><div class="bar"><i id="pbar"></i></div><div id="rows"></div>';
+  h+='<div class="sec"><h3>'+(st?"More places":"If you have time")+'</h3><span>'+d.extras.length+(st?' places':' extras')+'</span></div><div id="xrows"></div>';
   h+='<div class="panel rain"><b class="t">If it rains</b><ul>'+d.rain.map(function(r){return"<li>"+r+"</li>"}).join("")+'</ul></div>';
   h+='<details class="acc"><summary>For kids</summary><div class="c"><b>Facts</b><ul>'+d.facts.map(function(f){return"<li>"+f+"</li>"}).join("")+'</ul><b style="display:block;margin-top:10px">Spot list</b><ul class="spot" id="spot"></ul></div></details>';
   box.innerHTML=h;bindHotel();bindAa();renderChips();
   function prog(){var n=d.stops.filter(function(s){return store.done[s.id]}).length;$("prog").textContent=n+" of "+d.stops.length+" visited";$("pbar").style.width=(n/d.stops.length*100)+"%"}
-  function row(s,lab){var b=el("button","rowb k-"+s.k+(store.done[s.id]?" done":""),'<span class="'+numCls(s)+'">'+lab+'</span><span class="rt"><b>'+(s.top?'<span class="tstar2">★</span> ':'')+s.n+'</b><small>'+(s.x?s.cat:KIND[s.k]+" · "+s.t)+' · '+s.c+'</small></span>');b.addEventListener("click",function(){openDetail(s)});return b}
-  d.stops.forEach(function(s,i){$("rows").appendChild(row(s,String(i+1)))});
-  d.extras.forEach(function(s){$("xrows").appendChild(row(s,"+"))});
+  function row(s,lab){var b=el("button","rowb k-"+s.k+(store.done[s.id]?" done":""),'<span class="'+numCls(s)+'">'+lab+'</span><span class="rt"><b>'+(s.top?'<span class="tstar2">★</span> ':'')+s.n+'</b><small>'+(s.x?s.cat:KIND[s.k]+" · "+s.t)+' · '+s.c+'</small></span>'+(st?'<span class="rtg r-'+rateOf(s)+'" role="button" tabindex="0">'+RL[rateOf(s)]+'</span>':''));b.addEventListener("click",function(e){var t=st&&e.target.closest&&e.target.closest(".rtg");if(t){e.stopPropagation();var o=["m","g","o"],r=o[(o.indexOf(rateOf(s))+1)%3];store.rate=store.rate||{};store.rate[s.id]=r;save();renderDay();return}openDetail(s)});return b}
+  function ok(s){return !st||sitF==="all"||rateOf(s)===sitF}
+  d.stops.forEach(function(s,i){if(ok(s))$("rows").appendChild(row(s,String(i+1)))});
+  d.extras.forEach(function(s){if(ok(s))$("xrows").appendChild(row(s,"+"))});
+  if(st){Array.prototype.forEach.call(box.querySelectorAll("#rf button"),function(b){b.setAttribute("aria-pressed",String(b.getAttribute("data-r")===sitF));b.addEventListener("click",function(){sitF=b.getAttribute("data-r");renderDay()})});if(!$("rows").children.length)$("rows").innerHTML='<p class="cstat">No main-route places with this rating.</p>';if(!$("xrows").children.length)$("xrows").innerHTML='<p class="cstat">No more places with this rating.</p>'}
   prog();
   var sp=$("spot");d.spot.forEach(function(t,i){var key=d.id+"_"+i;var li=el("li",null,'<label><input type="checkbox"'+(store.spot[key]?" checked":"")+'> <span>'+t+'</span></label>');li.querySelector("input").addEventListener("change",function(e){store.spot[key]=e.target.checked;save()});sp.appendChild(li)})}
 
@@ -1871,19 +1886,20 @@ function renderTips(){
 
 /* ================= NAVIGATION ================= */
 var screen="plan";
-function go(s){screen=s;["plan","day","reg","exp","tips","all"].forEach(function(n){$("s-"+n).hidden=n!==s});
+function go(s){screen=s;["plan","day","reg","sit","exp","tips","all"].forEach(function(n){$("s-"+n).hidden=n!==s});
   document.body.classList.toggle("plan",s==="plan"||s==="all");
   Array.prototype.forEach.call(document.querySelectorAll("nav.tabbar button"),function(b){if(b.getAttribute("data-s")===s)b.setAttribute("aria-current","page");else b.removeAttribute("aria-current")});
   closeDetail();closeMenus();window.scrollTo({top:0});
   if(s==="plan")renderPlan();
   if(s==="all")renderAll();
   if(s==="day"){if(D[cur].reg)setDay(lastCity);renderDay()}
-  if(s==="reg"){if(!D[cur].reg)setDay(lastReg);renderDay()}
+  if(s==="reg"){if(!D[cur].reg||D[cur].sit)setDay(lastReg);renderDay()}
+  if(s==="sit"){for(var i=0;i<D.length;i++)if(D[i].sit)setDay(i);renderDay()}
   if(s==="exp"){expDay=cur;renderExp()}
   if(s==="tips")renderTips()}
 Array.prototype.forEach.call(document.querySelectorAll("nav.tabbar button"),function(b){b.addEventListener("click",function(){go(b.getAttribute("data-s"))})});
 bindAa();initMap();
-var h0=location.hash.replace("#","");go(["day","reg","exp","tips","all"].indexOf(h0)>-1?h0:"plan");
+var h0=location.hash.replace("#","");go(["day","reg","sit","exp","tips","all"].indexOf(h0)>-1?h0:"plan");
 loadWx();
 })();
 </script>
