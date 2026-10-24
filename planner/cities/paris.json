@@ -2,6 +2,9 @@
   "schemaVersion": 1,
   "id": "paris",
   "name": "Paris",
+  "aliases": [
+    "Paname"
+  ],
   "country": "France",
   "countryCode": "FR",
   "center": [

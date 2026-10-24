@@ -2,6 +2,9 @@
   "schemaVersion": 1,
   "id": "rome",
   "name": "Rome",
+  "aliases": [
+    "Roma"
+  ],
   "country": "Italy",
   "countryCode": "IT",
   "center": [

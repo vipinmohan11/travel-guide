@@ -2,6 +2,12 @@
   "schemaVersion": 1,
   "id": "new-york",
   "name": "New York",
+  "aliases": [
+    "NYC",
+    "New York City",
+    "Manhattan",
+    "Big Apple"
+  ],
   "country": "United States",
   "countryCode": "US",
   "center": [

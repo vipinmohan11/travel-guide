@@ -2,7 +2,7 @@
 // App files: cache first (bump VERSION on every release).
 // City packs: show the cached copy at once, refresh it in the background.
 // Map tiles: never stored here (OpenStreetMap's tile policy; the browser's own cache still helps).
-const VERSION = "tp-2026-10-24-1";
+const VERSION = "tp-2026-10-24-2";
 const SHELL = [
   "./",
   "index.html",

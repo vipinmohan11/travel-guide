@@ -2,6 +2,11 @@
   "schemaVersion": 1,
   "id": "new-delhi",
   "name": "New Delhi",
+  "aliases": [
+    "Delhi",
+    "Dilli",
+    "Old Delhi"
+  ],
   "country": "India",
   "countryCode": "IN",
   "center": [

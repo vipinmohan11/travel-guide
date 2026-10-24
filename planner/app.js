@@ -201,7 +201,12 @@ function showStep(n) {
 function renderCityList() {
   const q = plain($("#cityInput").value.trim());
   const list = $("#cityList");
-  const matches = cityIndex.filter((c) => !q || plain(c.name).includes(q) || plain(c.country).includes(q));
+  // Every word typed must appear in the name, country or an alias, so "Tokyo, Japan" and "Japan Tokyo" both work.
+  const words = q.split(/[^\p{L}\p{N}]+/u).filter(Boolean);
+  const matches = cityIndex.filter((c) => {
+    const hay = plain([c.name, c.country, ...(c.aliases || [])].join(" "));
+    return words.every((w) => hay.includes(w));
+  });
   list.innerHTML = matches
     .map(
       (c) => `<li><button type="button" class="city-btn" role="option" data-city="${esc(c.id)}">

@@ -2,6 +2,11 @@
   "schemaVersion": 1,
   "id": "tokyo",
   "name": "Tokyo",
+  "aliases": [
+    "Tōkyō",
+    "東京",
+    "Japan capital"
+  ],
   "country": "Japan",
   "countryCode": "JP",
   "center": [

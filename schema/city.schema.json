@@ -10,6 +10,7 @@
     "schemaVersion": { "const": 1 },
     "id": { "type": "string", "pattern": "^[a-z0-9-]+$" },
     "name": { "type": "string" },
+    "aliases": { "description": "Other names people type: local spelling, nickname, old name", "type": "array", "items": { "type": "string" } },
     "country": { "type": "string" },
     "countryCode": { "type": "string", "pattern": "^[A-Z]{2}$" },
     "center": { "$ref": "#/$defs/latlng" },

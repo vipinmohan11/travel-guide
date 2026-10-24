@@ -4,6 +4,9 @@
     {
       "id": "barcelona",
       "name": "Barcelona",
+      "aliases": [
+        "Barna"
+      ],
       "country": "Spain",
       "countryCode": "ES",
       "center": [
@@ -18,6 +21,7 @@
     {
       "id": "madrid",
       "name": "Madrid",
+      "aliases": [],
       "country": "Spain",
       "countryCode": "ES",
       "center": [
@@ -32,6 +36,9 @@
     {
       "id": "milan",
       "name": "Milan",
+      "aliases": [
+        "Milano"
+      ],
       "country": "Italy",
       "countryCode": "IT",
       "center": [
@@ -46,6 +53,11 @@
     {
       "id": "new-delhi",
       "name": "New Delhi",
+      "aliases": [
+        "Delhi",
+        "Dilli",
+        "Old Delhi"
+      ],
       "country": "India",
       "countryCode": "IN",
       "center": [
@@ -60,6 +72,12 @@
     {
       "id": "new-york",
       "name": "New York",
+      "aliases": [
+        "NYC",
+        "New York City",
+        "Manhattan",
+        "Big Apple"
+      ],
       "country": "United States",
       "countryCode": "US",
       "center": [
@@ -74,6 +92,9 @@
     {
       "id": "paris",
       "name": "Paris",
+      "aliases": [
+        "Paname"
+      ],
       "country": "France",
       "countryCode": "FR",
       "center": [
@@ -88,6 +109,9 @@
     {
       "id": "rome",
       "name": "Rome",
+      "aliases": [
+        "Roma"
+      ],
       "country": "Italy",
       "countryCode": "IT",
       "center": [
@@ -102,6 +126,11 @@
     {
       "id": "tokyo",
       "name": "Tokyo",
+      "aliases": [
+        "Tōkyō",
+        "東京",
+        "Japan capital"
+      ],
       "country": "Japan",
       "countryCode": "JP",
       "center": [

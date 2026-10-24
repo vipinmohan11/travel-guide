@@ -2,6 +2,9 @@
   "schemaVersion": 1,
   "id": "barcelona",
   "name": "Barcelona",
+  "aliases": [
+    "Barna"
+  ],
   "country": "Spain",
   "countryCode": "ES",
   "center": [

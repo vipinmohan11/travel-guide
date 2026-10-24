@@ -14,6 +14,7 @@ const cities = fs
   .map((p) => ({
     id: p.id,
     name: p.name,
+    aliases: p.aliases || [],
     country: p.country,
     countryCode: p.countryCode,
     center: p.center,
