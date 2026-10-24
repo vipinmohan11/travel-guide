@@ -61,3 +61,6 @@ tools/verify-coords.mjs              compare a city's pins with OpenStreetMap (r
 - City packs and guide texts: all rights reserved until a content licence is chosen
 - Leaflet: BSD 2-Clause (`planner/vendor/leaflet/LICENSE`); Overpass font: SIL OFL 1.1 (`planner/fonts/OFL-overpass.txt`)
 - Map data © OpenStreetMap contributors (ODbL)
+
+## Stuttgart (25–26 Oct 2026)
+- `stuttgart-2026/index.html`: 2-day family guide with a rated map. Pages: https://vipinmohan11.github.io/travel-guide/stuttgart-2026/
