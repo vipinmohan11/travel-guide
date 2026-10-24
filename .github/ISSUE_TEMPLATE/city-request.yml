@@ -1,0 +1,27 @@
+name: Request a city
+description: Ask for a new city in the trip planner
+title: "City request: "
+labels: ["city request"]
+body:
+  - type: input
+    id: city
+    attributes:
+      label: City
+      description: Which city should the planner add?
+      placeholder: Lisbon, Portugal
+    validations:
+      required: true
+  - type: dropdown
+    id: when
+    attributes:
+      label: When are you going?
+      options:
+        - Within a month
+        - In 1–3 months
+        - Later this year
+        - Just curious
+  - type: textarea
+    id: notes
+    attributes:
+      label: Anything we should know?
+      description: Places you'd love to see, travelling with kids, step-free needs…

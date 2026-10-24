@@ -1,0 +1,117 @@
+{
+  "version": 1,
+  "cities": [
+    {
+      "id": "barcelona",
+      "name": "Barcelona",
+      "country": "Spain",
+      "countryCode": "ES",
+      "center": [
+        41.3888,
+        2.17
+      ],
+      "cityDays": 6,
+      "places": 78,
+      "dayTrips": 4,
+      "status": "reviewed"
+    },
+    {
+      "id": "madrid",
+      "name": "Madrid",
+      "country": "Spain",
+      "countryCode": "ES",
+      "center": [
+        40.4168,
+        -3.7038
+      ],
+      "cityDays": 4,
+      "places": 26,
+      "dayTrips": 4,
+      "status": "draft"
+    },
+    {
+      "id": "milan",
+      "name": "Milan",
+      "country": "Italy",
+      "countryCode": "IT",
+      "center": [
+        45.4642,
+        9.19
+      ],
+      "cityDays": 3,
+      "places": 29,
+      "dayTrips": 5,
+      "status": "draft"
+    },
+    {
+      "id": "new-delhi",
+      "name": "New Delhi",
+      "country": "India",
+      "countryCode": "IN",
+      "center": [
+        28.6139,
+        77.209
+      ],
+      "cityDays": 5,
+      "places": 35,
+      "dayTrips": 3,
+      "status": "draft"
+    },
+    {
+      "id": "new-york",
+      "name": "New York",
+      "country": "United States",
+      "countryCode": "US",
+      "center": [
+        40.758,
+        -73.9855
+      ],
+      "cityDays": 6,
+      "places": 36,
+      "dayTrips": 4,
+      "status": "draft"
+    },
+    {
+      "id": "paris",
+      "name": "Paris",
+      "country": "France",
+      "countryCode": "FR",
+      "center": [
+        48.8566,
+        2.3522
+      ],
+      "cityDays": 6,
+      "places": 38,
+      "dayTrips": 4,
+      "status": "draft"
+    },
+    {
+      "id": "rome",
+      "name": "Rome",
+      "country": "Italy",
+      "countryCode": "IT",
+      "center": [
+        41.9,
+        12.48
+      ],
+      "cityDays": 5,
+      "places": 34,
+      "dayTrips": 4,
+      "status": "draft"
+    },
+    {
+      "id": "tokyo",
+      "name": "Tokyo",
+      "country": "Japan",
+      "countryCode": "JP",
+      "center": [
+        35.6812,
+        139.7671
+      ],
+      "cityDays": 6,
+      "places": 36,
+      "dayTrips": 5,
+      "status": "draft"
+    }
+  ]
+}

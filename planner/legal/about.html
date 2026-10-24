@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>About &amp; credits · Trip Planner</title>
+  <link rel="icon" href="../icons/icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../styles.css">
+  <script>try{var s=JSON.parse(localStorage.getItem("tp-settings")||"{}");if(s.scale)document.documentElement.style.setProperty("--scale",s.scale);if(s.theme&&s.theme!=="auto")document.documentElement.setAttribute("data-theme",s.theme)}catch(e){}</script>
+</head>
+<body>
+  <header class="bar"><a class="brand" href="../">Trip Planner</a></header>
+  <main class="legal">
+    <h1>About Trip Planner</h1>
+    <p>A free planner for city trips on foot and by public transport. Choose a city, your days and who's coming, and get a day-by-day route with walking times, lunch stops, a rainy-day swap and day trips by train or bus.</p>
+
+    <h2>How plans are made</h2>
+    <p>Each city has a hand-written list of places, grouped into neighbourhoods, with typical visit times, closing days and how much children enjoy them. The planner puts the must-sees first, keeps each day to one or two neighbourhoods, fits the day to your pace and adds lunch near where you are. The same choices always give the same plan, so a plan link always opens the same plan.</p>
+    <p>Walking times assume about 4.5 km/h (3.5 km/h with young children) and street distances. Public transport times are rough; use the Directions links for live times.</p>
+
+    <h2>Cities and how up to date they are</h2>
+    <p>"Reviewed" means a person checked the places on site or against official sources. "Unreviewed" cities are early drafts: check opening hours and prices before you go.</p>
+    <table id="cities"><thead><tr><th>City</th><th>Places</th><th>Day trips</th><th>Status</th></tr></thead><tbody></tbody></table>
+
+    <h2>Missing a city, or found a mistake?</h2>
+    <p><a href="https://github.com/vipinmohan11/travel-guide/issues/new?template=city-request.yml" rel="noopener">Request a city</a> or <a href="https://github.com/vipinmohan11/travel-guide/issues/new?template=report-mistake.yml" rel="noopener">report a mistake</a> on GitHub (a free account is needed).</p>
+
+    <h2>Credits</h2>
+    <ul>
+      <li>Map data © <a href="https://www.openstreetmap.org/copyright" rel="noopener">OpenStreetMap contributors</a>, available under the Open Database Licence. Map tiles by the OpenStreetMap Foundation.</li>
+      <li>Maps drawn with <a href="https://leafletjs.com" rel="noopener">Leaflet</a> (BSD 2-Clause licence).</li>
+      <li>Typeface: <a href="https://github.com/RedHatOfficial/Overpass" rel="noopener">Overpass</a> by Delve Fonts for Red Hat (SIL Open Font License 1.1).</li>
+      <li>City information written for this project. Barcelona is based on an earlier trip guide by the author (October 2026).</li>
+    </ul>
+
+    <h2>Source code</h2>
+    <p>The planner is open source: <a href="https://github.com/vipinmohan11/travel-guide" rel="noopener">github.com/vipinmohan11/travel-guide</a>.</p>
+
+    <p><a href="impressum.html">Impressum</a> · <a href="datenschutz.html">Privacy (Datenschutz)</a> · <a href="../">Back to the planner</a></p>
+  </main>
+  <script>
+    fetch("../cities/index.json").then(function (r) { return r.json(); }).then(function (d) {
+      document.querySelector("#cities tbody").innerHTML = d.cities.map(function (c) {
+        return "<tr><td>" + c.name + ", " + c.country + "</td><td>" + c.places + "</td><td>" + c.dayTrips + "</td><td>" + (c.status === "reviewed" ? "Reviewed" : "Unreviewed") + "</td></tr>";
+      }).join("");
+    }).catch(function () {});
+  </script>
+</body>
+</html>

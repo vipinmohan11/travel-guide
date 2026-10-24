@@ -1,0 +1,670 @@
+{
+  "schemaVersion": 1,
+  "id": "milan",
+  "name": "Milan",
+  "country": "Italy",
+  "countryCode": "IT",
+  "center": [
+    45.4642,
+    9.19
+  ],
+  "bbox": [
+    45.4,
+    9.08,
+    45.53,
+    9.28
+  ],
+  "timezone": "Europe/Rome",
+  "currency": "EUR",
+  "currencySymbol": "€",
+  "languages": "Italian",
+  "cityDays": 3,
+  "intro": "Italy's design and fashion capital: a marble cathedral you can walk on, Leonardo's Last Supper, a castle park and canal-side evenings. A compact centre with a fast metro, and lakes an hour away.",
+  "transit": {
+    "card": "Contactless bank card or 90-minute urban ticket",
+    "mode": "metro, tram and bus",
+    "note": "Tap the same card in and out on the metro; trams are a nice way to see the city."
+  },
+  "status": "draft",
+  "sources": [
+    "Written from general knowledge for the MVP; needs a human review before launch"
+  ],
+  "areas": [
+    {
+      "id": "duomo",
+      "name": "Duomo & Galleria",
+      "lat": 45.4645,
+      "lng": 9.191,
+      "blurb": "The cathedral, the glass-roofed arcade and La Scala."
+    },
+    {
+      "id": "brera",
+      "name": "Brera",
+      "lat": 45.472,
+      "lng": 9.188,
+      "blurb": "Art gallery, botanical garden and cobbled lanes."
+    },
+    {
+      "id": "sforza",
+      "name": "Castello Sforzesco & Sempione",
+      "lat": 45.4715,
+      "lng": 9.1785,
+      "blurb": "The castle and the city's big park."
+    },
+    {
+      "id": "grazie",
+      "name": "Last Supper & Sant'Ambrogio",
+      "lat": 45.464,
+      "lng": 9.1735,
+      "blurb": "Leonardo's mural and the science museum."
+    },
+    {
+      "id": "navigli",
+      "name": "Navigli canals",
+      "lat": 45.453,
+      "lng": 9.176,
+      "blurb": "Canal-side cafés and the evening aperitivo."
+    },
+    {
+      "id": "portanuova",
+      "name": "Porta Nuova",
+      "lat": 45.4845,
+      "lng": 9.1905,
+      "blurb": "Skyscrapers, the Vertical Forest and a new park."
+    },
+    {
+      "id": "venezia",
+      "name": "Porta Venezia gardens",
+      "lat": 45.4735,
+      "lng": 9.2015,
+      "blurb": "Natural history museum and public gardens."
+    },
+    {
+      "id": "sansiro",
+      "name": "San Siro",
+      "lat": 45.4781,
+      "lng": 9.124,
+      "blurb": "The football stadium in the west."
+    }
+  ],
+  "pois": [
+    {
+      "id": "duomo",
+      "name": "Milan Cathedral (Duomo)",
+      "area": "duomo",
+      "lat": 45.4642,
+      "lng": 9.1916,
+      "type": "sight",
+      "priority": 1,
+      "rank": 1,
+      "durationMin": 60,
+      "kidScore": 2,
+      "indoor": true,
+      "bestTime": "morning",
+      "cost": 2,
+      "bookAhead": true,
+      "site": "duomomilano.it",
+      "why": "A Gothic marble cathedral with 3,400 statues, built over six centuries.",
+      "kid": "Find the statue of St Bartholomew wearing his own skin like a cape.",
+      "tip": "Shoulders and knees covered; a combined ticket includes the terraces."
+    },
+    {
+      "id": "duomo-roof",
+      "name": "Duomo rooftop terraces",
+      "area": "duomo",
+      "lat": 45.4641,
+      "lng": 9.1919,
+      "type": "view",
+      "priority": 1,
+      "rank": 2,
+      "durationMin": 60,
+      "kidScore": 3,
+      "indoor": false,
+      "cost": 2,
+      "costNote": "Lift or stairs tickets",
+      "bookAhead": true,
+      "site": "duomomilano.it",
+      "why": "Walk among the spires on the cathedral roof, with Alps views on clear days.",
+      "kid": "Look for the golden Madonnina statue on the tallest spire.",
+      "tip": "The lift ticket costs more; the stairs are 250 steps."
+    },
+    {
+      "id": "galleria",
+      "name": "Galleria Vittorio Emanuele II",
+      "area": "duomo",
+      "lat": 45.4659,
+      "lng": 9.19,
+      "type": "sight",
+      "priority": 1,
+      "rank": 3,
+      "durationMin": 30,
+      "kidScore": 1,
+      "indoor": true,
+      "cost": 0,
+      "why": "A glass-domed 19th-century shopping arcade, Milan's 'living room'.",
+      "kid": "Spin on your heel on the bull mosaic in the floor for good luck."
+    },
+    {
+      "id": "scala",
+      "name": "La Scala Theatre Museum",
+      "area": "duomo",
+      "lat": 45.4674,
+      "lng": 9.1895,
+      "type": "museum",
+      "priority": 2,
+      "durationMin": 45,
+      "kidScore": 1,
+      "indoor": true,
+      "cost": 2,
+      "site": "teatroallascala.org",
+      "why": "The opera house museum, with a peek into the auditorium when there's no rehearsal."
+    },
+    {
+      "id": "san-bernardino",
+      "name": "San Bernardino alle Ossa",
+      "area": "duomo",
+      "lat": 45.4628,
+      "lng": 9.1945,
+      "type": "sight",
+      "priority": 3,
+      "durationMin": 15,
+      "kidScore": 1,
+      "indoor": true,
+      "cost": 0,
+      "why": "A small church whose chapel walls are decorated with human bones.",
+      "kid": "Spooky but fascinating for older kids."
+    },
+    {
+      "id": "palazzo-reale",
+      "name": "Palazzo Reale",
+      "area": "duomo",
+      "lat": 45.4632,
+      "lng": 9.1925,
+      "type": "museum",
+      "priority": 3,
+      "durationMin": 90,
+      "kidScore": 1,
+      "indoor": true,
+      "cost": 2,
+      "why": "The royal palace next to the Duomo, used for big temporary exhibitions.",
+      "tip": "Check what's on; tickets vary by exhibition."
+    },
+    {
+      "id": "last-supper",
+      "name": "The Last Supper (Santa Maria delle Grazie)",
+      "area": "grazie",
+      "lat": 45.4659,
+      "lng": 9.1709,
+      "type": "museum",
+      "priority": 1,
+      "rank": 4,
+      "durationMin": 30,
+      "kidScore": 1,
+      "indoor": true,
+      "closedDays": [
+        "Mon"
+      ],
+      "cost": 2,
+      "bookAhead": true,
+      "site": "cenacolovinciano.org",
+      "why": "Leonardo da Vinci's mural, seen in a 15-minute timed visit.",
+      "kid": "Find the knocked-over salt cellar near Judas's elbow.",
+      "tip": "Tickets go on sale in batches and sell out fast; book as early as you can."
+    },
+    {
+      "id": "sant-ambrogio",
+      "name": "Basilica of Sant'Ambrogio",
+      "area": "grazie",
+      "lat": 45.4624,
+      "lng": 9.1758,
+      "type": "sight",
+      "priority": 2,
+      "durationMin": 30,
+      "kidScore": 1,
+      "indoor": true,
+      "cost": 0,
+      "why": "A 4th-century church with a calm brick courtyard and golden mosaics."
+    },
+    {
+      "id": "science-museum",
+      "name": "Leonardo da Vinci Science Museum",
+      "area": "grazie",
+      "lat": 45.4628,
+      "lng": 9.1704,
+      "type": "museum",
+      "priority": 2,
+      "durationMin": 150,
+      "kidScore": 3,
+      "indoor": true,
+      "closedDays": [
+        "Mon"
+      ],
+      "cost": 2,
+      "site": "museoscienza.org",
+      "why": "Italy's biggest science museum: Leonardo's machines, trains, a ship and a real submarine.",
+      "kid": "Visit the Enrico Toti submarine (separate timed tour).",
+      "tip": "Book the submarine tour when you arrive."
+    },
+    {
+      "id": "castello",
+      "name": "Castello Sforzesco",
+      "area": "sforza",
+      "lat": 45.4705,
+      "lng": 9.1795,
+      "type": "sight",
+      "priority": 1,
+      "rank": 5,
+      "durationMin": 60,
+      "kidScore": 3,
+      "indoor": true,
+      "cost": 0,
+      "costNote": "Courtyards free; museums paid",
+      "why": "The Sforza family's brick castle, with free courtyards and museums inside.",
+      "kid": "Walk around the old moat and find the drawbridge.",
+      "tip": "The museums are closed on Mondays."
+    },
+    {
+      "id": "sempione",
+      "name": "Parco Sempione",
+      "area": "sforza",
+      "lat": 45.4728,
+      "lng": 9.177,
+      "type": "park",
+      "priority": 2,
+      "durationMin": 45,
+      "kidScore": 3,
+      "indoor": false,
+      "cost": 0,
+      "why": "The city's central park behind the castle, with a pond and playgrounds."
+    },
+    {
+      "id": "arco-pace",
+      "name": "Arco della Pace",
+      "area": "sforza",
+      "lat": 45.4757,
+      "lng": 9.1724,
+      "type": "sight",
+      "priority": 3,
+      "durationMin": 15,
+      "kidScore": 1,
+      "indoor": false,
+      "cost": 0,
+      "why": "Napoleon-era triumphal arch at the end of the park."
+    },
+    {
+      "id": "torre-branca",
+      "name": "Torre Branca",
+      "area": "sforza",
+      "lat": 45.4728,
+      "lng": 9.1745,
+      "type": "view",
+      "priority": 3,
+      "durationMin": 30,
+      "kidScore": 2,
+      "indoor": false,
+      "cost": 1,
+      "why": "A 108 m steel tower in the park with a lift to the top.",
+      "tip": "Opening hours are limited and weather-dependent."
+    },
+    {
+      "id": "brera-gallery",
+      "name": "Pinacoteca di Brera",
+      "area": "brera",
+      "lat": 45.4719,
+      "lng": 9.1879,
+      "type": "museum",
+      "priority": 2,
+      "durationMin": 120,
+      "kidScore": 1,
+      "indoor": true,
+      "closedDays": [
+        "Mon"
+      ],
+      "cost": 2,
+      "site": "pinacotecabrera.org",
+      "why": "Italy's great paintings from Mantegna to Caravaggio, in a historic palace.",
+      "kid": "Find the 'Dead Christ' painted from his feet up."
+    },
+    {
+      "id": "brera-lanes",
+      "name": "Brera lanes",
+      "area": "brera",
+      "lat": 45.4716,
+      "lng": 9.1867,
+      "type": "sight",
+      "priority": 3,
+      "durationMin": 30,
+      "kidScore": 1,
+      "indoor": false,
+      "cost": 0,
+      "why": "Cobbled streets of galleries, cafés and fortune tellers."
+    },
+    {
+      "id": "orto-botanico",
+      "name": "Brera Botanical Garden",
+      "area": "brera",
+      "lat": 45.4723,
+      "lng": 9.1897,
+      "type": "park",
+      "priority": 3,
+      "durationMin": 30,
+      "kidScore": 2,
+      "indoor": false,
+      "cost": 0,
+      "why": "A small, free walled garden hidden behind the Brera gallery."
+    },
+    {
+      "id": "darsena",
+      "name": "Darsena",
+      "area": "navigli",
+      "lat": 45.4545,
+      "lng": 9.1785,
+      "type": "sight",
+      "priority": 2,
+      "durationMin": 30,
+      "kidScore": 2,
+      "indoor": false,
+      "cost": 0,
+      "why": "The old harbour basin where the canals meet, now a waterside promenade."
+    },
+    {
+      "id": "naviglio-grande",
+      "name": "Naviglio Grande",
+      "area": "navigli",
+      "lat": 45.451,
+      "lng": 9.172,
+      "type": "sight",
+      "priority": 1,
+      "rank": 6,
+      "durationMin": 60,
+      "kidScore": 1,
+      "indoor": false,
+      "bestTime": "afternoon",
+      "cost": 0,
+      "why": "The canal lined with cafés, small shops and the famous evening aperitivo.",
+      "kid": "Look for the narrow 'Vicolo dei Lavandai', where people once washed clothes in the canal.",
+      "tip": "Best from late afternoon; a big antiques market runs on the last Sunday of the month."
+    },
+    {
+      "id": "bosco-verticale",
+      "name": "Bosco Verticale",
+      "area": "portanuova",
+      "lat": 45.4855,
+      "lng": 9.1903,
+      "type": "sight",
+      "priority": 2,
+      "durationMin": 20,
+      "kidScore": 1,
+      "indoor": false,
+      "cost": 0,
+      "why": "Two apartment towers covered in about 900 trees.",
+      "kid": "Count the floors with trees."
+    },
+    {
+      "id": "gae-aulenti",
+      "name": "Piazza Gae Aulenti",
+      "area": "portanuova",
+      "lat": 45.4836,
+      "lng": 9.1897,
+      "type": "sight",
+      "priority": 3,
+      "durationMin": 20,
+      "kidScore": 2,
+      "indoor": false,
+      "cost": 0,
+      "why": "A raised modern square with fountains kids run through in summer."
+    },
+    {
+      "id": "bam",
+      "name": "Biblioteca degli Alberi park",
+      "area": "portanuova",
+      "lat": 45.4845,
+      "lng": 9.1925,
+      "type": "park",
+      "priority": 3,
+      "durationMin": 30,
+      "kidScore": 3,
+      "indoor": false,
+      "cost": 0,
+      "why": "A new park of tree circles and meadows beside the skyscrapers."
+    },
+    {
+      "id": "natural-history",
+      "name": "Natural History Museum",
+      "area": "venezia",
+      "lat": 45.4729,
+      "lng": 9.2025,
+      "type": "museum",
+      "priority": 2,
+      "durationMin": 90,
+      "kidScore": 3,
+      "indoor": true,
+      "closedDays": [
+        "Mon"
+      ],
+      "cost": 1,
+      "site": "museodistorianaturalemilano.it",
+      "why": "Dinosaur skeletons, minerals and animal dioramas in a neo-Gothic building.",
+      "kid": "Count the dinosaur skeletons in the dinosaur hall."
+    },
+    {
+      "id": "montanelli",
+      "name": "Giardini Indro Montanelli",
+      "area": "venezia",
+      "lat": 45.474,
+      "lng": 9.2,
+      "type": "park",
+      "priority": 3,
+      "durationMin": 40,
+      "kidScore": 3,
+      "indoor": false,
+      "cost": 0,
+      "why": "Old public gardens with ponds and playgrounds, next to the natural history museum."
+    },
+    {
+      "id": "san-siro",
+      "name": "San Siro stadium tour",
+      "area": "sansiro",
+      "lat": 45.4781,
+      "lng": 9.124,
+      "type": "kids",
+      "priority": 3,
+      "durationMin": 90,
+      "kidScore": 3,
+      "indoor": true,
+      "cost": 3,
+      "bookAhead": true,
+      "site": "sansirostadium.com",
+      "why": "Tour of the stadium shared by AC Milan and Inter, with a museum.",
+      "tip": "Tours change on match days."
+    },
+    {
+      "id": "luini",
+      "name": "Luini panzerotti",
+      "area": "duomo",
+      "lat": 45.4652,
+      "lng": 9.1912,
+      "type": "food",
+      "priority": 3,
+      "durationMin": 20,
+      "kidScore": 3,
+      "indoor": false,
+      "closedDays": [
+        "Sun"
+      ],
+      "cost": 1,
+      "why": "A tiny bakery by the Duomo famous for fried dough pockets filled with tomato and mozzarella.",
+      "tip": "The queue moves fast; eat standing outside."
+    },
+    {
+      "id": "eataly",
+      "name": "Eataly Milano Smeraldo",
+      "area": "brera",
+      "lat": 45.48,
+      "lng": 9.1874,
+      "type": "food",
+      "priority": 3,
+      "durationMin": 60,
+      "kidScore": 2,
+      "indoor": true,
+      "cost": 2,
+      "why": "A big Italian food hall in an old theatre, with counters for pizza and pasta."
+    },
+    {
+      "id": "navigli-trattorias",
+      "name": "Navigli trattorias",
+      "area": "navigli",
+      "lat": 45.452,
+      "lng": 9.176,
+      "type": "food",
+      "priority": 3,
+      "durationMin": 75,
+      "kidScore": 2,
+      "indoor": true,
+      "cost": 2,
+      "why": "Canal-side trattorias; try risotto alla milanese or cotoletta."
+    },
+    {
+      "id": "brera-cafes",
+      "name": "Brera cafés",
+      "area": "brera",
+      "lat": 45.4716,
+      "lng": 9.187,
+      "type": "food",
+      "priority": 3,
+      "durationMin": 60,
+      "kidScore": 2,
+      "indoor": true,
+      "cost": 2,
+      "why": "Small cafés and trattorias in the lanes of Brera."
+    },
+    {
+      "id": "corso-magenta",
+      "name": "Corso Magenta cafés",
+      "area": "grazie",
+      "lat": 45.4652,
+      "lng": 9.176,
+      "type": "food",
+      "priority": 3,
+      "durationMin": 60,
+      "kidScore": 2,
+      "indoor": true,
+      "cost": 2,
+      "why": "Old pastry shops and cafés near the Last Supper."
+    }
+  ],
+  "dayTrips": [
+    {
+      "id": "como",
+      "name": "Lake Como (Como town)",
+      "lat": 45.8081,
+      "lng": 9.0852,
+      "by": "train",
+      "travelMin": 50,
+      "from": "Trenord train from Milano Cadorna or Milano Centrale",
+      "why": "Lake Como's main town: lakefront, ferries and a funicular up to Brunate.",
+      "kidScore": 3,
+      "priority": 1,
+      "highlights": [
+        "Lakefront promenade",
+        "Funicular to Brunate",
+        "Como Cathedral",
+        "Ferry along the lake"
+      ],
+      "tip": "Ferries to Bellagio take longer than you think; check the return times."
+    },
+    {
+      "id": "bergamo",
+      "name": "Bergamo Città Alta",
+      "lat": 45.7037,
+      "lng": 9.6625,
+      "by": "train",
+      "travelMin": 60,
+      "from": "Train from Milano Centrale or Porta Garibaldi, then the funicular",
+      "why": "A walled upper town of piazzas and churches above the modern city.",
+      "kidScore": 2,
+      "priority": 1,
+      "highlights": [
+        "Funicular to the upper town",
+        "Piazza Vecchia",
+        "Cappella Colleoni",
+        "Venetian walls"
+      ]
+    },
+    {
+      "id": "varenna",
+      "name": "Varenna & Bellagio",
+      "lat": 46.0105,
+      "lng": 9.2836,
+      "by": "train",
+      "travelMin": 70,
+      "from": "Train from Milano Centrale to Varenna-Esino, then ferries",
+      "why": "Pastel villages on Lake Como linked by short ferry hops.",
+      "kidScore": 2,
+      "priority": 2,
+      "highlights": [
+        "Varenna lakeside walk",
+        "Villa Monastero gardens",
+        "Ferry to Bellagio"
+      ]
+    },
+    {
+      "id": "stresa",
+      "name": "Stresa & Borromean Islands",
+      "lat": 45.8827,
+      "lng": 8.5394,
+      "by": "train",
+      "travelMin": 60,
+      "from": "Train from Milano Centrale to Stresa, then boats",
+      "why": "Lake Maggiore palaces and gardens with white peacocks.",
+      "kidScore": 3,
+      "priority": 2,
+      "highlights": [
+        "Isola Bella palace",
+        "Isola Madre gardens and peacocks",
+        "Lakeside promenade"
+      ],
+      "tip": "The island palaces open from spring to autumn."
+    },
+    {
+      "id": "verona",
+      "name": "Verona",
+      "lat": 45.4384,
+      "lng": 10.9916,
+      "by": "train",
+      "travelMin": 75,
+      "from": "High-speed train from Milano Centrale",
+      "why": "Roman arena, Juliet's balcony and riverside streets.",
+      "kidScore": 2,
+      "priority": 3,
+      "highlights": [
+        "Arena di Verona",
+        "Juliet's House",
+        "Piazza delle Erbe",
+        "Castel San Pietro view"
+      ]
+    }
+  ],
+  "tips": [
+    {
+      "title": "Getting around",
+      "text": "Tap a contactless bank card at the metro gates (in and out); fares are capped for the day. Trams and buses also accept contactless."
+    },
+    {
+      "title": "Book ahead",
+      "text": "The Last Supper sells out weeks ahead: book on the official site as soon as tickets for your dates are released. The Duomo terraces also sell timed tickets."
+    },
+    {
+      "title": "Dress code",
+      "text": "Cover shoulders and knees in the Duomo and churches."
+    },
+    {
+      "title": "Aperitivo",
+      "text": "From about 18:00, bars along the Navigli serve a drink with a plate of snacks: an easy early dinner for families."
+    },
+    {
+      "title": "Safety",
+      "text": "Watch for bracelet sellers and pickpockets around the Duomo and the Galleria. Emergency number: 112."
+    }
+  ]
+}

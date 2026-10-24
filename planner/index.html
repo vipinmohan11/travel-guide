@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <!-- Pre-launch: keep search engines out until the legal pages are filled in and the launch gate is passed. -->
+  <meta name="robots" content="noindex, nofollow">
+  <title>Trip Planner</title>
+  <meta name="description" content="Day-by-day city plans for walkers and public-transport travellers. Pick a city, your days and who's coming.">
+  <meta name="theme-color" content="#f2f5f4" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#141c1f" media="(prefers-color-scheme: dark)">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <link rel="preload" href="fonts/overpass-latin-800-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/overpass-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="vendor/leaflet/leaflet.css">
+  <link rel="stylesheet" href="styles.css">
+  <script>
+    // Apply saved text size and theme before first paint (no flash).
+    try {
+      var s = JSON.parse(localStorage.getItem("tp-settings") || "{}");
+      if (s.scale) document.documentElement.style.setProperty("--scale", s.scale);
+      if (s.theme && s.theme !== "auto") document.documentElement.setAttribute("data-theme", s.theme);
+    } catch (e) {}
+  </script>
+  <script src="vendor/leaflet/leaflet.js" defer></script>
+  <script type="module" src="app.js"></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="bar">
+    <a class="brand" href="#" aria-label="Trip Planner home">
+      <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true"><path d="M5 24 C 11 24, 11 8, 17 8 S 23 24, 27 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><circle cx="5" cy="24" r="3.5" fill="var(--bg)" stroke="currentColor" stroke-width="2.5"/><circle cx="17" cy="8" r="3.5" fill="var(--bg)" stroke="currentColor" stroke-width="2.5"/><circle cx="27" cy="24" r="3.5" fill="currentColor"/></svg>
+      <span>Trip Planner</span>
+    </a>
+    <div class="bar-tools">
+      <button class="icon-btn" id="settingsBtn" aria-haspopup="dialog" aria-controls="settings" aria-label="Text size and appearance">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 18 9 6l5 12M5.8 14h6.4M15 18l3-7.5 3 7.5M16 15.8h4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <div class="popover" id="settings" role="dialog" aria-label="Text size and appearance" hidden>
+    <p class="pop-label">Text size</p>
+    <div class="stepper" role="group" aria-label="Text size">
+      <button type="button" data-scale="-1" aria-label="Smaller text">A−</button>
+      <output id="scaleOut">100%</output>
+      <button type="button" data-scale="1" aria-label="Larger text">A+</button>
+    </div>
+    <p class="pop-label">Appearance</p>
+    <div class="seg" role="radiogroup" aria-label="Appearance">
+      <button type="button" role="radio" data-theme="auto">Auto</button>
+      <button type="button" role="radio" data-theme="light">Light</button>
+      <button type="button" role="radio" data-theme="dark">Dark</button>
+    </div>
+  </div>
+
+  <main id="main" tabindex="-1">
+    <!-- Wizard -->
+    <section id="wizard" class="screen" aria-labelledby="wizTitle">
+      <ol class="steps" aria-label="Steps">
+        <li data-step="1"><span class="dot"></span><span class="lbl">Where</span></li>
+        <li data-step="2"><span class="dot"></span><span class="lbl">When</span></li>
+        <li data-step="3"><span class="dot"></span><span class="lbl">Who &amp; how</span></li>
+      </ol>
+
+      <div class="step" data-step="1">
+        <h1 id="wizTitle" class="display">Where are you going?</h1>
+        <p class="lede">Walking routes and public transport, planned day by day. No account, nothing to install.</p>
+        <label class="field-label" for="cityInput">City</label>
+        <div class="search">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="m16 16 4.5 4.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          <input id="cityInput" type="search" autocomplete="off" spellcheck="false" placeholder="Rome, Tokyo, New York…" aria-controls="cityList" aria-describedby="cityHint">
+        </div>
+        <p id="cityHint" class="hint">Pick one of the cities below.</p>
+        <ul id="cityList" class="city-list" role="listbox" aria-label="Cities"></ul>
+        <div id="cityMissing" class="missing" hidden></div>
+      </div>
+
+      <div class="step" data-step="2" hidden>
+        <h1 class="display" id="whenTitle">How long?</h1>
+        <div class="row-field">
+          <span class="field-label" id="daysLabel">Days</span>
+          <div class="stepper big" role="group" aria-labelledby="daysLabel">
+            <button type="button" data-days="-1" aria-label="One day fewer">−</button>
+            <output id="daysOut" aria-live="polite">3</output>
+            <button type="button" data-days="1" aria-label="One day more">+</button>
+          </div>
+        </div>
+        <p class="hint" id="daysHint"></p>
+        <label class="field-label" for="startInput">First day <span class="opt">(optional)</span></label>
+        <input id="startInput" class="text-input" type="date">
+        <p class="hint">With dates, the plan skips places on their closing days.</p>
+        <div class="nav-row">
+          <button type="button" class="btn ghost" data-go="1">Back</button>
+          <button type="button" class="btn primary" data-go="3">Next</button>
+        </div>
+      </div>
+
+      <div class="step" data-step="3" hidden>
+        <h1 class="display">Who's coming?</h1>
+        <div class="row-field">
+          <span class="field-label" id="adultsLabel">Adults</span>
+          <div class="stepper" role="group" aria-labelledby="adultsLabel">
+            <button type="button" data-adults="-1" aria-label="One adult fewer">−</button>
+            <output id="adultsOut">2</output>
+            <button type="button" data-adults="1" aria-label="One adult more">+</button>
+          </div>
+        </div>
+        <div class="kids-field">
+          <span class="field-label">Children</span>
+          <ul id="kidsList" class="kids" aria-label="Children's ages"></ul>
+          <div class="add-kid">
+            <label for="kidAge" class="visually-hidden">Age of child to add</label>
+            <select id="kidAge"></select>
+            <button type="button" class="btn small" id="addKid">Add child</button>
+          </div>
+        </div>
+
+        <fieldset class="group">
+          <legend class="field-label">Pace</legend>
+          <div class="pace" id="paceGroup"></div>
+        </fieldset>
+
+        <fieldset class="group">
+          <legend class="field-label">What do you like? <span class="opt">(pick any)</span></legend>
+          <div class="chips" id="interestGroup"></div>
+        </fieldset>
+
+        <label class="switch">
+          <input type="checkbox" id="stepFree">
+          <span class="track" aria-hidden="true"></span>
+          <span>Step-free routes only <span class="opt">(buggy or wheelchair)</span></span>
+        </label>
+
+        <div class="nav-row">
+          <button type="button" class="btn ghost" data-go="2">Back</button>
+          <button type="button" class="btn primary" id="makePlan">Make my plan</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Plan -->
+    <section id="plan" class="screen" hidden aria-live="polite"></section>
+  </main>
+
+  <footer class="foot">
+    <p>Plans are suggestions. Opening hours, prices and closures change: check official sites before you go.</p>
+    <nav aria-label="Legal and about">
+      <a href="legal/about.html">About &amp; credits</a>
+      <a href="legal/impressum.html">Impressum</a>
+      <a href="legal/datenschutz.html">Privacy (Datenschutz)</a>
+    </nav>
+  </footer>
+
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+  <div id="printArea" class="print-area" aria-hidden="true"></div>
+</body>
+</html>

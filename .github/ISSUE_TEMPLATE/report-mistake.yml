@@ -1,0 +1,25 @@
+name: Report a mistake
+description: A place is closed, a pin is in the wrong spot, or a tip is out of date
+title: "Mistake: "
+labels: ["content fix"]
+body:
+  - type: input
+    id: city
+    attributes:
+      label: City
+    validations:
+      required: true
+  - type: input
+    id: place
+    attributes:
+      label: Place
+      description: The name as shown in the plan
+    validations:
+      required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: What's wrong?
+      description: For example "closed on Mondays since 2026" or "pin is on the wrong side of the river". A link to an official source helps.
+    validations:
+      required: true

@@ -1,0 +1,750 @@
+{
+  "schemaVersion": 1,
+  "id": "new-delhi",
+  "name": "New Delhi",
+  "country": "India",
+  "countryCode": "IN",
+  "center": [
+    28.6139,
+    77.209
+  ],
+  "bbox": [
+    28.45,
+    77.05,
+    28.75,
+    77.35
+  ],
+  "timezone": "Asia/Kolkata",
+  "currency": "INR",
+  "currencySymbol": "₹",
+  "languages": "Hindi, English",
+  "cityDays": 5,
+  "intro": "Mughal tombs and forts, the bustling lanes of Old Delhi, British-era boulevards and peaceful gardens. Distances are big: the metro is fast, cheap and air-conditioned, with app taxis for the gaps.",
+  "transit": {
+    "card": "Delhi Metro QR ticket (app or counter) or a travel card",
+    "mode": "metro, app taxis and auto-rickshaws",
+    "note": "Metro runs roughly 5:30–23:30; every station has a security check."
+  },
+  "status": "draft",
+  "sources": [
+    "Written from general knowledge for the MVP; needs a human review before launch"
+  ],
+  "areas": [
+    {
+      "id": "old",
+      "name": "Old Delhi",
+      "lat": 28.6535,
+      "lng": 77.234,
+      "blurb": "Red Fort, Jama Masjid and the lanes of Chandni Chowk."
+    },
+    {
+      "id": "cp",
+      "name": "Connaught Place",
+      "lat": 28.629,
+      "lng": 77.217,
+      "blurb": "Colonnaded circle of shops, a stepwell and a gurudwara."
+    },
+    {
+      "id": "central",
+      "name": "India Gate & Kartavya Path",
+      "lat": 28.613,
+      "lng": 77.229,
+      "blurb": "War memorials, museums and the Old Fort."
+    },
+    {
+      "id": "nizamuddin",
+      "name": "Humayun's Tomb & Nizamuddin",
+      "lat": 28.593,
+      "lng": 77.246,
+      "blurb": "The tomb that inspired the Taj, and a Sufi shrine."
+    },
+    {
+      "id": "lodhi",
+      "name": "Lodhi Garden & Khan Market",
+      "lat": 28.596,
+      "lng": 77.222,
+      "blurb": "Tomb-dotted garden and a smart market."
+    },
+    {
+      "id": "hauzkhas",
+      "name": "Hauz Khas",
+      "lat": 28.555,
+      "lng": 77.194,
+      "blurb": "Medieval ruins around a lake, with cafés."
+    },
+    {
+      "id": "mehrauli",
+      "name": "Qutub Minar & Mehrauli",
+      "lat": 28.5225,
+      "lng": 77.186,
+      "blurb": "The 73 m minaret and an archaeological park."
+    },
+    {
+      "id": "lotus",
+      "name": "Lotus Temple",
+      "lat": 28.5535,
+      "lng": 77.2588,
+      "blurb": "The flower-shaped house of worship in the south."
+    },
+    {
+      "id": "akshardham",
+      "name": "Akshardham",
+      "lat": 28.6127,
+      "lng": 77.2773,
+      "blurb": "The vast carved temple complex in the east."
+    },
+    {
+      "id": "chanakyapuri",
+      "name": "Chanakyapuri",
+      "lat": 28.588,
+      "lng": 77.185,
+      "blurb": "The embassy district with the Rail Museum."
+    }
+  ],
+  "pois": [
+    {
+      "id": "red-fort",
+      "name": "Red Fort",
+      "area": "old",
+      "lat": 28.6562,
+      "lng": 77.241,
+      "type": "sight",
+      "priority": 1,
+      "rank": 2,
+      "durationMin": 90,
+      "kidScore": 2,
+      "indoor": false,
+      "closedDays": [
+        "Mon"
+      ],
+      "cost": 1,
+      "costNote": "Cheaper tickets online",
+      "why": "The Mughal emperors' red sandstone fort, where the Prime Minister speaks on Independence Day.",
+      "kid": "Find the Hall of Public Audience where the emperor sat on a marble throne.",
+      "tip": "Buy tickets online for a lower price and a quicker entry."
+    },
+    {
+      "id": "jama-masjid",
+      "name": "Jama Masjid",
+      "area": "old",
+      "lat": 28.6507,
+      "lng": 77.2334,
+      "type": "sight",
+      "priority": 1,
+      "rank": 5,
+      "durationMin": 45,
+      "kidScore": 1,
+      "indoor": false,
+      "bestTime": "morning",
+      "cost": 0,
+      "costNote": "Free; camera and minaret fees",
+      "why": "India's largest mosque, built by Shah Jahan, with a courtyard for 25,000 people.",
+      "kid": "Climb the minaret (small fee) for a view over Old Delhi.",
+      "tip": "Closed to visitors at prayer times. Shoulders and legs covered; robes are lent at the gate."
+    },
+    {
+      "id": "chandni-chowk",
+      "name": "Chandni Chowk",
+      "area": "old",
+      "lat": 28.6506,
+      "lng": 77.2303,
+      "type": "market",
+      "priority": 2,
+      "durationMin": 60,
+      "kidScore": 2,
+      "indoor": false,
+      "closedDays": [
+        "Sun"
+      ],
+      "cost": 0,
+      "why": "Old Delhi's great market street; take a cycle rickshaw through the side lanes.",
+      "kid": "A cycle-rickshaw ride is the fun way to see it.",
+      "tip": "Many shops close on Sundays. Agree the rickshaw fare first."
+    },
+    {
+      "id": "sis-ganj",
+      "name": "Gurudwara Sis Ganj Sahib",
+      "area": "old",
+      "lat": 28.6563,
+      "lng": 77.2322,
+      "type": "sight",
+      "priority": 3,
+      "durationMin": 30,
+      "kidScore": 1,
+      "indoor": true,
+      "cost": 0,
+      "why": "A Sikh temple on Chandni Chowk marking the place where the ninth Guru was martyred.",
+      "tip": "Cover your head and remove shoes; scarves are provided."
+    },
+    {
+      "id": "paranthe-gali",
+      "name": "Paranthe Wali Gali",
+      "area": "old",
+      "lat": 28.656,
+      "lng": 77.2306,
+      "type": "food",
+      "priority": 3,
+      "durationMin": 45,
+      "kidScore": 3,
+      "indoor": false,
+      "cost": 1,
+      "why": "A narrow lane of family shops frying stuffed parathas since the 1870s.",
+      "tip": "Ask for less chilli for kids."
+    },
+    {
+      "id": "karims",
+      "name": "Karim's",
+      "area": "old",
+      "lat": 28.6496,
+      "lng": 77.2337,
+      "type": "food",
+      "priority": 3,
+      "durationMin": 60,
+      "kidScore": 2,
+      "indoor": true,
+      "cost": 1,
+      "why": "A legendary Mughlai restaurant by Jama Masjid, cooking kebabs and curries since 1913."
+    },
+    {
+      "id": "bangla-sahib",
+      "name": "Gurudwara Bangla Sahib",
+      "area": "cp",
+      "lat": 28.6264,
+      "lng": 77.2091,
+      "type": "sight",
+      "priority": 2,
+      "durationMin": 45,
+      "kidScore": 2,
+      "indoor": true,
+      "cost": 0,
+      "why": "A white-and-gold Sikh temple with a sacred pool and a free kitchen that feeds thousands every day.",
+      "kid": "Peek into the kitchen where volunteers make rotis by the thousand.",
+      "tip": "Cover your head, remove shoes and wash your feet at the entrance; scarves are provided."
+    },
+    {
+      "id": "agrasen",
+      "name": "Agrasen ki Baoli",
+      "area": "cp",
+      "lat": 28.6262,
+      "lng": 77.2251,
+      "type": "sight",
+      "priority": 2,
+      "durationMin": 20,
+      "kidScore": 2,
+      "indoor": false,
+      "stepFree": false,
+      "cost": 0,
+      "why": "A deep medieval stepwell with over 100 stone steps, hidden among office blocks.",
+      "kid": "Count the steps on the way down."
+    },
+    {
+      "id": "jantar-mantar",
+      "name": "Jantar Mantar",
+      "area": "cp",
+      "lat": 28.6271,
+      "lng": 77.2166,
+      "type": "sight",
+      "priority": 2,
+      "durationMin": 40,
+      "kidScore": 2,
+      "indoor": false,
+      "cost": 1,
+      "why": "An 18th-century observatory of giant stone instruments, including a huge sundial.",
+      "kid": "Tell the time by the shadow on the giant sundial."
+    },
+    {
+      "id": "janpath",
+      "name": "Janpath market",
+      "area": "cp",
+      "lat": 28.626,
+      "lng": 77.219,
+      "type": "market",
+      "priority": 3,
+      "durationMin": 45,
+      "kidScore": 1,
+      "indoor": false,
+      "cost": 1,
+      "why": "Street stalls of textiles, jewellery and souvenirs.",
+      "tip": "Bargain politely."
+    },
+    {
+      "id": "india-gate",
+      "name": "India Gate",
+      "area": "central",
+      "lat": 28.6129,
+      "lng": 77.2295,
+      "type": "sight",
+      "priority": 1,
+      "rank": 4,
+      "durationMin": 30,
+      "kidScore": 2,
+      "indoor": false,
+      "cost": 0,
+      "why": "The 42 m war memorial arch at the end of Kartavya Path, lit up in the evening.",
+      "kid": "Find names of soldiers carved into the arch.",
+      "tip": "Lively in the evening with families and ice-cream sellers."
+    },
+    {
+      "id": "war-memorial",
+      "name": "National War Memorial",
+      "area": "central",
+      "lat": 28.6127,
+      "lng": 77.233,
+      "type": "sight",
+      "priority": 2,
+      "durationMin": 40,
+      "kidScore": 2,
+      "indoor": false,
+      "cost": 0,
+      "why": "Circular memorial to soldiers who died for independent India."
+    },
+    {
+      "id": "national-museum",
+      "name": "National Museum",
+      "area": "central",
+      "lat": 28.6118,
+      "lng": 77.2194,
+      "type": "museum",
+      "priority": 2,
+      "durationMin": 120,
+      "kidScore": 1,
+      "indoor": true,
+      "closedDays": [
+        "Mon"
+      ],
+      "cost": 1,
+      "site": "nationalmuseumindia.gov.in",
+      "why": "India's big history museum: Harappan seals, sculptures and royal treasures.",
+      "kid": "Find the 4,500-year-old 'Dancing Girl' bronze from the Indus Valley."
+    },
+    {
+      "id": "kartavya-path",
+      "name": "Kartavya Path & Rashtrapati Bhavan view",
+      "area": "central",
+      "lat": 28.6152,
+      "lng": 77.2075,
+      "type": "sight",
+      "priority": 3,
+      "durationMin": 30,
+      "kidScore": 1,
+      "indoor": false,
+      "cost": 0,
+      "why": "The ceremonial avenue up Raisina Hill to the President's House."
+    },
+    {
+      "id": "purana-qila",
+      "name": "Purana Qila (Old Fort)",
+      "area": "central",
+      "lat": 28.6096,
+      "lng": 77.2437,
+      "type": "sight",
+      "priority": 2,
+      "durationMin": 60,
+      "kidScore": 2,
+      "indoor": false,
+      "cost": 1,
+      "why": "A 16th-century fort with huge gates and a boating lake below the walls.",
+      "kid": "Row a pedal boat around the fort moat."
+    },
+    {
+      "id": "crafts-museum",
+      "name": "National Crafts Museum",
+      "area": "central",
+      "lat": 28.613,
+      "lng": 77.2426,
+      "type": "museum",
+      "priority": 3,
+      "durationMin": 75,
+      "kidScore": 2,
+      "indoor": true,
+      "closedDays": [
+        "Mon"
+      ],
+      "cost": 1,
+      "why": "Village houses, textiles and craftspeople at work.",
+      "kid": "Watch an artisan at work in the courtyard."
+    },
+    {
+      "id": "humayun",
+      "name": "Humayun's Tomb",
+      "area": "nizamuddin",
+      "lat": 28.5933,
+      "lng": 77.2507,
+      "type": "sight",
+      "priority": 1,
+      "rank": 1,
+      "durationMin": 75,
+      "kidScore": 2,
+      "indoor": false,
+      "bestTime": "morning",
+      "cost": 1,
+      "why": "A 16th-century Mughal garden tomb, the model for the Taj Mahal.",
+      "kid": "Walk the four-part garden and find the water channels.",
+      "tip": "Early morning light is beautiful and it's cooler."
+    },
+    {
+      "id": "sunder-nursery",
+      "name": "Sunder Nursery",
+      "area": "nizamuddin",
+      "lat": 28.596,
+      "lng": 77.244,
+      "type": "park",
+      "priority": 2,
+      "durationMin": 60,
+      "kidScore": 3,
+      "indoor": false,
+      "cost": 1,
+      "why": "A restored Mughal garden park with lawns, ponds and tombs."
+    },
+    {
+      "id": "nizamuddin-dargah",
+      "name": "Nizamuddin Dargah",
+      "area": "nizamuddin",
+      "lat": 28.5913,
+      "lng": 77.2419,
+      "type": "sight",
+      "priority": 3,
+      "durationMin": 45,
+      "kidScore": 0,
+      "indoor": true,
+      "cost": 0,
+      "why": "A 14th-century Sufi shrine reached through busy lanes; qawwali music on Thursday evenings.",
+      "tip": "Cover your head; women cannot enter the inner tomb chamber."
+    },
+    {
+      "id": "lodhi-garden",
+      "name": "Lodhi Garden",
+      "area": "lodhi",
+      "lat": 28.5931,
+      "lng": 77.2197,
+      "type": "park",
+      "priority": 2,
+      "durationMin": 60,
+      "kidScore": 2,
+      "indoor": false,
+      "cost": 0,
+      "why": "A large garden with 15th-century tombs among the lawns.",
+      "kid": "Spot the parakeets in the trees."
+    },
+    {
+      "id": "dilli-haat",
+      "name": "Dilli Haat INA",
+      "area": "lodhi",
+      "lat": 28.5733,
+      "lng": 77.2079,
+      "type": "market",
+      "priority": 2,
+      "durationMin": 75,
+      "kidScore": 2,
+      "indoor": false,
+      "cost": 1,
+      "why": "An open-air craft bazaar with food stalls from every Indian state.",
+      "kid": "Try a dish from a state you've never heard of."
+    },
+    {
+      "id": "rail-museum",
+      "name": "National Rail Museum",
+      "area": "chanakyapuri",
+      "lat": 28.5853,
+      "lng": 77.1801,
+      "type": "kids",
+      "priority": 2,
+      "durationMin": 120,
+      "kidScore": 3,
+      "indoor": false,
+      "closedDays": [
+        "Mon"
+      ],
+      "cost": 1,
+      "why": "Steam engines, royal saloons and a toy train ride around the grounds.",
+      "kid": "Ride the little toy train around the museum."
+    },
+    {
+      "id": "nehru-park",
+      "name": "Nehru Park",
+      "area": "chanakyapuri",
+      "lat": 28.5972,
+      "lng": 77.1935,
+      "type": "park",
+      "priority": 3,
+      "durationMin": 40,
+      "kidScore": 2,
+      "indoor": false,
+      "cost": 0,
+      "why": "A big green park in the embassy district."
+    },
+    {
+      "id": "qutub",
+      "name": "Qutub Minar",
+      "area": "mehrauli",
+      "lat": 28.5245,
+      "lng": 77.1855,
+      "type": "sight",
+      "priority": 1,
+      "rank": 3,
+      "durationMin": 75,
+      "kidScore": 2,
+      "indoor": false,
+      "cost": 1,
+      "why": "A 73 m 12th-century minaret of red sandstone, plus an iron pillar that doesn't rust.",
+      "kid": "The iron pillar is over 1,600 years old and still hasn't rusted."
+    },
+    {
+      "id": "mehrauli-park",
+      "name": "Mehrauli Archaeological Park",
+      "area": "mehrauli",
+      "lat": 28.5196,
+      "lng": 77.1866,
+      "type": "park",
+      "priority": 3,
+      "durationMin": 60,
+      "kidScore": 1,
+      "indoor": false,
+      "cost": 0,
+      "why": "Woodland dotted with tombs, stepwells and mosques.",
+      "tip": "Go in daylight and in a group."
+    },
+    {
+      "id": "hauz-khas",
+      "name": "Hauz Khas fort & lake",
+      "area": "hauzkhas",
+      "lat": 28.5537,
+      "lng": 77.1922,
+      "type": "sight",
+      "priority": 2,
+      "durationMin": 60,
+      "kidScore": 2,
+      "indoor": false,
+      "bestTime": "afternoon",
+      "cost": 0,
+      "why": "Medieval college ruins overlooking a lake, popular at sunset."
+    },
+    {
+      "id": "deer-park",
+      "name": "Deer Park",
+      "area": "hauzkhas",
+      "lat": 28.56,
+      "lng": 77.196,
+      "type": "kids",
+      "priority": 3,
+      "durationMin": 45,
+      "kidScore": 3,
+      "indoor": false,
+      "cost": 0,
+      "why": "A park next to Hauz Khas with deer, rabbits and ducks."
+    },
+    {
+      "id": "lotus-temple",
+      "name": "Lotus Temple",
+      "area": "lotus",
+      "lat": 28.5535,
+      "lng": 77.2588,
+      "type": "sight",
+      "priority": 1,
+      "rank": 6,
+      "durationMin": 45,
+      "kidScore": 1,
+      "indoor": true,
+      "closedDays": [
+        "Mon"
+      ],
+      "cost": 0,
+      "why": "A Bahá'í house of worship shaped like a white lotus flower, open to all.",
+      "kid": "Count the 27 marble 'petals'.",
+      "tip": "Silence inside; shoes off at the entrance."
+    },
+    {
+      "id": "akshardham",
+      "name": "Akshardham",
+      "area": "akshardham",
+      "lat": 28.6127,
+      "lng": 77.2773,
+      "type": "sight",
+      "priority": 1,
+      "rank": 7,
+      "durationMin": 150,
+      "kidScore": 2,
+      "indoor": false,
+      "closedDays": [
+        "Mon"
+      ],
+      "cost": 0,
+      "costNote": "Temple free; exhibitions and water show paid",
+      "why": "A huge carved pink-and-white temple complex with exhibitions and an evening water show.",
+      "kid": "Count the stone elephants around the base of the temple.",
+      "tip": "No phones or bags allowed inside: leave them at the cloakroom."
+    },
+    {
+      "id": "cp-cafes",
+      "name": "Connaught Place cafés",
+      "area": "cp",
+      "lat": 28.6315,
+      "lng": 77.2167,
+      "type": "food",
+      "priority": 3,
+      "durationMin": 60,
+      "kidScore": 2,
+      "indoor": true,
+      "cost": 2,
+      "why": "Restaurants and cafés around the white colonnades of the inner circle."
+    },
+    {
+      "id": "pandara-road",
+      "name": "Pandara Road restaurants",
+      "area": "central",
+      "lat": 28.605,
+      "lng": 77.2265,
+      "type": "food",
+      "priority": 3,
+      "durationMin": 60,
+      "kidScore": 2,
+      "indoor": true,
+      "cost": 2,
+      "why": "A short row of classic North Indian restaurants near India Gate."
+    },
+    {
+      "id": "khan-market",
+      "name": "Khan Market",
+      "area": "lodhi",
+      "lat": 28.6003,
+      "lng": 77.227,
+      "type": "food",
+      "priority": 3,
+      "durationMin": 60,
+      "kidScore": 2,
+      "indoor": true,
+      "cost": 2,
+      "why": "A compact market of cafés, bakeries and bookshops near Lodhi Garden."
+    },
+    {
+      "id": "hkv-cafes",
+      "name": "Hauz Khas Village cafés",
+      "area": "hauzkhas",
+      "lat": 28.554,
+      "lng": 77.194,
+      "type": "food",
+      "priority": 3,
+      "durationMin": 60,
+      "kidScore": 1,
+      "indoor": true,
+      "cost": 2,
+      "why": "Cafés with views over the lake and ruins."
+    },
+    {
+      "id": "nizamuddin-kebabs",
+      "name": "Nizamuddin kebab stalls",
+      "area": "nizamuddin",
+      "lat": 28.5905,
+      "lng": 77.2425,
+      "type": "food",
+      "priority": 3,
+      "durationMin": 45,
+      "kidScore": 1,
+      "indoor": false,
+      "cost": 1,
+      "why": "Kebabs and breads from small shops in the lanes near the dargah."
+    },
+    {
+      "id": "akshardham-food",
+      "name": "Akshardham food court",
+      "area": "akshardham",
+      "lat": 28.612,
+      "lng": 77.278,
+      "type": "food",
+      "priority": 3,
+      "durationMin": 45,
+      "kidScore": 2,
+      "indoor": true,
+      "closedDays": [
+        "Mon"
+      ],
+      "cost": 1,
+      "why": "Vegetarian food court inside the complex."
+    }
+  ],
+  "dayTrips": [
+    {
+      "id": "agra",
+      "name": "Agra (Taj Mahal)",
+      "lat": 27.1751,
+      "lng": 78.0421,
+      "by": "train",
+      "travelMin": 110,
+      "from": "Gatimaan Express or Vande Bharat from Hazrat Nizamuddin or New Delhi to Agra Cantt",
+      "why": "The Taj Mahal at sunrise, plus Agra Fort, on a long day by fast train.",
+      "kidScore": 3,
+      "priority": 1,
+      "highlights": [
+        "Taj Mahal",
+        "Agra Fort",
+        "Mehtab Bagh sunset view across the river"
+      ],
+      "closedDays": [
+        "Fri"
+      ],
+      "tip": "The Taj is closed on Fridays. Book trains well ahead and buy Taj tickets online."
+    },
+    {
+      "id": "mathura",
+      "name": "Mathura & Vrindavan",
+      "lat": 27.4924,
+      "lng": 77.6737,
+      "by": "train",
+      "travelMin": 100,
+      "from": "Train from Hazrat Nizamuddin or New Delhi to Mathura Junction",
+      "why": "Krishna's birthplace and the temple town of Vrindavan nearby.",
+      "kidScore": 1,
+      "priority": 3,
+      "highlights": [
+        "Krishna Janmabhoomi temple",
+        "Vishram Ghat on the Yamuna",
+        "Vrindavan temples (by auto-rickshaw)"
+      ],
+      "tip": "Temples close in the early afternoon; go early."
+    },
+    {
+      "id": "chandigarh",
+      "name": "Chandigarh",
+      "lat": 30.7333,
+      "lng": 76.7794,
+      "by": "train",
+      "travelMin": 200,
+      "from": "Shatabdi Express from New Delhi",
+      "why": "Le Corbusier's planned city with the whimsical Rock Garden.",
+      "kidScore": 3,
+      "priority": 3,
+      "highlights": [
+        "Nek Chand Rock Garden",
+        "Sukhna Lake",
+        "Capitol Complex"
+      ],
+      "tip": "A very long day; only worth it with an early train."
+    }
+  ],
+  "tips": [
+    {
+      "title": "Getting around",
+      "text": "Use the metro for long hops: buy QR tickets in the DMRC app or at the counter. The first coach is for women only. App taxis (Uber, Ola) and auto-rickshaws fill the gaps; agree or check the fare first."
+    },
+    {
+      "title": "Season",
+      "text": "October to March is the best time. April to June is very hot (40 °C+), July to September is monsoon. In winter, check the air quality and fog before planning outdoor days."
+    },
+    {
+      "title": "Dress and manners",
+      "text": "Cover shoulders and legs at temples, mosques and gurudwaras. Remove shoes; cover your head at gurudwaras and mosques (scarves are usually provided)."
+    },
+    {
+      "title": "Food and water",
+      "text": "Drink only bottled or filtered water. Eat at busy places where food is cooked fresh. Many Indian dishes can be made 'less spicy' on request."
+    },
+    {
+      "title": "Monuments",
+      "text": "Many museums and Akshardham close on Mondays. Buy monument tickets online (ASI) for lower prices and shorter queues."
+    },
+    {
+      "title": "Safety",
+      "text": "Watch for touts at stations offering 'help' with tickets. Emergency number: 112."
+    }
+  ]
+}

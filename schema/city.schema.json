@@ -1,0 +1,125 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://vipinmohan11.github.io/travel-guide/schema/city.schema.json",
+  "title": "City pack",
+  "description": "One city for the trip planner. The engine turns it into a day-by-day plan.",
+  "type": "object",
+  "required": ["schemaVersion", "id", "name", "country", "center", "bbox", "timezone", "currency", "cityDays", "intro", "status", "areas", "pois", "dayTrips", "tips"],
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "id": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+    "name": { "type": "string" },
+    "country": { "type": "string" },
+    "countryCode": { "type": "string", "pattern": "^[A-Z]{2}$" },
+    "center": { "$ref": "#/$defs/latlng" },
+    "bbox": {
+      "description": "[south, west, north, east]; every POI must sit inside it",
+      "type": "array", "items": { "type": "number" }, "minItems": 4, "maxItems": 4
+    },
+    "timezone": { "type": "string" },
+    "currency": { "type": "string", "pattern": "^[A-Z]{3}$" },
+    "currencySymbol": { "type": "string" },
+    "languages": { "type": "string" },
+    "cityDays": { "description": "Most city days worth planning before day trips take over", "type": "integer", "minimum": 1, "maximum": 10 },
+    "intro": { "type": "string" },
+    "transit": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "card": { "type": "string" },
+        "note": { "type": "string" },
+        "mode": { "type": "string", "description": "What 'public transport' means here, e.g. metro, subway, metro + bus" }
+      }
+    },
+    "status": { "enum": ["draft", "reviewed"] },
+    "reviewed": { "type": "string", "description": "YYYY-MM of the last human review" },
+    "sources": { "type": "array", "items": { "type": "string" } },
+    "areas": {
+      "type": "array", "minItems": 2,
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "lat", "lng"],
+        "additionalProperties": false,
+        "properties": {
+          "id": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+          "name": { "type": "string" },
+          "lat": { "type": "number" },
+          "lng": { "type": "number" },
+          "blurb": { "type": "string" }
+        }
+      }
+    },
+    "pois": {
+      "type": "array", "minItems": 10,
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "area", "lat", "lng", "type", "priority", "durationMin", "kidScore", "indoor", "cost", "why"],
+        "additionalProperties": false,
+        "properties": {
+          "id": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+          "name": { "type": "string" },
+          "area": { "type": "string" },
+          "lat": { "type": "number" },
+          "lng": { "type": "number" },
+          "type": { "enum": ["sight", "museum", "food", "market", "park", "view", "beach", "kids"] },
+          "priority": { "description": "1 must-see, 2 recommended, 3 extra", "enum": [1, 2, 3] },
+          "rank": { "description": "Order of the city's top sights: 1 = the place everyone comes for", "type": "integer", "minimum": 1, "maximum": 20 },
+          "durationMin": { "type": "integer", "minimum": 10, "maximum": 300 },
+          "kidScore": { "description": "0 dull for kids … 3 kids love it", "enum": [0, 1, 2, 3] },
+          "indoor": { "type": "boolean" },
+          "stepFree": { "type": "boolean", "description": "false = stairs or steep paths only" },
+          "closedDays": { "type": "array", "items": { "enum": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"] } },
+          "bestTime": { "enum": ["morning", "afternoon", "evening", "any"] },
+          "cost": { "description": "0 free, 1 cheap, 2 mid, 3 expensive", "enum": [0, 1, 2, 3] },
+          "costNote": { "type": "string" },
+          "bookAhead": { "type": "boolean" },
+          "site": { "type": "string", "description": "Official website domain, no tracking parameters" },
+          "transitStop": { "type": "string" },
+          "why": { "type": "string" },
+          "kid": { "type": "string" },
+          "tip": { "type": "string" },
+          "inside": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    },
+    "dayTrips": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "lat", "lng", "by", "travelMin", "from", "why", "kidScore", "highlights"],
+        "additionalProperties": false,
+        "properties": {
+          "id": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+          "name": { "type": "string" },
+          "lat": { "type": "number" },
+          "lng": { "type": "number" },
+          "by": { "enum": ["train", "bus", "boat", "metro", "train + bus"] },
+          "travelMin": { "type": "integer", "minimum": 10, "maximum": 240 },
+          "from": { "type": "string" },
+          "why": { "type": "string" },
+          "kidScore": { "enum": [0, 1, 2, 3] },
+          "priority": { "enum": [1, 2, 3] },
+          "closedDays": { "type": "array", "items": { "enum": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"] } },
+          "highlights": { "type": "array", "items": { "type": "string" }, "minItems": 2 },
+          "tip": { "type": "string" }
+        }
+      }
+    },
+    "tips": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["title", "text"],
+        "additionalProperties": false,
+        "properties": {
+          "title": { "type": "string" },
+          "text": { "type": "string" }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "latlng": { "type": "array", "items": { "type": "number" }, "minItems": 2, "maxItems": 2 }
+  }
+}

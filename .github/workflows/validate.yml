@@ -1,0 +1,22 @@
+name: Validate city packs
+
+on:
+  push:
+    paths: ["planner/**", "schema/**", "tools/**", ".github/workflows/validate.yml"]
+  pull_request:
+    paths: ["planner/**", "schema/**", "tools/**", ".github/workflows/validate.yml"]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: City index is up to date
+        run: |
+          node tools/build-index.mjs
+          git diff --exit-code planner/cities/index.json
+      - name: Schema, data and engine checks
+        run: node tools/validate.mjs
