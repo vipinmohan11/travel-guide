@@ -886,6 +886,7 @@ html[data-theme="dark"] .leaflet-tile-pane{filter:invert(1) hue-rotate(180deg) b
 
 .flag{width:18px;height:12px;border-radius:2px;border:.5px solid rgba(0,0,0,.25);margin-right:6px;vertical-align:-1px;flex:none}
 .mapbar .seg button{display:flex;flex-direction:row;align-items:center;justify-content:center}
+svg.flag{display:inline-block;width:18px;height:12px;margin-right:4px}
 </style></head><body>
 <main id="app"><section id="v-trip"></section><section id="v-day" hidden></section><section id="v-map" hidden></section><section id="v-list" hidden></section><section id="v-tips" hidden></section></main>
 <div id="detail" class="page" hidden></div>
@@ -1234,7 +1235,7 @@ function vTrip(){
     var ds=daysOf(g);
     h+='<div class="sech"><span>'+CITY[g].n+'</span><span class="r">'+ds.length+(ds.length===1?" day":" days")+'</span></div><div class="group">';
     ds.forEach(function(d){var n=listCount(d);
-      h+='<button class="row tap" data-act="day" data-i="'+d.i+'" style="--c:'+cvar(g)+'"><span class="dn">'+(d.i+1)+'</span><span class="grow"><span class="sm" style="display:block">'+d.dow+' '+d.date+(d.wx?' · weather-dependent':'')+'</span><span class="ttl">'+esc(d.title)+'</span></span>'+(n?'<span class="cnt">'+n+' in list</span>':'')+ic(IC.fwd,"chev")+'</button>'});
+      h+='<button class="row tap" data-act="day" data-i="'+d.i+'" style="--c:'+cvar(g)+'"><span class="dn">'+(d.i+1)+'</span><span class="grow"><span class="sm" style="display:block">'+dayFlags(d)+d.dow+' '+d.date+(d.wx?' · weather-dependent':'')+'</span><span class="ttl">'+esc(d.title)+'</span></span>'+(n?'<span class="cnt">'+n+' in list</span>':'')+ic(IC.fwd,"chev")+'</button>'});
     h+='</div>'});
   h+='<p class="foot">Dates and times are a plan, not bookings. Check opening hours and prices on the official sites before you go.</p>';
   return h}
@@ -1242,7 +1243,7 @@ function vTrip(){
 function vDay(){
   var d=DAYS[cur],g=d.grp,ds=daysOf(g),w=wxDay(cur);
   var h='<div class="nav"><button class="nb" data-act="tab" data-s="trip">'+ic(IC.back)+'Trip</button><span class="t">Day '+(cur+1)+'</span><span class="navr"><button class="nb" data-act="day" data-i="'+(cur-1)+'" aria-label="Previous day"'+(cur===0?' disabled':'')+'>'+ic(IC.back)+'</button><button class="nb" data-act="day" data-i="'+(cur+1)+'" aria-label="Next day"'+(cur===9?' disabled':'')+'>'+ic(IC.fwd)+'</button></span></div>';
-  h+='<div class="head"><div class="eyebrow" style="color:'+cvar(g)+'">'+esc(CITY[g].n)+' · '+d.dow+' '+d.date+'</div><h1>'+esc(d.title)+'</h1></div>';
+  h+='<div class="head"><div class="eyebrow" style="color:'+cvar(g)+'">'+dayFlags(d)+esc(CITY[g].n)+' · '+d.dow+' '+d.date+'</div><h1>'+esc(d.title)+'</h1></div>';
   h+='<div class="segwrap"><div class="cap">Days in '+CITY[g].n+'</div><div class="seg">'+ds.map(function(x){return '<button data-act="day" data-i="'+x.i+'" aria-pressed="'+(x.i===cur)+'">'+(x.i+1)+'<small>'+x.dow+'</small></button>'}).join("")+'</div></div>';
   h+='<p class="lede">'+esc(d.lede)+'</p>';
   /* facts group */
@@ -1288,7 +1289,7 @@ function vList(){
     h+='<div class="empty"><svg viewBox="0 0 24 24" aria-hidden="true">'+IC.list+'</svg><b>Your list is empty</b><p>Open a day and tap <b style="display:inline;font-size:inherit;color:var(--fg)">Add</b> next to a place. It will appear here, sorted by day.</p><p>You can also start with all the highlights.</p><div class="btnrow"><button class="btn solid" data-act="addmust">Add all “Must see” places</button></div><div class="btnrow" style="margin-top:10px"><button class="btn" data-act="tab" data-s="trip">Browse the days</button></div></div>';return h}
   DAYS.forEach(function(d){
     var items=d.stops.concat(d.extras).filter(inList);if(!items.length)return;
-    h+='<div class="daych" style="--c:'+cvar(d.grp)+'"><i></i>'+esc(dlabel(d))+' · '+esc(CITY[d.grp].n)+'</div><div class="group">';
+    h+='<div class="daych" style="--c:'+cvar(d.grp)+'"><i></i>'+dayFlags(d)+esc(dlabel(d))+' · '+esc(CITY[d.grp].n)+'</div><div class="group">';
     items.forEach(function(s){var dn=!!store.done[s.id];
       h+='<div class="lrow'+(dn?" done":"")+'" style="--c:'+cvar(s.city)+'"><button class="ck" data-act="done" data-id="'+s.id+'" aria-pressed="'+dn+'" aria-label="Mark as done: '+esc(s.n)+'">'+ic(IC.check)+'</button><button class="pmain" style="padding:0" data-act="place" data-id="'+s.id+'"><span class="pt"><span class="nm">'+esc(s.n)+'</span><span class="mt">'+(s.x?esc(s.cat):KIND[s.k]+(s.t?" · "+esc(s.t):""))+' · '+esc(s.c)+'</span></span></button><button class="rm" data-act="add" data-id="'+s.id+'" aria-label="Remove '+esc(s.n)+'">Remove</button></div>'});
     h+='</div>'});
@@ -1365,7 +1366,11 @@ function vTips(){
 
 /* ---------- map ---------- */
 var map=null,layer=null,meLayer=null;
-function flag(g){return g==="munich"?'<svg class="flag" viewBox="0 0 18 12" aria-label="Germany"><rect width="18" height="4" fill="#000"/><rect y="4" width="18" height="4" fill="#d00"/><rect y="8" width="18" height="4" fill="#ffce00"/></svg>':'<svg class="flag" viewBox="0 0 18 12" aria-label="Austria"><rect width="18" height="4" fill="#ed2939"/><rect y="4" width="18" height="4" fill="#fff"/><rect y="8" width="18" height="4" fill="#ed2939"/></svg>'}
+function flagC(c){return c==="de"?'<svg class="flag" viewBox="0 0 18 12" role="img" aria-label="Germany"><rect width="18" height="4" fill="#000"/><rect y="4" width="18" height="4" fill="#d00"/><rect y="8" width="18" height="4" fill="#ffce00"/></svg>':'<svg class="flag" viewBox="0 0 18 12" role="img" aria-label="Austria"><rect width="18" height="4" fill="#ed2939"/><rect y="4" width="18" height="4" fill="#fff"/><rect y="8" width="18" height="4" fill="#ed2939"/></svg>'}
+function flag(g){return flagC(g==="munich"?"de":"at")}
+function cOf(s){return s.id==="kx-kehl"?"de":(s.city==="munich"?"de":"at")}
+function dayFlags(d){var set={};d.stops.forEach(function(s){set[cOf(s)]=1});return(set.de?flagC("de"):"")+(set.at?flagC("at"):"")}
+var URLS={"a2": "https://www.muenchner-dom.de", "a3": "https://www.viktualienmarkt-muenchen.de", "bx-vik": "https://www.viktualienmarkt-muenchen.de", "b1": "https://www.deutsches-museum.de", "bx-bmw": "https://www.bmw-welt.com", "bx-nymph": "https://www.schloss-nymphenburg.de", "bx-residenz": "https://www.residenz-muenchen.de", "bx-olympia": "https://www.olympiapark.de", "d5": "https://www.christkindlmarkt.co.at", "e1": "https://www.festung-hohensalzburg.at", "e5": "https://mozarteum.at/museen/mozarts-geburtshaus", "ex-mozarthome": "https://mozarteum.at/museen/mozart-wohnhaus", "e3": "https://www.hausdernatur.at", "dx-cathedral": "https://www.salzburger-dom.at", "dx-peter": "https://www.stift-stpeter.at", "k5": "https://www.hellbrunn.at", "k6": "https://www.salzburgmuseum.at", "f1": "https://www.zellamsee-kaprun.com", "f3": "https://www.kitzsteinhorn.at", "f4": "https://www.kitzsteinhorn.at", "f5": "https://www.kitzsteinhorn.at", "fx-schmitten": "https://www.schmittenhoehe.at", "g3": "https://www.salzwelten.at", "g4": "https://www.salzwelten.at", "g2": "https://www.hallstatt.net", "gx-museum": "https://www.museum-hallstatt.at", "gx-krippen": "https://www.dachstein.at", "gx-skywalk": "https://www.dachstein.at", "k1": "https://www.wolfgangseer-advent.at/en", "k2": "https://www.wolfgangseer-advent.at/en", "kx-strobl": "https://www.wolfgangseer-advent.at/en", "kx-zwolf": "https://www.12erhorn.at", "kx-kehl": "https://kehlsteinhaus.de", "kx-eis": "https://www.eisriesenwelt.at/en", "h1": "https://www.stephanscom.at", "h3": "https://www.demel.at", "h4": "https://www.wienerchristkindlmarkt.at", "hx-hofburg": "https://www.hofburg-wien.at", "hx-albertina": "https://www.wiener-staatsoper.at", "i1": "https://www.schoenbrunn.at", "i3": "https://www.schoenbrunn.at", "ix-gloriette": "https://www.schoenbrunn.at", "i2": "https://www.zoovienna.at", "i4": "https://www.wienerriesenrad.com", "ix-meer": "https://www.haus-des-meeres.at", "ix-musik": "https://www.hausdermusik.com", "ix-nhm": "https://www.nhm-wien.ac.at", "j1": "https://www.belvedere.at", "j2": "https://www.karlskirche.at", "j3": "https://www.naschmarkt-vienna.com", "jx-albertina": "https://www.albertina.at"};
 function vMapHtml(){
   var days=cityDays(mapCity);
   var h='<div class="mapbar"><div class="seg">'+CKEYS.map(function(g){return '<button data-act="mapcity" data-c="'+g+'" aria-pressed="'+(g===mapCity)+'">'+flag(g)+CITY[g].n+'</button>'}).join("")+'</div>';
@@ -1396,7 +1401,7 @@ function drawMap(fit){
   if(fit&&pts.length)map.fitBounds(L.latLngBounds(pts),{padding:[40,40],maxZoom:16,animate:false})}
 function openSheet(id){
   selId=id;var s=P[id],box=$("sheet");
-  box.innerHTML='<div class="top"><div class="grow" style="flex:1;min-width:0"><span class="mt" style="margin:0 0 2px;color:'+cvar(s.city)+';font-weight:600">'+esc(dlabel(DAYS[s.day]))+'</span><span class="nm">'+esc(s.n)+'</span><span class="mt">'+(s.x?esc(s.cat):KIND[s.k]+(s.t?" · "+esc(s.t):""))+' · '+esc(s.c)+'</span><div style="margin-top:6px;display:flex;gap:5px;flex-wrap:wrap">'+tags(s)+'</div></div><button class="x" data-act="sheetx" aria-label="Close">'+ic(IC.close)+'</button></div><p>'+esc(s.why)+'</p><div class="btnrow">'+addBtn(s)+'<button class="btn" data-act="place" data-id="'+s.id+'">Details</button><a class="btn" href="'+mapsPlace(s)+'" target="_blank" rel="noopener">Maps</a></div>';
+  box.innerHTML='<div class="top"><div class="grow" style="flex:1;min-width:0"><span class="mt" style="margin:0 0 2px;color:'+cvar(s.city)+';font-weight:600">'+esc(dlabel(DAYS[s.day]))+'</span><span class="nm">'+esc(s.n)+'</span><span class="mt">'+(s.x?esc(s.cat):KIND[s.k]+(s.t?" · "+esc(s.t):""))+' · '+esc(s.c)+'</span><div style="margin-top:6px;display:flex;gap:5px;flex-wrap:wrap">'+tags(s)+'</div></div><button class="x" data-act="sheetx" aria-label="Close">'+ic(IC.close)+'</button></div><p>'+esc(s.why)+'</p><div class="btnrow">'+addBtn(s)+'<button class="btn" data-act="place" data-id="'+s.id+'">Details</button><a class="btn" href="'+mapsPlace(s)+'" target="_blank" rel="noopener">Maps</a>'+(URLS[id]?'<a class="btn" href="'+URLS[id]+'" target="_blank" rel="noopener">Website</a>':'')+'</div>';
   box.hidden=false;drawMap(false);map.panTo([s.lat,s.lng],{animate:true})}
 function closeSheet(){var b=$("sheet");if(b&&!b.hidden){b.hidden=true;b.innerHTML=""}if(selId){selId=null;drawMap(false)}}
 function mapShow(){
@@ -1410,12 +1415,12 @@ function openDetail(id){
   var on=inList(s),prev=!s.x&&s.idx>0?d.stops[s.idx-1]:null,leg="";
   if(f.lg)leg=f.lg;else if(prev){var k=walkKm(prev,s);leg=(k>1.8?"Public transport":"Walk about "+Math.max(1,Math.round(k/4.3*60))+" min")+" · "+fmtKm(k)+" from the previous stop"}
   var h='<div class="nav"><button class="nb" data-act="detailx">'+ic(IC.back)+'Back</button><span class="t">'+esc(KIND[s.k])+'</span><span style="width:44px"></span></div><div class="body" style="--c:'+cvar(s.city)+'">';
-  h+='<div class="group"><div class="pbody"><div class="sm" style="color:'+cvar(s.city)+';font-weight:600">'+esc(dlabel(d))+'</div><h2 class="dtitle">'+esc(s.n)+'</h2><div class="tglist">'+tags(s)+'</div><p class="sm" style="margin-top:10px">'+(s.x?esc(s.cat):(s.t?"Suggested time "+esc(s.t)+" · ":"")+"")+esc(s.c)+'</p><p>'+esc(s.why)+'</p></div></div>';
+  h+='<div class="group"><div class="pbody"><div class="sm" style="color:'+cvar(s.city)+';font-weight:600">'+flagC(cOf(s))+esc(dlabel(d))+'</div><h2 class="dtitle">'+esc(s.n)+'</h2><div class="tglist">'+tags(s)+'</div><p class="sm" style="margin-top:10px">'+(s.x?esc(s.cat):(s.t?"Suggested time "+esc(s.t)+" · ":"")+"")+esc(s.c)+'</p><p>'+esc(s.why)+'</p></div></div>';
   h+='<div class="actions"><button class="btn full '+(on?"line":"solid")+'" data-act="add" data-id="'+s.id+'">'+ic(on?IC.check:IC.plus)+(on?"In my list · tap to remove":"Add to my list")+'</button>'+(on?'<button class="btn full" data-act="done" data-id="'+s.id+'">'+ic(IC.check)+(store.done[s.id]?"Done · tap to undo":"Mark as done")+'</button>':'')+'</div>';
   h+='<div class="sech"><span>Details</span></div><div class="group">';
   if(f.i)h+='<div class="fact"><b>What to see</b><ol>'+f.i.map(function(t){return '<li>'+esc(t)+'</li>'}).join("")+'</ol></div>';
   h+=fact("Time needed",f.tm)+fact("Tickets and rules",f.tx)+fact("Getting there",leg)+fact("Nearest stop",f.st)+fact("Facilities",f.fa)+fact("Local tip",f.tp)+fact("For the kids",s.kid);
-  h+='</div><div class="actions"><a class="btn full" href="'+mapsPlace(s)+'" target="_blank" rel="noopener">'+ic(IC.pin)+'Open in Google Maps</a><button class="btn full" data-act="showmap" data-id="'+s.id+'">'+ic(IC.map)+'Show on the map</button></div></div>';
+  h+='</div><div class="actions">'+(URLS[s.id]?'<a class="btn full solid" href="'+URLS[s.id]+'" target="_blank" rel="noopener">'+ic(IC.pin)+'Official website (hours, tickets)</a>':'')+'<a class="btn full" href="'+mapsPlace(s)+'" target="_blank" rel="noopener">'+ic(IC.pin)+'Open in Google Maps</a><button class="btn full" data-act="showmap" data-id="'+s.id+'">'+ic(IC.map)+'Show on the map</button></div></div>';
   var top=box.scrollTop;box.innerHTML=h;
   if(box.hidden){box.hidden=false;box.scrollTop=0;try{history.pushState({detail:id},"")}catch(e){}}else box.scrollTop=top}
 function closeDetail(viaPop){var box=$("detail");if(box.hidden)return;box.hidden=true;detailId=null;if(!viaPop&&history.state&&history.state.detail){try{history.back()}catch(e){}}}
