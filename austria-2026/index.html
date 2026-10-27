@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#f2f2f7"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Austria"><title>Munich, Salzburg, Vienna Guide</title>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#f2f2f7"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Austria"><link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="apple-touch-icon.png"><title>Munich, Salzburg, Vienna Guide</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <style>/* required styles */
 
@@ -1221,6 +1221,7 @@ function loadWx(){var c=null;try{c=JSON.parse(localStorage.getItem("aut26wx")||"
 function wxIcon(c){return c===0?IC.sun:c<=3?IC.cloud:c<=48?IC.cloud:c<=67?IC.rain:c<=77?IC.snow:IC.rain}
 function wxDay(di){if(!WX)return null;var o=WX[DAYS[di].wxi];if(!o||!o.daily)return null;var k=new Date(Date.UTC(2026,10,28+di)).toISOString().slice(0,10),i=o.daily.time.indexOf(k);if(i<0)return null;var d=o.daily;return{code:d.weather_code[i],hi:Math.round(d.temperature_2m_max[i]),lo:Math.round(d.temperature_2m_min[i]),pp:d.precipitation_probability_max[i],sun:(d.sunset[i]||"").slice(11,16)}}
 
+var deferredInstall=null;window.addEventListener("beforeinstallprompt",function(e){e.preventDefault();deferredInstall=e;if(view==="tips")render(true)});window.addEventListener("appinstalled",function(){deferredInstall=null;if(view==="tips")render(true)});
 /* ---------- state ---------- */
 var view="trip",cur=0,mapCity="munich",mapDay="all",selId=null,hotelEdit=null,detailId=null;
 var VIEWS=["trip","day","map","list","tips"];
@@ -1301,6 +1302,7 @@ function vTips(){
   function sec(t,body,open){return '<details class="group"'+(open?' open':'')+'><summary>'+t+'</summary><div class="in">'+body+'</div></details>'}
   function ul(a){return '<ul class="pl">'+a.map(function(x){return '<li>'+x+'</li>'}).join("")+'</ul>'}
   h+='<div class="sech"><span>Display</span></div><div class="group" id="settings"><div class="row"><span class="k">Appearance</span><div class="seg" style="flex:1">'+[["light","Light"],["dark","Dark"],["auto","Auto"]].map(function(x){return '<button data-act="theme" data-t="'+x[0]+'" aria-pressed="'+((store.theme||"light")===x[0])+'">'+x[1]+'</button>'}).join("")+'</div></div><div class="row"><span class="k">Text size</span><div class="stepper"><button data-act="fs" data-d="-1" aria-label="Smaller text">A−</button><b>'+FS+' px</b><button data-act="fs" data-d="1" aria-label="Larger text">A+</button></div></div><div class="row"><span class="k">Colour</span><div class="dots">'+THEMES.map(function(t){return '<button class="dot" data-act="accent" data-a="'+t[0]+'" style="background:'+t[2]+'" aria-label="'+t[1]+'" aria-pressed="'+((store.accent||"green")===t[0])+'"></button>'}).join("")+'</div></div></div>';
+  h+='<div class="sech"><span>Use like an app</span></div><div class="group"><div class="row" style="display:block"><b style="display:block;margin-bottom:4px">Works offline</b><span class="sm">After you open this page once with internet, the guide works without internet. Map pictures you have already looked at are saved too, so open the Map once for each city while you have Wi-Fi.</span></div>'+(deferredInstall?'<button class="row tap" data-act="install"><span class="v" style="color:var(--accent);font-weight:600">Install on this phone</span>'+ic(IC.fwd,"chev")+'</button>':'<div class="row" style="display:block"><span class="sm">To install in Chrome: tap the ⋮ menu, then “Add to Home screen” or “Install app”. On iPhone (Safari): Share, then “Add to Home Screen”.</span></div>')+'</div>';
   h+='<div class="sech"><span>Plan ahead</span></div>';
   h+=sec("Before you go",ul([
    "<b>Book long trips early.</b> High-speed train prices are dynamic and can be much higher in the last week.",
@@ -1490,6 +1492,7 @@ document.addEventListener("click",function(e){
    case"hotel-clear":delete store.hotels[t.getAttribute("data-c")];save();hotelEdit=t.getAttribute("data-c");render(true);break;
    case"hotel-save":{var r=parseHotel($("hin").value);if(r.err){$("hmsg").textContent=r.err;break}store.hotels[t.getAttribute("data-c")]=r;save();hotelEdit=null;render(true);break}
    case"hotel-gps":{var c=t.getAttribute("data-c");gps(function(g){store.hotels[c]={lat:g.lat,lng:g.lng};save();hotelEdit=null;render(true)});break}
+   case"install":if(deferredInstall){deferredInstall.prompt();deferredInstall=null}break;
    case"theme":store.theme=t.getAttribute("data-t");save();applyAll();render(true);break;
    case"fs":FS+=+t.getAttribute("data-d");store.fs=FS;save();applyAll();render(true);break;
    case"accent":store.accent=t.getAttribute("data-a");save();applyAll();render(true);break;
@@ -1498,4 +1501,4 @@ document.addEventListener("change",function(e){var t=e.target;if(t.getAttribute&
 
 parseHash();render();loadWx();
 })();
-</script></body></html>
+</script><script>if('serviceWorker' in navigator)window.addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){})})</script></body></html>
