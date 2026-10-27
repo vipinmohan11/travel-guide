@@ -55,6 +55,10 @@ tools/verify-coords.mjs              compare a city's pins with OpenStreetMap (r
   - `index.html`: web version (for GitHub Pages)
   - `barcelona-standalone.html`: standalone file for Android
 
+- `austria-2026/`: 10-day family trip Munich, Salzburg and Vienna (Zugspitze, Kitzsteinhorn and Hallstatt day trips), 28 Nov – 7 Dec 2026
+  - `index.html`: web version (for GitHub Pages)
+  - `austria-standalone.html`: standalone file for phones
+
 ## Licences
 
 - Code (`planner/*.js`, `planner/*.html`, `planner/*.css`, `tools/`, `schema/`): MIT, see `LICENSE`
