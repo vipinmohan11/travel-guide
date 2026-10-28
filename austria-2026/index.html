@@ -887,6 +887,15 @@ html[data-theme="dark"] .leaflet-tile-pane{filter:invert(1) hue-rotate(180deg) b
 .flag{width:18px;height:12px;border-radius:2px;border:.5px solid rgba(0,0,0,.25);margin-right:6px;vertical-align:-1px;flex:none}
 .mapbar .seg button{display:flex;flex-direction:row;align-items:center;justify-content:center}
 svg.flag{display:inline-block;width:18px;height:12px;margin-right:4px}
+
+.page .body{padding-bottom:calc(84px + env(safe-area-inset-bottom,0px))}
+.dbar{position:fixed;left:0;right:0;bottom:0;z-index:810;display:flex;gap:8px;padding:8px 12px calc(8px + env(safe-area-inset-bottom,0px));background:var(--bar);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);border-top:.5px solid var(--line)}
+.dn2{flex:1;min-width:0;display:flex;align-items:center;gap:6px;min-height:52px;padding:6px 10px;border:0;border-radius:12px;background:var(--fill,rgba(120,120,128,.12));color:var(--fg);text-align:left;font:inherit;font-size:.8125rem;font-weight:600}
+.dn2.r{justify-content:flex-end;text-align:right}
+.dn2 span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:block}
+.dn2 small{display:block;font-weight:500;font-size:.6875rem;color:var(--sub)}
+.dn2 .ic{flex:none;width:20px;height:20px;color:var(--accent)}
+.dn2[disabled]{opacity:.35}
 </style></head><body>
 <main id="app"><section id="v-trip"></section><section id="v-day" hidden></section><section id="v-map" hidden></section><section id="v-list" hidden></section><section id="v-tips" hidden></section></main>
 <div id="detail" class="page" hidden></div>
@@ -1415,18 +1424,27 @@ function mapShow(){
 
 /* ---------- detail ---------- */
 function fact(l,t){return t?'<div class="fact"><b>'+l+'</b><span>'+esc(t)+'</span></div>':''}
-function openDetail(id){
-  var s=P[id],f=s.f,d=DAYS[s.day],box=$("detail");detailId=id;
+var dctx=[],dback="Back";
+function ctxFor(id){
+  var s=P[id],ids;
+  if(view==="list"){ids=[];DAYS.forEach(function(d){d.stops.concat(d.extras).forEach(function(x){if(inList(x))ids.push(x.id)})});dback="My list"}
+  else if(view==="map"){ids=ALL.filter(function(x){return x.city===mapCity&&(mapDay==="all"||x.day===mapDay)}).map(function(x){return x.id});dback="Map"}
+  else{var d=DAYS[s.day];ids=d.stops.concat(d.extras).map(function(x){return x.id});dback="Day "+(s.day+1)}
+  if(ids.indexOf(id)<0){var d2=DAYS[s.day];ids=d2.stops.concat(d2.extras).map(function(x){return x.id});dback="Day "+(s.day+1)}
+  return ids}
+function openDetail(id,nav){
+  var s=P[id],f=s.f,d=DAYS[s.day],box=$("detail");detailId=id;if(box.hidden)dctx=ctxFor(id);var ci=dctx.indexOf(id),pv=ci>0?P[dctx[ci-1]]:null,nx=ci>=0&&ci<dctx.length-1?P[dctx[ci+1]]:null;
   var on=inList(s),prev=!s.x&&s.idx>0?d.stops[s.idx-1]:null,leg="";
   if(f.lg)leg=f.lg;else if(prev){var k=walkKm(prev,s);leg=(k>1.8?"Public transport":"Walk about "+Math.max(1,Math.round(k/4.3*60))+" min")+" · "+fmtKm(k)+" from the previous stop"}
-  var h='<div class="nav"><button class="nb" data-act="detailx">'+ic(IC.back)+'Back</button><span class="t">'+esc(KIND[s.k])+'</span><span style="width:44px"></span></div><div class="body" style="--c:'+cvar(s.city)+'">';
+  var h='<div class="nav"><button class="nb" data-act="detailx">'+ic(IC.back)+esc(dback)+'</button><span class="t">'+(ci>=0?(ci+1)+' of '+dctx.length:esc(KIND[s.k]))+'</span><span style="width:44px"></span></div><div class="body" style="--c:'+cvar(s.city)+'">';
   h+='<div class="group"><div class="pbody"><div class="sm" style="color:'+cvar(s.city)+';font-weight:600">'+flagC(cOf(s))+esc(dlabel(d))+'</div><h2 class="dtitle">'+esc(s.n)+'</h2><div class="tglist">'+tags(s)+'</div><p class="sm" style="margin-top:10px">'+(s.x?esc(s.cat):(s.t?"Suggested time "+esc(s.t)+" · ":"")+"")+esc(s.c)+'</p><p>'+esc(s.why)+'</p></div></div>';
   h+='<div class="actions"><button class="btn full '+(on?"line":"solid")+'" data-act="add" data-id="'+s.id+'">'+ic(on?IC.check:IC.plus)+(on?"In my list · tap to remove":"Add to my list")+'</button>'+(on?'<button class="btn full" data-act="done" data-id="'+s.id+'">'+ic(IC.check)+(store.done[s.id]?"Done · tap to undo":"Mark as done")+'</button>':'')+'</div>';
   h+='<div class="sech"><span>Details</span></div><div class="group">';
   if(f.i)h+='<div class="fact"><b>What to see</b><ol>'+f.i.map(function(t){return '<li>'+esc(t)+'</li>'}).join("")+'</ol></div>';
   h+=fact("Time needed",f.tm)+fact("Tickets and rules",f.tx)+fact("Getting there",leg)+fact("Nearest stop",f.st)+fact("Facilities",f.fa)+fact("Local tip",f.tp)+fact("For the kids",s.kid);
   h+='</div><div class="actions">'+(URLS[s.id]?'<a class="btn full solid" href="'+URLS[s.id]+'" target="_blank" rel="noopener">'+ic(IC.pin)+'Official website (hours, tickets)</a>':'')+'<a class="btn full" href="'+mapsPlace(s)+'" target="_blank" rel="noopener">'+ic(IC.pin)+'Open in Google Maps</a><button class="btn full" data-act="showmap" data-id="'+s.id+'">'+ic(IC.map)+'Show on the map</button></div><p class="foot">“Open in Google Maps” searches for <b>'+esc(gmq(s))+'</b>. If Google shows several results, choose the one with this name.</p></div>';
-  var top=box.scrollTop;box.innerHTML=h;
+  h+='<div class="dbar"><button class="dn2" data-act="dnav" data-d="-1"'+(pv?'':' disabled')+'>'+ic(IC.back)+'<span><small>Previous</small>'+(pv?esc(pv.n):'')+'</span></button><button class="dn2 r" data-act="dnav" data-d="1"'+(nx?'':' disabled')+'><span><small>Next</small>'+(nx?esc(nx.n):'')+'</span>'+ic(IC.fwd)+'</button></div>';
+  var top=nav?0:box.scrollTop;box.innerHTML=h;
   if(box.hidden){box.hidden=false;box.scrollTop=0;try{history.pushState({detail:id},"")}catch(e){}}else box.scrollTop=top}
 function closeDetail(viaPop){var box=$("detail");if(box.hidden)return;box.hidden=true;detailId=null;if(!viaPop&&history.state&&history.state.detail){try{history.back()}catch(e){}}}
 
@@ -1477,6 +1495,7 @@ document.addEventListener("click",function(e){
    case"add":e.stopPropagation();toggleAdd(id);break;
    case"place":openDetail(id);break;
    case"detailx":closeDetail();break;
+   case"dnav":{var ci=dctx.indexOf(detailId),n=dctx[ci+ +t.getAttribute("data-d")];if(n)openDetail(n,true);break}
    case"day":{var i=+t.getAttribute("data-i");if(DAYS[i])go("day-"+(i+1));break}
    case"tab":go(t.getAttribute("data-s"));break;
    case"hidehow":store.hideHow=true;save();render(true);break;
@@ -1502,6 +1521,7 @@ document.addEventListener("click",function(e){
   }});
 document.addEventListener("change",function(e){var t=e.target;if(t.getAttribute&&t.getAttribute("data-act")==="spot"){store.spot[t.getAttribute("data-k")]=t.checked;save()}});
 
+(function(){var x0=0,y0=0;var dt=$("detail");dt.addEventListener("touchstart",function(e){var t=e.touches[0];x0=t.clientX;y0=t.clientY},{passive:true});dt.addEventListener("touchend",function(e){var t=e.changedTouches[0],dx=t.clientX-x0,dy=t.clientY-y0;if(Math.abs(dx)>80&&Math.abs(dy)<45){var ci=dctx.indexOf(detailId),n=dctx[ci+(dx<0?1:-1)];if(n)openDetail(n,true)}},{passive:true})})();
 parseHash();render();loadWx();
 })();
 </script><script>if('serviceWorker' in navigator)window.addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){})})</script></body></html>
