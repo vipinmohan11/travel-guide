@@ -1042,10 +1042,19 @@ select,input[type=date]{margin-left:auto;font:inherit;font-size:.9375rem;color:v
 .useg{flex:1;min-width:0}
 .useg button{padding:6px 0}
 .usep{width:1px;height:22px;background:var(--line);flex:none}
+
+.shead{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.shead h1{margin:0}
+.mseg{display:inline-flex;background:var(--bg);border:1px solid var(--line);border-radius:999px;padding:1px;margin-left:4px}
+.mseg button{border:0;background:none;padding:2px 7px;font:inherit;font-size:.6875rem;font-weight:600;color:var(--sub);border-radius:999px;line-height:1.4}
+.mseg button[aria-pressed="true"]{background:var(--accent);color:#fff}
+.tabbar .ic{stroke-width:2.4}
+.tabbar button{color:var(--fg);opacity:.85}
+.tabbar button[aria-current="page"],.tabbar button.on{opacity:1}
 </style></head><body>
 <main id="app"><section id="v-trip"></section><section id="v-day" hidden></section><section id="v-map" hidden></section><section id="v-list" hidden></section><section id="v-tips" hidden></section><section id="v-stay" hidden></section><section id="v-more" hidden></section><section id="v-settings" hidden></section><section id="v-pack" hidden></section></main>
 <div id="detail" class="page" hidden></div>
-<nav class="tabbar" aria-label="Main"><div class="in"><button data-act="tab" data-s="trip"><svg class="ic" viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="2.5"/><path d="M4 10h16M8.5 3v4M15.5 3v4"/><path d="M8 14h2M14 14h2M8 17h2"/></svg><span class="nd" id="nd-trip" hidden></span>Itinerary</button><button data-act="tab" data-s="map"><svg class="ic" viewBox="0 0 24 24"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.3"/></svg>Map</button><button data-act="tab" data-s="list"><svg class="ic" viewBox="0 0 24 24"><path d="M6.5 4h11a1 1 0 0 1 1 1v15l-6.5-4-6.5 4V5a1 1 0 0 1 1-1z"/><path d="m9.3 10 1.9 1.9 3.5-3.7"/></svg><span class="badge" id="tabbadge" hidden></span>My list</button><button data-act="tab" data-s="tips"><svg class="ic" viewBox="0 0 24 24"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.6 10.8c.6.5 1 1.2 1 2V16h5.2v-.2c0-.8.4-1.5 1-2A6 6 0 0 0 12 3z"/></svg><span class="nd" id="nd-tips" hidden></span>Tips</button><button data-act="tab" data-s="settings"><svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 14.5a1.5 1.5 0 0 0 .3 1.7l.1.1a1.8 1.8 0 1 1-2.6 2.6l-.1-.1a1.5 1.5 0 0 0-1.7-.3 1.5 1.5 0 0 0-.9 1.4v.2a1.8 1.8 0 1 1-3.6 0v-.1a1.5 1.5 0 0 0-1-1.4 1.5 1.5 0 0 0-1.7.3l-.1.1a1.8 1.8 0 1 1-2.6-2.6l.1-.1a1.5 1.5 0 0 0 .3-1.7 1.5 1.5 0 0 0-1.4-.9h-.2a1.8 1.8 0 1 1 0-3.6h.1a1.5 1.5 0 0 0 1.4-1 1.5 1.5 0 0 0-.3-1.7l-.1-.1a1.8 1.8 0 1 1 2.6-2.6l.1.1a1.5 1.5 0 0 0 1.7.3h0a1.5 1.5 0 0 0 .9-1.4v-.2a1.8 1.8 0 1 1 3.6 0v.1a1.5 1.5 0 0 0 .9 1.4 1.5 1.5 0 0 0 1.7-.3l.1-.1a1.8 1.8 0 1 1 2.6 2.6l-.1.1a1.5 1.5 0 0 0-.3 1.7v0a1.5 1.5 0 0 0 1.4.9h.2a1.8 1.8 0 1 1 0 3.6h-.1a1.5 1.5 0 0 0-1.4.9z"/></svg><span class="nd" id="nd-settings" hidden></span>Settings</button></div></nav>
+<nav class="tabbar" aria-label="Main"><div class="in"><button data-act="tab" data-s="trip"><svg class="ic" viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="2.5"/><path d="M4 10h16M8.5 3v4M15.5 3v4"/><path d="M8 14h2M14 14h2M8 17h2"/></svg><span class="nd" id="nd-trip" hidden></span>Suggested</button><button data-act="tab" data-s="map"><svg class="ic" viewBox="0 0 24 24"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.3"/></svg>Map</button><button data-act="tab" data-s="list"><svg class="ic" viewBox="0 0 24 24"><path d="M6.5 4h11a1 1 0 0 1 1 1v15l-6.5-4-6.5 4V5a1 1 0 0 1 1-1z"/><path d="m9.3 10 1.9 1.9 3.5-3.7"/></svg><span class="badge" id="tabbadge" hidden></span>My itinerary</button><button data-act="tab" data-s="tips"><svg class="ic" viewBox="0 0 24 24"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.6 10.8c.6.5 1 1.2 1 2V16h5.2v-.2c0-.8.4-1.5 1-2A6 6 0 0 0 12 3z"/></svg><span class="nd" id="nd-tips" hidden></span>Tips</button><button data-act="tab" data-s="settings"><svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 14.5a1.5 1.5 0 0 0 .3 1.7l.1.1a1.8 1.8 0 1 1-2.6 2.6l-.1-.1a1.5 1.5 0 0 0-1.7-.3 1.5 1.5 0 0 0-.9 1.4v.2a1.8 1.8 0 1 1-3.6 0v-.1a1.5 1.5 0 0 0-1-1.4 1.5 1.5 0 0 0-1.7.3l-.1.1a1.8 1.8 0 1 1-2.6-2.6l.1-.1a1.5 1.5 0 0 0 .3-1.7 1.5 1.5 0 0 0-1.4-.9h-.2a1.8 1.8 0 1 1 0-3.6h.1a1.5 1.5 0 0 0 1.4-1 1.5 1.5 0 0 0-.3-1.7l-.1-.1a1.8 1.8 0 1 1 2.6-2.6l.1.1a1.5 1.5 0 0 0 1.7.3h0a1.5 1.5 0 0 0 .9-1.4v-.2a1.8 1.8 0 1 1 3.6 0v.1a1.5 1.5 0 0 0 .9 1.4 1.5 1.5 0 0 0 1.7-.3l.1-.1a1.8 1.8 0 1 1 2.6 2.6l-.1.1a1.5 1.5 0 0 0-.3 1.7v0a1.5 1.5 0 0 0 1.4.9h.2a1.8 1.8 0 1 1 0 3.6h-.1a1.5 1.5 0 0 0-1.4.9z"/></svg><span class="nd" id="nd-settings" hidden></span>Settings</button></div></nav>
 <div class="toast" id="toast" hidden></div>
 <script>/* @preserve
  * Leaflet 1.9.4, a JS library for interactive maps. https://leafletjs.com
@@ -1390,7 +1399,7 @@ function vTrip(){
   var s=stay(),cs=[];ITIN.forEach(function(D){if(D.i<s.total&&cs.indexOf(D.b)<0)cs.push(D.b)});
   var h='<div class="head"><div class="headrow"><div><div class="eyebrow">'+fd(s.start)+' – '+fd(stayEnd(s))+' '+s.start.slice(0,4)+'</div><h1>'+esc(cs.map(function(c){return SN(c)}).join(", ")||"Your trip")+'</h1><p class="sub">'+(s.total+1)+' days · '+esc(famSummary(s))+'</p></div><button class="aa" data-act="settings" aria-label="Text size and colours">Aa</button></div></div>';
   h+=todayCard();
-  if(!store.hideHow)h+='<div class="how"><b class="h">How this guide works</b><ol><li><i>1</i><span>Open a day below.</span></li><li><i>2</i><span>Tap <b>Add</b> next to the places you want to visit.</span></li><li><i>3</i><span>Find your own plan in <b>My list</b> at the bottom.</span></li></ol><button class="btn solid" data-act="hidehow">Got it</button></div>';
+  if(!store.hideHow)h+='<div class="how"><b class="h">How this guide works</b><ol><li><i>1</i><span>Open a day below.</span></li><li><i>2</i><span>Tap <b>Add</b> next to the places you want to visit.</span></li><li><i>3</i><span>Build your own itinerary in <b>My itinerary</b> at the bottom.</span></li></ol><button class="btn solid" data-act="hidehow">Got it</button></div>';
   h+=newBanner('trip')+updNotice()+planTiles();
   if(sumNights(s)<s.total)h+='<div class="callout w"><b>Some nights have no city yet</b>The days below follow your night-by-night plan. <button class="lnk" data-act="stay-open">Finish the plan</button></div>';
   var g=-1;
@@ -1406,7 +1415,7 @@ function vTrip(){
 function vDay(){
   var D=ITIN[cur];if(!D){cur=0;D=ITIN[0]}
   var th=D.th,g=D.b,ds=ITIN.filter(function(x){return x.sg===D.sg}),w=wxDay(D.date,WXI[g]),s=stay(),col=SC(g);
-  var h='<div class="nav"><button class="nb" data-act="tab" data-s="trip">'+ic(IC.back)+'Itinerary</button><span class="t">Day '+(cur+1)+'</span><span class="navr"><button class="nb" data-act="day" data-i="'+(cur-1)+'" aria-label="Previous day"'+(cur===0?' disabled':'')+'>'+ic(IC.back)+'</button><button class="nb" data-act="day" data-i="'+(cur+1)+'" aria-label="Next day"'+(cur>=ITIN.length-1?' disabled':'')+'>'+ic(IC.fwd)+'</button></span></div>';
+  var h='<div class="nav"><button class="nb" data-act="tab" data-s="trip">'+ic(IC.back)+'Suggested</button><span class="t">Day '+(cur+1)+'</span><span class="navr"><button class="nb" data-act="day" data-i="'+(cur-1)+'" aria-label="Previous day"'+(cur===0?' disabled':'')+'>'+ic(IC.back)+'</button><button class="nb" data-act="day" data-i="'+(cur+1)+'" aria-label="Next day"'+(cur>=ITIN.length-1?' disabled':'')+'>'+ic(IC.fwd)+'</button></span></div>';
   h+='<div class="head"><div class="eyebrow" style="color:'+col+'">'+dayFlags({stops:D.pl})+esc(SN(g))+' · '+D.dow+' '+D.dm+'</div><h1>'+esc(D.title)+'</h1></div>';
   h+='<div class="segwrap"><div class="cap">Days in this stay · '+esc(SN(g))+'</div><div class="seg">'+ds.map(function(x){return '<button data-act="day" data-i="'+x.i+'" aria-pressed="'+(x.i===cur)+'">'+(x.i+1)+'<small>'+x.dow+'</small></button>'}).join("")+'</div></div>';
   h+='<p class="lede">'+esc(th.lede)+'</p>';
@@ -1450,7 +1459,7 @@ function prow(s,lb){
 
 function vList(){
   var n=totalList();
-  var h='<div class="head"><div class="headrow"><div><div class="eyebrow">Your own plan</div><h1>My list</h1><p class="sub">'+(n?n+(n===1?" place":" places")+" · "+Object.keys(store.done).filter(function(k){return store.done[k]&&store.list[k]}).length+" done":"Nothing added yet")+'</p></div>'+(n?'<button class="aa" data-act="copy" aria-label="Copy my list as text">'+ic(IC.copy)+'</button>':'')+'</div></div>';
+  var h='<div class="head"><div class="headrow"><div><div class="eyebrow">Your own plan</div><h1>My itinerary</h1><p class="sub">'+(n?n+(n===1?" place":" places")+" · "+Object.keys(store.done).filter(function(k){return store.done[k]&&store.list[k]}).length+" done":"Nothing added yet")+'</p></div>'+(n?'<button class="aa" data-act="copy" aria-label="Copy my list as text">'+ic(IC.copy)+'</button>':'')+'</div></div>';
   if(!n){
     h+='<div class="empty"><svg viewBox="0 0 24 24" aria-hidden="true">'+IC.list+'</svg><b>Your list is empty</b><p>Open a day and tap <b style="display:inline;font-size:inherit;color:var(--fg)">Add</b> next to a place. It will appear here, sorted by day.</p><p>You can also start with all the highlights.</p><div class="btnrow"><button class="btn solid" data-act="addmust">Add all “Must see” places</button></div><div class="btnrow" style="margin-top:10px"><button class="btn" data-act="tab" data-s="trip">Browse the days</button></div></div>';return h}
   var LG=listGroups();
@@ -1631,7 +1640,7 @@ function fact(l,t){return t?'<div class="fact"><b>'+l+'</b><span>'+esc(t)+'</spa
 var dctx=[],dback="Back";
 function ctxFor(id){
   var s=P[id],ids;
-  if(view==="list"){ids=[];DAYS.forEach(function(d){d.stops.concat(d.extras).forEach(function(x){if(inList(x))ids.push(x.id)})});dback="My list"}
+  if(view==="list"){ids=[];DAYS.forEach(function(d){d.stops.concat(d.extras).forEach(function(x){if(inList(x))ids.push(x.id)})});dback="My itinerary"}
   else if(view==="map"){ids=mapScope().filter(function(x){return mapDay==="all"||(ITIN[mapDay]&&ITIN[mapDay].has[x.id])}).map(function(x){return x.id});dback="Map"}
   else{var DD=ITIN[cur];ids=(view==="day"&&DD)?DD.all.slice():[];dback="Day "+(cur+1)}
   if(ids.indexOf(id)<0){var DI=itinPlace(id);ids=DI?DI.all.slice():[id];dback=DI?"Day "+(DI.i+1):"Back"}
@@ -1674,7 +1683,7 @@ window.addEventListener("hashchange",function(){closeDetail(true);parseHash();re
 window.addEventListener("popstate",function(){if(!$("detail").hidden&&!(history.state&&history.state.detail))closeDetail(true)});
 
 /* ---------- actions ---------- */
-function toggleAdd(id){var on=!store.list[id];if(on)store.list[id]=true;else{delete store.list[id];delete store.done[id]}save();toast(on?"Added to My list":"Removed from My list");refresh()}
+function toggleAdd(id){var on=!store.list[id];if(on)store.list[id]=true;else{delete store.list[id];delete store.done[id]}save();toast(on?"Added to My list":"Removed from My itinerary");refresh()}
 function refresh(){
   if(view==="map"){drawMap(false);if(selId)openSheet(selId);var n=totalList(),bd=$("tabbadge");bd.textContent=n;bd.hidden=!n}else render(true);
   if(!$("detail").hidden&&detailId)openDetail(detailId)}
@@ -1848,7 +1857,7 @@ function planTiles(){
   return'<div class="sech"><span>Plan</span></div><div class="group tg4">'+tl("stay-open","bed","#007aff","Stay")+tl("pack-open","box","#34c759","Packing list")+tl("print-open","print","#8e8e93","Print PDF")+'</div>'}
 function vMore(){
   var s=stay(),pc=planCities();
-  var h='<div class="nav"><button class="nb" data-act="tab" data-s="trip">'+ic(IC.back)+'Itinerary</button><span class="t">Good to know</span><span style="width:44px"></span></div>';
+  var h='<div class="nav"><button class="nb" data-act="tab" data-s="trip">'+ic(IC.back)+'Suggested</button><span class="t">Good to know</span><span style="width:44px"></span></div>';
   h+='<div class="head"><div class="eyebrow">'+fd(s.start)+' – '+fd(stayEnd(s))+'</div><h1>Events, savings and food</h1><p class="sub">'+MORE_ASOF+'. Dates can change: check the link.</p></div>';
   h+='<div class="segwrap"><div class="seg">'+[["events","Events"],["save","Save money"],["food","Food"]].map(function(x){return'<button data-act="more-tab" data-t="'+x[0]+'" aria-pressed="'+(moreTab===x[0])+'">'+x[1]+'</button>'}).join("")+'</div></div>';
   if(moreTab==="events"){
@@ -1900,7 +1909,7 @@ function vMore(){
   return h}
 
 /* ================= PHASE 1: update, backup, where to stay ================= */
-var APP_VERSION="1.9.5",SCHEMA=3;
+var APP_VERSION="1.9.6",SCHEMA=3;
 function pad2(n){return("0"+n).slice(-2)}
 function today(){var d=new Date();return d.getFullYear()+"-"+pad2(d.getMonth()+1)+"-"+pad2(d.getDate())}
 var WD=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"],MN=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
@@ -2105,7 +2114,7 @@ function pkCount(pe){var n=0,d=0;pe.g.forEach(function(g,gi){g[1].forEach(functi
 function vPack(){
   var pe=pkPeople(),tot=0,dn=0;pe.forEach(function(p){var c=pkCount(p);dn+=c[0];tot+=c[1]});
   var cur=null;pe.forEach(function(p){if(p.k===packTab)cur=p});if(!cur){cur=pe[0];packTab=cur.k}
-  var h='<div class="nav"><button class="nb" data-act="tab" data-s="trip">'+ic(IC.back)+'Itinerary</button><span class="t">Packing</span><span style="width:44px"></span></div><div class="head"><h1>Packing list</h1><p class="sub">'+dn+' of '+tot+' packed</p></div>';
+  var h='<div class="nav"><button class="nb" data-act="tab" data-s="trip">'+ic(IC.back)+'Suggested</button><span class="t">Packing</span><span style="width:44px"></span></div><div class="head"><h1>Packing list</h1><p class="sub">'+dn+' of '+tot+' packed</p></div>';
   h+='<div class="segwrap"><div class="seg pks">'+pe.map(function(p){var c=pkCount(p);return'<button data-act="pack-tab" data-t="'+p.k+'" aria-pressed="'+(p.k===cur.k)+'">'+esc(p.l)+'<small>'+c[0]+'/'+c[1]+'</small></button>'}).join("")+'</div></div>';
   cur.g.forEach(function(g,gi){h+='<div class="sech" style="margin-top:12px;margin-bottom:5px"><span>'+g[0]+'</span></div><div class="group">';g[1].forEach(function(t,ti){var id=cur.k+"."+gi+"."+ti,on=!!(store.pack&&store.pack[id]);h+='<button class="row tap srow pk'+(on?' on':'')+'" data-act="pack-tick" data-id="'+id+'" role="checkbox" aria-checked="'+on+'"><span class="ck">'+(on?ic(IC.check):'')+'</span><span class="grow">'+esc(t)+'</span></button>'});h+='</div>'});
   h+='<p class="foot">Ticks are saved on this phone and go with “Send my plan”. Tap a tab to switch person. The Home tab is for the things to do before you leave.</p>';return h}
@@ -2170,19 +2179,14 @@ function sRow(k,c,t,sub,right,act,more){
   return act?'<button class="row tap srow" data-act="'+act+'"'+(more||'')+'>'+inner+'</button>':'<div class="row srow">'+inner+'</div>'}
 function sSw(on,act){return'<button class="sw" role="switch" aria-checked="'+on+'" data-act="'+act+'" data-v="'+(on?0:1)+'" aria-label="Automatic updates"><i></i></button>'}
 function vSettings(){
+  var fxs0=fxs(),mseg=function(k,o){return'<div class="mseg">'+o.map(function(x){return'<button data-act="fx-set" data-k="'+k+'" data-v="'+x[0]+'" aria-pressed="'+((k==="cur"?fxs0.cur:fxs0.tmp)===x[0])+'">'+x[1]+'</button>'}).join("")+'</div>'},mini=mseg("cur",[["EUR","€"],["SAR","SAR"]])+mseg("tmp",[["C","°C"],["F","°F"]]);
   var th=store.theme||"light",ac=store.accent||"green",ai=0;THEMES.forEach(function(t,k){if(t[0]===ac)ai=k});var nx=THEMES[(ai+1)%THEMES.length];
   var tb=function(k,t,svg){return'<button class="hb" data-act="theme" data-t="'+k+'" aria-label="'+t+'" aria-pressed="'+(th===k)+'"><svg viewBox="0 0 24 24">'+svg+'</svg></button>'};
-  var hb='<div class="hbar hrow" id="settings">'+tb("light","Light",SIC.sun)+tb("dark","Dark",'<path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/>')+tb("auto","Automatic",'<circle cx="12" cy="12" r="8.5"/><path d="M12 3.5v17a8.5 8.5 0 0 0 0-17z" fill="currentColor"/>')+'<span class="hsep"></span><button class="hb t" data-act="fs" data-d="-1" aria-label="Smaller text">A−</button><button class="hb t" data-act="fs" data-d="1" aria-label="Larger text">A+</button><span class="hsep"></span><button class="hb" data-act="accent" data-a="'+nx[0]+'" aria-label="Change colour"><i class="cd" style="background:'+THEMES[ai][2]+'"></i></button></div>',h='<div class="head"><h1>Settings</h1></div>'+hb,st=upd.state,ks=bkDates(),lastBk=ks.length?ks[ks.length-1]:null;
+  var hb='<div class="hbar hrow" id="settings">'+tb("light","Light",SIC.sun)+tb("dark","Dark",'<path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/>')+tb("auto","Automatic",'<circle cx="12" cy="12" r="8.5"/><path d="M12 3.5v17a8.5 8.5 0 0 0 0-17z" fill="currentColor"/>')+'<span class="hsep"></span><button class="hb t" data-act="fs" data-d="-1" aria-label="Smaller text">A−</button><button class="hb t" data-act="fs" data-d="1" aria-label="Larger text">A+</button><span class="hsep"></span><button class="hb" data-act="accent" data-a="'+nx[0]+'" aria-label="Change colour"><i class="cd" style="background:'+THEMES[ai][2]+'"></i></button></div>',h='<div class="head shead"><h1>Settings</h1>'+mini+'</div>'+hb,st=upd.state,ks=bkDates(),lastBk=ks.length?ks[ks.length-1]:null;
   h+=newBanner('settings');
-  var fxs0=fxs(),uSeg=function(k,opts){return'<div class="seg useg">'+opts.map(function(o){return'<button data-act="fx-set" data-k="'+k+'" data-v="'+o[0]+'" aria-pressed="'+((k==="cur"?fxs0.cur:fxs0.tmp)===o[0])+'">'+o[1]+'</button>'}).join("")+'</div>'};
-  h+='<div class="group sg"><div class="row srow unit">'+sI("coin","#34c759")+uSeg("cur",[["EUR","€"],["SAR","SAR"]])+'<span class="usep"></span>'+sI("cloud","#5ac8fa")+uSeg("tmp",[["C","°C"],["F","°F"]])+'</div></div>';
-  h+='<p class="foot sf">Applies to prices and temperatures across the whole guide. 1 EUR ≈ '+fxN(fxs0.r,2)+' SAR'+(fxs0.rd?', rate updated '+fxs0.rd:', rate estimated')+'.</p>';
   if(pendImp)h+='<div class="group sg"><div class="row" style="display:block"><b>A plan was shared with you</b><span class="sm" style="display:block;color:var(--fg);margin:4px 0 8px">'+impSummary(pendImp)+'</span><div class="btnrow"><button class="btn solid" data-act="imp-ok">Replace my plan</button><button class="btn" data-act="imp-no">Cancel</button></div><p class="sm" style="margin:8px 0 0">Your current plan is backed up first.</p></div></div>';
   h+='<div class="group sg">'+sRow("share","#ff9500","Send my plan to another phone","AirDrop, Messages or WhatsApp",ic(IC.fwd,"chev"),"plan-share")+'<div class="row srow">'+sI("link","#ff9500")+'<input id="impbox" class="sin" placeholder="Paste received link" autocomplete="off" autocapitalize="off" spellcheck="false"><button class="btn sm1" data-act="imp-paste">Import</button></div>'+(impMsg?'<div class="row"><span class="sm" style="color:var(--warn)">'+esc(impMsg)+'</span></div>':'')+'</div>';
   h+='<p class="foot sf">Tap Send and pick AirDrop or a chat. Your friend opens the link and taps “Replace my plan”. Both phones need the latest version.</p>';
-  var tl=function(k,c,t,act,x){return'<button class="tile" data-act="'+act+'">'+sI(k,c)+'<span>'+t+'</span></button>'};
-  h+='<div class="group sg tg">'+tl("clock","#007aff","Back up","bk-now")+tl("down","#007aff","Save file","bk-file")+'<label class="tile">'+sI("up","#007aff")+'<span>Restore file</span><input type="file" accept="application/json,.json" data-f="bkfile" hidden></label>'+(ks.length?tl("undo",restoreArm?"#ff3b30":"#007aff",restoreArm?"Tap again":"Last backup","bk-last"):'<span class="tile off">'+sI("undo","#c7c7cc")+'<span>Last backup</span></span>')+'</div>';
-  h+='<p class="foot sf">'+(lastBk?'Last backup: '+fd(lastBk)+'. ':'No backup yet. ')+'Kept on this phone for 7 days.</p>';
   var last=store.lastCheck?new Date(store.lastCheck):null;
   var stt=upd.msg?esc(upd.msg):(upd.latest?(vcmp(upd.latest,APP_VERSION)>0?'Version '+esc(upd.latest)+' is available':'You have the latest version'):'Tap Check to look for updates');
   var vd=store.verDate?new Date(store.verDate+"T00:00:00"):last;var usub=upd.msg||upd.state==="available"?esc(stt):(vd?'Updated on '+vd.getDate()+' '+MN[vd.getMonth()]:esc(stt));
@@ -2190,6 +2194,9 @@ function vSettings(){
   var au=store.autoUpd!==false;
   var right='<span class="ucol">'+ur+'<span class="uaut">Auto'+sSw(au,"upd-auto")+'</span></span>';
   h+='<div class="group sg">'+sRow("refresh","#34c759","App ver "+esc(APP_VERSION),usub,right,null)+(st==="installing"?'<div class="row"><div class="prog"><i></i></div></div>':'')+'</div>';
+  var tl=function(k,c,t,act,x){return'<button class="tile" data-act="'+act+'">'+sI(k,c)+'<span>'+t+'</span></button>'};
+  h+='<div class="group sg tg">'+tl("clock","#007aff","Back up","bk-now")+tl("down","#007aff","Save file","bk-file")+'<label class="tile">'+sI("up","#007aff")+'<span>Restore file</span><input type="file" accept="application/json,.json" data-f="bkfile" hidden></label>'+(ks.length?tl("undo",restoreArm?"#ff3b30":"#007aff",restoreArm?"Tap again":"Last backup","bk-last"):'<span class="tile off">'+sI("undo","#c7c7cc")+'<span>Last backup</span></span>')+'</div>';
+  h+='<p class="foot sf">'+(lastBk?'Last backup: '+fd(lastBk)+'. ':'No backup yet. ')+'Kept on this phone for 7 days.</p>';
   h+=deferredInstall?'<div class="group sg">'+sRow("phone","#34c759","Install on this phone","",ic(IC.fwd,"chev"),"install")+'</div>':'';
     h+='<p class="foot sf">Add to Home Screen: iPhone, Share then Add to Home Screen. Works offline after you open it once with internet.</p>';
   return h}
@@ -2370,7 +2377,7 @@ function planCard(s,k,rows,stats,isCur,btn){
 function vStay(){
   var s=stay(),sum=sumNights(s),unp=s.total-sum,sc=schedule(s),rm=roadmap(s),wn=warnings(s),gn=guideNights();
   var airOpts=function(sel){return Object.keys(AIR).map(function(k){return'<option value="'+k+'"'+(sel===k?" selected":"")+'>'+AIR[k].n+'</option>'}).join("")};
-  var h='<div class="nav"><button class="nb" data-act="tab" data-s="trip">'+ic(IC.back)+'Itinerary</button><span class="t">Where to stay</span><span style="width:44px"></span></div>';
+  var h='<div class="nav"><button class="nb" data-act="tab" data-s="trip">'+ic(IC.back)+'Suggested</button><span class="t">Where to stay</span><span style="width:44px"></span></div>';
   h+='<div class="head"><div class="eyebrow">Hotel nights</div><h1>Where to stay</h1><p class="sub">'+s.total+' nights · '+fd(s.start)+' to '+fd(stayEnd(s))+'</p></div>';
   if(!store.hideStayHow)h+='<div class="how"><b class="h">How it works</b><ol><li><i>1</i><span>Check <b>your journey</b> and <b>family</b>.</span></li><li><i>2</i><span>Pick a <b>city for each night</b>. Add hotel names if you like.</span></li><li><i>3</i><span>Your <b>route and map</b> appear by themselves.</span></li></ol><button class="btn solid" data-act="stay-how">Got it</button></div>';
   /* 1 journey */
