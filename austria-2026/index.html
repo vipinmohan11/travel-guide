@@ -1553,16 +1553,17 @@ function vTips(){
    "Hallo / Guten Tag / Grüß Gott: hello","Danke / Bitte: thanks / please","Haben Sie einen Tisch für … Personen? Do you have a table for … people?","Eine Tageskarte für … Erwachsene und … Kinder, bitte: a day ticket for … adults and … children, please","Zusammen, bitte: together, please (paying)","Die Rechnung, bitte: the bill, please","Kinderpunsch, bitte: a children’s punch, please","Ist da Schweinefleisch drin? Is there pork in it?","Ohne Schweinefleisch, bitte: without pork, please","Stilles Wasser, bitte: still water, please"]));
   var TI={"Before you go":["list","Before you go","#007aff"],"Hotels":["bed","Hotels","#007aff"],"Trains, tickets and transport":["train","Trains","#007aff"],
    "Restaurants: the unwritten rules":["fork","Restaurants","#ff9500"],"Cash, cards and bottle deposits":["card","Cash, cards","#ff9500"],"Opening times, water and toilets":["clock","Hours","#ff9500"],
-   "Weather and clothes":["cloud","Weather","#34c759"],"What to wear: everyone, and why":["coat","Clothes","#34c759"],"Christmas markets with children":["tree","Markets","#34c759"],"Krampus and Nikolaus":["mask","Krampus","#34c759"],"Mountain days and swapping days":["mount","Mountains","#34c759"],"Useful German":["chat","German","#34c759"]};
+   "Weather and clothes":["cloud","Weather","#34c759"],"What to wear: everyone, and why":["coat","Clothes","#34c759"],"Christmas markets with children":["tree","Markets","#34c759"],"Krampus and Nikolaus":["mask","Krampus","#34c759"],"Mountain days and swapping days":["mount","Mountains","#34c759"],"Useful German":["chat","German","#34c759"],"Events":["cal","Events","#ff9500"],"Save money":["card","Save money","#ff9500"],"Food":["fork","Food","#ff9500"]};
   var cur=null;TS.forEach(function(x){if(x.t===tipSec)cur=x});
   if(cur){
     var ti=TI[cur.t]||["list",cur.t,"#007aff"];
     return'<div class="nav"><button class="nb" data-act="tip-back">'+ic(IC.back)+'Tips</button><span class="t">'+esc(ti[1])+'</span><span style="width:44px"></span></div><div class="head sh"><h1 style="font-size:1.5rem">'+sI(ti[0],ti[2]).replace('class="si"','class="si lg"')+' '+cur.t+'</h1></div><div class="group"><div class="in" style="padding:6px 16px 12px">'+cur.b+'</div></div><p class="foot">Emergency: 112 (all of Europe). Prices, hours and train times are estimates: check the official sites.</p>'}
   h=h.replace('<div class="eyebrow">Before and during the trip</div>','');
+  TS.push({c:"On the trip",t:"Events",b:"",more:"events"});TS.push({c:"Eating and money",t:"Save money",b:"",more:"save"});TS.push({c:"Eating and money",t:"Food",b:"",more:"food"});
   var cats=[];TS.forEach(function(x){if(cats.indexOf(x.c)<0)cats.push(x.c)});
   cats.forEach(function(cn){
     h+='<div class="sech" style="margin-top:14px;margin-bottom:5px"><span>'+cn+'</span></div><div class="group tg3">';
-    TS.forEach(function(x){if(x.c!==cn)return;var ti=TI[x.t]||["list",x.t,"#007aff"];h+='<button class="tile" data-act="tip-open" data-t="'+esc(x.t)+'">'+sI(ti[0],ti[2])+'<span>'+ti[1]+'</span></button>'});
+    TS.forEach(function(x){if(x.c!==cn)return;var ti=TI[x.t]||["list",x.t,"#007aff"];h+='<button class="tile" data-act="'+(x.more?'tip-more':'tip-open')+'" data-t="'+esc(x.t)+'" data-m="'+(x.more||'')+'">'+sI(ti[0],ti[2])+'<span>'+ti[1]+'</span></button>'});
     h+='</div>'});
   h+=newBanner('tips');
   h+='<div class="callout w" style="margin-top:14px"><b>Emergency: 112</b>Works all over Europe. Prices, hours and train times are estimates: check the official sites.</div>';
@@ -1704,6 +1705,7 @@ document.addEventListener("click",function(e){
    case"day":{var i=+t.getAttribute("data-i");if(ITIN[i])go("day-"+(i+1));break}
    case"tip-open":tipSec=t.getAttribute("data-t");render();break;
    case"tip-back":tipSec=null;render();break;
+   case"tip-more":moreTab=t.getAttribute("data-m");go("more");break;
    case"tab":go(t.getAttribute("data-s"));break;
    case"hidehow":store.hideHow=true;save();render(true);break;
    case"settings":go("settings");break;
@@ -1843,7 +1845,7 @@ function fchip(t){return'<span class="ft ft-'+t.toLowerCase()+'">'+FDET[t]+'</sp
 function planCities(){var o=[];ITIN.forEach(function(D){if(o.indexOf(D.b)<0)o.push(D.b)});return o}
 function planTiles(){
   var tl=function(act,k,c,t){return'<button class="tile" data-act="'+act+'">'+sI(k,c)+'<span>'+t+'</span></button>'};
-  return'<div class="sech"><span>Plan</span></div><div class="group tg4">'+tl("stay-open","bed","#007aff","Stay")+tl("pack-open","box","#34c759","Packing")+tl("more-open","cal","#ff9500","Events")+tl("print-open","print","#8e8e93","Print PDF")+'</div>'}
+  return'<div class="sech"><span>Plan</span></div><div class="group tg4">'+tl("stay-open","bed","#007aff","Stay")+tl("pack-open","box","#34c759","Packing list")+tl("print-open","print","#8e8e93","Print PDF")+'</div>'}
 function vMore(){
   var s=stay(),pc=planCities();
   var h='<div class="nav"><button class="nb" data-act="tab" data-s="trip">'+ic(IC.back)+'Itinerary</button><span class="t">Good to know</span><span style="width:44px"></span></div>';
@@ -1898,7 +1900,7 @@ function vMore(){
   return h}
 
 /* ================= PHASE 1: update, backup, where to stay ================= */
-var APP_VERSION="1.9.4",SCHEMA=3;
+var APP_VERSION="1.9.5",SCHEMA=3;
 function pad2(n){return("0"+n).slice(-2)}
 function today(){var d=new Date();return d.getFullYear()+"-"+pad2(d.getMonth()+1)+"-"+pad2(d.getDate())}
 var WD=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"],MN=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
@@ -2134,6 +2136,7 @@ function doImport(){
   store.planImported=today();save();pendImp=null;impMsg="";
   try{applyAll()}catch(e){}try{buildItin()}catch(e){}toast("Plan imported");go("trip")}
 var SIC={
+ coin:'<circle cx="12" cy="12" r="8.5"/><path d="M15.2 9.3a4 4 0 1 0 0 5.4M7.6 11h5.2M7.6 13h5.2"/>',
  print:'<path d="M7 9V3.5h10V9"/><rect x="4" y="9" width="16" height="7.5" rx="2"/><path d="M7 14h10v6.5H7z"/>',
  house:'<path d="M4 11 12 4l8 7v9H4z"/><path d="M10 20v-5h4v5"/>',
  cal:'<rect x="4" y="5" width="16" height="15" rx="2.5"/><path d="M4 10h16M9 3v4M15 3v4"/>',
@@ -2171,6 +2174,15 @@ function vSettings(){
   var tb=function(k,t,svg){return'<button class="hb" data-act="theme" data-t="'+k+'" aria-label="'+t+'" aria-pressed="'+(th===k)+'"><svg viewBox="0 0 24 24">'+svg+'</svg></button>'};
   var hb='<div class="hbar hrow" id="settings">'+tb("light","Light",SIC.sun)+tb("dark","Dark",'<path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/>')+tb("auto","Automatic",'<circle cx="12" cy="12" r="8.5"/><path d="M12 3.5v17a8.5 8.5 0 0 0 0-17z" fill="currentColor"/>')+'<span class="hsep"></span><button class="hb t" data-act="fs" data-d="-1" aria-label="Smaller text">A−</button><button class="hb t" data-act="fs" data-d="1" aria-label="Larger text">A+</button><span class="hsep"></span><button class="hb" data-act="accent" data-a="'+nx[0]+'" aria-label="Change colour"><i class="cd" style="background:'+THEMES[ai][2]+'"></i></button></div>',h='<div class="head"><h1>Settings</h1></div>'+hb,st=upd.state,ks=bkDates(),lastBk=ks.length?ks[ks.length-1]:null;
   h+=newBanner('settings');
+  var fxs0=fxs(),uSeg=function(k,opts){return'<div class="seg useg">'+opts.map(function(o){return'<button data-act="fx-set" data-k="'+k+'" data-v="'+o[0]+'" aria-pressed="'+((k==="cur"?fxs0.cur:fxs0.tmp)===o[0])+'">'+o[1]+'</button>'}).join("")+'</div>'};
+  h+='<div class="group sg"><div class="row srow unit">'+sI("coin","#34c759")+uSeg("cur",[["EUR","€"],["SAR","SAR"]])+'<span class="usep"></span>'+sI("cloud","#5ac8fa")+uSeg("tmp",[["C","°C"],["F","°F"]])+'</div></div>';
+  h+='<p class="foot sf">Applies to prices and temperatures across the whole guide. 1 EUR ≈ '+fxN(fxs0.r,2)+' SAR'+(fxs0.rd?', rate updated '+fxs0.rd:', rate estimated')+'.</p>';
+  if(pendImp)h+='<div class="group sg"><div class="row" style="display:block"><b>A plan was shared with you</b><span class="sm" style="display:block;color:var(--fg);margin:4px 0 8px">'+impSummary(pendImp)+'</span><div class="btnrow"><button class="btn solid" data-act="imp-ok">Replace my plan</button><button class="btn" data-act="imp-no">Cancel</button></div><p class="sm" style="margin:8px 0 0">Your current plan is backed up first.</p></div></div>';
+  h+='<div class="group sg">'+sRow("share","#ff9500","Send my plan to another phone","AirDrop, Messages or WhatsApp",ic(IC.fwd,"chev"),"plan-share")+'<div class="row srow">'+sI("link","#ff9500")+'<input id="impbox" class="sin" placeholder="Paste received link" autocomplete="off" autocapitalize="off" spellcheck="false"><button class="btn sm1" data-act="imp-paste">Import</button></div>'+(impMsg?'<div class="row"><span class="sm" style="color:var(--warn)">'+esc(impMsg)+'</span></div>':'')+'</div>';
+  h+='<p class="foot sf">Tap Send and pick AirDrop or a chat. Your friend opens the link and taps “Replace my plan”. Both phones need the latest version.</p>';
+  var tl=function(k,c,t,act,x){return'<button class="tile" data-act="'+act+'">'+sI(k,c)+'<span>'+t+'</span></button>'};
+  h+='<div class="group sg tg">'+tl("clock","#007aff","Back up","bk-now")+tl("down","#007aff","Save file","bk-file")+'<label class="tile">'+sI("up","#007aff")+'<span>Restore file</span><input type="file" accept="application/json,.json" data-f="bkfile" hidden></label>'+(ks.length?tl("undo",restoreArm?"#ff3b30":"#007aff",restoreArm?"Tap again":"Last backup","bk-last"):'<span class="tile off">'+sI("undo","#c7c7cc")+'<span>Last backup</span></span>')+'</div>';
+  h+='<p class="foot sf">'+(lastBk?'Last backup: '+fd(lastBk)+'. ':'No backup yet. ')+'Kept on this phone for 7 days.</p>';
   var last=store.lastCheck?new Date(store.lastCheck):null;
   var stt=upd.msg?esc(upd.msg):(upd.latest?(vcmp(upd.latest,APP_VERSION)>0?'Version '+esc(upd.latest)+' is available':'You have the latest version'):'Tap Check to look for updates');
   var vd=store.verDate?new Date(store.verDate+"T00:00:00"):last;var usub=upd.msg||upd.state==="available"?esc(stt):(vd?'Updated on '+vd.getDate()+' '+MN[vd.getMonth()]:esc(stt));
@@ -2178,15 +2190,6 @@ function vSettings(){
   var au=store.autoUpd!==false;
   var right='<span class="ucol">'+ur+'<span class="uaut">Auto'+sSw(au,"upd-auto")+'</span></span>';
   h+='<div class="group sg">'+sRow("refresh","#34c759","App ver "+esc(APP_VERSION),usub,right,null)+(st==="installing"?'<div class="row"><div class="prog"><i></i></div></div>':'')+'</div>';
-  var tl=function(k,c,t,act,x){return'<button class="tile" data-act="'+act+'">'+sI(k,c)+'<span>'+t+'</span></button>'};
-  h+='<div class="group sg tg">'+tl("clock","#007aff","Back up","bk-now")+tl("down","#007aff","Save file","bk-file")+'<label class="tile">'+sI("up","#007aff")+'<span>Restore file</span><input type="file" accept="application/json,.json" data-f="bkfile" hidden></label>'+(ks.length?tl("undo",restoreArm?"#ff3b30":"#007aff",restoreArm?"Tap again":"Last backup","bk-last"):'<span class="tile off">'+sI("undo","#c7c7cc")+'<span>Last backup</span></span>')+'</div>';
-  h+='<p class="foot sf">'+(lastBk?'Last backup: '+fd(lastBk)+'. ':'No backup yet. ')+'Kept on this phone for 7 days.</p>';
-  var fxs0=fxs(),uSeg=function(k,opts){return'<div class="seg useg">'+opts.map(function(o){return'<button data-act="fx-set" data-k="'+k+'" data-v="'+o[0]+'" aria-pressed="'+((k==="cur"?fxs0.cur:fxs0.tmp)===o[0])+'">'+o[1]+'</button>'}).join("")+'</div>'};
-  h+='<div class="group sg"><div class="row srow unit">'+sI("card","#34c759")+uSeg("cur",[["EUR","€"],["SAR","SAR"]])+'<span class="usep"></span>'+sI("cloud","#5ac8fa")+uSeg("tmp",[["C","°C"],["F","°F"]])+'</div></div>';
-  h+='<p class="foot sf">Applies to prices and temperatures across the whole guide. 1 EUR ≈ '+fxN(fxs0.r,2)+' SAR'+(fxs0.rd?', rate updated '+fxs0.rd:', rate estimated')+'.</p>';
-  if(pendImp)h+='<div class="group sg"><div class="row" style="display:block"><b>A plan was shared with you</b><span class="sm" style="display:block;color:var(--fg);margin:4px 0 8px">'+impSummary(pendImp)+'</span><div class="btnrow"><button class="btn solid" data-act="imp-ok">Replace my plan</button><button class="btn" data-act="imp-no">Cancel</button></div><p class="sm" style="margin:8px 0 0">Your current plan is backed up first.</p></div></div>';
-  h+='<div class="group sg">'+sRow("share","#ff9500","Send my plan to another phone","AirDrop, Messages or WhatsApp",ic(IC.fwd,"chev"),"plan-share")+'<div class="row srow">'+sI("link","#ff9500")+'<input id="impbox" class="sin" placeholder="Paste received link" autocomplete="off" autocapitalize="off" spellcheck="false"><button class="btn sm1" data-act="imp-paste">Import</button></div>'+(impMsg?'<div class="row"><span class="sm" style="color:var(--warn)">'+esc(impMsg)+'</span></div>':'')+'</div>';
-  h+='<p class="foot sf">Tap Send and pick AirDrop or a chat. Your friend opens the link and taps “Replace my plan”. Both phones need the latest version.</p>';
   h+=deferredInstall?'<div class="group sg">'+sRow("phone","#34c759","Install on this phone","",ic(IC.fwd,"chev"),"install")+'</div>':'';
     h+='<p class="foot sf">Add to Home Screen: iPhone, Share then Add to Home Screen. Works offline after you open it once with internet.</p>';
   return h}
