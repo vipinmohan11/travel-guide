@@ -1038,7 +1038,6 @@ select,input[type=date]{margin-left:auto;font:inherit;font-size:.9375rem;color:v
 #fxbar{display:flex;justify-content:center;padding:calc(env(safe-area-inset-top,0px) + 6px) 12px 6px}
 .fxseg,.fxr{display:none}
 </style></head><body>
-<div id="fxbar"></div>
 <main id="app"><section id="v-trip"></section><section id="v-day" hidden></section><section id="v-map" hidden></section><section id="v-list" hidden></section><section id="v-tips" hidden></section><section id="v-stay" hidden></section><section id="v-more" hidden></section><section id="v-settings" hidden></section><section id="v-pack" hidden></section></main>
 <div id="detail" class="page" hidden></div>
 <nav class="tabbar" aria-label="Main"><div class="in"><button data-act="tab" data-s="trip"><svg class="ic" viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="2.5"/><path d="M4 10h16M8.5 3v4M15.5 3v4"/><path d="M8 14h2M14 14h2M8 17h2"/></svg><span class="nd" id="nd-trip" hidden></span>Itinerary</button><button data-act="tab" data-s="map"><svg class="ic" viewBox="0 0 24 24"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.3"/></svg>Map</button><button data-act="tab" data-s="list"><svg class="ic" viewBox="0 0 24 24"><path d="M6.5 4h11a1 1 0 0 1 1 1v15l-6.5-4-6.5 4V5a1 1 0 0 1 1-1z"/><path d="m9.3 10 1.9 1.9 3.5-3.7"/></svg><span class="badge" id="tabbadge" hidden></span>My list</button><button data-act="tab" data-s="tips"><svg class="ic" viewBox="0 0 24 24"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.6 10.8c.6.5 1 1.2 1 2V16h5.2v-.2c0-.8.4-1.5 1-2A6 6 0 0 0 12 3z"/></svg><span class="nd" id="nd-tips" hidden></span>Tips</button><button data-act="tab" data-s="settings"><svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 14.5a1.5 1.5 0 0 0 .3 1.7l.1.1a1.8 1.8 0 1 1-2.6 2.6l-.1-.1a1.5 1.5 0 0 0-1.7-.3 1.5 1.5 0 0 0-.9 1.4v.2a1.8 1.8 0 1 1-3.6 0v-.1a1.5 1.5 0 0 0-1-1.4 1.5 1.5 0 0 0-1.7.3l-.1.1a1.8 1.8 0 1 1-2.6-2.6l.1-.1a1.5 1.5 0 0 0 .3-1.7 1.5 1.5 0 0 0-1.4-.9h-.2a1.8 1.8 0 1 1 0-3.6h.1a1.5 1.5 0 0 0 1.4-1 1.5 1.5 0 0 0-.3-1.7l-.1-.1a1.8 1.8 0 1 1 2.6-2.6l.1.1a1.5 1.5 0 0 0 1.7.3h0a1.5 1.5 0 0 0 .9-1.4v-.2a1.8 1.8 0 1 1 3.6 0v.1a1.5 1.5 0 0 0 .9 1.4 1.5 1.5 0 0 0 1.7-.3l.1-.1a1.8 1.8 0 1 1 2.6 2.6l-.1.1a1.5 1.5 0 0 0-.3 1.7v0a1.5 1.5 0 0 0 1.4.9h.2a1.8 1.8 0 1 1 0 3.6h-.1a1.5 1.5 0 0 0-1.4.9z"/></svg><span class="nd" id="nd-settings" hidden></span>Settings</button></div></nav>
@@ -1894,7 +1893,7 @@ function vMore(){
   return h}
 
 /* ================= PHASE 1: update, backup, where to stay ================= */
-var APP_VERSION="1.9.2",SCHEMA=3;
+var APP_VERSION="1.9.3",SCHEMA=3;
 function pad2(n){return("0"+n).slice(-2)}
 function today(){var d=new Date();return d.getFullYear()+"-"+pad2(d.getMonth()+1)+"-"+pad2(d.getDate())}
 var WD=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"],MN=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
@@ -2067,7 +2066,7 @@ function initFx(){
   fxBar();
   var f=fxs();
   if(!f.rd||f.rd!==today()){try{fetch("https://api.frankfurter.dev/v1/latest?base=EUR&symbols=USD").then(function(r){return r.json()}).then(function(j){var u=j&&j.rates&&j.rates.USD;if(u>0.5&&u<2){var g=fxs();g.r=Math.round(u*3.75*1000)/1000;g.rd=today();save();fxBar();render(true)}}).catch(function(){})}catch(e){}}}
-function fxNote(){var f=fxs();return'1 € ≈ '+fxN(f.r,3)+' SAR'+(f.rd?' (updated '+f.rd+')':' (estimate: connect to the internet to update)')}
+function fxNote(){var f=fxs();return'1 EUR ≈ '+fxN(f.r,3)+' SAR'+(f.rd?' (updated '+f.rd+')':' (estimate: connect to the internet to update)')}
 /* sun */
 function sunTimes(iso,lat,lng){
   var d=new Date(iso+"T12:00:00Z"),n=Math.floor((d-Date.UTC(d.getUTCFullYear(),0,0))/864e5),R=Math.PI/180,g=2*Math.PI/365*(n-1);
@@ -2177,12 +2176,14 @@ function vSettings(){
   var tl=function(k,c,t,act,x){return'<button class="tile" data-act="'+act+'">'+sI(k,c)+'<span>'+t+'</span></button>'};
   h+='<div class="group sg tg">'+tl("clock","#007aff","Back up","bk-now")+tl("down","#007aff","Save file","bk-file")+'<label class="tile">'+sI("up","#007aff")+'<span>Restore file</span><input type="file" accept="application/json,.json" data-f="bkfile" hidden></label>'+(ks.length?tl("undo",restoreArm?"#ff3b30":"#007aff",restoreArm?"Tap again":"Last backup","bk-last"):'<span class="tile off">'+sI("undo","#c7c7cc")+'<span>Last backup</span></span>')+'</div>';
   h+='<p class="foot sf">'+(lastBk?'Last backup: '+fd(lastBk)+'. ':'No backup yet. ')+'Kept on this phone for 7 days.</p>';
+  var fxs0=fxs(),uSeg=function(k,opts){return'<div class="seg" style="margin-left:auto;min-width:150px">'+opts.map(function(o){return'<button data-act="fx-set" data-k="'+k+'" data-v="'+o[0]+'" aria-pressed="'+((k==="cur"?fxs0.cur:fxs0.tmp)===o[0])+'">'+o[1]+'</button>'}).join("")+'</div>'};
+  h+='<div class="group sg"><div class="row srow">'+sI("card","#34c759")+'<span class="stt">Currency</span>'+uSeg("cur",[["EUR","€ Euro"],["SAR","SAR"]])+'</div><div class="row srow">'+sI("cloud","#5ac8fa")+'<span class="stt">Temperature</span>'+uSeg("tmp",[["C","°C"],["F","°F"]])+'</div></div>';
+  h+='<p class="foot sf">Applies to prices and temperatures across the whole guide. 1 EUR ≈ '+fxN(fxs0.r,2)+' SAR'+(fxs0.rd?', rate updated '+fxs0.rd:', rate estimated')+'.</p>';
   if(pendImp)h+='<div class="group sg"><div class="row" style="display:block"><b>A plan was shared with you</b><span class="sm" style="display:block;color:var(--fg);margin:4px 0 8px">'+impSummary(pendImp)+'</span><div class="btnrow"><button class="btn solid" data-act="imp-ok">Replace my plan</button><button class="btn" data-act="imp-no">Cancel</button></div><p class="sm" style="margin:8px 0 0">Your current plan is backed up first.</p></div></div>';
   h+='<div class="group sg">'+sRow("share","#ff9500","Send my plan to another phone","AirDrop, Messages or WhatsApp",ic(IC.fwd,"chev"),"plan-share")+'<div class="row srow">'+sI("link","#ff9500")+'<input id="impbox" class="sin" placeholder="Paste received link" autocomplete="off" autocapitalize="off" spellcheck="false"><button class="btn sm1" data-act="imp-paste">Import</button></div>'+(impMsg?'<div class="row"><span class="sm" style="color:var(--warn)">'+esc(impMsg)+'</span></div>':'')+'</div>';
   h+='<p class="foot sf">Tap Send and pick AirDrop or a chat. Your friend opens the link and taps “Replace my plan”. Both phones need the latest version.</p>';
   h+=deferredInstall?'<div class="group sg">'+sRow("phone","#34c759","Install on this phone","",ic(IC.fwd,"chev"),"install")+'</div>':'';
-  h+='<p class="foot sf">Currency: '+fxNote()+'. Temperatures: °C to °F.</p>';
-  h+='<p class="foot sf">Add to Home Screen: iPhone, Share then Add to Home Screen. Works offline after you open it once with internet.</p>';
+    h+='<p class="foot sf">Add to Home Screen: iPhone, Share then Add to Home Screen. Works offline after you open it once with internet.</p>';
   return h}
 
 /* ---------- where to stay ---------- */
