@@ -1029,11 +1029,19 @@ select,input[type=date]{margin-left:auto;font:inherit;font-size:.9375rem;color:v
 .fxseg button[aria-pressed="true"]{background:var(--accent);color:#fff}
 .fxr{font-size:.6875rem;color:var(--sub);margin-left:auto}
 #fxbar{justify-content:flex-start;gap:8px;flex-wrap:nowrap}
+
+.fxall{display:inline-flex;align-items:center;gap:0;background:var(--bg);border:1px solid var(--line);border-radius:999px;padding:3px}
+.fxg{display:inline-flex;gap:2px}
+.fxg button{border:0;background:none;padding:5px 11px;border-radius:999px;font:inherit;font-size:.8125rem;font-weight:600;color:var(--sub)}
+.fxg button[aria-pressed="true"]{background:var(--accent);color:#fff}
+.fxdiv{width:1px;height:18px;background:var(--line);margin:0 6px}
+#fxbar{display:flex;justify-content:center;padding:calc(env(safe-area-inset-top,0px) + 6px) 12px 6px}
+.fxseg,.fxr{display:none}
 </style></head><body>
 <div id="fxbar"></div>
 <main id="app"><section id="v-trip"></section><section id="v-day" hidden></section><section id="v-map" hidden></section><section id="v-list" hidden></section><section id="v-tips" hidden></section><section id="v-stay" hidden></section><section id="v-more" hidden></section><section id="v-settings" hidden></section><section id="v-pack" hidden></section></main>
 <div id="detail" class="page" hidden></div>
-<nav class="tabbar" aria-label="Main"><div class="in"><button data-act="tab" data-s="trip"><svg class="ic" viewBox="0 0 24 24"><rect x="4" y="8" width="16" height="12" rx="2.5"/><path d="M9 8V6a1.5 1.5 0 0 1 1.5-1.5h3A1.5 1.5 0 0 1 15 6v2M4 13.5h16M10.5 13.5v1.5h3v-1.5"/></svg><span class="nd" id="nd-trip" hidden></span>Trip</button><button data-act="tab" data-s="map"><svg class="ic" viewBox="0 0 24 24"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.3"/></svg>Trip map</button><button data-act="tab" data-s="list"><svg class="ic" viewBox="0 0 24 24"><path d="M6.5 4h11a1 1 0 0 1 1 1v15l-6.5-4-6.5 4V5a1 1 0 0 1 1-1z"/><path d="m9.3 10 1.9 1.9 3.5-3.7"/></svg><span class="badge" id="tabbadge" hidden></span>My list</button><button data-act="tab" data-s="tips"><svg class="ic" viewBox="0 0 24 24"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.6 10.8c.6.5 1 1.2 1 2V16h5.2v-.2c0-.8.4-1.5 1-2A6 6 0 0 0 12 3z"/></svg><span class="nd" id="nd-tips" hidden></span>Tips</button><button data-act="tab" data-s="settings"><svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 14.5a1.5 1.5 0 0 0 .3 1.7l.1.1a1.8 1.8 0 1 1-2.6 2.6l-.1-.1a1.5 1.5 0 0 0-1.7-.3 1.5 1.5 0 0 0-.9 1.4v.2a1.8 1.8 0 1 1-3.6 0v-.1a1.5 1.5 0 0 0-1-1.4 1.5 1.5 0 0 0-1.7.3l-.1.1a1.8 1.8 0 1 1-2.6-2.6l.1-.1a1.5 1.5 0 0 0 .3-1.7 1.5 1.5 0 0 0-1.4-.9h-.2a1.8 1.8 0 1 1 0-3.6h.1a1.5 1.5 0 0 0 1.4-1 1.5 1.5 0 0 0-.3-1.7l-.1-.1a1.8 1.8 0 1 1 2.6-2.6l.1.1a1.5 1.5 0 0 0 1.7.3h0a1.5 1.5 0 0 0 .9-1.4v-.2a1.8 1.8 0 1 1 3.6 0v.1a1.5 1.5 0 0 0 .9 1.4 1.5 1.5 0 0 0 1.7-.3l.1-.1a1.8 1.8 0 1 1 2.6 2.6l-.1.1a1.5 1.5 0 0 0-.3 1.7v0a1.5 1.5 0 0 0 1.4.9h.2a1.8 1.8 0 1 1 0 3.6h-.1a1.5 1.5 0 0 0-1.4.9z"/></svg><span class="nd" id="nd-settings" hidden></span>Settings</button></div></nav>
+<nav class="tabbar" aria-label="Main"><div class="in"><button data-act="tab" data-s="trip"><svg class="ic" viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="2.5"/><path d="M4 10h16M8.5 3v4M15.5 3v4"/><path d="M8 14h2M14 14h2M8 17h2"/></svg><span class="nd" id="nd-trip" hidden></span>Itinerary</button><button data-act="tab" data-s="map"><svg class="ic" viewBox="0 0 24 24"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.3"/></svg>Map</button><button data-act="tab" data-s="list"><svg class="ic" viewBox="0 0 24 24"><path d="M6.5 4h11a1 1 0 0 1 1 1v15l-6.5-4-6.5 4V5a1 1 0 0 1 1-1z"/><path d="m9.3 10 1.9 1.9 3.5-3.7"/></svg><span class="badge" id="tabbadge" hidden></span>My list</button><button data-act="tab" data-s="tips"><svg class="ic" viewBox="0 0 24 24"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.6 10.8c.6.5 1 1.2 1 2V16h5.2v-.2c0-.8.4-1.5 1-2A6 6 0 0 0 12 3z"/></svg><span class="nd" id="nd-tips" hidden></span>Tips</button><button data-act="tab" data-s="settings"><svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 14.5a1.5 1.5 0 0 0 .3 1.7l.1.1a1.8 1.8 0 1 1-2.6 2.6l-.1-.1a1.5 1.5 0 0 0-1.7-.3 1.5 1.5 0 0 0-.9 1.4v.2a1.8 1.8 0 1 1-3.6 0v-.1a1.5 1.5 0 0 0-1-1.4 1.5 1.5 0 0 0-1.7.3l-.1.1a1.8 1.8 0 1 1-2.6-2.6l.1-.1a1.5 1.5 0 0 0 .3-1.7 1.5 1.5 0 0 0-1.4-.9h-.2a1.8 1.8 0 1 1 0-3.6h.1a1.5 1.5 0 0 0 1.4-1 1.5 1.5 0 0 0-.3-1.7l-.1-.1a1.8 1.8 0 1 1 2.6-2.6l.1.1a1.5 1.5 0 0 0 1.7.3h0a1.5 1.5 0 0 0 .9-1.4v-.2a1.8 1.8 0 1 1 3.6 0v.1a1.5 1.5 0 0 0 .9 1.4 1.5 1.5 0 0 0 1.7-.3l.1-.1a1.8 1.8 0 1 1 2.6 2.6l-.1.1a1.5 1.5 0 0 0-.3 1.7v0a1.5 1.5 0 0 0 1.4.9h.2a1.8 1.8 0 1 1 0 3.6h-.1a1.5 1.5 0 0 0-1.4.9z"/></svg><span class="nd" id="nd-settings" hidden></span>Settings</button></div></nav>
 <div class="toast" id="toast" hidden></div>
 <script>/* @preserve
  * Leaflet 1.9.4, a JS library for interactive maps. https://leafletjs.com
@@ -1394,7 +1402,7 @@ function vTrip(){
 function vDay(){
   var D=ITIN[cur];if(!D){cur=0;D=ITIN[0]}
   var th=D.th,g=D.b,ds=ITIN.filter(function(x){return x.sg===D.sg}),w=wxDay(D.date,WXI[g]),s=stay(),col=SC(g);
-  var h='<div class="nav"><button class="nb" data-act="tab" data-s="trip">'+ic(IC.back)+'Trip</button><span class="t">Day '+(cur+1)+'</span><span class="navr"><button class="nb" data-act="day" data-i="'+(cur-1)+'" aria-label="Previous day"'+(cur===0?' disabled':'')+'>'+ic(IC.back)+'</button><button class="nb" data-act="day" data-i="'+(cur+1)+'" aria-label="Next day"'+(cur>=ITIN.length-1?' disabled':'')+'>'+ic(IC.fwd)+'</button></span></div>';
+  var h='<div class="nav"><button class="nb" data-act="tab" data-s="trip">'+ic(IC.back)+'Itinerary</button><span class="t">Day '+(cur+1)+'</span><span class="navr"><button class="nb" data-act="day" data-i="'+(cur-1)+'" aria-label="Previous day"'+(cur===0?' disabled':'')+'>'+ic(IC.back)+'</button><button class="nb" data-act="day" data-i="'+(cur+1)+'" aria-label="Next day"'+(cur>=ITIN.length-1?' disabled':'')+'>'+ic(IC.fwd)+'</button></span></div>';
   h+='<div class="head"><div class="eyebrow" style="color:'+col+'">'+dayFlags({stops:D.pl})+esc(SN(g))+' · '+D.dow+' '+D.dm+'</div><h1>'+esc(D.title)+'</h1></div>';
   h+='<div class="segwrap"><div class="cap">Days in this stay · '+esc(SN(g))+'</div><div class="seg">'+ds.map(function(x){return '<button data-act="day" data-i="'+x.i+'" aria-pressed="'+(x.i===cur)+'">'+(x.i+1)+'<small>'+x.dow+'</small></button>'}).join("")+'</div></div>';
   h+='<p class="lede">'+esc(th.lede)+'</p>';
@@ -1715,7 +1723,7 @@ document.addEventListener("click",function(e){
    case"hotel-gps":{var c=t.getAttribute("data-c");gps(function(g){store.hotels[c]={lat:g.lat,lng:g.lng};save();hotelEdit=null;render(true)});break}
    case"hard-update":hardUpdate();break;
    case"more-open":go("more");break;
-   case"pack-open":packTab="s";go("pack");break;
+   case"pack-open":packTab="home";go("pack");break;
    case"pack-home":packTab="home";go("pack");break;
    case"stay-tile":go("stay");break;
    case"fx-set":{var fx0=fxs();fx0[t.getAttribute("data-k")==="cur"?"cur":"tmp"]=t.getAttribute("data-v");save();fxBar();render(true);break}
@@ -1830,11 +1838,11 @@ var FOOD=[
 function fchip(t){return'<span class="ft ft-'+t.toLowerCase()+'">'+FDET[t]+'</span>'}
 function planCities(){var o=[];ITIN.forEach(function(D){if(o.indexOf(D.b)<0)o.push(D.b)});return o}
 function planTiles(){
-  var tl=function(act,k,c,t,sub){return'<button class="tile" data-act="'+act+'">'+sI(k,c)+'<span>'+t+'</span></button>'};
-  return'<div class="sech"><span>Plan</span></div><div class="group tg4">'+tl("stay-open","bed","#007aff","Stay")+tl("more-open","cal","#ff9500","Events")+tl("pack-open","box","#34c759","Packing")+tl("pack-home","house","#5856d6","Start at home")+tl("print-open","copy","#8e8e93","Print PDF")+'</div>'}
+  var tl=function(act,k,c,t){return'<button class="tile" data-act="'+act+'">'+sI(k,c)+'<span>'+t+'</span></button>'};
+  return'<div class="sech"><span>Plan</span></div><div class="group tg4">'+tl("stay-open","bed","#007aff","Stay")+tl("pack-open","box","#34c759","Packing")+tl("more-open","cal","#ff9500","Events")+tl("print-open","print","#8e8e93","Print PDF")+'</div>'}
 function vMore(){
   var s=stay(),pc=planCities();
-  var h='<div class="nav"><button class="nb" data-act="tab" data-s="trip">'+ic(IC.back)+'Trip</button><span class="t">Good to know</span><span style="width:44px"></span></div>';
+  var h='<div class="nav"><button class="nb" data-act="tab" data-s="trip">'+ic(IC.back)+'Itinerary</button><span class="t">Good to know</span><span style="width:44px"></span></div>';
   h+='<div class="head"><div class="eyebrow">'+fd(s.start)+' – '+fd(stayEnd(s))+'</div><h1>Events, savings and food</h1><p class="sub">'+MORE_ASOF+'. Dates can change: check the link.</p></div>';
   h+='<div class="segwrap"><div class="seg">'+[["events","Events"],["save","Save money"],["food","Food"]].map(function(x){return'<button data-act="more-tab" data-t="'+x[0]+'" aria-pressed="'+(moreTab===x[0])+'">'+x[1]+'</button>'}).join("")+'</div></div>';
   if(moreTab==="events"){
@@ -1886,7 +1894,7 @@ function vMore(){
   return h}
 
 /* ================= PHASE 1: update, backup, where to stay ================= */
-var APP_VERSION="1.9.1",SCHEMA=3;
+var APP_VERSION="1.9.2",SCHEMA=3;
 function pad2(n){return("0"+n).slice(-2)}
 function today(){var d=new Date();return d.getFullYear()+"-"+pad2(d.getMonth()+1)+"-"+pad2(d.getDate())}
 var WD=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"],MN=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
@@ -2039,7 +2047,7 @@ function fxN(n,d){var s=(Math.round(n*Math.pow(10,d))/Math.pow(10,d)).toFixed(d)
 function fxBar(){
   var f=fxs(),sg=function(k,v,l){return'<button data-act="fx-set" data-k="'+k+'" data-v="'+v+'" aria-pressed="'+((k==="cur"?f.cur:f.tmp)===v)+'">'+l+'</button>'};
   var b=document.getElementById("fxbar");if(!b)return;
-  b.innerHTML='<div class="fxseg">'+sg("cur","EUR","€")+sg("cur","SAR","SAR")+'</div><div class="fxseg">'+sg("tmp","C","°C")+sg("tmp","F","°F")+'</div><span class="fxr">1 € ≈ '+fxN(f.r,2)+' SAR</span>';
+  b.innerHTML='<div class="fxall" title="1 € ≈ '+fxN(f.r,2)+' SAR"><div class="fxg">'+sg("cur","EUR","€")+sg("cur","SAR","SAR")+'</div><span class="fxdiv"></span><div class="fxg">'+sg("tmp","C","°C")+sg("tmp","F","°F")+'</div></div>';
   document.documentElement.style.setProperty("--fxh",b.offsetHeight+"px")}
 function fxNum(s){return parseFloat(String(s).replace(",","."))}
 function fxConv(html){
@@ -2086,15 +2094,15 @@ var PKADULT=[["Clothes",["Winter jacket (waterproof, windproof)","Fleece or wool
 var PKKID=[["Clothes",["Thermal top and bottom (2 sets)","Fleece","Snow jacket and snow trousers","Warm trousers (3)","Tops (5)","Socks (7) and warm socks (2)","Underwear (7)","Pyjamas","Hat","Mittens (warmer than gloves)","Neck warmer","Spare set of socks, mittens and a top for the day bag"]],["Shoes",["Waterproof boots with warm socks","Slippers"]],["Comfort and fun",["A favourite toy or blanket","Books or a tablet with downloaded films","Snacks for the train","Small notebook and pens","Sunglasses"]],["Care",["Toothbrush and toothpaste","Wet wipes and tissues","Sunscreen and lip balm","Plasters and small first-aid kit","Any medicine they need"]]];
 var PKTEEN=PKKID.map(function(g){return g[0]==="Comfort and fun"?["Comfort and fun",["Headphones","Books or a tablet with downloaded films","Snacks for the train","Small notebook","Sunglasses"]]:g}).concat([["Documents",["Passport (original and copy)","Own bag or backpack for the day"]]]);
 var PKSHARED=[["Documents and money",["Passports and visas checked","Travel insurance card","Bookings and tickets (saved offline)","Bank card and some cash (€5 and €10 notes)","Photocopies of documents"]],["Family and travel",["Thermal flask for hot drinks","Reusable bags","Small first-aid kit for the family","Umbrella (small, for light rain)","Day backpack for the group"]],["Tech",["EU plug adaptor","Shared power bank","eSIM or SIM for each phone","DB Navigator and ÖBB apps installed","Guide saved offline on each phone"]]];
-function pkPeople(){var s=stay(),p=[{k:"home",l:"Start at home",g:PKHOME}];for(var i=0;i<s.adults;i++)p.push({k:"a"+i,l:s.adults>1?"Adult "+(i+1):"Adult",g:PKADULT});(s.kids||[]).forEach(function(age,i){p.push({k:"c"+i,l:"Kid "+age,g:age>=10?PKTEEN:PKKID})});p.push({k:"s",l:"Shared",g:PKSHARED});return p}
+function pkPeople(){var s=stay(),p=[{k:"home",l:"Home",g:PKHOME}];for(var i=0;i<s.adults;i++)p.push({k:"a"+i,l:s.adults>1?"Adult "+(i+1):"Adult",g:PKADULT});(s.kids||[]).forEach(function(age,i){p.push({k:"c"+i,l:(s.kids.length>1?"Child "+(i+1):"Child"),g:age>=10?PKTEEN:PKKID})});p.push({k:"s",l:"Shared",g:PKSHARED});return p}
 function pkCount(pe){var n=0,d=0;pe.g.forEach(function(g,gi){g[1].forEach(function(t,ti){n++;if(store.pack&&store.pack[pe.k+"."+gi+"."+ti])d++})});return[d,n]}
 function vPack(){
   var pe=pkPeople(),tot=0,dn=0;pe.forEach(function(p){var c=pkCount(p);dn+=c[0];tot+=c[1]});
   var cur=null;pe.forEach(function(p){if(p.k===packTab)cur=p});if(!cur){cur=pe[0];packTab=cur.k}
-  var h='<div class="nav"><button class="nb" data-act="tab" data-s="trip">'+ic(IC.back)+'Trip</button><span class="t">Packing list</span><span style="width:44px"></span></div><div class="head"><h1>Packing list</h1><p class="sub">'+dn+' of '+tot+' packed</p></div>';
+  var h='<div class="nav"><button class="nb" data-act="tab" data-s="trip">'+ic(IC.back)+'Itinerary</button><span class="t">Packing</span><span style="width:44px"></span></div><div class="head"><h1>Packing list</h1><p class="sub">'+dn+' of '+tot+' packed</p></div>';
   h+='<div class="segwrap"><div class="seg pks">'+pe.map(function(p){var c=pkCount(p);return'<button data-act="pack-tab" data-t="'+p.k+'" aria-pressed="'+(p.k===cur.k)+'">'+esc(p.l)+'<small>'+c[0]+'/'+c[1]+'</small></button>'}).join("")+'</div></div>';
   cur.g.forEach(function(g,gi){h+='<div class="sech" style="margin-top:12px;margin-bottom:5px"><span>'+g[0]+'</span></div><div class="group">';g[1].forEach(function(t,ti){var id=cur.k+"."+gi+"."+ti,on=!!(store.pack&&store.pack[id]);h+='<button class="row tap srow pk'+(on?' on':'')+'" data-act="pack-tick" data-id="'+id+'" role="checkbox" aria-checked="'+on+'"><span class="ck">'+(on?ic(IC.check):'')+'</span><span class="grow">'+esc(t)+'</span></button>'});h+='</div>'});
-  h+='<p class="foot">Ticks are saved on this phone and go with “Send my plan”. Tap a tab to switch person.</p>';return h}
+  h+='<p class="foot">Ticks are saved on this phone and go with “Send my plan”. Tap a tab to switch person. The Home tab is for the things to do before you leave.</p>';return h}
 /* ---------- share / import ---------- */
 var tipSec=null,pendImp=null,impMsg="";
 var SHKEYS=["stay","hotels","spot","list","done","pack"];
@@ -2122,6 +2130,7 @@ function doImport(){
   store.planImported=today();save();pendImp=null;impMsg="";
   try{applyAll()}catch(e){}try{buildItin()}catch(e){}toast("Plan imported");go("trip")}
 var SIC={
+ print:'<path d="M7 9V3.5h10V9"/><rect x="4" y="9" width="16" height="7.5" rx="2"/><path d="M7 14h10v6.5H7z"/>',
  house:'<path d="M4 11 12 4l8 7v9H4z"/><path d="M10 20v-5h4v5"/>',
  cal:'<rect x="4" y="5" width="16" height="15" rx="2.5"/><path d="M4 10h16M9 3v4M15 3v4"/>',
  box:'<path d="M4 8l8-4 8 4v9l-8 4-8-4z"/><path d="M4 8l8 4 8-4M12 12v9"/>',
@@ -2352,7 +2361,7 @@ function planCard(s,k,rows,stats,isCur,btn){
 function vStay(){
   var s=stay(),sum=sumNights(s),unp=s.total-sum,sc=schedule(s),rm=roadmap(s),wn=warnings(s),gn=guideNights();
   var airOpts=function(sel){return Object.keys(AIR).map(function(k){return'<option value="'+k+'"'+(sel===k?" selected":"")+'>'+AIR[k].n+'</option>'}).join("")};
-  var h='<div class="nav"><button class="nb" data-act="tab" data-s="trip">'+ic(IC.back)+'Trip</button><span class="t">Where to stay</span><span style="width:44px"></span></div>';
+  var h='<div class="nav"><button class="nb" data-act="tab" data-s="trip">'+ic(IC.back)+'Itinerary</button><span class="t">Where to stay</span><span style="width:44px"></span></div>';
   h+='<div class="head"><div class="eyebrow">Hotel nights</div><h1>Where to stay</h1><p class="sub">'+s.total+' nights · '+fd(s.start)+' to '+fd(stayEnd(s))+'</p></div>';
   if(!store.hideStayHow)h+='<div class="how"><b class="h">How it works</b><ol><li><i>1</i><span>Check <b>your journey</b> and <b>family</b>.</span></li><li><i>2</i><span>Pick a <b>city for each night</b>. Add hotel names if you like.</span></li><li><i>3</i><span>Your <b>route and map</b> appear by themselves.</span></li></ol><button class="btn solid" data-act="stay-how">Got it</button></div>';
   /* 1 journey */
