@@ -1220,6 +1220,37 @@ h1.h2{font-size:1.75rem;line-height:1.18}
 .tundo{flex:none;min-height:36px;padding:0 14px;border:0;border-radius:9px;background:rgba(127,127,127,.28);color:inherit;font-weight:700;font-size:.9375rem}
 .toast[hidden]{display:none!important}
 .toast.wu{width:min(340px,88vw);justify-content:space-between}.toast.wu span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* ===== 2.1 changes ===== */
+.tdc{padding:4px 0 2px}
+.tdh{display:flex;align-items:center;justify-content:space-between;padding:10px 16px 6px}
+.tdh b{font-size:1.125rem}
+.tde{min-height:34px;padding:0 16px;border:1.5px solid var(--accent);border-radius:17px;background:none;color:var(--accent);font-weight:600;font-size:.9375rem}
+.tdr{align-items:flex-start;gap:12px}
+.tdr .k{flex:none;width:78px;color:var(--sub);font-size:.8125rem;font-weight:600;padding-top:2px}
+.tdr .v{flex:1;text-align:left}
+.tdr .v b{display:block;font-weight:600}
+.tdr .v .sm{display:block}
+.tdr .tda{color:var(--accent);font-weight:600}
+.ddate{display:inline-block;margin-right:8px;padding:2px 10px;border-radius:8px;background:var(--accent-soft);color:var(--accent);font-weight:700;font-size:.875rem}
+.day.today .ddate{background:var(--accent);color:var(--on-accent)}
+.swrow{display:flex;justify-content:space-between;gap:4px;margin-top:12px}
+.sw1{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;padding:0;border:0;background:none;color:var(--sub);font-size:.75rem;font-weight:500;min-height:44px}
+.sw1 i{display:block;width:34px;height:34px;border-radius:50%;box-shadow:inset 0 0 0 2px var(--card);border:3px solid transparent}
+.sw1[aria-pressed="true"]{color:var(--fg);font-weight:700}
+.sw1[aria-pressed="true"] i{border-color:var(--fg)}
+
+/* 2.1 trip card: soft, bordered, editable look */
+.tdc{padding:0;background:var(--accent-soft)!important;border:2px solid var(--accent-soft)}
+@supports (background:color-mix(in srgb,red 10%,transparent)){.tdc{background:color-mix(in srgb,var(--accent) 9%,transparent)!important;border:2px solid color-mix(in srgb,var(--accent) 32%,transparent)}}
+.tdc .stt{color:var(--fg);font-weight:600}
+.tdc .chev{color:var(--accent)}
+
+/* top tools row: no card, highlighted icons */
+.group.tflat{background:transparent!important;border:0;padding:4px 0 0}
+.tflat .si{background:var(--accent)!important}
+.tflat .si svg{stroke:var(--on-accent)!important}
+.tflat .tile{font-weight:600}
 </style></head><body>
 <main id="app"><section id="v-trip" hidden></section><section id="v-day" hidden></section><section id="v-map" hidden></section><section id="v-list"></section><section id="v-tips" hidden></section><section id="v-stay" hidden></section><section id="v-more" hidden></section><section id="v-settings" hidden></section><section id="v-pack" hidden></section></main>
 <div id="detail" class="page" hidden></div>
@@ -1557,7 +1588,7 @@ function loadWx(){var c=null;try{c=JSON.parse(localStorage.getItem("aut26wx")||"
 function wxIcon(c){return c===0?IC.sun:c<=3?IC.cloud:c<=48?IC.cloud:c<=67?IC.rain:c<=77?IC.snow:IC.rain}
 function wxDay(k,wi){if(!WX)return null;var o=WX[wi||0];if(!o||!o.daily)return null;var i=o.daily.time.indexOf(k);if(i<0)return null;var d=o.daily;return{code:d.weather_code[i],hi:Math.round(d.temperature_2m_max[i]),lo:Math.round(d.temperature_2m_min[i]),pp:d.precipitation_probability_max[i],sun:(d.sunset[i]||"").slice(11,16)}}
 
-var deferredInstall=null;window.addEventListener("beforeinstallprompt",function(e){e.preventDefault();deferredInstall=e;if(view==="tips"||view==="settings")render(true)});window.addEventListener("appinstalled",function(){deferredInstall=null;if(view==="tips"||view==="settings")render(true)});
+var deferredInstall=null,instHelp=false;window.addEventListener("beforeinstallprompt",function(e){e.preventDefault();deferredInstall=e;if(view==="tips"||view==="settings")render(true)});window.addEventListener("appinstalled",function(){deferredInstall=null;if(view==="tips"||view==="settings")render(true)});
 /* ---------- state ---------- */
 var view="list",cur=0,mapSg="all",mapDay="all",selId=null,hotelEdit=null,detailId=null;
 var VIEWS=["trip","day","map","list","tips","stay","more","settings","pack"];
@@ -1629,6 +1660,9 @@ function prow(s,lb){
 function famShort(s){var k=s.kids.length;return s.adults+" adult"+(s.adults>1?"s":"")+(k?", "+k+" child"+(k>1?"ren":""):"")}
 function tlItem(s){var dn=!!store.done[s.id];
   return'<li class="ti'+(dn?" done":"")+'"><button class="tck" data-act="done" data-id="'+s.id+'" aria-pressed="'+dn+'" aria-label="'+(dn?"Visited: ":"Mark as visited: ")+esc(s.n)+'">'+ic(IC.check)+'</button><button class="tbody" data-act="place" data-id="'+s.id+'"><span class="tname">'+esc(s.n)+'</span><span class="tmeta">'+(s.t?'<b>'+esc(s.t)+'</b> · ':'')+(s.x?esc(s.cat):KIND[s.k])+' · '+esc(s.c)+'</span></button>'+(listEdit?'<button class="tx" data-act="add" data-id="'+s.id+'" aria-label="Remove from itinerary: '+esc(s.n)+'"><i></i></button>':'')+'</li>'}
+function tripCard(s){
+  var cs=[];ITIN.forEach(function(D){if(cs.indexOf(D.b)<0)cs.push(D.b)});
+  return'<div class="group tdc"><button class="row tap srow" data-act="stay-open" aria-label="Trip details. Tap to edit dates, travellers and hotels">'+sI("route")+'<span class="grow"><span class="stt">Trip details</span><span class="sm" style="display:block">'+esc(cs.map(function(c){return SN(c)}).join(" → "))+' · '+esc(famShort(s))+'</span></span>'+ic(IC.fwd,"chev")+'</button></div>'}
 function vList(){
   var s=stay(),n=totalList(),LG=listGroups(),by={},td=today(),cs=[];LG.days.forEach(function(x){by[x.D.i]=x.items});
   ITIN.forEach(function(D){if(cs.indexOf(D.b)<0)cs.push(D.b)});
@@ -1636,14 +1670,14 @@ function vList(){
   if(!n)listEdit=false;
   var h='<div class="head"><div class="headrow"><div><h1>Itinerary</h1><p class="sub">'+fd(s.start)+' – '+fd(stayEnd(s))+' · '+(s.total+1)+' days</p></div>'+(n?'<button class="editb" data-act="list-edit" aria-pressed="'+listEdit+'">'+(listEdit?"Done":"Edit")+'</button>':'')+'</div></div>';
   if(listEdit)h+='<p class="foot" style="margin:0 20px 8px">Tap the red button to remove a place. Tap Done when you are finished.</p>';
-  h+='<div class="group tdcard"><button class="row tap srow" data-act="stay-open">'+sI("route")+'<span class="grow"><span class="stt">Trip details</span><span class="sm" style="display:block">'+esc(cs.map(function(c){return SN(c)}).join(" → "))+' · '+esc(famShort(s))+'</span></span>'+ic(IC.fwd,"chev")+'</button></div>';
+  h+=tripCard(s);
   h+=todayCard()+newBanner('list')+updNotice();
   if(sumNights(s)<s.total)h+='<div class="callout w"><b>Some nights have no city yet</b>Pick a city for every night so each day knows where you are. <button class="lnk" data-act="stay-open">Open Trip details</button></div>';
   if(!n)h+='<div class="intro"><b>Start your itinerary</b><p>Open <b>Day ideas</b> and tap <b>Add</b> on the places you like. They appear here under their day, in order.</p><div class="btnrow"><button class="btn solid" data-act="tab" data-s="trip">Browse Day ideas</button><button class="btn" data-act="addmust">Add the highlights</button></div></div>';
   h+='<div class="sech"><span>Your days</span><span class="r">'+(n?n+(n===1?" place":" places")+(dn?" · "+dn+" visited":""):"")+'</span></div>';
   ITIN.forEach(function(D){
     var it=by[D.i]||[],isT=D.date===td,tag=D.kind==="move"?"Travel day":D.kind==="last"?"Departure day":"";
-    h+='<section class="day'+(isT?" today":"")+'"><div class="dhead"><span class="dnum">'+(D.i+1)+'</span><div class="grow"><div class="dmeta">'+(isT?'<b>Today</b> · ':'')+D.dow+' '+D.dm+' · '+esc(SN(D.b))+(tag?' · '+tag:'')+'</div><h2 class="dt">'+esc(D.title)+'</h2></div><button class="dadd" data-act="day" data-i="'+D.i+'" aria-label="Add places to day '+(D.i+1)+'">'+ic(IC.plus)+'Add</button></div>';
+    h+='<section class="day'+(isT?" today":"")+'"><div class="dhead"><span class="dnum">'+(D.i+1)+'</span><div class="grow"><div class="dmeta"><span class="ddate">'+(isT?'Today · ':'')+D.dow+' '+D.dm+'</span>'+esc(SN(D.b))+(tag?' · '+tag:'')+'</div><h2 class="dt">'+esc(D.title)+'</h2></div><button class="dadd" data-act="day" data-i="'+D.i+'" aria-label="Add places to day '+(D.i+1)+'">'+ic(IC.plus)+'Add</button></div>';
     if(it.length)h+='<ol class="dtl">'+it.map(tlItem).join("")+'</ol>';
     else h+='<p class="dempty">No places yet.</p>';
     h+='</section>'});
@@ -1740,19 +1774,20 @@ function vTips(){
    "Hallo / Guten Tag / Grüß Gott: hello","Danke / Bitte: thanks / please","Haben Sie einen Tisch für … Personen? Do you have a table for … people?","Eine Tageskarte für … Erwachsene und … Kinder, bitte: a day ticket for … adults and … children, please","Zusammen, bitte: together, please (paying)","Die Rechnung, bitte: the bill, please","Kinderpunsch, bitte: a children’s punch, please","Ist da Schweinefleisch drin? Is there pork in it?","Ohne Schweinefleisch, bitte: without pork, please","Stilles Wasser, bitte: still water, please"]));
   var cur=null;TS.forEach(function(x){if(x.t===tipSec)cur=x});
   if(cur)return navBar("tips")+'<div class="head"><h1 class="h2">'+esc(cur.t)+'</h1></div><div class="prose">'+cur.b+'</div><p class="foot">Prices, hours and train times are estimates. Check the official sites before you go.</p>';
-  TS.unshift({c:"Plan ahead",t:"Packing list",act:"pack-open"});
-  TS.push({c:"Plan ahead",t:"Save as PDF",act:"print-open"});
-  TS.push({c:"Eating and money",t:"Save money",more:"save"});TS.push({c:"Eating and money",t:"Food",more:"food"});TS.push({c:"On the trip",t:"Events",more:"events"});
-  var cats=[];TS.forEach(function(x){if(cats.indexOf(x.c)<0)cats.push(x.c)});
-  cats.forEach(function(cn){
-    h+='<div class="sech"><span>'+cn+'</span></div><div class="group tgrid">';
-    TS.forEach(function(x){if(x.c!==cn)return;var ti=TIX[x.t]||["list",x.t];
+  TS.push({t:"Packing list",act:"pack-open"});TS.push({t:"Print as PDF",act:"print-open"});
+  TS.push({t:"Save money",more:"save"});TS.push({t:"Food",more:"food"});TS.push({t:"Events",more:"events"});
+  var TG=[["",["Packing list","Print as PDF"]],["Plan ahead",["Before you go","Hotels","Trains, tickets and transport","Weather","What to wear: everyone, and why"]],
+   ["Eat and spend",["Food","Restaurants: the unwritten rules","Cash, cards and bottle deposits","Save money","Opening times, water and toilets","Useful German"]],
+   ["Out and about",["Christmas markets with children","Krampus and Nikolaus","Mountain days and swapping days","Events"]]];
+  TG.forEach(function(g){
+    h+=(g[0]?'<div class="sech"><span>'+g[0]+'</span></div>':'')+'<div class="group tgrid'+(g[0]?'':' tflat')+'">';
+    g[1].forEach(function(t){var x=null;TS.forEach(function(y){if(y.t===t)x=y});if(!x)return;var ti=TIX[x.t]||["list",x.t];
       h+='<button class="tile" data-act="'+(x.act||(x.more?'tip-more':'tip-open'))+'" data-t="'+esc(x.t)+'" data-m="'+(x.more||'')+'">'+sI(ti[0])+'<span>'+esc(ti[1])+'</span></button>'});
     h+='</div>'});
   h+='<div class="callout sos"><b>Emergency: 112</b>Police, fire and ambulance, free from any phone in Europe.</div>';
   return h}
 
-var TIX={"Packing list":["box","Packing list"],"Before you go":["list","Before you go"],"Hotels":["bed","Hotels"],"Trains, tickets and transport":["train","Trains"],"Save as PDF":["print","Save as PDF"],
+var TIX={"Packing list":["box","Packing list"],"Before you go":["list","Before you go"],"Hotels":["bed","Hotels"],"Trains, tickets and transport":["train","Trains"],"Print as PDF":["print","Print as PDF"],
  "Restaurants: the unwritten rules":["fork","Restaurants"],"Cash, cards and bottle deposits":["card","Cash and cards"],"Opening times, water and toilets":["clock","Opening hours"],"Save money":["coin","Save money"],"Food":["bowl","Food"],
  "Weather":["cloud","Weather"],"What to wear: everyone, and why":["coat","Clothes"],"Christmas markets with children":["tree","Markets"],"Krampus and Nikolaus":["mask","Krampus"],"Mountain days and swapping days":["mount","Mountains"],"Useful German":["chat","German"],"Events":["cal","Events"]};
 var TIS={};Object.keys(TIX).forEach(function(k){TIS[k]=TIX[k][1]});
@@ -1945,7 +1980,7 @@ document.addEventListener("click",function(e){
    case"pack-tick":{var pid=t.getAttribute("data-id");store.pack=store.pack||{};if(store.pack[pid])delete store.pack[pid];else store.pack[pid]=1;save();render(true);break}
    case"more-tab":moreTab=t.getAttribute("data-t");render(true);break;
    case"food-nopork":store.foodNoPork=!store.foodNoPork;save();render(true);break;
-   case"install":if(deferredInstall){deferredInstall.prompt();deferredInstall=null}break;
+   case"install":if(deferredInstall){deferredInstall.prompt();deferredInstall=null}else{instHelp=!instHelp;render(true)}break;
    case"theme":store.theme=t.getAttribute("data-t");save();applyAll();render(true);break;
    case"fs":FS+=+t.getAttribute("data-d");store.fs=FS;save();applyAll();render(true);break;
    case"accent":store.accent=t.getAttribute("data-a");save();applyAll();render(true);break;
@@ -2104,7 +2139,7 @@ function vMore(){
   return h}
 
 /* ================= PHASE 1: update, backup, where to stay ================= */
-var APP_VERSION="2.0.2",SCHEMA=3;
+var APP_VERSION="2.1.0",SCHEMA=3;
 function pad2(n){return("0"+n).slice(-2)}
 function today(){var d=new Date();return d.getFullYear()+"-"+pad2(d.getMonth()+1)+"-"+pad2(d.getDate())}
 var WD=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"],MN=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
@@ -2395,8 +2430,12 @@ function vSettings(){
   var tl=function(k,c,t,act,x){return'<button class="tile" data-act="'+act+'">'+sI(k,c)+'<span>'+t+'</span></button>'};
   h+='<div class="group sg tg">'+tl("clock","#007aff","Back up","bk-now")+tl("down","#007aff","Save file","bk-file")+'<label class="tile">'+sI("up","#007aff")+'<span>Restore file</span><input type="file" accept="application/json,.json" data-f="bkfile" hidden></label>'+(ks.length?tl("undo",restoreArm?"#ff3b30":"#007aff",restoreArm?"Tap again":"Last backup","bk-last"):'<span class="tile off">'+sI("undo","#c7c7cc")+'<span>Last backup</span></span>')+'</div>';
   h+='<p class="foot sf">'+(lastBk?'Last backup: '+fd(lastBk)+'. ':'No backup yet. ')+'Kept on this phone for 7 days.</p>';
-  h+=deferredInstall?'<div class="group sg">'+sRow("phone","#34c759","Install on this phone","",ic(IC.fwd,"chev"),"install")+'</div>':'';
-    h+='<p class="foot sf">Add to Home Screen: iPhone, Share then Add to Home Screen. Works offline after you open it once with internet.</p>';
+  var isApp=(window.matchMedia&&matchMedia("(display-mode: standalone)").matches)||navigator.standalone,isIos=/iphone|ipad|ipod/i.test(navigator.userAgent)||(navigator.platform==="MacIntel"&&navigator.maxTouchPoints>1);
+  if(isApp)h+='<div class="group sg">'+sRow("phone","#34c759","Installed on this phone","You opened the app from your Home Screen.","",null)+'</div>';
+  else{
+    h+='<div class="group sg">'+sRow("phone","#34c759","Install on this phone",deferredInstall?"One tap adds it to your Home Screen":instHelp?"Steps for iPhone and Android below":"Tap to see how on iPhone or Android",ic(IC.fwd,"chev"),"install")+'</div>';
+    if(instHelp&&!deferredInstall){var IOS='<div class="how"><b class="h">iPhone (Safari)</b><ol><li><i>1</i><span>Tap the <b>Share</b> button (square with an arrow) at the bottom of Safari.</span></li><li><i>2</i><span>Scroll down and tap <b>Add to Home Screen</b>.</span></li><li><i>3</i><span>Tap <b>Add</b>. The app now opens from your Home Screen.</span></li></ol><p class="sm" style="margin:8px 0 0">Open this page in Safari first. Chats such as WhatsApp cannot install it.</p></div>',AND='<div class="how"><b class="h">Android (Chrome)</b><ol><li><i>1</i><span>Tap the <b>three dots</b> at the top right of Chrome.</span></li><li><i>2</i><span>Tap <b>Install app</b> or <b>Add to Home screen</b>.</span></li><li><i>3</i><span>Tap <b>Install</b>. The app now opens from your Home Screen.</span></li></ol><p class="sm" style="margin:8px 0 0">Open this page in Chrome first. Chats such as WhatsApp cannot install it.</p></div>';h+=isIos?IOS+AND:AND+IOS}}
+    h+='<p class="foot sf">Works offline after you open it once with internet.</p>';
   return h}
 
 /* ---------- where to stay ---------- */
@@ -2678,7 +2717,7 @@ function printHtml(){
 }
 function printOpen(){
   var el=document.getElementById("printdoc");if(!el){el=document.createElement("div");el.id="printdoc";document.body.appendChild(el)}
-  el.innerHTML='<div class="ptool"><button class="btn" data-act="print-close">Close</button><span class="grow" style="flex:1;font-weight:600;text-align:center">Your trip</span><button class="btn solid" data-act="print-go">Save as PDF</button></div><div class="pbody">'+printHtml()+'</div>';
+  el.innerHTML='<div class="ptool"><button class="btn" data-act="print-close">Close</button><span class="grow" style="flex:1;font-weight:600;text-align:center">Your trip</span><button class="btn solid" data-act="print-go">Print as PDF</button></div><div class="pbody">'+printHtml()+'</div>';
   el.classList.add("show");document.body.classList.add("printing");document.body.style.overflow="hidden";el.scrollTop=0;
 }
 function printClose(){var el=document.getElementById("printdoc");if(el)el.classList.remove("show");document.body.classList.remove("printing");document.body.style.overflow=""}
