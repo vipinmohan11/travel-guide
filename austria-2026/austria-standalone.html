@@ -1792,7 +1792,7 @@ function vMore(){
   return h}
 
 /* ================= PHASE 1: update, backup, where to stay ================= */
-var APP_VERSION="1.7.0",SCHEMA=3;
+var APP_VERSION="1.7.1",SCHEMA=3;
 function pad2(n){return("0"+n).slice(-2)}
 function today(){var d=new Date();return d.getFullYear()+"-"+pad2(d.getMonth()+1)+"-"+pad2(d.getDate())}
 var WD=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"],MN=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
@@ -1967,8 +1967,8 @@ function doImport(){
 function vSettings(){
   var h='<div class="head"><div class="eyebrow">This phone</div><h1>Settings</h1></div>';
   h+=newBanner('settings');
+  h+=vUpdateBlock()+vShare();
   h+='<div class="sech"><span>Display</span></div><div class="group" id="settings"><div class="row"><span class="k">Appearance</span><div class="seg" style="flex:1">'+[["light","Light"],["dark","Dark"],["auto","Auto"]].map(function(x){return '<button data-act="theme" data-t="'+x[0]+'" aria-pressed="'+((store.theme||"light")===x[0])+'">'+x[1]+'</button>'}).join("")+'</div></div><div class="row"><span class="k">Text size</span><div class="stepper"><button data-act="fs" data-d="-1" aria-label="Smaller text">A−</button><b>'+FS+' px</b><button data-act="fs" data-d="1" aria-label="Larger text">A+</button></div></div><div class="row"><span class="k">Colour</span><div class="dots">'+THEMES.map(function(t){return '<button class="dot" data-act="accent" data-a="'+t[0]+'" style="background:'+t[2]+'" aria-label="'+t[1]+'" aria-pressed="'+((store.accent||"green")===t[0])+'"></button>'}).join("")+'</div></div></div>';
-  h+=vShare()+vUpdateBlock();
   h+='<div class="sech"><span>Use like an app</span></div><div class="group"><div class="row" style="display:block"><b style="display:block;margin-bottom:4px">Works offline</b><span class="sm">After you open this page once with internet, the guide works without internet. Map pictures you have already looked at are saved too, so open the Map once for each city while you have Wi-Fi.</span></div>'+(deferredInstall?'<button class="row tap" data-act="install"><span class="v" style="color:var(--accent);font-weight:600">Install on this phone</span>'+ic(IC.fwd,"chev")+'</button>':'<div class="row" style="display:block"><span class="sm">To install in Chrome: tap the ⋮ menu, then “Add to Home screen” or “Install app”. On iPhone (Safari): Share, then “Add to Home Screen”.</span></div>')+'</div>';
   h+='<p class="foot">Version '+esc(APP_VERSION)+'</p>';
   return h}
