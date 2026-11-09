@@ -960,9 +960,9 @@ select,input[type=date]{margin-left:auto;font:inherit;font-size:.9375rem;color:v
 .ft-fish{border-color:#0b63ce;background:rgba(11,99,206,.14)}
 .ft-alcohol{border-color:#8e8e93}
 </style></head><body>
-<main id="app"><section id="v-trip"></section><section id="v-day" hidden></section><section id="v-map" hidden></section><section id="v-list" hidden></section><section id="v-tips" hidden></section><section id="v-stay" hidden></section><section id="v-more" hidden></section></main>
+<main id="app"><section id="v-trip"></section><section id="v-day" hidden></section><section id="v-map" hidden></section><section id="v-list" hidden></section><section id="v-tips" hidden></section><section id="v-stay" hidden></section><section id="v-more" hidden></section><section id="v-settings" hidden></section></main>
 <div id="detail" class="page" hidden></div>
-<nav class="tabbar" aria-label="Main"><div class="in"><button data-act="tab" data-s="trip"><svg class="ic" viewBox="0 0 24 24"><path d="M5 4h14a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1z"/><path d="M8 9h8M8 13h8M8 17h5"/></svg>Trip<span class="nd" id="nd-trip" hidden></span></button><button data-act="tab" data-s="map"><svg class="ic" viewBox="0 0 24 24"><path d="M9 4 3.5 6v14L9 18l6 2 5.5-2V4L15 6 9 4z"/><path d="M9 4v14M15 6v14"/></svg>Trip map</button><button data-act="tab" data-s="list"><svg class="ic" viewBox="0 0 24 24"><path d="M9 6h11M9 12h11M9 18h11"/><path d="m3.5 6 1.2 1.2L6.8 5M3.5 12l1.2 1.2L6.8 11M3.5 18l1.2 1.2L6.8 17"/></svg>My list<span class="badge" id="tabbadge" hidden></span></button><button data-act="tab" data-s="tips"><svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 11v5.5M12 7.6v.2"/></svg><span class="nd" id="nd-tips" hidden></span>Tips</button></div></nav>
+<nav class="tabbar" aria-label="Main"><div class="in"><button data-act="tab" data-s="trip"><svg class="ic" viewBox="0 0 24 24"><path d="M5 4h14a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1z"/><path d="M8 9h8M8 13h8M8 17h5"/></svg>Trip<span class="nd" id="nd-trip" hidden></span></button><button data-act="tab" data-s="map"><svg class="ic" viewBox="0 0 24 24"><path d="M9 4 3.5 6v14L9 18l6 2 5.5-2V4L15 6 9 4z"/><path d="M9 4v14M15 6v14"/></svg>Trip map</button><button data-act="tab" data-s="list"><svg class="ic" viewBox="0 0 24 24"><path d="M9 6h11M9 12h11M9 18h11"/><path d="m3.5 6 1.2 1.2L6.8 5M3.5 12l1.2 1.2L6.8 11M3.5 18l1.2 1.2L6.8 17"/></svg>My list<span class="badge" id="tabbadge" hidden></span></button><button data-act="tab" data-s="tips"><svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 11v5.5M12 7.6v.2"/></svg><span class="nd" id="nd-tips" hidden></span>Tips</button><button data-act="tab" data-s="settings"><svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 3v2.2M12 18.8V21M3 12h2.2M18.8 12H21M5.6 5.6l1.6 1.6M16.8 16.8l1.6 1.6M18.4 5.6l-1.6 1.6M7.2 16.8l-1.6 1.6"/></svg><span class="nd" id="nd-settings" hidden></span>Settings</button></div></nav>
 <div class="toast" id="toast" hidden></div>
 <script>/* @preserve
  * Leaflet 1.9.4, a JS library for interactive maps. https://leafletjs.com
@@ -1294,10 +1294,10 @@ function loadWx(){var c=null;try{c=JSON.parse(localStorage.getItem("aut26wx")||"
 function wxIcon(c){return c===0?IC.sun:c<=3?IC.cloud:c<=48?IC.cloud:c<=67?IC.rain:c<=77?IC.snow:IC.rain}
 function wxDay(k,wi){if(!WX)return null;var o=WX[wi||0];if(!o||!o.daily)return null;var i=o.daily.time.indexOf(k);if(i<0)return null;var d=o.daily;return{code:d.weather_code[i],hi:Math.round(d.temperature_2m_max[i]),lo:Math.round(d.temperature_2m_min[i]),pp:d.precipitation_probability_max[i],sun:(d.sunset[i]||"").slice(11,16)}}
 
-var deferredInstall=null;window.addEventListener("beforeinstallprompt",function(e){e.preventDefault();deferredInstall=e;if(view==="tips")render(true)});window.addEventListener("appinstalled",function(){deferredInstall=null;if(view==="tips")render(true)});
+var deferredInstall=null;window.addEventListener("beforeinstallprompt",function(e){e.preventDefault();deferredInstall=e;if(view==="tips"||view==="settings")render(true)});window.addEventListener("appinstalled",function(){deferredInstall=null;if(view==="tips"||view==="settings")render(true)});
 /* ---------- state ---------- */
 var view="trip",cur=0,mapSg="all",mapDay="all",selId=null,hotelEdit=null,detailId=null;
-var VIEWS=["trip","day","map","list","tips","stay","more"];
+var VIEWS=["trip","day","map","list","tips","stay","more","settings"];
 
 /* ---------- views ---------- */
 function addBtn(s,full){var on=inList(s);return '<button class="add'+(on?" on":"")+'" data-act="add" data-id="'+s.id+'" aria-pressed="'+on+'" aria-label="'+(on?"Remove from my list: ":"Add to my list: ")+esc(s.n)+'">'+ic(on?IC.check:IC.plus)+(on?"Added":"Add")+'</button>'}
@@ -1388,9 +1388,7 @@ function vTips(){
   var h='<div class="head"><div class="eyebrow">Before and during the trip</div><h1>Tips</h1></div>';
   function sec(t,body,open){return '<details class="group"'+(open?' open':'')+'><summary>'+t+'</summary><div class="in">'+body+'</div></details>'}
   function ul(a){return '<ul class="pl">'+a.map(function(x){return '<li>'+x+'</li>'}).join("")+'</ul>'}
-  h+='<div class="sech"><span>Display</span></div><div class="group" id="settings"><div class="row"><span class="k">Appearance</span><div class="seg" style="flex:1">'+[["light","Light"],["dark","Dark"],["auto","Auto"]].map(function(x){return '<button data-act="theme" data-t="'+x[0]+'" aria-pressed="'+((store.theme||"light")===x[0])+'">'+x[1]+'</button>'}).join("")+'</div></div><div class="row"><span class="k">Text size</span><div class="stepper"><button data-act="fs" data-d="-1" aria-label="Smaller text">A−</button><b>'+FS+' px</b><button data-act="fs" data-d="1" aria-label="Larger text">A+</button></div></div><div class="row"><span class="k">Colour</span><div class="dots">'+THEMES.map(function(t){return '<button class="dot" data-act="accent" data-a="'+t[0]+'" style="background:'+t[2]+'" aria-label="'+t[1]+'" aria-pressed="'+((store.accent||"green")===t[0])+'"></button>'}).join("")+'</div></div></div>';
-  h+=newBanner('tips')+vUpdateBlock();
-  h+='<div class="sech"><span>Use like an app</span></div><div class="group"><div class="row" style="display:block"><b style="display:block;margin-bottom:4px">Works offline</b><span class="sm">After you open this page once with internet, the guide works without internet. Map pictures you have already looked at are saved too, so open the Map once for each city while you have Wi-Fi.</span></div>'+(deferredInstall?'<button class="row tap" data-act="install"><span class="v" style="color:var(--accent);font-weight:600">Install on this phone</span>'+ic(IC.fwd,"chev")+'</button>':'<div class="row" style="display:block"><span class="sm">To install in Chrome: tap the ⋮ menu, then “Add to Home screen” or “Install app”. On iPhone (Safari): Share, then “Add to Home Screen”.</span></div>')+'</div>';
+  h+=newBanner('tips');
   h+='<div class="sech"><span>Plan ahead</span></div>';
   h+=sec("Before you go",ul([
    "<b>Book long trips early.</b> High-speed train prices are dynamic and can be much higher in the last week.",
@@ -1557,7 +1555,7 @@ function openDetail(id,nav){
 function closeDetail(viaPop){var box=$("detail");if(box.hidden)return;box.hidden=true;detailId=null;if(!viaPop&&history.state&&history.state.detail){try{history.back()}catch(e){}}}
 
 /* ---------- render + routing ---------- */
-var TABOF={trip:"trip",day:"trip",stay:"trip",more:"trip",map:"map",list:"list",tips:"tips"};
+var TABOF={trip:"trip",day:"trip",stay:"trip",more:"trip",map:"map",list:"list",tips:"tips",settings:"settings"};
 function fixHtml(err){try{console.error(err)}catch(e){}return'<div class="head"><h1>Something went wrong</h1></div><div class="callout w"><b>This page could not open</b>Your saved plan and list are safe. Tap the button to load the newest version of the guide.</div><div class="actions"><button class="btn full solid" data-act="hard-update">Load the newest version</button><button class="btn full" data-act="tab" data-s="trip">Back to Trip</button></div>'}
 function hardUpdate(){try{dailyBackup(true)}catch(e){}var go2=function(){location.reload()};var p=[];if(window.caches)p.push(caches.keys().then(function(ks){return Promise.all(ks.filter(function(k){return k.indexOf("tiles")<0}).map(function(k){return caches.delete(k)}))}));if(navigator.serviceWorker)p.push(navigator.serviceWorker.getRegistrations().then(function(rs){return Promise.all(rs.map(function(r){return r.unregister()}))}));Promise.all(p).then(go2,go2);setTimeout(go2,4000)}
 function render(keepScroll){
@@ -1568,11 +1566,11 @@ function render(keepScroll){
   if(view==="map"){document.body.style.paddingBottom="0";mapShow();return}
   document.body.style.paddingBottom="";
   var el=$("v-"+view);
-  try{el.innerHTML=view==="trip"?vTrip():view==="day"?vDay():view==="list"?vList():view==="stay"?vStay():view==="more"?vMore():vTips()}catch(err){el.innerHTML=fixHtml(err)}if(view==="stay")setTimeout(stayMap,0);else if(document.body.style.overflow==="hidden")document.body.style.overflow="";
+  try{el.innerHTML=view==="trip"?vTrip():view==="day"?vDay():view==="list"?vList():view==="stay"?vStay():view==="more"?vMore():view==="settings"?vSettings():vTips()}catch(err){el.innerHTML=fixHtml(err)}if(view==="stay")setTimeout(stayMap,0);else if(document.body.style.overflow==="hidden")document.body.style.overflow="";
   if(keepScroll)window.scrollTo(0,y);else window.scrollTo(0,0)}
 function parseHash(){
-  var h=(location.hash||"").replace("#","");var m=h.match(/^day-(\d+)$/);
-  buildItin();if(m&&ITIN[+m[1]-1]){view="day";cur=+m[1]-1;mapSg=ITIN[cur].sg;mapDay="all"}else if(["trip","map","list","tips","stay","more"].indexOf(h)>-1)view=h;else view="trip"}
+  var h=(location.hash||"").replace("#","");if(h.indexOf("plan=")===0){var po=decodePlan(h.slice(5));try{history.replaceState(null,"","#settings")}catch(e){}if(po){pendImp=po;impMsg=""}h="settings"}var m=h.match(/^day-(\d+)$/);
+  buildItin();if(m&&ITIN[+m[1]-1]){view="day";cur=+m[1]-1;mapSg=ITIN[cur].sg;mapDay="all"}else if(["trip","map","list","tips","stay","more","settings"].indexOf(h)>-1)view=h;else view="trip"}
 function go(hash){if(location.hash==="#"+hash){parseHash();render();return}location.hash=hash}
 window.addEventListener("hashchange",function(){closeDetail(true);parseHash();render()});
 window.addEventListener("popstate",function(){if(!$("detail").hidden&&!(history.state&&history.state.detail))closeDetail(true)});
@@ -1609,7 +1607,11 @@ document.addEventListener("click",function(e){
    case"day":{var i=+t.getAttribute("data-i");if(ITIN[i])go("day-"+(i+1));break}
    case"tab":go(t.getAttribute("data-s"));break;
    case"hidehow":store.hideHow=true;save();render(true);break;
-   case"settings":go("tips");break;
+   case"settings":go("settings");break;
+   case"plan-share":{var lk=planLink(),tx="My Austria trip plan. Open the link, then tap Replace my plan.";if(navigator.share){navigator.share({title:"Austria trip plan",text:tx,url:lk}).catch(function(){})}else{var done=function(){toast("Link copied. Paste it in a message.")};if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(tx+" "+lk).then(done,function(){window.prompt("Copy this link",lk)});else window.prompt("Copy this link",lk)}break}
+   case"imp-paste":{var bx=$("impbox"),pp=decodePlan(bx&&bx.value);if(pp){pendImp=pp;impMsg=""}else impMsg="That is not a plan link or code from this guide.";render(true);break}
+   case"imp-ok":doImport();break;
+   case"imp-no":pendImp=null;render(true);break;
    case"done":store.done[id]=!store.done[id];save();refresh();break;
    case"addmust":ALL.forEach(function(s){if(s.r==="m"&&!s.x)store.list[s.id]=true;});save();toast("Added all Must see places");render();break;
    case"copy":copyList();break;
@@ -1790,7 +1792,7 @@ function vMore(){
   return h}
 
 /* ================= PHASE 1: update, backup, where to stay ================= */
-var APP_VERSION="1.6.1",SCHEMA=3;
+var APP_VERSION="1.7.0",SCHEMA=3;
 function pad2(n){return("0"+n).slice(-2)}
 function today(){var d=new Date();return d.getFullYear()+"-"+pad2(d.getMonth()+1)+"-"+pad2(d.getDate())}
 var WD=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"],MN=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
@@ -1851,13 +1853,13 @@ function migrate(){
 if(typeof loadErr!=="undefined"&&loadErr){var rr=restoreLatest();setTimeout(function(){toast(rr?"Your saved data was recovered from the backup of "+rr:"Saved data could not be read")},600)}
 var wasExisting=!!store.schema;
 migrate();dailyBackup(false);
-var NEWIN={"1.6.1":{tips:"New: What to wear, for adults and both children, with the reason for each item, for the city, the glacier and the lakes."},"1.6.0":{trip:"New: Events and markets for your dates, ways to save money, and food to try with veg, pork and beef tags."},"1.5.3":{tips:"Fixed: the Tips tab did not open. Everything you saved is unchanged."},"1.5.2":{trip:"The Trip map now follows your stays: a Route view and one tab per stay, with a square pin where you sleep."},"1.5.0":{trip:"Your days now follow your night-by-night plan: same length and same order, with enough places for every stay."},"1.4.0":{trip:"Where to stay is simpler: journey, family, night plan and route in one page. New: print your whole trip as a PDF with links."},"1.3.0":{trip:"Where to stay is now night by night: pick a city for every night, and the same city can come back later. Each stay gets its own hotel name."},"1.2.0":{trip:"Where to stay: add Hallstatt, Kaprun and St. Gilgen, and pick one of three night plans.",tips:"Updates now install by themselves. You can turn this off."}};
+var NEWIN={"1.7.0":{settings:"New Settings tab: appearance, updates and backup moved here. New: Share my plan with another phone."},"1.6.1":{tips:"New: What to wear, for adults and both children, with the reason for each item, for the city, the glacier and the lakes."},"1.6.0":{trip:"New: Events and markets for your dates, ways to save money, and food to try with veg, pork and beef tags."},"1.5.3":{tips:"Fixed: the Tips tab did not open. Everything you saved is unchanged."},"1.5.2":{trip:"The Trip map now follows your stays: a Route view and one tab per stay, with a square pin where you sleep."},"1.5.0":{trip:"Your days now follow your night-by-night plan: same length and same order, with enough places for every stay."},"1.4.0":{trip:"Where to stay is simpler: journey, family, night plan and route in one page. New: print your whole trip as a PDF with links."},"1.3.0":{trip:"Where to stay is now night by night: pick a city for every night, and the same city can come back later. Each stay gets its own hotel name."},"1.2.0":{trip:"Where to stay: add Hallstatt, Kaprun and St. Gilgen, and pick one of three night plans.",tips:"Updates now install by themselves. You can turn this off."}};
 (function(){var seen=store.seenVer;
   if(seen!==APP_VERSION){
     if((seen||wasExisting)&&NEWIN[APP_VERSION]){store.newTabs=store.newTabs||{};Object.keys(NEWIN[APP_VERSION]).forEach(function(k){store.newTabs[k]={v:APP_VERSION,t:NEWIN[APP_VERSION][k]}})}
     store.seenVer=APP_VERSION;save();
   }})();
-function updNewDots(){["trip","map","list","tips"].forEach(function(k){var e=document.getElementById("nd-"+k);if(e)e.hidden=!(store.newTabs&&store.newTabs[k])})}
+function updNewDots(){["trip","map","list","tips","settings"].forEach(function(k){var e=document.getElementById("nd-"+k);if(e)e.hidden=!(store.newTabs&&store.newTabs[k])})}
 function newBanner(k){var n=store.newTabs&&store.newTabs[k];if(!n)return"";return'<div class="callout" style="background:var(--accent-soft)" role="status"><b style="color:var(--accent)">New in version '+esc(n.v)+'</b>'+esc(n.t)+'<div style="margin-top:8px"><button class="btn solid" style="min-height:36px;padding:0 14px" data-act="new-ok" data-t="'+k+'">OK</button></div></div>'}
 function downloadBackup(){
   var name="austria-guide-backup-"+today()+".json",data=JSON.stringify({app:"austria-2026",version:APP_VERSION,saved:new Date().toISOString(),data:store},null,1);
@@ -1880,7 +1882,7 @@ function restoreFile(file){
 /* ---------- update ---------- */
 var upd={state:"idle",msg:"",latest:null,notes:""},pendingCheck=false,restoreArm=false;
 function vcmp(a,b){var x=String(a).split("."),y=String(b).split(".");for(var i=0;i<3;i++){var d=(+x[i]||0)-(+y[i]||0);if(d)return d>0?1:-1}return 0}
-function rerenderUpd(){if(view==="tips"||view==="trip")render(true)}
+function rerenderUpd(){if(view==="settings"||view==="tips"||view==="trip")render(true)}
 var autoTried=false;
 function checkUpdate(silent){
   if(!navigator.onLine){pendingCheck=true;if(!silent){upd.state="offline";upd.msg="You are offline. The check will run by itself when the internet is back.";rerenderUpd()}return}
@@ -1934,6 +1936,42 @@ function vUpdateBlock(){
   h+='<div class="row" style="display:block"><div class="btnrow"><button class="btn" data-act="bk-now">Back up now</button><button class="btn" data-act="bk-file">Save backup file</button></div><div class="btnrow" style="margin-top:10px"><label class="btn" style="cursor:pointer">Restore from file<input type="file" accept="application/json,.json" data-f="bkfile" hidden></label>'+(ks.length?'<button class="btn'+(restoreArm?' solid':'')+'" data-act="bk-last">'+(restoreArm?"Tap again to restore":"Restore last backup")+'</button>':'')+'</div><p class="sm" style="margin:8px 0 0">Tip: on iPhone, Safari can clear saved data if the guide is not opened for several weeks. Save a backup file now and then and keep it in the Files app.</p></div></div>';
   return h;
 }
+
+
+/* ---------- share / import ---------- */
+var pendImp=null,impMsg="";
+var SHKEYS=["stay","hotels","spot","list","done"];
+function planCode(){var o={app:"aut26",v:APP_VERSION};SHKEYS.forEach(function(k){if(store[k]!==undefined)o[k]=store[k]});return btoa(unescape(encodeURIComponent(JSON.stringify(o))))}
+function planLink(){return location.origin+location.pathname+"#plan="+encodeURIComponent(planCode())}
+function decodePlan(txt){
+  try{txt=String(txt||"").trim();var m=txt.match(/plan=([^&\s]+)/);if(m)txt=m[1];if(txt.indexOf("%")>-1)txt=decodeURIComponent(txt);txt=txt.replace(/\s+/g,"");
+    var o=JSON.parse(decodeURIComponent(escape(atob(txt))));if(!o||o.app!=="aut26"||(!o.stay&&!o.list&&!o.hotels))return null;return o}catch(e){return null}}
+function impSummary(o){
+  var s=o.stay||{},nc=(s.nc||[]).slice(),cities=[];nc.forEach(function(c){if(cities.indexOf(c)<0)cities.push(c)});
+  var hn=0;if(s.hn)Object.keys(s.hn).forEach(function(k){if(s.hn[k])hn++});
+  var nl=o.list?Object.keys(o.list).length:0;
+  return (s.start?'Arrive '+fd(s.start)+' · ':'')+(s.total||nc.length||"?")+' nights'+(cities.length?'<br>'+cities.map(function(c){return esc(SN(c))}).join(' → '):'')+'<br>'+hn+' hotel name'+(hn===1?'':'s')+' · '+nl+' saved place'+(nl===1?'':'s')}
+function vShare(){
+  var h='<div class="sech"><span>Share my plan</span></div><div class="group">';
+  if(pendImp){
+    h+='<div class="row" style="display:block"><b style="display:block;margin-bottom:4px">A plan was shared with you</b><span class="sm" style="display:block;color:var(--fg)">'+impSummary(pendImp)+'</span><p class="sm" style="margin:8px 0">Replace my plan with this one? Your current plan is backed up first, so you can restore it under Backup.</p><div class="btnrow"><button class="btn solid" data-act="imp-ok">Replace my plan</button><button class="btn" data-act="imp-no">Cancel</button></div></div>';
+  }
+  h+='<div class="row" style="display:block"><button class="btn solid full" data-act="plan-share">'+ic(IC.fwd)+'Share my plan</button><ol class="sm" style="margin:10px 0 0;padding-left:18px"><li>Tap Share, then pick AirDrop, Messages or WhatsApp.</li><li>The other person taps the link. It opens this guide.</li><li>They tap “Replace my plan”. Done.</li></ol><p class="sm" style="margin:8px 0 0">Both phones need the latest version. If the guide is installed on the Home Screen and the link opens in Safari, copy the link and paste it below.</p></div>';
+  h+='<div class="row" style="display:block"><b style="display:block;margin-bottom:6px">Got a link or code?</b><textarea id="impbox" rows="2" placeholder="Paste the link here" style="width:100%;box-sizing:border-box;border:1px solid var(--line);border-radius:10px;padding:10px;font:inherit;background:var(--bg);color:var(--fg)"></textarea><div class="btnrow" style="margin-top:8px"><button class="btn" data-act="imp-paste">Show plan</button></div>'+(impMsg?'<p class="sm" style="margin:8px 0 0;color:var(--warn)">'+esc(impMsg)+'</p>':'')+'</div></div>';
+  return h}
+function doImport(){
+  if(!pendImp)return;preRestore();
+  SHKEYS.forEach(function(k){if(pendImp[k]!==undefined)store[k]=pendImp[k]});
+  store.planImported=today();save();pendImp=null;impMsg="";
+  try{applyAll()}catch(e){}try{buildItin()}catch(e){}toast("Plan imported");go("trip")}
+function vSettings(){
+  var h='<div class="head"><div class="eyebrow">This phone</div><h1>Settings</h1></div>';
+  h+=newBanner('settings');
+  h+='<div class="sech"><span>Display</span></div><div class="group" id="settings"><div class="row"><span class="k">Appearance</span><div class="seg" style="flex:1">'+[["light","Light"],["dark","Dark"],["auto","Auto"]].map(function(x){return '<button data-act="theme" data-t="'+x[0]+'" aria-pressed="'+((store.theme||"light")===x[0])+'">'+x[1]+'</button>'}).join("")+'</div></div><div class="row"><span class="k">Text size</span><div class="stepper"><button data-act="fs" data-d="-1" aria-label="Smaller text">A−</button><b>'+FS+' px</b><button data-act="fs" data-d="1" aria-label="Larger text">A+</button></div></div><div class="row"><span class="k">Colour</span><div class="dots">'+THEMES.map(function(t){return '<button class="dot" data-act="accent" data-a="'+t[0]+'" style="background:'+t[2]+'" aria-label="'+t[1]+'" aria-pressed="'+((store.accent||"green")===t[0])+'"></button>'}).join("")+'</div></div></div>';
+  h+=vShare()+vUpdateBlock();
+  h+='<div class="sech"><span>Use like an app</span></div><div class="group"><div class="row" style="display:block"><b style="display:block;margin-bottom:4px">Works offline</b><span class="sm">After you open this page once with internet, the guide works without internet. Map pictures you have already looked at are saved too, so open the Map once for each city while you have Wi-Fi.</span></div>'+(deferredInstall?'<button class="row tap" data-act="install"><span class="v" style="color:var(--accent);font-weight:600">Install on this phone</span>'+ic(IC.fwd,"chev")+'</button>':'<div class="row" style="display:block"><span class="sm">To install in Chrome: tap the ⋮ menu, then “Add to Home screen” or “Install app”. On iPhone (Safari): Share, then “Add to Home Screen”.</span></div>')+'</div>';
+  h+='<p class="foot">Version '+esc(APP_VERSION)+'</p>';
+  return h}
 
 /* ---------- where to stay ---------- */
 var AIR={MUC:{n:"Munich Airport",c:"munich",lat:48.3537,lng:11.775,min:40},SZG:{n:"Salzburg Airport",c:"salzburg",lat:47.7933,lng:13.0043,min:20},VIE:{n:"Vienna Airport",c:"vienna",lat:48.1103,lng:16.5697,min:30}};
@@ -2371,7 +2409,7 @@ document.addEventListener("click",function(e){
     case"upd-install":installUpdate();break;
     case"bk-now":dailyBackup(true);toast("Backup saved");render(true);break;
     case"bk-file":downloadBackup();break;
-    case"bk-last":{if(!restoreArm){restoreArm=true;render(true);setTimeout(function(){if(restoreArm){restoreArm=false;if(view==="tips")render(true)}},6000);break}restoreArm=false;preRestore();var rd=restoreLatest(true);if(rd){applyAll();toast("Restored the backup of "+fd(rd))}else toast("No backup could be restored");render(true);break}
+    case"bk-last":{if(!restoreArm){restoreArm=true;render(true);setTimeout(function(){if(restoreArm){restoreArm=false;if(view==="tips"||view==="settings")render(true)}},6000);break}restoreArm=false;preRestore();var rd=restoreLatest(true);if(rd){applyAll();toast("Restored the backup of "+fd(rd))}else toast("No backup could be restored");render(true);break}
   }
 });
 document.addEventListener("change",function(e){
@@ -2389,7 +2427,7 @@ function tripStayRow(){
 }
 function updNotice(){
   if(upd.state!=="available")return"";
-  return'<div class="callout" style="background:var(--accent-soft)"><b style="color:var(--accent)">Update ready</b>Version '+esc(upd.latest)+' is available. <button class="lnk" data-act="tab" data-s="tips">Install in Tips</button></div>';
+  return'<div class="callout" style="background:var(--accent-soft)"><b style="color:var(--accent)">Update ready</b>Version '+esc(upd.latest)+' is available. <button class="lnk" data-act="tab" data-s="settings">Install in Settings</button></div>';
 }
 
 parseHash();render();loadWx();
