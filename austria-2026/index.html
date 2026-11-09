@@ -1002,6 +1002,8 @@ select,input[type=date]{margin-left:auto;font:inherit;font-size:.9375rem;color:v
 .tg3 .tile{padding:4px 0;gap:4px;font-size:.6875rem;line-height:1.15}
 .tg3 .tile .si{width:40px;height:40px;border-radius:11px}
 .tg3 .tile .si svg{width:22px;height:22px}
+
+.hrow{justify-content:flex-end;margin:-4px 14px 8px}
 </style></head><body>
 <main id="app"><section id="v-trip"></section><section id="v-day" hidden></section><section id="v-map" hidden></section><section id="v-list" hidden></section><section id="v-tips" hidden></section><section id="v-stay" hidden></section><section id="v-more" hidden></section><section id="v-settings" hidden></section></main>
 <div id="detail" class="page" hidden></div>
@@ -1852,7 +1854,7 @@ function vMore(){
   return h}
 
 /* ================= PHASE 1: update, backup, where to stay ================= */
-var APP_VERSION="1.8.2",SCHEMA=3;
+var APP_VERSION="1.8.3",SCHEMA=3;
 function pad2(n){return("0"+n).slice(-2)}
 function today(){var d=new Date();return d.getFullYear()+"-"+pad2(d.getMonth()+1)+"-"+pad2(d.getDate())}
 var WD=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"],MN=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
@@ -2056,21 +2058,21 @@ function sSw(on,act){return'<button class="sw" role="switch" aria-checked="'+on+
 function vSettings(){
   var th=store.theme||"light",ac=store.accent||"green",ai=0;THEMES.forEach(function(t,k){if(t[0]===ac)ai=k});var nx=THEMES[(ai+1)%THEMES.length];
   var tb=function(k,t,svg){return'<button class="hb" data-act="theme" data-t="'+k+'" aria-label="'+t+'" aria-pressed="'+(th===k)+'"><svg viewBox="0 0 24 24">'+svg+'</svg></button>'};
-  var h='<div class="head sh" id="settings"><h1>Settings</h1><div class="hbar">'+tb("light","Light",SIC.sun)+tb("dark","Dark",'<path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/>')+tb("auto","Automatic",'<circle cx="12" cy="12" r="8.5"/><path d="M12 3.5v17a8.5 8.5 0 0 0 0-17z" fill="currentColor"/>')+'<span class="hsep"></span><button class="hb t" data-act="fs" data-d="-1" aria-label="Smaller text">A−</button><button class="hb t" data-act="fs" data-d="1" aria-label="Larger text">A+</button><span class="hsep"></span><button class="hb" data-act="accent" data-a="'+nx[0]+'" aria-label="Change colour"><i class="cd" style="background:'+THEMES[ai][2]+'"></i></button></div></div>',st=upd.state,ks=bkDates(),lastBk=ks.length?ks[ks.length-1]:null;
+  var hb='<div class="hbar hrow" id="settings">'+tb("light","Light",SIC.sun)+tb("dark","Dark",'<path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/>')+tb("auto","Automatic",'<circle cx="12" cy="12" r="8.5"/><path d="M12 3.5v17a8.5 8.5 0 0 0 0-17z" fill="currentColor"/>')+'<span class="hsep"></span><button class="hb t" data-act="fs" data-d="-1" aria-label="Smaller text">A−</button><button class="hb t" data-act="fs" data-d="1" aria-label="Larger text">A+</button><span class="hsep"></span><button class="hb" data-act="accent" data-a="'+nx[0]+'" aria-label="Change colour"><i class="cd" style="background:'+THEMES[ai][2]+'"></i></button></div>',h='<div class="head"><h1>Settings</h1></div>'+hb,st=upd.state,ks=bkDates(),lastBk=ks.length?ks[ks.length-1]:null;
   h+=newBanner('settings');
   var last=store.lastCheck?new Date(store.lastCheck):null;
   var stt=upd.msg?esc(upd.msg):(upd.latest?(vcmp(upd.latest,APP_VERSION)>0?'Version '+esc(upd.latest)+' is available':'You have the latest version'):'Tap Check to look for updates');
-  var usub='<b>Version '+esc(APP_VERSION)+'</b><span style="display:block">'+stt+(last&&!upd.msg?' · checked '+last.getDate()+' '+MN[last.getMonth()]:'')+'</span>';
+  var usub='<b>'+esc(APP_VERSION)+'</b><span style="display:block">'+stt+(last&&!upd.msg?' · checked '+last.getDate()+' '+MN[last.getMonth()]:'')+'</span>';
   var ur=(st==="available"?'<button class="btn solid sm1" data-act="upd-install">Install</button>':(st==="installing"||st==="done")?'<span class="sm">Working…</span>':'<button class="btn sm1" data-act="upd-check">Check</button>');
   var au=store.autoUpd!==false;
   var right='<span class="ucol">'+ur+'<span class="uaut">Auto'+sSw(au,"upd-auto")+'</span></span>';
-  h+='<div class="group sg">'+sRow("refresh","#34c759","App",usub,right,null)+(st==="installing"?'<div class="row"><div class="prog"><i></i></div></div>':'')+'</div>';
+  h+='<div class="group sg">'+sRow("refresh","#34c759","App version",usub,right,null)+(st==="installing"?'<div class="row"><div class="prog"><i></i></div></div>':'')+'</div>';
   var tl=function(k,c,t,act,x){return'<button class="tile" data-act="'+act+'">'+sI(k,c)+'<span>'+t+'</span></button>'};
   h+='<div class="group sg tg">'+tl("clock","#007aff","Back up","bk-now")+tl("down","#007aff","Save file","bk-file")+'<label class="tile">'+sI("up","#007aff")+'<span>Restore file</span><input type="file" accept="application/json,.json" data-f="bkfile" hidden></label>'+(ks.length?tl("undo",restoreArm?"#ff3b30":"#007aff",restoreArm?"Tap again":"Last backup","bk-last"):'<span class="tile off">'+sI("undo","#c7c7cc")+'<span>Last backup</span></span>')+'</div>';
   h+='<p class="foot sf">'+(lastBk?'Last backup: '+fd(lastBk)+'. ':'No backup yet. ')+'Kept on this phone for 7 days.</p>';
   if(pendImp)h+='<div class="group sg"><div class="row" style="display:block"><b>A plan was shared with you</b><span class="sm" style="display:block;color:var(--fg);margin:4px 0 8px">'+impSummary(pendImp)+'</span><div class="btnrow"><button class="btn solid" data-act="imp-ok">Replace my plan</button><button class="btn" data-act="imp-no">Cancel</button></div><p class="sm" style="margin:8px 0 0">Your current plan is backed up first.</p></div></div>';
-  h+='<div class="group sg">'+sRow("share","#ff9500","Share my plan","AirDrop, Messages or WhatsApp",ic(IC.fwd,"chev"),"plan-share")+'<div class="row srow">'+sI("link","#ff9500")+'<input id="impbox" class="sin" placeholder="Paste the plan link here" autocomplete="off" autocapitalize="off" spellcheck="false"><button class="btn sm1" data-act="imp-paste">Add</button></div>'+(impMsg?'<div class="row"><span class="sm" style="color:var(--warn)">'+esc(impMsg)+'</span></div>':'')+'</div>';
-  h+='<p class="foot sf">Tap Share, send it. Your friend opens the link and taps “Replace my plan”. Both phones need the latest version.</p>';
+  h+='<div class="group sg">'+sRow("share","#ff9500","Send my plan to another phone","AirDrop, Messages or WhatsApp",ic(IC.fwd,"chev"),"plan-share")+'<div class="row srow">'+sI("link","#ff9500")+'<input id="impbox" class="sin" placeholder="Paste received link" autocomplete="off" autocapitalize="off" spellcheck="false"><button class="btn sm1" data-act="imp-paste">Import</button></div>'+(impMsg?'<div class="row"><span class="sm" style="color:var(--warn)">'+esc(impMsg)+'</span></div>':'')+'</div>';
+  h+='<p class="foot sf">Tap Send and pick AirDrop or a chat. Your friend opens the link and taps “Replace my plan”. Both phones need the latest version.</p>';
   h+=deferredInstall?'<div class="group sg">'+sRow("phone","#34c759","Install on this phone","",ic(IC.fwd,"chev"),"install")+'</div>':'';
   h+='<p class="foot sf">Add to Home Screen: iPhone, Share then Add to Home Screen. Works offline after you open it once with internet.</p>';
   return h}
