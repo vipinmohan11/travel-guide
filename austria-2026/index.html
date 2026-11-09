@@ -997,6 +997,11 @@ select,input[type=date]{margin-left:auto;font:inherit;font-size:.9375rem;color:v
 
 .tg3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px 6px;padding:12px 8px}
 .si.lg{display:inline-flex;vertical-align:middle;margin-right:6px}
+
+.tg3{grid-template-columns:repeat(4,1fr);gap:2px;padding:8px 4px}
+.tg3 .tile{padding:4px 0;gap:4px;font-size:.6875rem;line-height:1.15}
+.tg3 .tile .si{width:40px;height:40px;border-radius:11px}
+.tg3 .tile .si svg{width:22px;height:22px}
 </style></head><body>
 <main id="app"><section id="v-trip"></section><section id="v-day" hidden></section><section id="v-map" hidden></section><section id="v-list" hidden></section><section id="v-tips" hidden></section><section id="v-stay" hidden></section><section id="v-more" hidden></section><section id="v-settings" hidden></section></main>
 <div id="detail" class="page" hidden></div>
@@ -1508,8 +1513,8 @@ function vTips(){
   h+=sec("Useful German",ul([
    "Hallo / Guten Tag / Grüß Gott: hello","Danke / Bitte: thanks / please","Haben Sie einen Tisch für vier? Do you have a table for four?","Eine Tageskarte für zwei Erwachsene und zwei Kinder, bitte: a day ticket for two adults and two children, please","Zusammen, bitte: together, please (paying)","Die Rechnung, bitte: the bill, please","Kinderpunsch, bitte: a children’s punch, please","Ist da Schweinefleisch drin? Is there pork in it?","Ohne Schweinefleisch, bitte: without pork, please","Stilles Wasser, bitte: still water, please"]));
   var TI={"Before you go":["list","Before you go","#007aff"],"Hotels":["bed","Hotels","#007aff"],"Trains, tickets and transport":["train","Trains","#007aff"],
-   "Restaurants: the unwritten rules":["fork","Restaurants","#ff9500"],"Cash, cards and bottle deposits":["card","Cash and cards","#ff9500"],"Opening times, water and toilets":["clock","Opening times","#ff9500"],
-   "Weather and clothes":["cloud","Weather","#34c759"],"What to wear: everyone, and why":["coat","What to wear","#34c759"],"Christmas markets with children":["tree","Markets","#34c759"],"Krampus and Nikolaus":["mask","Krampus","#34c759"],"Mountain days and swapping days":["mount","Mountains","#34c759"],"Useful German":["chat","German","#34c759"]};
+   "Restaurants: the unwritten rules":["fork","Restaurants","#ff9500"],"Cash, cards and bottle deposits":["card","Cash, cards","#ff9500"],"Opening times, water and toilets":["clock","Hours","#ff9500"],
+   "Weather and clothes":["cloud","Weather","#34c759"],"What to wear: everyone, and why":["coat","Clothes","#34c759"],"Christmas markets with children":["tree","Markets","#34c759"],"Krampus and Nikolaus":["mask","Krampus","#34c759"],"Mountain days and swapping days":["mount","Mountains","#34c759"],"Useful German":["chat","German","#34c759"]};
   var cur=null;TS.forEach(function(x){if(x.t===tipSec)cur=x});
   if(cur){
     var ti=TI[cur.t]||["list",cur.t,"#007aff"];
@@ -1847,7 +1852,7 @@ function vMore(){
   return h}
 
 /* ================= PHASE 1: update, backup, where to stay ================= */
-var APP_VERSION="1.8.0",SCHEMA=3;
+var APP_VERSION="1.8.1",SCHEMA=3;
 function pad2(n){return("0"+n).slice(-2)}
 function today(){var d=new Date();return d.getFullYear()+"-"+pad2(d.getMonth()+1)+"-"+pad2(d.getDate())}
 var WD=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"],MN=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
