@@ -1777,6 +1777,7 @@ function mDays(){
 function vMapHtml(){
   mapFix();
   var h='<div class="mtop"><h1 class="h2">Map</h1><div class="chips" id="mchips" role="group" aria-label="Choose a city">'+mChips()+'</div></div>';
+  h+=newBanner('map');
   h+='<div class="mframe"><div id="map"></div><div class="mctl"><button data-act="zin" aria-label="Zoom in">+</button><button data-act="zout" aria-label="Zoom out">−</button><button data-act="locate" id="locbtn" aria-label="Show my location"'+(store.me&&store.meOn!==false?' aria-pressed="true"':'')+'>'+ic(IC.loc)+'</button></div><div class="sheet" id="sheet" hidden></div></div>';
   h+='<div class="mdays" id="mdays" role="group" aria-label="Choose a day">'+mDays()+'</div>';
   h+='<div class="mleg"><span><i class="l1"></i>Saved</span><span><i class="l2"></i>Idea</span><span><i class="l3"></i>Where you sleep</span></div>';
