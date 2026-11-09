@@ -1531,6 +1531,8 @@ function closeDetail(viaPop){var box=$("detail");if(box.hidden)return;box.hidden
 
 /* ---------- render + routing ---------- */
 var TABOF={trip:"trip",day:"trip",stay:"trip",map:"map",list:"list",tips:"tips"};
+function fixHtml(err){try{console.error(err)}catch(e){}return'<div class="head"><h1>Something went wrong</h1></div><div class="callout w"><b>This page could not open</b>Your saved plan and list are safe. Tap the button to load the newest version of the guide.</div><div class="actions"><button class="btn full solid" data-act="hard-update">Load the newest version</button><button class="btn full" data-act="tab" data-s="trip">Back to Trip</button></div>'}
+function hardUpdate(){try{dailyBackup(true)}catch(e){}var go2=function(){location.reload()};var p=[];if(window.caches)p.push(caches.keys().then(function(ks){return Promise.all(ks.filter(function(k){return k.indexOf("tiles")<0}).map(function(k){return caches.delete(k)}))}));if(navigator.serviceWorker)p.push(navigator.serviceWorker.getRegistrations().then(function(rs){return Promise.all(rs.map(function(r){return r.unregister()}))}));Promise.all(p).then(go2,go2);setTimeout(go2,4000)}
 function render(keepScroll){
   var y=window.pageYOffset;buildItin();
   VIEWS.forEach(function(v){var e=$("v-"+v);if(e)e.hidden=(v!==view)});
@@ -1539,7 +1541,7 @@ function render(keepScroll){
   if(view==="map"){document.body.style.paddingBottom="0";mapShow();return}
   document.body.style.paddingBottom="";
   var el=$("v-"+view);
-  el.innerHTML=view==="trip"?vTrip():view==="day"?vDay():view==="list"?vList():view==="stay"?vStay():vTips();if(view==="stay")setTimeout(stayMap,0);else if(document.body.style.overflow==="hidden")document.body.style.overflow="";
+  try{el.innerHTML=view==="trip"?vTrip():view==="day"?vDay():view==="list"?vList():view==="stay"?vStay():vTips()}catch(err){el.innerHTML=fixHtml(err)}if(view==="stay")setTimeout(stayMap,0);else if(document.body.style.overflow==="hidden")document.body.style.overflow="";
   if(keepScroll)window.scrollTo(0,y);else window.scrollTo(0,0)}
 function parseHash(){
   var h=(location.hash||"").replace("#","");var m=h.match(/^day-(\d+)$/);
@@ -1595,6 +1597,7 @@ document.addEventListener("click",function(e){
    case"hotel-clear":delete store.hotels[t.getAttribute("data-c")];save();hotelEdit=t.getAttribute("data-c");render(true);break;
    case"hotel-save":{var r=parseHotel($("hin").value);if(r.err){$("hmsg").textContent=r.err;break}store.hotels[t.getAttribute("data-c")]=r;save();hotelEdit=null;render(true);break}
    case"hotel-gps":{var c=t.getAttribute("data-c");gps(function(g){store.hotels[c]={lat:g.lat,lng:g.lng};save();hotelEdit=null;render(true)});break}
+   case"hard-update":hardUpdate();break;
    case"install":if(deferredInstall){deferredInstall.prompt();deferredInstall=null}break;
    case"theme":store.theme=t.getAttribute("data-t");save();applyAll();render(true);break;
    case"fs":FS+=+t.getAttribute("data-d");store.fs=FS;save();applyAll();render(true);break;
@@ -1604,7 +1607,7 @@ document.addEventListener("change",function(e){var t=e.target;if(t.getAttribute&
 
 (function(){var x0=0,y0=0;var dt=$("detail");dt.addEventListener("touchstart",function(e){var t=e.touches[0];x0=t.clientX;y0=t.clientY},{passive:true});dt.addEventListener("touchend",function(e){var t=e.changedTouches[0],dx=t.clientX-x0,dy=t.clientY-y0;if(x0>24&&x0<window.innerWidth-24&&Math.abs(dx)>50&&Math.abs(dx)>Math.abs(dy)*1.4){var ci=dctx.indexOf(detailId),n=dctx[ci+(dx<0?1:-1)];if(n)openDetail(n,true)}},{passive:true})})();
 /* ================= PHASE 1: update, backup, where to stay ================= */
-var APP_VERSION="1.5.2",SCHEMA=3;
+var APP_VERSION="1.5.3",SCHEMA=3;
 function pad2(n){return("0"+n).slice(-2)}
 function today(){var d=new Date();return d.getFullYear()+"-"+pad2(d.getMonth()+1)+"-"+pad2(d.getDate())}
 var WD=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"],MN=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
@@ -1665,7 +1668,7 @@ function migrate(){
 if(typeof loadErr!=="undefined"&&loadErr){var rr=restoreLatest();setTimeout(function(){toast(rr?"Your saved data was recovered from the backup of "+rr:"Saved data could not be read")},600)}
 var wasExisting=!!store.schema;
 migrate();dailyBackup(false);
-var NEWIN={"1.5.2":{trip:"The Trip map now follows your stays: a Route view and one tab per stay, with a square pin where you sleep."},"1.5.0":{trip:"Your days now follow your night-by-night plan: same length and same order, with enough places for every stay."},"1.4.0":{trip:"Where to stay is simpler: journey, family, night plan and route in one page. New: print your whole trip as a PDF with links."},"1.3.0":{trip:"Where to stay is now night by night: pick a city for every night, and the same city can come back later. Each stay gets its own hotel name."},"1.2.0":{trip:"Where to stay: add Hallstatt, Kaprun and St. Gilgen, and pick one of three night plans.",tips:"Updates now install by themselves. You can turn this off."}};
+var NEWIN={"1.5.3":{tips:"Fixed: the Tips tab did not open. Everything you saved is unchanged."},"1.5.2":{trip:"The Trip map now follows your stays: a Route view and one tab per stay, with a square pin where you sleep."},"1.5.0":{trip:"Your days now follow your night-by-night plan: same length and same order, with enough places for every stay."},"1.4.0":{trip:"Where to stay is simpler: journey, family, night plan and route in one page. New: print your whole trip as a PDF with links."},"1.3.0":{trip:"Where to stay is now night by night: pick a city for every night, and the same city can come back later. Each stay gets its own hotel name."},"1.2.0":{trip:"Where to stay: add Hallstatt, Kaprun and St. Gilgen, and pick one of three night plans.",tips:"Updates now install by themselves. You can turn this off."}};
 (function(){var seen=store.seenVer;
   if(seen!==APP_VERSION){
     if((seen||wasExisting)&&NEWIN[APP_VERSION]){store.newTabs=store.newTabs||{};Object.keys(NEWIN[APP_VERSION]).forEach(function(k){store.newTabs[k]={v:APP_VERSION,t:NEWIN[APP_VERSION][k]}})}
@@ -1701,7 +1704,7 @@ function checkUpdate(silent){
   if(!silent){upd.state="checking";upd.msg="Checking for updates…";rerenderUpd()}
   fetch("version.json?t="+Date.now(),{cache:"no-store"}).then(function(r){if(!r.ok)throw new Error("x");return r.json()}).then(function(j){
     upd.latest=j.version;upd.notes=j.notes||"";store.lastCheck=Date.now();save();
-    if(vcmp(j.version,APP_VERSION)>0){upd.state="available";upd.msg="Version "+j.version+" is ready to install.";if(store.autoUpd!==false&&!autoTried){autoTried=true;toast("Updating to version "+j.version+"…");setTimeout(installUpdate,900);return}}
+    if(vcmp(j.version,APP_VERSION)>0){upd.state="available";upd.msg="Version "+j.version+" is ready to install.";if((store.autoUpd!==false||j.force)&&!autoTried){autoTried=true;toast("Updating to version "+j.version+"…");setTimeout(installUpdate,900);return}}
     else{upd.state="current";upd.msg="You have the latest version."}
     if(!silent||upd.state==="available")rerenderUpd();
   }).catch(function(){if(!silent){upd.state="error";upd.msg="Could not check for updates. Your data is safe.";rerenderUpd()}});
@@ -2034,11 +2037,11 @@ function printOpen(){
 }
 function printClose(){var el=document.getElementById("printdoc");if(el)el.classList.remove("show");document.body.classList.remove("printing");document.body.style.overflow=""}
 /* ===== itinerary: built from the night-by-night plan ===== */
-var ITIN=[],ITD={},THEMES={},ORD={munich:["d1","d2","x-m3","x-m4"],salzburg:["d3","d4","d5","d6","d7"],kaprun:["d4","x-k2"],hallstatt:["d5","x-h2"],stgilgen:["d6","x-g2"],vienna:["d8","d9","d10","x-v4","x-v5"]},TARR={munich:"d1",salzburg:"x-s0",vienna:"d8"},WXI={munich:0,salzburg:1,kaprun:1,hallstatt:1,stgilgen:1,vienna:2};
+var ITIN=[],ITD={},DTH={},ORD={munich:["d1","d2","x-m3","x-m4"],salzburg:["d3","d4","d5","d6","d7"],kaprun:["d4","x-k2"],hallstatt:["d5","x-h2"],stgilgen:["d6","x-g2"],vienna:["d8","d9","d10","x-v4","x-v5"]},TARR={munich:"d1",salzburg:"x-s0",vienna:"d8"},WXI={munich:0,salzburg:1,kaprun:1,hallstatt:1,stgilgen:1,vienna:2};
 function mkT(id,city,tplId,o){
   var tpl=DAYS.filter(function(x){return x.id===tplId})[0];
   var t={id:id,city:city,tpl:tpl,title:tpl.title,lede:tpl.lede,stops:tpl.stops.map(function(x){return x.id}),extras:tpl.extras.map(function(x){return x.id}),getting:tpl.getting,rain:tpl.rain,facts:tpl.facts,spot:tpl.spot,startPt:tpl.startPt,start:tpl.start,budget:tpl.budget,budgetNote:tpl.budgetNote,clim:tpl.clim,wrule:tpl.wrule,trans:tpl.trans,st:null,trip:null,wx:tpl.wx,mor:null};
-  for(var k in o)t[k]=o[k];THEMES[id]=t;return t}
+  for(var k in o)t[k]=o[k];DTH[id]=t;return t}
 (function(){
   var P0={n:"",lat:0,lng:0};
   mkT("d1","munich","d1",{mor:["a2","a3"],st:"Everything today is within 10–15 min on foot of Marienplatz. Wear warm shoes."});
@@ -2056,8 +2059,8 @@ function mkT(id,city,tplId,o){
 })();
 function consumedT(t,shown){var n=0;t.stops.forEach(function(id){if(shown[id])n++});return n>Math.floor(t.stops.length/2)}
 function freeT(b,shown,cnt){
-  var base=THEMES[(ORD[b]||ORD.salzburg)[0]],pool=[];
-  (ORD[b]||[]).forEach(function(id){THEMES[id].stops.concat(THEMES[id].extras).forEach(function(x){if(pool.indexOf(x)<0)pool.push(x)})});
+  var base=DTH[(ORD[b]||ORD.salzburg)[0]],pool=[];
+  (ORD[b]||[]).forEach(function(id){DTH[id].stops.concat(DTH[id].extras).forEach(function(x){if(pool.indexOf(x)<0)pool.push(x)})});
   var rest=pool.filter(function(id){return !shown[id]});
   rest.sort(function(a,c){var o={m:0,g:1,o:2};return(o[P[a].r]||0)-(o[P[c].r]||0)});
   var st=rest.slice(0,4),ex=rest.slice(4,9);
@@ -2075,9 +2078,9 @@ function buildItin(){
   var freeCnt={},usedT={};
   function nextT(b,arr,morn,last){
     var t=null;
-    if(arr&&!morn&&TARR[b]&&!consumedT(THEMES[TARR[b]],shown))t=THEMES[TARR[b]];
-    if(last&&!t){var l0=ORD[b]||[];for(var k0=0;k0<l0.length;k0++){var c0=THEMES[l0[k0]];if(c0.lastOnly&&!usedT[c0.id]){t=c0;break}}}
-    if(!t){var l=ORD[b]||[];for(var k=0;k<l.length;k++){var c=THEMES[l[k]];if(c.lastOnly&&!last)continue;if(c.trip&&c.trip!==b&&(stayC[c.trip]||arr||morn))continue;if(morn&&!c.mor)continue;if(!consumedT(c,shown)){t=c;break}}}
+    if(arr&&!morn&&TARR[b]&&!consumedT(DTH[TARR[b]],shown))t=DTH[TARR[b]];
+    if(last&&!t){var l0=ORD[b]||[];for(var k0=0;k0<l0.length;k0++){var c0=DTH[l0[k0]];if(c0.lastOnly&&!usedT[c0.id]){t=c0;break}}}
+    if(!t){var l=ORD[b]||[];for(var k=0;k<l.length;k++){var c=DTH[l[k]];if(c.lastOnly&&!last)continue;if(c.trip&&c.trip!==b&&(stayC[c.trip]||arr||morn))continue;if(morn&&!c.mor)continue;if(!consumedT(c,shown)){t=c;break}}}
     if(!t&&!morn){freeCnt[b]=(freeCnt[b]||0)+1;return freeT(b,shown,freeCnt[b])}return t}
   for(var i=0;i<=N;i++){
     var date=addDays(s.start,i),mc=i===0?A.c:f[i-1],sc=i<N?f[i]:null,b=sc||mc;
