@@ -1057,10 +1057,173 @@ select,input[type=date]{margin-left:auto;font:inherit;font-size:.9375rem;color:v
 .pkhi .chev .ic,.pkhi svg.chev{stroke:#fff}
 .tabbar button[data-s="list"] .ic{width:40px;height:40px;padding:8px;box-sizing:border-box;border-radius:16px;background:var(--accent);color:#fff;stroke-width:2.2;margin-top:-18px}
 .tabbar button[data-s="list"]{color:var(--accent);font-weight:700}
+
+/* ===== 2.0 refinement ===== */
+body{padding-bottom:calc(var(--tab) + env(safe-area-inset-bottom,0px) + 32px)}
+h1{font-size:2.125rem;letter-spacing:-.025em}
+h1.h2{font-size:1.75rem;line-height:1.18}
+.head .eyebrow{color:var(--sub)}
+.sub{line-height:1.4}
+.navsp{width:44px;flex:none}
+.nb span{max-width:42vw;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.nav .t:empty{display:none}
+/* tab bar: equal tabs, 22px icons, accent for the active tab */
+.tabbar .in{max-width:640px}
+.tabbar button{min-height:44px;color:var(--sub);opacity:1;font-weight:500;font-size:.6875rem;gap:3px}
+.tabbar button .ic,.tabbar button[data-s="list"] .ic{width:22px;height:22px;padding:0;margin:0;background:none;border-radius:0;color:inherit;stroke-width:2}
+.tabbar button[data-s="list"]{color:var(--sub);font-weight:500}
+.tabbar button[aria-current="page"],.tabbar button[data-s="list"][aria-current="page"]{color:var(--accent);font-weight:650}
+.tabbar .tl{line-height:1.1}
+.badge{top:2px;left:calc(50% + 5px);min-width:17px;height:17px;line-height:17px;font-size:.625rem}
+/* one accent for icons and markers */
+.si{width:30px;height:30px;border-radius:8px;background:var(--accent-soft)!important;flex:none;display:flex;align-items:center;justify-content:center}
+.si svg{width:18px;height:18px;fill:none;stroke:var(--accent);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.dn,.prow,.lrow,.pn{--c:var(--accent)!important}
+.tl .tdot:not(.a){background:var(--accent)!important}
+/* tips grid */
+.tgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:4px 2px;padding:12px 6px 10px}
+.tgrid .tile{min-height:76px;padding:4px 2px;gap:6px;font-size:.75rem;font-weight:500;line-height:1.2;color:var(--fg);justify-content:flex-start}
+.tgrid .tile .si{width:44px;height:44px;border-radius:12px}
+.tgrid .tile .si svg{width:22px;height:22px}
+.callout.sos{background:var(--card);margin:20px 16px 0;border-radius:14px}
+.prose{margin:6px 16px 0;background:var(--card);border-radius:16px;padding:2px 18px}
+.prose .pl{margin:0;padding:0;list-style:none}
+.prose .pl li{padding:13px 0;font-size:1rem;line-height:1.45;border-bottom:.5px solid var(--line)}
+.prose .pl li:last-child{border-bottom:0}
+/* itinerary */
+.intro{margin:14px 16px 0;padding:16px;background:var(--accent-soft);border-radius:16px}
+.intro p{margin:6px 0 12px;font-size:.9375rem;line-height:1.45}
+.day{margin:0 16px 12px;background:var(--card);border-radius:16px;padding:14px 16px 8px}
+.day.today{box-shadow:inset 0 0 0 2px var(--accent)}
+.dhead{display:flex;gap:12px;align-items:flex-start}
+.dnum{flex:none;width:36px;height:36px;border-radius:11px;background:var(--accent);color:var(--on-accent);font-weight:700;font-size:1.0625rem;display:grid;place-items:center;font-variant-numeric:tabular-nums}
+.dmeta{display:block;font-size:.8125rem;color:var(--sub);font-weight:500}
+.dmeta b{color:var(--accent)}
+.dt{margin:2px 0 0;font-size:1.0625rem;font-weight:650;line-height:1.28;letter-spacing:-.01em}
+.dadd{flex:none;display:inline-flex;align-items:center;gap:3px;min-height:44px;padding:0 10px;margin:-6px -10px 0 0;border:0;background:none;color:var(--accent);font-weight:600;font-size:.9375rem}
+.dadd .ic{width:18px;height:18px;stroke-width:2.4}
+.dempty{margin:4px 0 8px 48px;color:var(--sub);font-size:.9375rem}
+.dtl{list-style:none;margin:6px 0 0;padding:0}
+.ti{display:flex;align-items:center;gap:12px;position:relative;min-height:54px}
+.ti::before{content:"";position:absolute;left:17px;top:0;bottom:0;width:2px;background:var(--line)}
+.ti:first-child::before{top:50%}.ti:last-child::before{bottom:50%}.ti:only-child::before{display:none}
+.tck{position:relative;z-index:1;flex:none;width:36px;height:44px;border:0;background:none;display:grid;place-items:center;padding:0}
+.tck .ic{width:22px;height:22px;padding:3px;border-radius:50%;border:2px solid var(--accent);background:var(--card);color:transparent;stroke-width:3.2}
+.ti.done .tck .ic{background:var(--accent);color:var(--on-accent)}
+.tbody{flex:1;min-width:0;border:0;background:none;text-align:left;padding:7px 0;display:block}
+.tname{display:block;font-weight:600;font-size:1rem;line-height:1.3}
+.tmeta{display:block;font-size:.8125rem;color:var(--sub);margin-top:2px}
+.tmeta b{color:var(--fg);font-weight:600}
+.ti.done .tname{color:var(--sub);text-decoration:line-through}
+.tx{flex:none;width:44px;height:44px;border:0;background:none;color:var(--sub);display:grid;place-items:center;margin-right:-12px}
+.tx .ic{width:16px;height:16px;stroke-width:2.2}
+/* day ideas list */
+.drow{gap:14px}
+.drow .dnum{width:32px;height:32px;border-radius:10px;font-size:.9375rem}
+.drow .ttl{display:block;font-weight:600;line-height:1.3}
+.cnt{font-size:.8125rem;color:var(--accent);font-weight:600;white-space:nowrap}
+/* day page */
+.sub2{margin:18px 20px 7px;font-size:.9375rem;font-weight:650;color:var(--fg)}
+.kv .k{min-width:72px}
+/* map */
+#v-map{padding:calc(env(safe-area-inset-top,0px) + 10px) 0 10px}
+.mtop{flex:none;padding:0 16px}
+.mtop h1{margin:0 0 10px}
+.chips{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}
+.chips::-webkit-scrollbar,.mdays::-webkit-scrollbar{display:none}
+.chips button{flex:none;min-height:36px;padding:0 14px;border-radius:18px;border:1px solid var(--line);background:var(--card);font-size:.9375rem;font-weight:500;white-space:nowrap}
+.chips button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.mframe{position:relative;flex:1;min-height:0;margin:12px 16px 10px;border:1px solid var(--line);border-radius:18px;overflow:hidden;background:var(--card)}
+.mframe #map{position:absolute;inset:0}
+.mframe .mctl{right:12px;top:12px}
+.mframe .sheet{border-radius:16px 16px 0 0}
+.mdays{flex:none;display:flex;gap:6px;overflow-x:auto;padding:0 16px;scrollbar-width:none}
+.mdays button{flex:none;min-width:46px;min-height:50px;border-radius:12px;border:1px solid var(--line);background:transparent;color:var(--sub);display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1.1;padding:0 6px}
+.mdays button b{font-size:1rem}
+.mdays button small{font-size:.6875rem;font-weight:500}
+.mdays button.in{border-color:var(--accent);background:var(--accent-soft);color:var(--accent)}
+.mdays button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.mdays .mall{font-weight:600;font-size:.8125rem;padding:0 12px;color:var(--fg)}
+.mleg{flex:none;display:flex;gap:16px;padding:8px 16px 0;font-size:.75rem;color:var(--sub)}
+.mleg span{display:inline-flex;align-items:center;gap:6px}
+.mleg i{display:inline-block;width:12px;height:12px;border-radius:50%;border:2px solid var(--accent)}
+.mleg .l1{background:var(--accent)}.mleg .l3{border-radius:3px;background:var(--accent);border-color:var(--accent)}
+.pin{border-color:var(--accent);color:var(--accent)}
+.pin.in{background:var(--accent);color:#fff}
+.pin.far{width:10px;height:10px;border:2px solid #8e8e93;background:#fff;opacity:.85}
+.spin{background:var(--accent)}
+.spin.off{background:#8e8e93}
+/* editorial pages */
+.ed{margin:22px 20px 0}
+.ed h2{font-size:1.25rem;font-weight:700;letter-spacing:-.015em;margin:0 0 8px}
+.ed ul{margin:0;padding:0 0 0 18px}
+.ed li{margin:0 0 10px;line-height:1.5;font-size:1rem}
+.ed li a{font-size:.875rem;font-weight:500}
+.dish{margin:0}
+.dish dt{font-weight:600;font-size:1rem;margin-top:14px;display:flex;flex-wrap:wrap;align-items:center;gap:6px}
+.dish dd{margin:3px 0 0;color:var(--sub);font-size:.9375rem;line-height:1.45}
+.fts{display:inline-flex;gap:4px;flex-wrap:wrap}
+.fts .ft{margin:0;font-size:.6875rem;padding:1px 7px}
+.ed+.sech{margin-top:30px}
+/* events */
+.ev{align-items:flex-start;gap:14px;padding:13px 16px}
+.evd{flex:none;width:54px;text-align:center;border-radius:11px;background:var(--accent-soft);color:var(--accent);padding:7px 0;line-height:1.15}
+.evd b{display:block;font-size:.875rem;font-weight:700}
+.evd small{display:block;font-size:.625rem;font-weight:600;text-transform:uppercase;letter-spacing:.04em}
+.evt{display:block;font-size:1rem;line-height:1.3}
+.ev p{margin:3px 0 7px;font-size:.875rem;color:var(--sub);line-height:1.42}
+.evm{display:flex;gap:12px;flex-wrap:wrap;font-size:.8125rem;font-weight:500}
+.evm .on{color:var(--accent)}
+.evm a{text-decoration:none}
+/* packing */
+.cbx{width:24px;height:24px;border-radius:7px;border:2px solid var(--line);display:grid;place-items:center;flex:none}
+.pk.on .cbx{background:var(--accent);border-color:var(--accent)}
+.cbx svg{width:15px;height:15px;stroke:#fff;stroke-width:3}
+.pbar{height:6px;border-radius:3px;background:var(--fill);margin-top:12px;overflow:hidden}
+.pbar i{display:block;height:100%;background:var(--accent);border-radius:3px}
+/* trip details */
+.htip{margin:8px 0 0 42px;font-size:.8125rem;color:var(--sub);line-height:1.4}
+.tabbar .tl{white-space:nowrap}
+.group+.group{margin-top:10px}
+
+.pin{--c:var(--accent)}
+.kv .row{align-items:flex-start}
+.nrow b{white-space:nowrap}
+
+/* draft 2 fixes */
+:root{--tab:58px}
+.tabbar .in{height:var(--tab);align-items:stretch}
+.tabbar button{height:100%;justify-content:center;padding:7px 0 5px;gap:4px}
+.tabbar button .nd{top:5px}
+.badge{top:3px}
+.mdays{gap:4px}
+.mdays button{flex:1 0 28px;min-width:28px;min-height:36px;border-radius:9px;padding:0}
+.mdays button b{font-size:.875rem}
+.mdays button small{display:none}
+.mdays .mall{flex:0 0 auto;padding:0 10px;font-size:.75rem}
+.editb{flex:none;margin-top:6px;min-height:44px;padding:0 4px 0 12px;border:0;background:none;color:var(--accent);font-weight:600;font-size:1.0625rem}
+.tx i{display:block;width:22px;height:22px;border-radius:50%;background:#e5322d;position:relative}
+.tx i::after{content:"";position:absolute;left:5px;right:5px;top:10px;height:2px;background:#fff;border-radius:1px}
+.tdcard{background:var(--accent)!important}
+.tdcard .row,.tdcard .stt,.tdcard .sm,.tdcard .chev{color:var(--on-accent)!important}
+.tdcard .sm{opacity:.9}
+.tdcard .si{background:rgba(255,255,255,.22)!important}
+.tdcard .si svg{stroke:#fff}
+.fact b{font-size:.9375rem;font-weight:650;color:var(--accent);text-transform:none;letter-spacing:0;margin-bottom:3px}
+.fact{padding:12px 16px}
+.kv .k{color:var(--accent);font-weight:600}
+
+.mdays button{flex:1 1 0;min-width:26px}
+.mdays .mall{flex:0 0 auto;padding:0 9px}
+
+.toast.wu{display:flex;align-items:center;gap:14px;padding:6px 6px 6px 16px;text-align:left}
+.tundo{flex:none;min-height:36px;padding:0 14px;border:0;border-radius:9px;background:rgba(127,127,127,.28);color:inherit;font-weight:700;font-size:.9375rem}
+.toast[hidden]{display:none!important}
+.toast.wu{width:min(340px,88vw);justify-content:space-between}.toast.wu span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 </style></head><body>
-<main id="app"><section id="v-trip"></section><section id="v-day" hidden></section><section id="v-map" hidden></section><section id="v-list" hidden></section><section id="v-tips" hidden></section><section id="v-stay" hidden></section><section id="v-more" hidden></section><section id="v-settings" hidden></section><section id="v-pack" hidden></section></main>
+<main id="app"><section id="v-trip" hidden></section><section id="v-day" hidden></section><section id="v-map" hidden></section><section id="v-list"></section><section id="v-tips" hidden></section><section id="v-stay" hidden></section><section id="v-more" hidden></section><section id="v-settings" hidden></section><section id="v-pack" hidden></section></main>
 <div id="detail" class="page" hidden></div>
-<nav class="tabbar" aria-label="Main"><div class="in"><button data-act="tab" data-s="trip"><svg class="ic" viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="2.5"/><path d="M4 10h16M8.5 3v4M15.5 3v4"/><path d="M8 14h2M14 14h2M8 17h2"/></svg><span class="nd" id="nd-trip" hidden></span>Suggested</button><button data-act="tab" data-s="map"><svg class="ic" viewBox="0 0 24 24"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.3"/></svg>Map</button><button data-act="tab" data-s="list"><svg class="ic" viewBox="0 0 24 24"><path d="M6.5 4h11a1 1 0 0 1 1 1v15l-6.5-4-6.5 4V5a1 1 0 0 1 1-1z"/><path d="m9.3 10 1.9 1.9 3.5-3.7"/></svg><span class="badge" id="tabbadge" hidden></span>My itinerary</button><button data-act="tab" data-s="tips"><svg class="ic" viewBox="0 0 24 24"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.6 10.8c.6.5 1 1.2 1 2V16h5.2v-.2c0-.8.4-1.5 1-2A6 6 0 0 0 12 3z"/></svg><span class="nd" id="nd-tips" hidden></span>Tips</button><button data-act="tab" data-s="settings"><svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 14.5a1.5 1.5 0 0 0 .3 1.7l.1.1a1.8 1.8 0 1 1-2.6 2.6l-.1-.1a1.5 1.5 0 0 0-1.7-.3 1.5 1.5 0 0 0-.9 1.4v.2a1.8 1.8 0 1 1-3.6 0v-.1a1.5 1.5 0 0 0-1-1.4 1.5 1.5 0 0 0-1.7.3l-.1.1a1.8 1.8 0 1 1-2.6-2.6l.1-.1a1.5 1.5 0 0 0 .3-1.7 1.5 1.5 0 0 0-1.4-.9h-.2a1.8 1.8 0 1 1 0-3.6h.1a1.5 1.5 0 0 0 1.4-1 1.5 1.5 0 0 0-.3-1.7l-.1-.1a1.8 1.8 0 1 1 2.6-2.6l.1.1a1.5 1.5 0 0 0 1.7.3h0a1.5 1.5 0 0 0 .9-1.4v-.2a1.8 1.8 0 1 1 3.6 0v.1a1.5 1.5 0 0 0 .9 1.4 1.5 1.5 0 0 0 1.7-.3l.1-.1a1.8 1.8 0 1 1 2.6 2.6l-.1.1a1.5 1.5 0 0 0-.3 1.7v0a1.5 1.5 0 0 0 1.4.9h.2a1.8 1.8 0 1 1 0 3.6h-.1a1.5 1.5 0 0 0-1.4.9z"/></svg><span class="nd" id="nd-settings" hidden></span>Settings</button></div></nav>
+<nav class="tabbar" aria-label="Main"><div class="in"><button data-act="tab" data-s="list" aria-label="Itinerary"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 9.5h17M8 3v4M16 3v4"/><path d="m9 14.8 2.1 2.1 4-4.2"/></svg><span class="nd" id="nd-list" hidden></span><span class="badge" id="tabbadge" hidden></span><span class="tl">Itinerary</span></button><button data-act="tab" data-s="trip" aria-label="Day ideas"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m15.6 8.4-2.2 5-5 2.2 2.2-5z"/></svg><span class="nd" id="nd-trip" hidden></span><span class="tl">Day ideas</span></button><button data-act="tab" data-s="map" aria-label="Map"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4.5 3.5 6.5v13L9 17.5l6 2 5.5-2v-13L15 6.5z"/><path d="M9 4.5v13M15 6.5v13"/></svg><span class="nd" id="nd-map" hidden></span><span class="tl">Map</span></button><button data-act="tab" data-s="tips" aria-label="Tips"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.6 10.8c.6.5 1 1.2 1 2V16h5.2v-.2c0-.8.4-1.5 1-2A6 6 0 0 0 12 3z"/></svg><span class="nd" id="nd-tips" hidden></span><span class="tl">Tips</span></button><button data-act="tab" data-s="settings" aria-label="Settings"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 14.5a1.5 1.5 0 0 0 .3 1.7l.1.1a1.8 1.8 0 1 1-2.6 2.6l-.1-.1a1.5 1.5 0 0 0-1.7-.3 1.5 1.5 0 0 0-.9 1.4v.2a1.8 1.8 0 1 1-3.6 0v-.1a1.5 1.5 0 0 0-1-1.4 1.5 1.5 0 0 0-1.7.3l-.1.1a1.8 1.8 0 1 1-2.6-2.6l.1-.1a1.5 1.5 0 0 0 .3-1.7 1.5 1.5 0 0 0-1.4-.9h-.2a1.8 1.8 0 1 1 0-3.6h.1a1.5 1.5 0 0 0 1.4-1 1.5 1.5 0 0 0-.3-1.7l-.1-.1a1.8 1.8 0 1 1 2.6-2.6l.1.1a1.5 1.5 0 0 0 1.7.3h0a1.5 1.5 0 0 0 .9-1.4v-.2a1.8 1.8 0 1 1 3.6 0v.1a1.5 1.5 0 0 0 .9 1.4 1.5 1.5 0 0 0 1.7-.3l.1-.1a1.8 1.8 0 1 1 2.6 2.6l-.1.1a1.5 1.5 0 0 0-.3 1.7v0a1.5 1.5 0 0 0 1.4.9h.2a1.8 1.8 0 1 1 0 3.6h-.1a1.5 1.5 0 0 0-1.4.9z"/></svg><span class="nd" id="nd-settings" hidden></span><span class="tl">Settings</span></button></div></nav>
 <div class="toast" id="toast" hidden></div>
 <script>/* @preserve
  * Leaflet 1.9.4, a JS library for interactive maps. https://leafletjs.com
@@ -1079,7 +1242,7 @@ function km(a,b){var r=Math.PI/180,dl=(b.lat-a.lat)*r,dn=(b.lng-a.lng)*r;var x=M
 function walkKm(a,b){return km(a,b)*1.3}
 function fmtKm(k){return k<1?Math.round(k*100)*10+" m":k.toFixed(1)+" km"}
 function q(n,c){return encodeURIComponent(n.replace(/\s*\(.*?\)/g,"")+", "+(c||"Austria"))}
-var toastT;function toast(m){var t=$("toast");t.textContent=m;t.hidden=false;clearTimeout(toastT);toastT=setTimeout(function(){t.hidden=true},2200)}
+var toastT,lastUndo=null;function toast(m,undo){var t=$("toast");lastUndo=undo||null;t.innerHTML="";var s=document.createElement("span");s.textContent=m;t.appendChild(s);if(undo){var b=document.createElement("button");b.className="tundo";b.setAttribute("data-act","undo");b.textContent="Undo";t.appendChild(b)}t.classList.toggle("wu",!!undo);t.hidden=false;clearTimeout(toastT);toastT=setTimeout(function(){t.hidden=true;lastUndo=null},undo?5000:2200)}
 
 /* ---------- icons ---------- */
 function ic(p,cls){return '<svg class="ic'+(cls?" "+cls:"")+'" viewBox="0 0 24 24" aria-hidden="true">'+p+'</svg>'}
@@ -1137,7 +1300,7 @@ X("ax-peter","Alter Peter (St. Peter’s tower)",48.13630,11.57640,"view","Viewp
 {id:"d2",dow:"Sun",date:"29 Nov",grp:"munich",wx:false,title:"Munich morning, then the train to Salzburg",area:"Munich, then Salzburg",cy:"Munich",wxi:0,hc:"munich",sleep:"Salzburg (near Mirabellplatz or the Hauptbahnhof)",
  trans:"Train: ICE 211, Munich Hbf 16:16 to Salzburg Hbf 17:59 (ticket €24.99 in your plan). Check out by 11:00 and leave your bags at the hotel until you collect them on the way to the station.",
  start:"Your hotel in Munich, check out by 11:00 and leave the bags at the hotel",startPt:{n:"Munich Hauptbahnhof",lat:48.1403,lng:11.5600},
- budget:"€110",budgetNote:"Train to Salzburg ≈€25 (check if per person) · museum ≈€25 for the family (check) · lunch ≈€45 · market snacks ≈€25",
+ budget:"€110",budgetNote:"Train to Salzburg ≈€25 (check if per person) · museum ≈€25 for 2 adults and 2 children (check) · lunch ≈€45 · market snacks ≈€25",
  clim:"Plan for about 0–8 °C. First Advent Sunday. Sunset around 16:20.",
  lede:"One easy morning and a short afternoon in Munich, then the train to Salzburg and the Christmas market in the evening. Pick only one afternoon activity.",
  getting:["Hotel breakfast first (you can also eat on the train: there is a pantry car).","Sunday: most shops are closed. Museums, restaurants and Christmas markets are open. The Viktualienmarkt is closed on Sundays.","Be back at the hotel by about 15:15 to collect your bags and walk or take the U-Bahn to Munich Hbf.","Reserve seats on ICE 211 if you did not already.","In Salzburg: from the Hbf it is about 20 min on foot to the old town, or a short bus ride."],
@@ -1175,7 +1338,7 @@ X("bx-bmw","BMW Welt and BMW Museum",48.17730,11.55600,"see","Cars","Welt free �
 S("e1","Hohensalzburg Fortress and the Festungsbahn",47.79500,13.04770,"play","09:45","Funicular + fortress ≈€17–20 adult (check) · child about half","m","The big medieval fortress above the city. Ride the funicular, walk the terraces for views and visit the small museums.","Look for the long Hohensalzburg walls and find the oldest cannon.",
    {i:["Funicular ride from Kapitelplatz","View terraces over the city and the Alps","Fortress museums and the Marionette museum","Café and shop inside"],tm:"2–2.5 h.",tx:"Open daily in winter, about 09:30–17:00. Tickets by the funicular: check festung-hohensalzburg.at. Audio guide available in English.",fa:"Cafés, toilets, lifts in part of the fortress.",st:"Kapitelplatz (Festungsbahn valley station).",tp:"Go early for clear views and fewer people. Part of the fortress is cobbled and uphill.",lg:"Walk from the hotel about 20 min to Kapitelplatz"}),S("d3","Getreidegasse",47.80020,13.04260,"see","11:45","Free · Mozartkugel ≈€1–2 each","m","The famous narrow shopping street with wrought-iron guild signs. The birthplace of Mozart is at number 9.","Find the iron signs, one for each shop.",
    {i:["Wrought-iron guild signs","Mozart’s Birthplace (optional)","Small shops and cafés"],tm:"30–45 min.",tx:"Free to walk. Many shops are open until 18:00–19:00.",fa:"Toilets in cafés.",st:"Old town on foot.",tp:"It is crowded at dusk: hold hands in the narrow passages."}),S("e5","Mozart’s Birthplace (Geburtshaus)",47.80040,13.04290,"see","12:30","≈€13 adult · check child price","g","The house where Mozart was born, with violins and family items. Short and warm.","Look for the tiny violin Mozart played as a child.",
-   {i:["Mozart’s childhood violin","Family rooms and instruments"],tm:"45–60 min.",tx:"Open daily, about 09:00–17:30: check mozarteum.at. A Salzburg Card may cover it.",fa:"Toilets and shop.",st:"Getreidegasse 9.",tp:"Good for rain."}),S("e3","Haus der Natur",47.79930,13.03980,"play","14:00","≈€14 adult · ≈€8 child (check)","m","A natural history museum with an aquarium, reptile zoo, a space hall and science rooms. Great for both kids.","Spot a shark and a crocodile and find the space hall.",
+   {i:["Mozart’s childhood violin","Family rooms and instruments"],tm:"45–60 min.",tx:"Open daily, about 09:00–17:30: check mozarteum.at. A Salzburg Card may cover it.",fa:"Toilets and shop.",st:"Getreidegasse 9.",tp:"Good for rain."}),S("e3","Haus der Natur",47.79930,13.03980,"play","14:00","≈€14 adult · ≈€8 child (check)","m","A natural history museum with an aquarium, reptile zoo, a space hall and science rooms. Great for kids.","Spot a shark and a crocodile and find the space hall.",
    {i:["Aquarium with sharks and reef fish","Reptile zoo","Space hall and science centre","Dinosaurs and Alpine nature"],tm:"2–2.5 h.",tx:"Open daily about 09:00–17:00. Check hausdernatur.at for current prices and opening.",fa:"Café, toilets, lockers.",st:"Museumsplatz, a 10 min walk from the Getreidegasse.",tp:"Older kids will like the space and science floors."}),S("e4","Café Tomaselli or another old-town café",47.79970,13.04370,"eat","16:00","≈€10 per person","g","A famous old coffee house on the Alter Markt. Time for hot chocolate and cake.","Order a hot chocolate and a slice of cake.",
    {i:["Hot chocolate and cakes","Salzburger Nockerl (a sweet soufflé, ask to share)","Old market square"],tm:"45 min.",tx:"Open daily from about 07:00 or 08:00 to 19:00 or 20:00: check.",fa:"Toilets inside.",st:"Alter Markt in the old town.",tp:"Any café on the Alter Markt works if it is full."}), ],
  extras:[
@@ -1211,7 +1374,7 @@ X("fx-zell","Zell am See lake promenade",47.32530,12.80000,"view","Walk","Free",
 },
 {id:"d5",dow:"Wed",date:"2 Dec",grp:"salzburg",wx:true,trans:"Salzburg Hbf to Hallstatt by train (usually via Attnang-Puchheim) and ferry, about 2.5–3 h each way. Or use a rental car for just this day if you do not want 2+ hours of travel (check the price).",title:"Hallstatt: the lake village",area:"Hallstatt, Salzkammergut",cy:"Hallstatt",wxi:1,hc:"salzburg",sleep:"Salzburg",
  start:"Salzburg Hbf, train via Attnang-Puchheim to Hallstatt station, then the ferry across the lake",startPt:{n:"Salzburg Hauptbahnhof",lat:47.8130,lng:13.0457},
- budget:"€230",budgetNote:"Train and ferry for four about €80–120 (check oebb.at) · salt mine tour and funicular ≈€100 for the family (check salzwelten.at) · food ≈€50",
+ budget:"€230",budgetNote:"Train and ferry for four about €80–120 (check oebb.at) · salt mine tour and funicular ≈€100 for 2 adults and 2 children (check salzwelten.at) · food ≈€50",
  clim:"Plan for about 0–5 °C or colder, often fog or low cloud on the lake. Sunset around 16:15.",
  lede:"A classic Austrian lake-and-mountain village without changing hotels. The trip takes about 2.5 hours each way by train and ferry, so make it a full day.",
  getting:["Salzburg to Hallstatt: usually train to Attnang-Puchheim, change to the Salzkammergut line, get off at Hallstatt station. The ferry crosses the lake to the village and is timed to meet trains. About 2.5–3 h in total: check oebb.at and the ÖBB app.","Another route: train or bus to Bad Ischl, then local bus to Hallstatt.","The salt mine funicular (Salzbergbahn) goes from the village up to the Salzwelten and the Skywalk. Check opening and tours for winter.","Last return trains in winter are early evening: plan to leave the village by about 16:30."],
@@ -1223,8 +1386,8 @@ X("fx-zell","Zell am See lake promenade",47.32530,12.80000,"view","Walk","Free",
 S("g1","Hallstatt station and the ferry",47.56120,13.64090,"play","10:45","Ferry ≈€3–4 per adult (check)","g","A small station on the opposite shore of the lake. The ferry ride is the best arrival: you see the village from the water.","Count the swans and look for the village appearing.",
    {i:["Hallstatt Bahnhof","Short ferry ride across the Hallstätter See","First view of the village"],tm:"15–20 min.",tx:"The ferry runs in time with the trains. In very cold weather it may change: check.",fa:"Toilets at the station.",st:"Hallstatt Bahnhof.",tp:"Ask about the ferry ticket on the train or at the pier.",lg:"Train from Salzburg about 2–2.5 h"}),S("g2","Hallstatt Marktplatz",47.56220,13.64930,"see","11:15","Free","m","The small main square with colourful houses, cafés and the lake behind. The picture-postcard spot.","Find the Trinity column in the middle of the square.",
    {i:["Market square with the Trinity column","Houses by the lake","Cafés and small shops"],tm:"45–60 min.",tx:"Free. Hallstatt is busy even in winter: go early.",fa:"Cafés, public toilets near the square.",st:"Ferry stop at the Markt.",tp:"Have lunch here or at the Seestraße lakeside."}),S("g3","Salzbergbahn funicular and Skywalk (Welterbeblick)",47.56280,13.65050,"view","13:00","Funicular ≈€16 adult · check family tickets","m","A funicular takes you up the hill to a viewing platform that hangs over the village and lake. Best on clear days.","Look straight down to the village roofs and the lake.",
-   {i:["Funicular ride (Salzbergbahn)","Skywalk viewing platform","Path to the Salzwelten (salt mine)"],tm:"1–1.5 h.",tx:"Winter operation is limited: check salzwelten.at and the funicular timetable. Winter ice can close paths.",fa:"Toilets and café at the top.",st:"Valley station on the north side of the village, 10–15 min walk from the Markt.",tp:"If the weather is bad, skip the Skywalk and do the salt mine instead.",lg:"Walk about 10–15 min from the Markt"}),S("g4","Salzwelten Hallstatt (salt mine tour)",47.55930,13.64690,"play","14:15","≈€40 adult · child about half (check, combo with funicular)","g","A guided tour into the oldest salt mine in the world, with wooden slides and a salt lake. Fun for both kids.","Go down a miner’s slide and look for the underground salt lake.",
-   {i:["Guided tour in a salt mine","Miners’ wooden slides","Underground salt lake","Mining history"],tm:"About 1.5 h.",tx:"Tour times and winter hours: check salzwelten.at. A minimum age may apply for some tours; for kids of 6 and 12 it is usually fine. Mine is cool (about 8 °C): dress in layers.",fa:"Cafés and toilets at the entrance.",st:"At the top of the funicular, a short walk.",tp:"Book a time slot online if possible."}),S("g5","Lakefront walk and Hallstatt Church",47.56100,13.64970,"view","16:00","Free","o","A calm walk on the lake path and a look at the small church with its frescoes. A quiet end to the day.","Look for the church on the cliff above the water.",
+   {i:["Funicular ride (Salzbergbahn)","Skywalk viewing platform","Path to the Salzwelten (salt mine)"],tm:"1–1.5 h.",tx:"Winter operation is limited: check salzwelten.at and the funicular timetable. Winter ice can close paths.",fa:"Toilets and café at the top.",st:"Valley station on the north side of the village, 10–15 min walk from the Markt.",tp:"If the weather is bad, skip the Skywalk and do the salt mine instead.",lg:"Walk about 10–15 min from the Markt"}),S("g4","Salzwelten Hallstatt (salt mine tour)",47.55930,13.64690,"play","14:15","≈€40 adult · child about half (check, combo with funicular)","g","A guided tour into the oldest salt mine in the world, with wooden slides and a salt lake. Fun for kids.","Go down a miner’s slide and look for the underground salt lake.",
+   {i:["Guided tour in a salt mine","Miners’ wooden slides","Underground salt lake","Mining history"],tm:"About 1.5 h.",tx:"Tour times and winter hours: check salzwelten.at. A minimum age may apply for some tours; for school-age kids it is usually fine. Mine is cool (about 8 °C): dress in layers.",fa:"Cafés and toilets at the entrance.",st:"At the top of the funicular, a short walk.",tp:"Book a time slot online if possible."}),S("g5","Lakefront walk and Hallstatt Church",47.56100,13.64970,"view","16:00","Free","o","A calm walk on the lake path and a look at the small church with its frescoes. A quiet end to the day.","Look for the church on the cliff above the water.",
    {i:["Seestraße lakefront","Catholic parish church on the hill","Charnel house (Beinhaus) nearby"],tm:"30–40 min.",tx:"Free. The Beinhaus (bone house) is small and paid and may feel odd for young kids.",fa:"Cafés and toilets.",st:"Village on foot.",tp:"Leave by 16:30 to catch the ferry and return trains.",lg:"Short walk from the Markt"}), ],
  extras:[
 X("gx-museum","Hallstatt Museum",47.56180,13.64880,"see","Museum","≈€12 adult (check)","o","A small museum about 7,000 years of local history.","Look for the old tools and boats.",
@@ -1239,7 +1402,7 @@ X("gx-skywalk","Dachstein Skywalk (Ramsau glacier)",47.4747,13.6217,"view","Moun
 {id:"d6",dow:"Thu",date:"3 Dec",grp:"salzburg",wx:false,title:"Wolfgangsee Advent markets",area:"St. Gilgen, St. Wolfgang",cy:"St. Gilgen",wxi:1,hc:"salzburg",sleep:"Salzburg",
  trans:"Bus 150 from Salzburg Hbf to St. Gilgen (about 50 min), then bus or Advent boat to St. Wolfgang (check wolfgangseer-advent.at).",
  start:"Salzburg Hbf, bus 150 to St. Gilgen (about 50 min)",startPt:{n:"Salzburg Hauptbahnhof",lat:47.8130,lng:13.0457},
- budget:"€130",budgetNote:"Bus ≈€40–60 for the family (check) · market snacks and lunch ≈€70 · optional cable car extra",
+ budget:"€130",budgetNote:"Bus ≈€40–60 for 2 adults and 2 children (check) · market snacks and lunch ≈€70 · optional cable car extra",
  clim:"Plan for about 0–6 °C, cold lake wind. Sunset around 16:20.",
  lede:"An optional lakeside day: two small Advent markets at the Wolfgangsee. Pick this day only if the family wants a quieter day.",
  getting:["Salzburg Hbf to St. Gilgen: bus 150 (about 50 min). Check the ÖBB app for the timetable.","St. Gilgen to St. Wolfgang: local bus, or the Advent boat if it runs (check the market website).","Markets are usually open on set days and hours in Advent: check wolfgangseer-advent.at before you go.","Last buses back to Salzburg are early evening: leave by about 17:00."],
@@ -1365,7 +1528,8 @@ function totalList(){return ALL.filter(inList).length}
 function dlabel(d){return "Day "+(d.i+1)+" · "+d.dow+" "+d.date}
 function gmq(s){return GM[s.id]||(s.n.replace(/\s*\(.*?\)/g,"")+", "+(s.f.cy||DAYS[s.day].cy))}
 function appleMaps(s){return"https://maps.apple.com/?ll="+s.lat+","+s.lng+"&q="+encodeURIComponent(gmq(s))}
-function mapsPlace(s){return "https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(gmq(s))}
+function mapsPlace(s){return"https://www.google.com/maps/search/"+encodeURIComponent(gmq(s)).replace(/%20/g,"+")+"/@"+s.lat+","+s.lng+",17z"}
+function mapsPlaceOld(s){return "https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(gmq(s))}
 function ref(o){return o.lat!=null?o.lat+","+o.lng:q(o.n)}
 function mapsDir(a,b,mode){return "https://www.google.com/maps/dir/?api=1&travelmode="+(mode||"transit")+"&origin="+ref(a)+"&destination="+ref(b)}
 function tags(s){var h='<span class="tag '+s.r+'">'+RL[s.r]+'</span>';if(s.f.chk)h+='<span class="tag w">'+esc(s.f.chk)+'</span>';return h}
@@ -1395,60 +1559,59 @@ function wxDay(k,wi){if(!WX)return null;var o=WX[wi||0];if(!o||!o.daily)return n
 
 var deferredInstall=null;window.addEventListener("beforeinstallprompt",function(e){e.preventDefault();deferredInstall=e;if(view==="tips"||view==="settings")render(true)});window.addEventListener("appinstalled",function(){deferredInstall=null;if(view==="tips"||view==="settings")render(true)});
 /* ---------- state ---------- */
-var view="trip",cur=0,mapSg="all",mapDay="all",selId=null,hotelEdit=null,detailId=null;
+var view="list",cur=0,mapSg="all",mapDay="all",selId=null,hotelEdit=null,detailId=null;
 var VIEWS=["trip","day","map","list","tips","stay","more","settings","pack"];
+var NAVS=[],SCR={},lastH=null,listEdit=false;
 
 /* ---------- views ---------- */
-function addBtn(s,full){var on=inList(s);return '<button class="add'+(on?" on":"")+'" data-act="add" data-id="'+s.id+'" aria-pressed="'+on+'" aria-label="'+(on?"Remove from my list: ":"Add to my list: ")+esc(s.n)+'">'+ic(on?IC.check:IC.plus)+(on?"Added":"Add")+'</button>'}
+function addBtn(s,full){var on=inList(s);return '<button class="add'+(on?" on":"")+'" data-act="add" data-id="'+s.id+'" aria-pressed="'+on+'" aria-label="'+(on?"Remove from itinerary: ":"Add to itinerary: ")+esc(s.n)+'">'+ic(on?IC.check:IC.plus)+(on?"Saved":"Add")+'</button>'}
 
 function vTrip(){
-  var s=stay(),cs=[];ITIN.forEach(function(D){if(D.i<s.total&&cs.indexOf(D.b)<0)cs.push(D.b)});
-  var h='<div class="head"><div class="headrow"><div><div class="eyebrow">'+fd(s.start)+' – '+fd(stayEnd(s))+' '+s.start.slice(0,4)+'</div><h1>'+esc(cs.map(function(c){return SN(c)}).join(", ")||"Your trip")+'</h1><p class="sub">'+(s.total+1)+' days · '+esc(famSummary(s))+'</p></div><button class="aa" data-act="settings" aria-label="Text size and colours">Aa</button></div></div>';
-  h+=todayCard();
-  if(!store.hideHow)h+='<div class="how"><b class="h">How this guide works</b><ol><li><i>1</i><span>Open a day below.</span></li><li><i>2</i><span>Tap <b>Add</b> next to the places you want to visit.</span></li><li><i>3</i><span>Build your own itinerary in <b>My itinerary</b> at the bottom.</span></li></ol><button class="btn solid" data-act="hidehow">Got it</button></div>';
-  h+=newBanner('trip')+updNotice()+planTiles();
-  if(sumNights(s)<s.total)h+='<div class="callout w"><b>Some nights have no city yet</b>The days below follow your night-by-night plan. <button class="lnk" data-act="stay-open">Finish the plan</button></div>';
+  var s=stay();
+  var h='<div class="head"><h1>Day ideas</h1><p class="sub">A suggested plan for every day of your trip. Add the places you like to your itinerary.</p></div>';
+  h+=newBanner('trip');
+  if(sumNights(s)<s.total)h+='<div class="callout w"><b>Some nights have no city yet</b>The days follow your Trip details. <button class="lnk" data-act="stay-open">Open Trip details</button></div>';
   var g=-1;
   ITIN.forEach(function(D){
     if(D.sg!==g){if(g>=0)h+='</div>';g=D.sg;var r=D.row;
-      h+='<div class="sech"><span>'+(r?SN(r.c)+(r.visit>1?" (back again)":""):SN(D.b))+'</span><span class="r">'+(r?r.n+(r.n===1?" night":" nights"):"")+'</span></div><div class="group">'}
-    var n=listCount({stops:D.pl,extras:D.exo});
-    h+='<button class="row tap" data-act="day" data-i="'+D.i+'" style="--c:'+SC(D.b)+'"><span class="dn">'+(D.i+1)+'</span><span class="grow"><span class="sm" style="display:block">'+dayFlags({stops:D.pl})+D.dow+' '+D.dm+(D.th.wx&&D.kind!=="move"?' · weather-dependent':'')+(D.kind==="move"?' · travel from '+SN(D.mc):'')+(D.kind==="last"?' · departure day':'')+'</span><span class="ttl">'+esc(D.title)+'</span></span>'+(n?'<span class="cnt">'+n+' in list</span>':'')+ic(IC.fwd,"chev")+'</button>'});
+      h+='<div class="sech"><span>'+esc(r?SN(r.c):SN(D.b))+'</span><span class="r">'+(r?r.n+(r.n===1?" night":" nights"):"")+'</span></div><div class="group">'}
+    var n=listCount({stops:D.pl,extras:D.exo}),tag=D.kind==="move"?"Travel from "+SN(D.mc):D.kind==="last"?"Departure day":D.th.wx?"Weather-dependent":"";
+    h+='<button class="row tap drow" data-act="day" data-i="'+D.i+'"><span class="dnum">'+(D.i+1)+'</span><span class="grow"><span class="dmeta">'+D.dow+' '+D.dm+(tag?' · '+tag:'')+'</span><span class="ttl">'+esc(D.title)+'</span></span>'+(n?'<span class="cnt">'+n+' saved</span>':'')+ic(IC.fwd,"chev")+'</button>'});
   if(g>=0)h+='</div>';
-  h+='<p class="foot">The days follow your plan in <b>Trip setup</b>. Change the nights there and this page updates. Dates and times are a plan, not bookings. Check opening hours and prices on the official sites before you go.</p>';
+  h+='<p class="foot">The days follow your Trip details. Times and prices are a guide, not bookings: check the official sites before you go.</p>';
   return h}
 
 function vDay(){
   var D=ITIN[cur];if(!D){cur=0;D=ITIN[0]}
   var th=D.th,g=D.b,ds=ITIN.filter(function(x){return x.sg===D.sg}),w=wxDay(D.date,WXI[g]),s=stay(),col=SC(g);
-  var h='<div class="nav"><button class="nb" data-act="tab" data-s="trip">'+ic(IC.back)+'Suggested</button><span class="t">Day '+(cur+1)+'</span><span class="navr"><button class="nb" data-act="day" data-i="'+(cur-1)+'" aria-label="Previous day"'+(cur===0?' disabled':'')+'>'+ic(IC.back)+'</button><button class="nb" data-act="day" data-i="'+(cur+1)+'" aria-label="Next day"'+(cur>=ITIN.length-1?' disabled':'')+'>'+ic(IC.fwd)+'</button></span></div>';
-  h+='<div class="head"><div class="eyebrow" style="color:'+col+'">'+dayFlags({stops:D.pl})+esc(SN(g))+' · '+D.dow+' '+D.dm+'</div><h1>'+esc(D.title)+'</h1></div>';
-  h+='<div class="segwrap"><div class="cap">Days in this stay · '+esc(SN(g))+'</div><div class="seg">'+ds.map(function(x){return '<button data-act="day" data-i="'+x.i+'" aria-pressed="'+(x.i===cur)+'">'+(x.i+1)+'<small>'+x.dow+'</small></button>'}).join("")+'</div></div>';
+  var h=navBar("trip",'<span class="navr"><button class="nb" data-act="day" data-i="'+(cur-1)+'" aria-label="Previous day"'+(cur===0?' disabled':'')+'>'+ic(IC.back)+'</button><button class="nb" data-act="day" data-i="'+(cur+1)+'" aria-label="Next day"'+(cur>=ITIN.length-1?' disabled':'')+'>'+ic(IC.fwd)+'</button></span>');
+  h+='<div class="head"><div class="eyebrow">Day '+(cur+1)+' · '+D.dow+' '+D.dm+' · '+esc(SN(g))+'</div><h1 class="h2">'+esc(D.title)+'</h1></div>';
+  h+='<div class="segwrap"><div class="cap">Days in '+esc(SN(g))+'</div><div class="seg">'+ds.map(function(x){return '<button data-act="day" data-i="'+x.i+'" aria-pressed="'+(x.i===cur)+'">'+(x.i+1)+'<small>'+x.dow+'</small></button>'}).join("")+'</div></div>';
   h+='<p class="lede">'+esc(th.lede)+'</p>';
-  h+='<div class="sech"><span>Today</span></div><div class="group">';
+  h+='<div class="sech"><span>At a glance</span></div><div class="group kv">';
   h+='<div class="row"><span class="k">Travel</span><span class="v">'+esc(D.trans)+'</span></div>';
   h+='<div class="row"><span class="k">Start</span><span class="v">'+esc(D.start)+'</span></div>';
   h+='<div class="row"><span class="k">Sleep</span><span class="v">'+esc(D.sleep)+'</span></div>';
-  h+='<div class="row"><span class="k">Cost</span><span class="v"><b>'+esc(th.budget)+'</b> estimate for the family. '+esc(th.budgetNote)+'</span></div>';
+  h+='<div class="row"><span class="k">Cost</span><span class="v"><b>'+esc(th.budget)+'</b> estimated day cost. '+esc(th.budgetNote)+'</span></div>';
   h+='<div class="row"><span class="k">Weather</span><span class="v">'+(w?'<span class="wx">'+ic(wxIcon(w.code))+'<b>'+deg(w.hi)+' / '+deg(w.lo)+'</b> · rain chance '+(w.pp==null?"n/a":w.pp+"%")+(w.sun?' · sunset '+w.sun:'')+'</span>':esc(th.clim)+'<span class="sm" style="display:block">Live forecast appears here about two weeks before the trip.</span>')+'</span></div>';
   if(CKEYS.indexOf(g)>-1)h+=hotelRow({hc:g,startPt:th.startPt});
   h+='</div>';
-  var eo=evOnDay(D);if(eo.length)h+='<div class="callout"><b>Happening today</b>'+eo.map(function(e){return esc(e.t)+(e.f?' (free)':'')}).join(' · ')+' <button class="lnk" data-act="more-open">All events</button></div>';
+  var eo=evOnDay(D);if(eo.length)h+='<div class="callout"><b>Happening today</b>'+eo.map(function(e){return esc(e.t)+(e.f?' (free)':'')}).join(' · ')+' <button class="lnk" data-act="more-open">See events</button></div>';
   if(th.wrule&&D.kind!=="move")h+='<div class="callout w"><b>Weather rule</b>'+esc(th.wrule)+'</div>';
   var n=listCount({stops:D.pl,extras:D.exo});
-  h+='<div class="sech"><span>Places</span><span class="r">'+n+' in your list</span></div>';
-  h+='<p class="foot" style="margin:-2px 20px 8px">Tap <b>Add</b> on the places you want to visit. Tap a name for details.</p>';
+  h+='<div class="sech"><span>Plan for the day</span><span class="r">'+(n?n+' saved':'')+'</span></div>';
+  h+='<p class="foot" style="margin:-2px 20px 10px">Tap <b>Add</b> to save a place to your itinerary.</p>';
   var rows=function(list){return list.map(function(p){return prow(p,String(D.pos[p.id]))}).join("")};
   if(D.morning){
-    h+='<div class="sech"><span>Morning in '+esc(SN(D.mc))+'</span></div><div class="group" style="--c:'+col+'">'+rows(D.mpl)+'</div>';
-    h+='<div class="sech"><span>Then in '+esc(SN(g))+'</span></div><div class="group" style="--c:'+col+'">'+rows(D.apl)+'</div>';
+    h+='<div class="sub2">Morning · '+esc(SN(D.mc))+'</div><div class="group" style="--c:'+col+'">'+rows(D.mpl)+'</div>';
+    h+='<div class="sub2">Afternoon and evening · '+esc(SN(g))+'</div><div class="group" style="--c:'+col+'">'+rows(D.apl)+'</div>';
   }else h+='<div class="group" style="--c:'+col+'">'+rows(D.apl)+'</div>';
-  if(D.exo.length)h+='<div class="sech"><span>More options</span><span class="r">'+D.exo.length+'</span></div><div class="group" style="--c:'+col+'">'+D.exo.map(function(p){return prow(p)}).join("")+'</div>';
-  h+='<div class="actions"><button class="btn full" data-act="daymap">'+ic(IC.map)+'Show this day on Trip map</button></div>';
+  if(D.exo.length)h+='<div class="sub2">More options nearby</div><div class="group" style="--c:'+col+'">'+D.exo.map(function(p){return prow(p)}).join("")+'</div>';
+  h+='<div class="actions"><button class="btn full" data-act="daymap">'+ic(IC.map)+'Show on map</button></div>';
   h+='<div class="sech"><span>Good to know</span></div>';
   h+='<details class="group"><summary>Getting around</summary><div class="in"><ul class="pl">'+th.getting.map(function(x){return '<li>'+esc(x)+'</li>'}).join("")+'</ul></div></details>';
   h+='<details class="group"><summary>If it rains</summary><div class="in"><ul class="pl">'+th.rain.map(function(x){return '<li>'+esc(x)+'</li>'}).join("")+'</ul></div></details>';
-  h+='<details class="group"><summary>For the kids'+(s.kids.length?' ('+esc(s.kids.join(", "))+')':'')+'</summary><div class="in"><ul class="pl">'+th.facts.map(function(x){return '<li>'+esc(x)+'</li>'}).join("")+'</ul><div class="sech" style="margin:8px 16px 0"><span>Spot list</span></div><ul class="spot">'+th.spot.map(function(t,i){var key=th.id+"_"+i;return '<li><label><input type="checkbox" data-act="spot" data-k="'+key+'"'+(store.spot[key]?" checked":"")+'><span>'+esc(t)+'</span></label></li>'}).join("")+'</ul></div></details>';
+  h+='<details class="group"><summary>For kids</summary><div class="in"><ul class="pl">'+th.facts.map(function(x){return '<li>'+esc(x)+'</li>'}).join("")+'</ul><div class="sub2" style="margin:10px 16px 0">Spot it</div><ul class="spot">'+th.spot.map(function(t,i){var key=th.id+"_"+i;return '<li><label><input type="checkbox" data-act="spot" data-k="'+key+'"'+(store.spot[key]?" checked":"")+'><span>'+esc(t)+'</span></label></li>'}).join("")+'</ul></div></details>';
   return h}
 
 function hotelRow(d){
@@ -1463,29 +1626,38 @@ function prow(s,lb){
   var lab=lb!=null?lb:(s.x?ic(IC[s.k]):String(s.idx+1)),xx=lb==null&&s.x;
   return '<div class="prow" style="--c:'+cvar(s.city)+'"><button class="pmain" data-act="place" data-id="'+s.id+'"><span class="pn'+(xx?" x":"")+'">'+lab+'</span><span class="pt"><span class="nm">'+esc(s.n)+'</span><span class="mt">'+(s.x?esc(s.cat):KIND[s.k]+(s.t?" · "+esc(s.t):""))+' · '+esc(s.c)+'</span><span class="tg">'+tags(s)+'</span></span></button>'+addBtn(s)+'</div>'}
 
+function famShort(s){var k=s.kids.length;return s.adults+" adult"+(s.adults>1?"s":"")+(k?", "+k+" child"+(k>1?"ren":""):"")}
+function tlItem(s){var dn=!!store.done[s.id];
+  return'<li class="ti'+(dn?" done":"")+'"><button class="tck" data-act="done" data-id="'+s.id+'" aria-pressed="'+dn+'" aria-label="'+(dn?"Visited: ":"Mark as visited: ")+esc(s.n)+'">'+ic(IC.check)+'</button><button class="tbody" data-act="place" data-id="'+s.id+'"><span class="tname">'+esc(s.n)+'</span><span class="tmeta">'+(s.t?'<b>'+esc(s.t)+'</b> · ':'')+(s.x?esc(s.cat):KIND[s.k])+' · '+esc(s.c)+'</span></button>'+(listEdit?'<button class="tx" data-act="add" data-id="'+s.id+'" aria-label="Remove from itinerary: '+esc(s.n)+'"><i></i></button>':'')+'</li>'}
 function vList(){
-  var n=totalList();
-  var h='<div class="head"><div class="headrow"><div><div class="eyebrow">Your own plan</div><h1>My itinerary</h1><p class="sub">'+(n?n+(n===1?" place":" places")+" · "+Object.keys(store.done).filter(function(k){return store.done[k]&&store.list[k]}).length+" done":"Nothing added yet")+'</p></div>'+(n?'<button class="aa" data-act="copy" aria-label="Copy my list as text">'+ic(IC.copy)+'</button>':'')+'</div></div>';
-  if(!n){
-    h+='<div class="empty"><svg viewBox="0 0 24 24" aria-hidden="true">'+IC.list+'</svg><b>Your list is empty</b><p>Open a day and tap <b style="display:inline;font-size:inherit;color:var(--fg)">Add</b> next to a place. It will appear here, sorted by day.</p><p>You can also start with all the highlights.</p><div class="btnrow"><button class="btn solid" data-act="addmust">Add all “Must see” places</button></div><div class="btnrow" style="margin-top:10px"><button class="btn" data-act="tab" data-s="trip">Browse the days</button></div></div>';return h}
-  var LG=listGroups();
-  function grp(label,col,flags,items){
-    h+='<div class="daych" style="--c:'+col+'"><i></i>'+flags+esc(label)+'</div><div class="group">';
-    items.forEach(function(s){var dn=!!store.done[s.id];
-      h+='<div class="lrow'+(dn?" done":"")+'" style="--c:'+cvar(s.city)+'"><button class="ck" data-act="done" data-id="'+s.id+'" aria-pressed="'+dn+'" aria-label="Tick as visited: '+esc(s.n)+'">'+ic(IC.check)+'</button><button class="pmain" style="padding:0" data-act="place" data-id="'+s.id+'"><span class="pt"><span class="nm">'+esc(s.n)+'</span><span class="mt">'+(s.x?esc(s.cat):KIND[s.k]+(s.t?" · "+esc(s.t):""))+' · '+esc(s.c)+'</span></span></button><button class="rm" data-act="add" data-id="'+s.id+'" aria-label="Remove '+esc(s.n)+'">Remove</button></div>'});
-    h+='</div>'}
-  LG.days.forEach(function(x){grp('Day '+(x.D.i+1)+' · '+x.D.dow+' '+x.D.dm+' · '+SN(x.D.b),SC(x.D.b),dayFlags({stops:x.items}),x.items)});
-  if(LG.un.length){grp('Not in your itinerary','#8e8e93','',LG.un);h+='<p class="foot">These places are in cities or days your night-by-night plan does not include. Change the nights in Where to stay to add them.</p>'}
-  h+='<p class="foot">Tick the circle when you have been there. Your list is saved on this phone only.</p>';
+  var s=stay(),n=totalList(),LG=listGroups(),by={},td=today(),cs=[];LG.days.forEach(function(x){by[x.D.i]=x.items});
+  ITIN.forEach(function(D){if(cs.indexOf(D.b)<0)cs.push(D.b)});
+  var dn=ALL.filter(function(x){return inList(x)&&store.done[x.id]}).length;
+  if(!n)listEdit=false;
+  var h='<div class="head"><div class="headrow"><div><h1>Itinerary</h1><p class="sub">'+fd(s.start)+' – '+fd(stayEnd(s))+' · '+(s.total+1)+' days</p></div>'+(n?'<button class="editb" data-act="list-edit" aria-pressed="'+listEdit+'">'+(listEdit?"Done":"Edit")+'</button>':'')+'</div></div>';
+  if(listEdit)h+='<p class="foot" style="margin:0 20px 8px">Tap the red button to remove a place. Tap Done when you are finished.</p>';
+  h+='<div class="group tdcard"><button class="row tap srow" data-act="stay-open">'+sI("route")+'<span class="grow"><span class="stt">Trip details</span><span class="sm" style="display:block">'+esc(cs.map(function(c){return SN(c)}).join(" → "))+' · '+esc(famShort(s))+'</span></span>'+ic(IC.fwd,"chev")+'</button></div>';
+  h+=todayCard()+newBanner('list')+updNotice();
+  if(sumNights(s)<s.total)h+='<div class="callout w"><b>Some nights have no city yet</b>Pick a city for every night so each day knows where you are. <button class="lnk" data-act="stay-open">Open Trip details</button></div>';
+  if(!n)h+='<div class="intro"><b>Start your itinerary</b><p>Open <b>Day ideas</b> and tap <b>Add</b> on the places you like. They appear here under their day, in order.</p><div class="btnrow"><button class="btn solid" data-act="tab" data-s="trip">Browse Day ideas</button><button class="btn" data-act="addmust">Add the highlights</button></div></div>';
+  h+='<div class="sech"><span>Your days</span><span class="r">'+(n?n+(n===1?" place":" places")+(dn?" · "+dn+" visited":""):"")+'</span></div>';
+  ITIN.forEach(function(D){
+    var it=by[D.i]||[],isT=D.date===td,tag=D.kind==="move"?"Travel day":D.kind==="last"?"Departure day":"";
+    h+='<section class="day'+(isT?" today":"")+'"><div class="dhead"><span class="dnum">'+(D.i+1)+'</span><div class="grow"><div class="dmeta">'+(isT?'<b>Today</b> · ':'')+D.dow+' '+D.dm+' · '+esc(SN(D.b))+(tag?' · '+tag:'')+'</div><h2 class="dt">'+esc(D.title)+'</h2></div><button class="dadd" data-act="day" data-i="'+D.i+'" aria-label="Add places to day '+(D.i+1)+'">'+ic(IC.plus)+'Add</button></div>';
+    if(it.length)h+='<ol class="dtl">'+it.map(tlItem).join("")+'</ol>';
+    else h+='<p class="dempty">No places yet.</p>';
+    h+='</section>'});
+  if(LG.un.length){h+='<div class="sech"><span>Outside your dates</span></div><section class="day"><p class="dempty" style="margin-top:0">These places belong to cities or days that are not in your Trip details.</p><ol class="dtl">'+LG.un.map(tlItem).join("")+'</ol></section>'}
+  h+='<p class="foot">Tap a circle when you have visited a place. Your itinerary is saved on this phone.</p>';
   return h}
 
 function listGroups(){
   var g=ITIN.map(function(D){return{D:D,items:[]}}),un=[];
-  ALL.filter(inList).forEach(function(s){var i=ITD[s.id];if(i!=null&&g[i])g[i].items.push(s);else un.push(s)});
+  var byDate={};ITIN.forEach(function(D){byDate[D.date]=D.i});ALL.filter(inList).forEach(function(s){var ld=store.ld&&store.ld[s.id],i=(ld&&byDate[ld]!=null)?byDate[ld]:ITD[s.id];if(i!=null&&g[i])g[i].items.push(s);else un.push(s)});
   g.forEach(function(x){x.items.sort(function(p,q){return x.D.all.indexOf(p.id)-x.D.all.indexOf(q.id)})});
   return{days:g.filter(function(x){return x.items.length}),un:un}}
 function vTips(){
-  var h='<div class="head"><div class="eyebrow">Before and during the trip</div><h1>Tips</h1></div>';
+  var h='<div class="head"><h1>Tips</h1><p class="sub">Plan ahead, eat well and get around.</p></div>';
   var TS=[],cat="";
   function sec(t,body,open){TS.push({c:cat,t:t,b:body});return''}
   function ul(a){return '<ul class="pl">'+a.map(function(x){return '<li>'+x+'</li>'}).join("")+'</ul>'}
@@ -1566,24 +1738,24 @@ function vTips(){
    "Paths and pavements can be icy: wear shoes with grip."]));
   h+=sec("Useful German",ul([
    "Hallo / Guten Tag / Grüß Gott: hello","Danke / Bitte: thanks / please","Haben Sie einen Tisch für … Personen? Do you have a table for … people?","Eine Tageskarte für … Erwachsene und … Kinder, bitte: a day ticket for … adults and … children, please","Zusammen, bitte: together, please (paying)","Die Rechnung, bitte: the bill, please","Kinderpunsch, bitte: a children’s punch, please","Ist da Schweinefleisch drin? Is there pork in it?","Ohne Schweinefleisch, bitte: without pork, please","Stilles Wasser, bitte: still water, please"]));
-  var TI={"Before you go":["list","Before you go","#007aff"],"Hotels":["bed","Hotels","#007aff"],"Trains, tickets and transport":["train","Trains","#007aff"],
-   "Restaurants: the unwritten rules":["fork","Restaurants","#ff9500"],"Cash, cards and bottle deposits":["card","Cash, cards","#ff9500"],"Opening times, water and toilets":["clock","Hours","#ff9500"],
-   "Weather and clothes":["cloud","Weather","#34c759"],"What to wear: everyone, and why":["coat","Clothes","#34c759"],"Christmas markets with children":["tree","Markets","#34c759"],"Krampus and Nikolaus":["mask","Krampus","#34c759"],"Mountain days and swapping days":["mount","Mountains","#34c759"],"Useful German":["chat","German","#34c759"],"Events":["cal","Events","#ff9500"],"Save money":["card","Save money","#ff9500"],"Food":["fork","Food","#ff9500"]};
   var cur=null;TS.forEach(function(x){if(x.t===tipSec)cur=x});
-  if(cur){
-    var ti=TI[cur.t]||["list",cur.t,"#007aff"];
-    return'<div class="nav"><button class="nb" data-act="tip-back">'+ic(IC.back)+'Tips</button><span class="t">'+esc(ti[1])+'</span><span style="width:44px"></span></div><div class="head sh"><h1 style="font-size:1.5rem">'+sI(ti[0],ti[2]).replace('class="si"','class="si lg"')+' '+cur.t+'</h1></div><div class="group"><div class="in" style="padding:6px 16px 12px">'+cur.b+'</div></div><p class="foot">Emergency: 112 (all of Europe). Prices, hours and train times are estimates: check the official sites.</p>'}
-  h=h.replace('<div class="eyebrow">Before and during the trip</div>','');
-  TS.push({c:"On the trip",t:"Events",b:"",more:"events"});TS.push({c:"Eating and money",t:"Save money",b:"",more:"save"});TS.push({c:"Eating and money",t:"Food",b:"",more:"food"});TS.push({c:"Before you go",t:"Print PDF",b:"",more:"print"});
+  if(cur)return navBar("tips")+'<div class="head"><h1 class="h2">'+esc(cur.t)+'</h1></div><div class="prose">'+cur.b+'</div><p class="foot">Prices, hours and train times are estimates. Check the official sites before you go.</p>';
+  TS.unshift({c:"Plan ahead",t:"Packing list",act:"pack-open"});
+  TS.push({c:"Plan ahead",t:"Save as PDF",act:"print-open"});
+  TS.push({c:"Eating and money",t:"Save money",more:"save"});TS.push({c:"Eating and money",t:"Food",more:"food"});TS.push({c:"On the trip",t:"Events",more:"events"});
   var cats=[];TS.forEach(function(x){if(cats.indexOf(x.c)<0)cats.push(x.c)});
-  h+='<button class="pkhi" data-act="pack-open">'+sI('box','rgba(255,255,255,0.25)').replace('class="si"','class="si pksi"')+'<span class="grow"><b style="display:block;font-size:1.0625rem">Packing list</b><span style="display:block;opacity:.9;font-size:.8125rem">For each person, with ticks. Start here before you travel.</span></span>'+ic(IC.fwd,'chev')+'</button>';
   cats.forEach(function(cn){
-    h+='<div class="sech" style="margin-top:14px;margin-bottom:5px"><span>'+cn+'</span></div><div class="group tg3">';
-    TS.forEach(function(x){if(x.c!==cn)return;var ti=TI[x.t]||["list",x.t,"#007aff"];h+='<button class="tile" data-act="'+(x.more==="print"?'print-open':x.more?'tip-more':'tip-open')+'" data-t="'+esc(x.t)+'" data-m="'+(x.more||'')+'">'+sI(ti[0],ti[2])+'<span>'+ti[1]+'</span></button>'});
+    h+='<div class="sech"><span>'+cn+'</span></div><div class="group tgrid">';
+    TS.forEach(function(x){if(x.c!==cn)return;var ti=TIX[x.t]||["list",x.t];
+      h+='<button class="tile" data-act="'+(x.act||(x.more?'tip-more':'tip-open'))+'" data-t="'+esc(x.t)+'" data-m="'+(x.more||'')+'">'+sI(ti[0])+'<span>'+esc(ti[1])+'</span></button>'});
     h+='</div>'});
-  h+=newBanner('tips');
-  h+='<div class="callout w" style="margin-top:14px"><b>Emergency: 112</b>Works all over Europe. Prices, hours and train times are estimates: check the official sites.</div>';
+  h+='<div class="callout sos"><b>Emergency: 112</b>Police, fire and ambulance, free from any phone in Europe.</div>';
   return h}
+
+var TIX={"Packing list":["box","Packing list"],"Before you go":["list","Before you go"],"Hotels":["bed","Hotels"],"Trains, tickets and transport":["train","Trains"],"Save as PDF":["print","Save as PDF"],
+ "Restaurants: the unwritten rules":["fork","Restaurants"],"Cash, cards and bottle deposits":["card","Cash and cards"],"Opening times, water and toilets":["clock","Opening hours"],"Save money":["coin","Save money"],"Food":["bowl","Food"],
+ "Weather":["cloud","Weather"],"What to wear: everyone, and why":["coat","Clothes"],"Christmas markets with children":["tree","Markets"],"Krampus and Nikolaus":["mask","Krampus"],"Mountain days and swapping days":["mount","Mountains"],"Useful German":["chat","German"],"Events":["cal","Events"]};
+var TIS={};Object.keys(TIX).forEach(function(k){TIS[k]=TIX[k][1]});
 
 /* ---------- map ---------- */
 var map=null,layer=null,meLayer=null;
@@ -1598,13 +1770,18 @@ function mapDays(){return mapSg==="all"?ITIN:ITIN.filter(function(D){return D.sg
 function mapScope(){var ids={};mapDays().forEach(function(D){D.all.forEach(function(id){ids[id]=1})});if(mapSg==="all")ALL.forEach(function(s){if(inList(s))ids[s.id]=1});return ALL.filter(function(s){return ids[s.id]})}
 function mapFix(){var st=mapStays();if(mapSg!=="all"&&!st[mapSg])mapSg="all";if(mapDay!=="all"&&(!ITIN[mapDay]||(mapSg!=="all"&&ITIN[mapDay].sg!==mapSg)))mapDay="all"}
 function shortN(c){return SN(c).replace(/\s*\(.*\)/,"").split(" and ")[0]}
+function mChips(){var st=mapStays(),seen={};
+  return'<button data-act="mapcity" data-c="all" aria-pressed="'+(mapSg==="all")+'">Whole trip</button>'+st.map(function(x){seen[x.c]=(seen[x.c]||0)+1;return'<button data-act="mapcity" data-c="'+x.g+'" aria-pressed="'+(x.g===mapSg)+'">'+esc(shortN(x.c))+(seen[x.c]>1?' (again)':'')+'</button>'}).join("")}
+function mDays(){
+  return'<button class="mall" data-act="mapday" data-d="all" aria-pressed="'+(mapDay==="all")+'" aria-label="All days">All</button>'+ITIN.map(function(D){var inC=mapSg==="all"||D.sg===mapSg;return'<button class="'+(inC?"in":"out")+'" data-act="mapday" data-d="'+D.i+'" aria-pressed="'+(mapDay===D.i)+'" aria-label="Day '+(D.i+1)+', '+D.dow+' '+D.dm+', '+esc(SN(D.b))+'"><b>'+(D.i+1)+'</b><small>'+D.dow+'</small></button>'}).join("")}
 function vMapHtml(){
-  mapFix();var st=mapStays(),days=mapDays();
-  var h='<div class="mapbar"><div class="seg msegs"><button data-act="mapcity" data-c="all" aria-pressed="'+(mapSg==="all")+'">Route</button>'+st.map(function(x){return '<button data-act="mapcity" data-c="'+x.g+'" aria-pressed="'+(x.g===mapSg)+'">'+flagC(x.c==="munich"?"de":"at")+(x.g+1)+' '+esc(shortN(x.c))+'</button>'}).join("")+'</div>';
-  h+='<div class="dpills"><span class="lab">Day</span><button data-act="mapday" data-d="all" aria-pressed="'+(mapDay==="all")+'">All</button>'+days.map(function(d){return '<button data-act="mapday" data-d="'+d.i+'" aria-pressed="'+(mapDay===d.i)+'">'+(d.i+1)+'</button>'}).join("")+'</div>';
-  h+='<div class="legend"><span><i></i>Not in my list</span><span><i class="f"></i>In my list</span><span>Square = where you sleep</span></div></div>';
-  h+='<div class="mapwrap"><div id="map"></div><div class="mctl"><button data-act="zin" aria-label="Zoom in">+</button><button data-act="zout" aria-label="Zoom out">−</button><button data-act="locate" id="locbtn" aria-label="Show my location">'+ic(IC.loc)+'</button></div><div class="sheet" id="sheet" hidden></div></div>';
+  mapFix();
+  var h='<div class="mtop"><h1 class="h2">Map</h1><div class="chips" id="mchips" role="group" aria-label="Choose a city">'+mChips()+'</div></div>';
+  h+='<div class="mframe"><div id="map"></div><div class="mctl"><button data-act="zin" aria-label="Zoom in">+</button><button data-act="zout" aria-label="Zoom out">−</button><button data-act="locate" id="locbtn" aria-label="Show my location"'+(store.me&&store.meOn!==false?' aria-pressed="true"':'')+'>'+ic(IC.loc)+'</button></div><div class="sheet" id="sheet" hidden></div></div>';
+  h+='<div class="mdays" id="mdays" role="group" aria-label="Choose a day">'+mDays()+'</div>';
+  h+='<div class="mleg"><span><i class="l1"></i>Saved</span><span><i class="l2"></i>Idea</span><span><i class="l3"></i>Where you sleep</span></div>';
   return h}
+function mapUpdate(fit){var c=$("mchips"),d=$("mdays");if(c)c.innerHTML=mChips();if(d){d.innerHTML=mDays();var on=d.querySelector('[aria-pressed="true"]:not(.mall)')||d.querySelector("button.in");if(on&&on.scrollIntoView)try{on.scrollIntoView({block:"nearest",inline:"center"})}catch(e){}}var sh=$("sheet");if(sh&&!sh.hidden){sh.hidden=true;sh.innerHTML=""}selId=null;drawMap(fit!==false)}
 function initMap(){
   if(map||typeof L==="undefined")return;
   map=L.map("map",{zoomControl:false,attributionControl:true,zoomSnap:.5,tap:true}).setView([48.14,11.57],13);
@@ -1618,36 +1795,37 @@ function pinIcon(s,dim,sel){
   var mn=pinMain(s),lab=pinLab(s);
   var cls="pin"+(mn?"":" sm")+(inList(s)?" in":"")+(dim?" dim":"")+(sel?" sel":"");
   var sz=mn?30:20;
-  return L.divIcon({className:"pinw",html:'<div class="'+cls+'" style="--c:'+cvar(s.city)+'">'+lab+'</div>',iconSize:[sz,sz],iconAnchor:[sz/2,sz/2]})}
+  return L.divIcon({className:"pinw",html:'<div class="'+cls+'">'+lab+'</div>',iconSize:[sz,sz],iconAnchor:[sz/2,sz/2]})}
 function drawMap(fit){
   if(!map)return;layer.clearLayers();meLayer.clearLayers();var pts=[];
-  var sts=mapStays().filter(function(x){return mapSg==="all"||x.g===mapSg}),hubs=[];
-  mapScope().forEach(function(s){
+  var inScope={};mapScope().forEach(function(s){inScope[s.id]=1});
+  ALL.forEach(function(s){
+    if(!inScope[s.id]){if(mapSg==="all")return;var fm=L.marker([s.lat,s.lng],{icon:L.divIcon({className:"pinw",html:'<div class="pin far"></div>',iconSize:[10,10],iconAnchor:[5,5]}),keyboard:false,title:s.n,zIndexOffset:-100});fm.on("click",function(e){if(e&&e.originalEvent)L.DomEvent.stopPropagation(e);openSheet(s.id)});fm.addTo(layer);return}
     var dim=mapDay!=="all"&&!(ITIN[mapDay]&&ITIN[mapDay].has[s.id]),sel=selId===s.id;if(!dim)pts.push([s.lat,s.lng]);
     var m=L.marker([s.lat,s.lng],{icon:pinIcon(s,dim,sel),zIndexOffset:sel?1000:(dim?0:(s.idx>=0?200:100)),keyboard:false,title:s.n});
     m.on("click",function(e){if(e&&e.originalEvent)L.DomEvent.stopPropagation(e);openSheet(s.id)});m.addTo(layer)});
-  var scs={};sts.forEach(function(x){scs[x.c]=1});
-  var lab={};sts.forEach(function(x){(lab[x.c]=lab[x.c]||[]).push(x.g+1)});
-  if(mapSg==="all"){var rp=sts.map(function(x){return[HUB[x.c].lat,HUB[x.c].lng]});if(rp.length>1)L.polyline(rp,{color:getComputedStyle(document.documentElement).getPropertyValue("--accent")||"#1b7f3f",weight:3,dashArray:"6 6",opacity:.8}).addTo(layer)}
-  Object.keys(lab).forEach(function(c){var t=lab[c].join("/"),w=t.length>1?40:28;pts.push([HUB[c].lat,HUB[c].lng]);L.marker([HUB[c].lat,HUB[c].lng],{icon:L.divIcon({className:"pinw",html:'<div class="spin" style="--c:'+SC(c)+'">'+t+'</div>',iconSize:[w,28],iconAnchor:[w/2,14]}),zIndexOffset:600,title:"You sleep here: "+SN(c)}).addTo(layer)});
-  Object.keys(store.hotels).forEach(function(k){var h=store.hotels[k];if(h&&scs[k]&&typeof h.lat==="number"){L.marker([h.lat,h.lng],{icon:L.divIcon({className:"pinw",html:'<div class="hpin">H</div>',iconSize:[28,28],iconAnchor:[14,14]}),zIndexOffset:500,title:"Hotel"}).addTo(layer)}});
+  var all=mapStays(),lab={},on={};all.forEach(function(x){(lab[x.c]=lab[x.c]||[]).push(x.g+1);if(mapSg==="all"||x.g===mapSg)on[x.c]=1});
+  var rp=all.map(function(x){return[HUB[x.c].lat,HUB[x.c].lng]});
+  if(rp.length>1)L.polyline(rp,{color:mapSg==="all"?(getComputedStyle(document.documentElement).getPropertyValue("--accent").trim()||"#1b7f3f"):"#8e8e93",weight:mapSg==="all"?3:2,dashArray:"6 6",opacity:mapSg==="all"?.8:.5,interactive:false}).addTo(layer);
+  Object.keys(lab).forEach(function(c){var t=lab[c].join("/"),w=t.length>1?40:28;if(on[c])pts.push([HUB[c].lat,HUB[c].lng]);L.marker([HUB[c].lat,HUB[c].lng],{icon:L.divIcon({className:"pinw",html:'<div class="spin'+(on[c]?'':' off')+'">'+t+'</div>',iconSize:[w,28],iconAnchor:[w/2,14]}),zIndexOffset:on[c]?600:50,title:"You sleep here: "+SN(c)}).addTo(layer)});
+  Object.keys(store.hotels).forEach(function(k){var h=store.hotels[k];if(h&&on[k]&&typeof h.lat==="number"){L.marker([h.lat,h.lng],{icon:L.divIcon({className:"pinw",html:'<div class="hpin">H</div>',iconSize:[28,28],iconAnchor:[14,14]}),zIndexOffset:500,title:"Hotel"}).addTo(layer)}});
   if(store.me&&store.meOn!==false)L.marker([store.me.lat,store.me.lng],{icon:L.divIcon({className:"pinw",html:'<div class="medot"></div>',iconSize:[20,20],iconAnchor:[10,10]}),interactive:false,zIndexOffset:2000}).addTo(meLayer);
-  if(fit&&pts.length)map.fitBounds(L.latLngBounds(pts),{padding:[40,40],maxZoom:16,animate:false})}
+  if(fit&&pts.length)map.fitBounds(L.latLngBounds(pts),{padding:[36,36],maxZoom:15,animate:false})}
 function openSheet(id){
   selId=id;var s=P[id],box=$("sheet");
-  box.innerHTML='<div class="top"><div class="grow" style="flex:1;min-width:0"><span class="mt" style="margin:0 0 2px;color:'+cvar(s.city)+';font-weight:600">'+esc(dl(s))+'</span><span class="nm">'+esc(s.n)+'</span><span class="mt">'+(s.x?esc(s.cat):KIND[s.k]+(s.t?" · "+esc(s.t):""))+' · '+esc(s.c)+'</span><div style="margin-top:6px;display:flex;gap:5px;flex-wrap:wrap">'+tags(s)+'</div></div><button class="x" data-act="sheetx" aria-label="Close">'+ic(IC.close)+'</button></div><p>'+esc(s.why)+'</p><p class="sm" style="margin:0 0 8px">Google Maps name: '+esc(gmq(s))+'</p><div class="btnrow">'+addBtn(s)+'<button class="btn" data-act="place" data-id="'+s.id+'">Details</button><a class="btn" href="'+mapsPlace(s)+'" target="_blank" rel="noopener">Google Maps</a>'+(URLS[id]?'<a class="btn" href="'+URLS[id]+'" target="_blank" rel="noopener">Website</a>':'')+'</div>';
+  box.innerHTML='<div class="top"><div class="grow" style="flex:1;min-width:0"><span class="mt" style="margin:0 0 2px;font-weight:600;color:var(--accent)">'+esc(dl(s))+'</span><span class="nm">'+esc(s.n)+'</span><span class="mt">'+(s.x?esc(s.cat):KIND[s.k]+(s.t?" · "+esc(s.t):""))+' · '+esc(s.c)+'</span><div style="margin-top:6px;display:flex;gap:5px;flex-wrap:wrap">'+tags(s)+'</div></div><button class="x" data-act="sheetx" aria-label="Close">'+ic(IC.close)+'</button></div><p>'+esc(s.why)+'</p><div class="btnrow">'+addBtn(s)+'<button class="btn" data-act="place" data-id="'+s.id+'">Details</button><a class="btn" href="'+mapsPlace(s)+'" target="_blank" rel="noopener">Open in Google Maps</a>'+(URLS[id]?'<a class="btn" href="'+URLS[id]+'" target="_blank" rel="noopener">Website</a>':'')+'</div>';
   box.hidden=false;drawMap(false);map.panTo([s.lat,s.lng],{animate:true})}
 function closeSheet(){var b=$("sheet");if(b&&!b.hidden){b.hidden=true;b.innerHTML=""}if(selId){selId=null;drawMap(false)}}
 function mapShow(){
   $("v-map").innerHTML=vMapHtml();map=null;layer=null;meLayer=null;
-  requestAnimationFrame(function(){initMap();if(!map)return;map.invalidateSize();drawMap(true);if(selId&&P[selId]&&mapScope().indexOf(P[selId])>-1)openSheet(selId);else selId=null})}
+  requestAnimationFrame(function(){initMap();if(!map)return;map.invalidateSize();drawMap(true);var dd=$("mdays"),on=dd&&(dd.querySelector('[aria-pressed="true"]:not(.mall)')||dd.querySelector("button.in"));if(on&&on.scrollIntoView)try{on.scrollIntoView({block:"nearest",inline:"center"})}catch(e){}if(selId&&P[selId]&&mapScope().indexOf(P[selId])>-1)openSheet(selId);else selId=null})}
 
 /* ---------- detail ---------- */
 function fact(l,t){return t?'<div class="fact"><b>'+l+'</b><span>'+esc(t)+'</span></div>':''}
 var dctx=[],dback="Back";
 function ctxFor(id){
   var s=P[id],ids;
-  if(view==="list"){ids=[];DAYS.forEach(function(d){d.stops.concat(d.extras).forEach(function(x){if(inList(x))ids.push(x.id)})});dback="My itinerary"}
+  if(view==="list"){ids=[];DAYS.forEach(function(d){d.stops.concat(d.extras).forEach(function(x){if(inList(x))ids.push(x.id)})});dback="Itinerary"}
   else if(view==="map"){ids=mapScope().filter(function(x){return mapDay==="all"||(ITIN[mapDay]&&ITIN[mapDay].has[x.id])}).map(function(x){return x.id});dback="Map"}
   else{var DD=ITIN[cur];ids=(view==="day"&&DD)?DD.all.slice():[];dback="Day "+(cur+1)}
   if(ids.indexOf(id)<0){var DI=itinPlace(id);ids=DI?DI.all.slice():[id];dback=DI?"Day "+(DI.i+1):"Back"}
@@ -1657,20 +1835,20 @@ function openDetail(id,nav){
   var on=inList(s),prev=(ci>0&&view==='day'&&!s.x&&P[dctx[ci-1]]&&!P[dctx[ci-1]].x&&walkKm(P[dctx[ci-1]],s)<30)?P[dctx[ci-1]]:null,leg="";
   if(f.lg)leg=f.lg;else if(prev){var k=walkKm(prev,s);leg=(k>1.8?"Public transport":"Walk about "+Math.max(1,Math.round(k/4.3*60))+" min")+" · "+fmtKm(k)+" from the previous stop"}
   var h='<div class="nav"><button class="nb" data-act="detailx">'+ic(IC.back)+esc(dback)+'</button><span class="t">'+(ci>=0?(ci+1)+' of '+dctx.length:esc(KIND[s.k]))+'</span><span style="width:44px"></span></div><div class="body" style="--c:'+cvar(s.city)+'">';
-  h+='<div class="group"><div class="pbody"><div class="sm" style="color:'+cvar(s.city)+';font-weight:600">'+flagC(cOf(s))+esc(dl(s))+'</div><h2 class="dtitle">'+esc(s.n)+'</h2><div class="tglist">'+tags(s)+'</div><p class="sm" style="margin-top:10px">'+(s.x?esc(s.cat):(s.t?"Suggested time "+esc(s.t)+" · ":"")+"")+esc(s.c)+'</p><p>'+esc(s.why)+'</p></div></div>';
-  h+='<div class="actions"><button class="btn full '+(on?"line":"solid")+'" data-act="add" data-id="'+s.id+'">'+ic(on?IC.check:IC.plus)+(on?"Saved to my list. Tap to remove":"Add to my list")+'</button>'+(on?'<button class="btn full" data-act="done" data-id="'+s.id+'">'+ic(IC.check)+(store.done[s.id]?"Visited. Tap to undo":"Tick as visited")+'</button>':'')+'</div>';
+  h+='<div class="group"><div class="pbody"><div class="eyebrow">'+esc(dl(s))+'</div><h2 class="dtitle">'+esc(s.n)+'</h2><div class="tglist">'+tags(s)+'</div><p class="sm" style="margin-top:10px">'+(s.x?esc(s.cat):(s.t?"Suggested time "+esc(s.t)+" · ":"")+"")+esc(s.c)+'</p><p>'+esc(s.why)+'</p></div></div>';
+  h+='<div class="actions"><button class="btn full '+(on?"line":"solid")+'" data-act="add" data-id="'+s.id+'">'+ic(on?IC.check:IC.plus)+(on?"In your itinerary · Remove":"Add to itinerary")+'</button>'+(on?'<button class="btn full" data-act="done" data-id="'+s.id+'">'+ic(IC.check)+(store.done[s.id]?"Visited · Undo":"Mark as visited")+'</button>':'')+'</div>';
   h+='<div class="sech"><span>Details</span></div><div class="group">';
   if(f.i)h+='<div class="fact"><b>What to see</b><ol>'+f.i.map(function(t){return '<li>'+esc(t)+'</li>'}).join("")+'</ol></div>';
-  h+=fact("Time needed",f.tm)+fact("Tickets and rules",f.tx)+fact("Getting there",leg)+fact("Nearest stop",f.st)+fact("Facilities",f.fa)+fact("Local tip",f.tp)+fact("For the kids",s.kid);
-  h+='</div><div class="actions">'+(URLS[s.id]?'<a class="btn full solid" href="'+URLS[s.id]+'" target="_blank" rel="noopener">'+ic(IC.pin)+'Official website (hours, tickets)</a>':'')+'<a class="btn full" href="'+mapsPlace(s)+'" target="_blank" rel="noopener">'+ic(IC.pin)+'Open in Google Maps</a><a class="btn full" href="'+appleMaps(s)+'" target="_blank" rel="noopener">'+ic(IC.pin)+'Open in Apple Maps</a><button class="btn full" data-act="showmap" data-id="'+s.id+'">'+ic(IC.map)+'See on Trip map</button></div><p class="foot">“Open in Google Maps” and “Open in Apple Maps” search for <b>'+esc(gmq(s))+'</b>. If Google shows several results, choose the one with this name.</p></div>';
+  h+=fact("Time needed",f.tm)+fact("Tickets and rules",f.tx)+fact("Getting there",leg)+fact("Nearest stop",f.st)+fact("Facilities",f.fa)+fact("Local tip",f.tp)+fact("For kids",s.kid);
+  h+='</div><div class="actions">'+(URLS[s.id]?'<a class="btn full solid" href="'+URLS[s.id]+'" target="_blank" rel="noopener">'+ic(IC.pin)+'Official website (hours, tickets)</a>':'')+'<a class="btn full" href="'+mapsPlace(s)+'" target="_blank" rel="noopener">'+ic(IC.pin)+'Open in Google Maps</a><a class="btn full" href="'+appleMaps(s)+'" target="_blank" rel="noopener">'+ic(IC.pin)+'Open in Apple Maps</a></div></div>';
   h+='<div class="dbar"><button class="dn2" data-act="dnav" data-d="-1"'+(pv?'':' disabled')+'>'+ic(IC.back)+'<span><small>Previous</small>'+(pv?esc(pv.n):'')+'</span></button><button class="dn2 r" data-act="dnav" data-d="1"'+(nx?'':' disabled')+'><span><small>Next</small>'+(nx?esc(nx.n):'')+'</span>'+ic(IC.fwd)+'</button></div>';
   var top=nav?0:box.scrollTop;box.innerHTML=fxConv(h);
   if(box.hidden){box.hidden=false;box.scrollTop=0;try{history.pushState({detail:id},"")}catch(e){}}else box.scrollTop=top}
 function closeDetail(viaPop){var box=$("detail");if(box.hidden)return;box.hidden=true;detailId=null;if(!viaPop&&history.state&&history.state.detail){try{history.back()}catch(e){}}}
 
 /* ---------- render + routing ---------- */
-var TABOF={trip:"trip",day:"trip",stay:"trip",more:"trip",map:"map",list:"list",tips:"tips",settings:"settings",pack:"trip"};
-function fixHtml(err){try{console.error(err)}catch(e){}return'<div class="head"><h1>Something went wrong</h1></div><div class="callout w"><b>This page could not open</b>Your saved plan and list are safe. Tap the button to load the newest version of the guide.</div><div class="actions"><button class="btn full solid" data-act="hard-update">Load the newest version</button><button class="btn full" data-act="tab" data-s="trip">Back to Trip</button></div>'}
+var TABOF={trip:"trip",day:"trip",stay:"list",more:"tips",map:"map",list:"list",tips:"tips",settings:"settings",pack:"tips"};
+function fixHtml(err){try{console.error(err)}catch(e){}return'<div class="head"><h1>Something went wrong</h1></div><div class="callout w"><b>This page could not open</b>Your saved plan and list are safe. Tap the button to load the newest version of the guide.</div><div class="actions"><button class="btn full solid" data-act="hard-update">Load the newest version</button><button class="btn full" data-act="tab" data-s="list">Back to Itinerary</button></div>'}
 function hardUpdate(){try{dailyBackup(true)}catch(e){}var go2=function(){location.reload()};var p=[];if(window.caches)p.push(caches.keys().then(function(ks){return Promise.all(ks.filter(function(k){return k.indexOf("tiles")<0}).map(function(k){return caches.delete(k)}))}));if(navigator.serviceWorker)p.push(navigator.serviceWorker.getRegistrations().then(function(rs){return Promise.all(rs.map(function(r){return r.unregister()}))}));Promise.all(p).then(go2,go2);setTimeout(go2,4000)}
 function render(keepScroll){
   var y=window.pageYOffset;buildItin();
@@ -1684,13 +1862,23 @@ function render(keepScroll){
   if(keepScroll)window.scrollTo(0,y);else window.scrollTo(0,0)}
 function parseHash(){
   var h=(location.hash||"").replace("#","");if(h.indexOf("plan=")===0){var po=decodePlan(h.slice(5));try{history.replaceState(null,"","#settings")}catch(e){}if(po){pendImp=po;impMsg=""}h="settings"}var m=h.match(/^day-(\d+)$/);
-  buildItin();if(m&&ITIN[+m[1]-1]){view="day";cur=+m[1]-1;mapSg=ITIN[cur].sg;mapDay="all"}else if(["trip","map","list","tips","stay","more","settings","pack"].indexOf(h)>-1)view=h;else view="trip"}
+  buildItin();if(m&&ITIN[+m[1]-1]){view="day";cur=+m[1]-1;mapSg=ITIN[cur].sg;mapDay="all"}else if(/^tip-/.test(h)){view="tips";try{tipSec=decodeURIComponent(h.slice(4))}catch(e){tipSec=null}}else if(/^more-(events|save|food)$/.test(h)){view="more";moreTab=h.slice(5)}else if(["trip","map","list","tips","stay","more","settings","pack"].indexOf(h)>-1){view=h;if(h==="tips")tipSec=null;if(h==="more")moreTab="events"}else view="list"}
 function go(hash){if(location.hash==="#"+hash){parseHash();render();return}location.hash=hash}
-window.addEventListener("hashchange",function(){closeDetail(true);parseHash();render()});
+function curH(){return(location.hash||"").replace("#","")||"list"}
+window.addEventListener("hashchange",function(){
+  var nh=curH(),back=false;if(lastH!=null)SCR[lastH]=window.pageYOffset;
+  if(NAVS.length>1&&NAVS[NAVS.length-2]===nh){NAVS.pop();back=true}else if(NAVS[NAVS.length-1]!==nh)NAVS.push(nh);
+  lastH=nh;closeDetail(true);parseHash();render();
+  if(back&&SCR[nh]!=null&&view!=="map"){var y=SCR[nh];requestAnimationFrame(function(){window.scrollTo(0,y)})}});
+function hTitle(h){var m;if(!h||h==="list")return"Itinerary";if(h==="trip")return"Day ideas";if(h==="map")return"Map";if(h==="tips")return"Tips";if(h==="settings")return"Settings";if(h==="stay")return"Trip details";if(h==="pack")return"Packing list";
+  if(m=h.match(/^day-(\d+)$/))return"Day "+m[1];if(m=h.match(/^more-(\w+)$/))return({events:"Events",save:"Save money",food:"Food"})[m[1]]||"Tips";if(h==="more")return"Events";
+  if(/^tip-/.test(h)){var t="";try{t=decodeURIComponent(h.slice(4))}catch(e){}return(TIS[t]||"Tips")}return"Back"}
+function navBar(fb,right,center){var pv=NAVS.length>1?NAVS[NAVS.length-2]:fb;return'<div class="nav"><button class="nb" data-act="back" data-f="'+fb+'">'+ic(IC.back)+'<span>'+esc(hTitle(pv))+'</span></button><span class="t">'+(center||"")+'</span>'+(right||'<span class="navsp"></span>')+'</div>'}
 window.addEventListener("popstate",function(){if(!$("detail").hidden&&!(history.state&&history.state.detail))closeDetail(true)});
 
 /* ---------- actions ---------- */
-function toggleAdd(id){var on=!store.list[id];if(on)store.list[id]=true;else{delete store.list[id];delete store.done[id]}save();toast(on?"Added to My list":"Removed from My itinerary");refresh()}
+function addDay(){if(view==='day'&&ITIN[cur])return ITIN[cur].date;if(view==='map'&&mapDay!=='all'&&ITIN[mapDay])return ITIN[mapDay].date;return null}
+function toggleAdd(id){var on=!store.list[id],un=null;store.ld=store.ld||{};if(on){store.list[id]=true;var dd=addDay();if(dd)store.ld[id]=dd}else{var pd0=store.done[id],pl0=store.ld[id];un=function(){store.list[id]=true;if(pd0)store.done[id]=pd0;if(pl0)store.ld[id]=pl0;save();toast("Back in your itinerary");refresh()};delete store.list[id];delete store.done[id];delete store.ld[id]}save();toast(on?"Added to Itinerary":"Removed from Itinerary",un);refresh()}
 function refresh(){
   if(view==="map"){drawMap(false);if(selId)openSheet(selId);var n=totalList(),bd=$("tabbadge");bd.textContent=n;bd.hidden=!n}else render(true);
   if(!$("detail").hidden&&detailId)openDetail(detailId)}
@@ -1719,10 +1907,13 @@ document.addEventListener("click",function(e){
    case"detailx":closeDetail();break;
    case"dnav":{var ci=dctx.indexOf(detailId),n=dctx[ci+ +t.getAttribute("data-d")];if(n)openDetail(n,true);break}
    case"day":{var i=+t.getAttribute("data-i");if(ITIN[i])go("day-"+(i+1));break}
-   case"tip-open":tipSec=t.getAttribute("data-t");render();break;
+   case"tip-open":go("tip-"+encodeURIComponent(t.getAttribute("data-t")));break;
    case"tip-back":tipSec=null;render();break;
-   case"tip-more":moreTab=t.getAttribute("data-m");go("more");break;
+   case"tip-more":go("more-"+t.getAttribute("data-m"));break;
    case"tab":go(t.getAttribute("data-s"));break;
+   case"undo":{$("toast").hidden=true;clearTimeout(toastT);if(lastUndo){var uf=lastUndo;lastUndo=null;uf()}break}
+   case"list-edit":listEdit=!listEdit;render(true);break;
+   case"back":{if(NAVS.length>1)history.back();else go(t.getAttribute("data-f")||"list");break}
    case"hidehow":store.hideHow=true;save();render(true);break;
    case"settings":go("settings");break;
    case"plan-share":{var lk=planLink(),tx="My Austria trip plan. Open the link, then tap Replace my plan.";if(navigator.share){navigator.share({title:"Austria trip plan",text:tx,url:lk}).catch(function(){})}else{var done=function(){toast("Link copied. Paste it in a message.")};if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(tx+" "+lk).then(done,function(){window.prompt("Copy this link",lk)});else window.prompt("Copy this link",lk)}break}
@@ -1734,8 +1925,8 @@ document.addEventListener("click",function(e){
    case"copy":copyList();break;
    case"daymap":mapSg=ITIN[cur].sg;mapDay=cur;selId=null;go("map");break;
    case"showmap":{var s=P[id];closeDetail();mapSg=ITD[id]!=null?ITIN[ITD[id]].sg:"all";mapDay=ITD[id]!=null?ITD[id]:"all";selId=id;go("map");break}
-   case"mapcity":{var mc=t.getAttribute("data-c");mapSg=mc==="all"?"all":+mc}mapDay="all";selId=null;mapShow();break;
-   case"mapday":{var d=t.getAttribute("data-d");mapDay=d==="all"?"all":+d;selId=null;mapShow();break}
+   case"mapcity":{var mc=t.getAttribute("data-c");mapSg=mc==="all"?"all":+mc;mapDay="all";mapUpdate(true);break}
+   case"mapday":{var d=t.getAttribute("data-d");if(d==="all")mapDay="all";else{mapDay=+d;if(ITIN[mapDay])mapSg=ITIN[mapDay].sg}mapUpdate(true);break}
    case"zin":if(map)map.zoomIn();break;case"zout":if(map)map.zoomOut();break;
    case"sheetx":closeSheet();break;
    case"locate":if(store.me&&store.meOn!==false){store.meOn=false;save();drawMap(false);t.setAttribute("aria-pressed","false")}else gps(function(g){store.me=g;store.meOn=true;save();t.setAttribute("aria-pressed","true");drawMap(false);if(map)map.setView([g.lat,g.lng],15)});break;
@@ -1744,7 +1935,7 @@ document.addEventListener("click",function(e){
    case"hotel-save":{var r=parseHotel($("hin").value);if(r.err){$("hmsg").textContent=r.err;break}store.hotels[t.getAttribute("data-c")]=r;save();hotelEdit=null;render(true);break}
    case"hotel-gps":{var c=t.getAttribute("data-c");gps(function(g){store.hotels[c]={lat:g.lat,lng:g.lng};save();hotelEdit=null;render(true)});break}
    case"hard-update":hardUpdate();break;
-   case"more-open":go("more");break;
+   case"more-open":go("more-events");break;
    case"pack-open":packTab="home";go("pack");break;
    case"pack-home":packTab="home";go("pack");break;
    case"stay-tile":go("stay");break;
@@ -1862,24 +2053,12 @@ function planCities(){var o=[];ITIN.forEach(function(D){if(o.indexOf(D.b)<0)o.pu
 function planTiles(){
   return'<div class="sech"><span>Plan</span></div><div class="group"><button class="row tap srow" data-act="stay-open">'+sI("bed","#007aff")+'<span class="grow"><span class="stt">Trip setup</span><span class="sm" style="display:block">Dates, nights, hotels, people and pace. Everything else is based on this.</span></span>'+ic(IC.fwd,"chev")+'</button></div>'}
 function vMore(){
-  var s=stay(),pc=planCities();var TT={events:["Events","Local markets and events for your dates"],save:["Save money","Free offers, passes and everyday savings"],food:["Food to try","Dishes by city, tagged veg, pork, beef or fish"]};
-  var tt=TT[moreTab]||TT.events;
-  var h='<div class="nav"><button class="nb" data-act="tab" data-s="tips">'+ic(IC.back)+'Tips</button><span class="t">'+tt[0]+'</span><span style="width:44px"></span></div>';
-  h+='<div class="head"><div class="eyebrow">'+fd(s.start)+' – '+fd(stayEnd(s))+'</div><h1>'+tt[0]+'</h1><p class="sub">'+tt[1]+'. '+MORE_ASOF+'. Dates can change: check the link.</p></div>';
-  if(moreTab==="events"){
-    h+='<p class="foot" style="margin:6px 20px">Events from 28 Nov to 12 Dec. Cities on your route come first, and “On your trip” shows which days fit.</p>';
-    ["munich","salzburg","stgilgen","hallstatt","vienna"].sort(function(a,b){return(pc.indexOf(a)<0?1:0)-(pc.indexOf(b)<0?1:0)}).forEach(function(c){
-      var ev=EVD.filter(function(e){return e.c===c&&e.b>="2026-11-28"&&e.a<="2026-12-13"}).sort(function(x,y){return(x.k==="s"?0:1)-(y.k==="s"?0:1)||x.a.localeCompare(y.a)});if(!ev.length)return;
-      var on=pc.indexOf(c)>-1;
-      h+='<div class="sech"><span>'+esc(c==="stgilgen"?"Wolfgangsee and St. Gilgen":SN(c))+'</span><span class="r">'+(on?"On your route":"Not on your route")+'</span></div><div class="group">';
-      ev.forEach(function(e){var f=on?evFits(e):[];
-        h+='<div class="row" style="display:block"><b>'+esc(e.t)+'</b><span class="sm" style="display:block">'+evDates(e)+'</span><p style="margin:4px 0">'+esc(e.n)+'</p><div class="tglist">'+(e.f?'<span class="tag g">Free</span>':'')+(e.kid?'<span class="tag m">Good with kids</span>':'')+(f.length?'<span class="tag o">On your trip: day '+(f.length>3?f[0]+'–'+f[f.length-1]:f.join(", "))+'</span>':'')+'</div><a class="lnk" style="padding:4px 0" href="'+e.u+'" target="_blank" rel="noopener">Official source</a></div>'});
-      h+='</div>'});
-    h+='<p class="foot">Krampus runs are loud and can scare young children. The “Kinder” runs and Nikolaus are the gentle versions. Kaprun and Zell am See: no dated events found, check zellamsee-kaprun.com (Star Advent).</p>';
-  }
+  var s=stay(),pc=planCities(),h=navBar("tips");
+  var city=function(c){return c==="stgilgen"?"Wolfgangsee and St. Gilgen":SN(c)};
   if(moreTab==="save"){
+    h+='<div class="head"><h1>Save money</h1><p class="sub">Free entry, passes and everyday savings. '+MORE_ASOF+'.</p></div>';
     var T=[
-     ["Free for your children",[
+     ["Free for children",[
       ["Munich: under-18s are free in many museums, including Nymphenburg and the Residenz with the treasury, Alte Pinakothek, Museum Five Continents and Museum Mensch und Natur. Kids pay nothing.",SRC.mum],
       ["Vienna: under-19s are free in many big museums, such as the Albertina, Belvedere, Natural History Museum, Museum of Fine Arts and the Technical Museum. Bring ID.",SRC.vk],
       ["Vienna public transport is free for children until the school year in which they turn six, and for children up to 15 on Sundays, public holidays (8 Dec) and school holidays.",SRC.vk],
@@ -1896,26 +2075,35 @@ function vMore(){
      ["Everyday tips",[
       ["Market mugs have a deposit (usually a few euros). Return the mug to get it back, or keep it as a souvenir.",null],
       ["Lunch menus (Mittagsmenü) are cheaper than dinner. Supermarkets (Billa, Spar, Hofer, Lidl, Rewe) are good for breakfast and snacks.",null],
-      ["Market portions are big. Share one dish among the four of you and add Kinderpunsch.",null],
+      ["Market portions are big. Share one dish and add a Kinderpunsch for the kids.",null],
       ["Take the train and walk. A rental car is costly and parking in city centres is hard.",null]]]];
-    T.forEach(function(g){h+='<div class="sech"><span>'+g[0]+'</span></div><div class="group">';g[1].forEach(function(x){h+='<div class="row" style="display:block"><span>'+esc(x[0])+'</span>'+(x[1]?'<br><a class="lnk" style="padding:4px 0" href="'+x[1]+'" target="_blank" rel="noopener">Source</a>':'')+'</div>'});h+='</div>'});
-    h+='<p class="foot">Prices and rules change. Check the official site before you pay.</p>';
-  }
+    T.forEach(function(g){h+='<div class="ed"><h2>'+esc(g[0])+'</h2><ul>'+g[1].map(function(x){return'<li>'+esc(x[0])+(x[1]?' <a href="'+x[1]+'" target="_blank" rel="noopener">Source</a>':'')+'</li>'}).join("")+'</ul></div>'});
+    h+='<p class="foot">Prices and rules change. Check the official site before you pay.</p>';return h}
   if(moreTab==="food"){
     var np=!!store.foodNoPork;
-    h+='<div class="group"><button class="row tap" data-act="food-nopork" role="switch" aria-checked="'+np+'"><span class="grow"><b>Hide dishes with pork</b><span class="sm" style="display:block">Hides “Usually pork” and “Maybe pork”</span></span><span class="sm" style="font-weight:600;color:var(--accent)">'+(np?"On":"Off")+'</span></button></div>';
-    h+='<p class="foot" style="margin:6px 20px">Tags show the usual recipe. Recipes differ: ask when you order. “Vegetarian” dishes can still use lard or be cooked in meat broth.</p>';
-    FOOD.slice().sort(function(a,b){return(pc.indexOf(a.c)<0&&a.c!=="all"?1:0)-(pc.indexOf(b.c)<0&&b.c!=="all"?1:0)}).forEach(function(g){
+    h+='<div class="head"><h1>Food</h1><p class="sub">What to try in each city, tagged so you can choose at a glance. '+MORE_ASOF+'.</p></div>';
+    h+='<div class="group"><div class="row srow"><span class="grow"><span class="stt">Hide dishes with pork</span><span class="sm" style="display:block">Also hides “Maybe pork”</span></span>'+sSw(np,"food-nopork").replace('aria-label="Automatic updates"','aria-label="Hide dishes with pork"')+'</div></div>';
+    h+='<p class="foot">Tags show the usual recipe. Recipes differ, so ask when you order. A vegetarian dish can still use lard or meat broth.</p>';
+    var shownOff=false;
+    FOOD.slice().sort(function(x,y){return(pc.indexOf(x.c)<0&&x.c!=="all"?1:0)-(pc.indexOf(y.c)<0&&y.c!=="all"?1:0)}).forEach(function(g){
       var items=g.i.filter(function(x){return!(np&&(x[2].indexOf("Pork")>-1||x[2].indexOf("MaybePork")>-1))});
-      h+='<div class="sech"><span>'+esc(g.h)+'</span><span class="r">'+(g.c==="all"?"":(pc.indexOf(g.c)>-1?"On your route":"Not on your route"))+'</span></div><div class="group">';
-      items.forEach(function(x){h+='<div class="row" style="display:block"><b>'+esc(x[0])+'</b><span class="sm" style="display:block">'+esc(x[1])+'</span><div style="margin-top:4px">'+x[2].map(fchip).join("")+'</div></div>'});
-      if(!items.length)h+='<div class="row"><span class="sm">All dishes here are hidden by your filter.</span></div>';
-      h+='</div>'});
-  }
+      var off=g.c!=="all"&&pc.indexOf(g.c)<0;if(off&&!shownOff){shownOff=true;h+='<div class="sech"><span>Not on your route</span></div>'}
+      h+='<div class="ed"><h2>'+esc(g.h)+'</h2>'+(items.length?'<dl class="dish">'+items.map(function(x){return'<dt>'+esc(x[0])+'<span class="fts">'+x[2].map(fchip).join("")+'</span></dt><dd>'+esc(x[1])+'</dd>'}).join("")+'</dl>':'<p class="sm">All dishes here are hidden by your filter.</p>')+'</div>'});
+    return h}
+  h+='<div class="head"><h1>Events</h1><p class="sub">Markets and events from 28 Nov to 12 Dec. '+MORE_ASOF+'. Dates can change, so check the source.</p></div>';
+  var shown=false;
+  ["munich","salzburg","stgilgen","hallstatt","vienna"].sort(function(x,y){return(pc.indexOf(x)<0?1:0)-(pc.indexOf(y)<0?1:0)}).forEach(function(c){
+    var ev=EVD.filter(function(e){return e.c===c&&e.b>="2026-11-28"&&e.a<="2026-12-13"}).sort(function(x,y){return(x.k==="s"?0:1)-(y.k==="s"?0:1)||x.a.localeCompare(y.a)});if(!ev.length)return;
+    var on=pc.indexOf(c)>-1;if(!on&&!shown){shown=true;h+='<div class="sech"><span>Not on your route</span></div>'}
+    h+='<div class="sech"><span>'+esc(city(c))+'</span></div><div class="group">';
+    ev.forEach(function(e){var f=on?evFits(e):[];
+      h+='<div class="row ev"><div class="evd">'+(e.a===e.b?'<b>'+fd(e.a).split(" ").slice(1).join(" ")+'</b><small>'+fd(e.a).split(" ")[0]+'</small>':'<small>until</small><b>'+(e.b>"2026-12-31"?"Jan":fd(e.b).split(" ").slice(1).join(" "))+'</b>')+'</div><div class="grow"><b class="evt">'+esc(e.t)+'</b><p>'+esc(e.n)+'</p><div class="evm">'+(e.f?'<span>Free</span>':'')+(e.kid?'<span>Good with kids</span>':'')+(f.length?'<span class="on">Your day '+(f.length>3?f[0]+'–'+f[f.length-1]:f.join(", "))+'</span>':'')+'<a href="'+e.u+'" target="_blank" rel="noopener">Source</a></div></div></div>'});
+    h+='</div>'});
+  h+='<p class="foot">Krampus runs are loud and can scare young children. The “Kinder” runs and Nikolaus are the gentle versions. Kaprun and Zell am See: no dated events found, check zellamsee-kaprun.com (Star Advent).</p>';
   return h}
 
 /* ================= PHASE 1: update, backup, where to stay ================= */
-var APP_VERSION="1.9.7",SCHEMA=3;
+var APP_VERSION="2.0.0",SCHEMA=3;
 function pad2(n){return("0"+n).slice(-2)}
 function today(){var d=new Date();return d.getFullYear()+"-"+pad2(d.getMonth()+1)+"-"+pad2(d.getDate())}
 var WD=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"],MN=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
@@ -1976,7 +2164,7 @@ function migrate(){
 if(typeof loadErr!=="undefined"&&loadErr){var rr=restoreLatest();setTimeout(function(){toast(rr?"Your saved data was recovered from the backup of "+rr:"Saved data could not be read")},600)}
 var wasExisting=!!store.schema;
 migrate();dailyBackup(false);
-var NEWIN={"1.9.1":{trip:"Currency and temperature switches (€ or SAR, °C or °F) apply to the whole guide. Extended packing list per person, and a Start at home checklist. Plan tiles on Trip."},"1.9.0":{trip:"New: Today card, Packing list, Open in Apple Maps, and a euro and temperature converter at the top of every page."},"1.8.5":{tips:"Tips rewritten in general terms: adults, older kids and younger kids. Weather and clothes tidied up."},"1.8.0":{tips:"Tips are now grouped with icons: tap a tile to open it."},"1.7.0":{settings:"New Settings tab: appearance, updates and backup moved here. New: Share my plan with another phone."},"1.6.1":{tips:"New: What to wear, for adults and both children, with the reason for each item, for the city, the glacier and the lakes."},"1.6.0":{trip:"New: Events and markets for your dates, ways to save money, and food to try with veg, pork and beef tags."},"1.5.3":{tips:"Fixed: the Tips tab did not open. Everything you saved is unchanged."},"1.5.2":{trip:"The Trip map now follows your stays: a Route view and one tab per stay, with a square pin where you sleep."},"1.5.0":{trip:"Your days now follow your night-by-night plan: same length and same order, with enough places for every stay."},"1.4.0":{trip:"Where to stay is simpler: journey, family, night plan and route in one page. New: print your whole trip as a PDF with links."},"1.3.0":{trip:"Where to stay is now night by night: pick a city for every night, and the same city can come back later. Each stay gets its own hotel name."},"1.2.0":{trip:"Where to stay: add Hallstatt, Kaprun and St. Gilgen, and pick one of three night plans.",tips:"Updates now install by themselves. You can turn this off."}};
+var NEWIN={"2.0.0":{list:"New look. Itinerary is now your own day-by-day plan and opens first. Day ideas holds the suggested days.",trip:"Suggested days are now called Day ideas.",map:"Pick a city and the map, pins and days update together."},"1.9.1":{trip:"Currency and temperature switches (€ or SAR, °C or °F) apply to the whole guide. Extended packing list per person, and a Start at home checklist. Plan tiles on Trip."},"1.9.0":{trip:"New: Today card, Packing list, Open in Apple Maps, and a euro and temperature converter at the top of every page."},"1.8.5":{tips:"Tips rewritten in general terms: adults, older kids and younger kids. Weather and clothes tidied up."},"1.8.0":{tips:"Tips are now grouped with icons: tap a tile to open it."},"1.7.0":{settings:"New Settings tab: appearance, updates and backup moved here. New: Share my plan with another phone."},"1.6.1":{tips:"New: What to wear, for adults and both children, with the reason for each item, for the city, the glacier and the lakes."},"1.6.0":{trip:"New: Events and markets for your dates, ways to save money, and food to try with veg, pork and beef tags."},"1.5.3":{tips:"Fixed: the Tips tab did not open. Everything you saved is unchanged."},"1.5.2":{trip:"The Trip map now follows your stays: a Route view and one tab per stay, with a square pin where you sleep."},"1.5.0":{trip:"Your days now follow your night-by-night plan: same length and same order, with enough places for every stay."},"1.4.0":{trip:"Where to stay is simpler: journey, family, night plan and route in one page. New: print your whole trip as a PDF with links."},"1.3.0":{trip:"Where to stay is now night by night: pick a city for every night, and the same city can come back later. Each stay gets its own hotel name."},"1.2.0":{trip:"Where to stay: add Hallstatt, Kaprun and St. Gilgen, and pick one of three night plans.",tips:"Updates now install by themselves. You can turn this off."}};
 (function(){var seen=store.seenVer;
   if(seen!==APP_VERSION){
     if((seen||wasExisting)&&NEWIN[APP_VERSION]){store.newTabs=store.newTabs||{};Object.keys(NEWIN[APP_VERSION]).forEach(function(k){store.newTabs[k]={v:APP_VERSION,t:NEWIN[APP_VERSION][k]}})}
@@ -2109,7 +2297,7 @@ function todayCard(){
   var line=[];if(w)line.push(deg(w.hi)+' / '+deg(w.lo)+(w.pp==null?'':' · rain '+w.pp+'%'));if(sun)line.push('Sunrise '+sun[0]+' · Sunset '+sun[1]);
   return'<div class="group"><button class="row tap" data-act="day" data-i="'+D.i+'" style="display:block"><span class="sm" style="display:block;color:var(--accent);font-weight:600;text-transform:uppercase;letter-spacing:.04em">Today · Day '+(D.i+1)+' · '+esc(SN(D.b))+'</span><b style="display:block;margin:2px 0">'+esc(D.title)+'</b>'+(line.length?'<span class="sm" style="display:block">'+line.join(' · ')+'</span>':'')+(nx?'<span class="sm" style="display:block;color:var(--fg);margin-top:4px">Next up: <b>'+esc(nx.n)+'</b></span>':'<span class="sm" style="display:block;margin-top:4px">All stops done. Enjoy the evening.</span>')+'</button></div>'}
 /* packing */
-var packTab="s";
+var packTab="home";
 var PKHOME=[["Before you leave",["Passports and visas checked (6+ months valid)","Travel insurance card saved","Flight, train and hotel bookings saved offline","Ticket screenshots on the phone and a printout","Bank cards: tell the bank about the trip","Some euro cash and a backup card","Phones and power banks charged","eSIM or SIM installed and working","Guide opened once online, Map cities saved","Prayer times app set to Munich, Salzburg, Vienna"]],["At home",["Stop mail and deliveries","Fridge emptied, bins out, plants watered","Lights on timers, alarm set","Neighbour or family has a key and emergency number","Car parked or arrangements made for pick-up","Emergency contacts written on paper for the kids’ bags"]]];
 var PKADULT=[["Clothes",["Winter jacket (waterproof, windproof)","Fleece or wool sweater (2)","Thermal base layers (2 sets)","Warm trousers (3)","Tops or T-shirts (5)","Thermal leggings","Socks (7) and warm wool socks (2)","Underwear (7)","Pyjamas","Hat that covers the ears","Scarf and neck warmer","Gloves, plus a spare pair"]],["Shoes",["Waterproof shoes with grip","Light shoes or slippers for the hotel","Shoe spray for snow and slush"]],["Toiletries and care",["Toothbrush, toothpaste and floss","Shampoo, body wash and deodorant","Hairbrush and hair ties","Face cream and lip balm","Shaving kit or razor","Wet wipes and tissues","Sunscreen (snow glare)","Small first-aid kit and plasters"]],["Medicine",["Prescription medicines (enough for the trip plus 3 days)","Prescriptions or doctor letter (in English or German)","Pain relief, fever and stomach medicine","Glasses or contact lenses, with solution"]],["Tech",["Phone charger and cable","Power bank (cold drains batteries)","EU plug adaptor (type C/F)","Headphones","Camera and spare battery (optional)"]],["Faith and prayer",["Prayer mat (small, travel size)","Qibla direction app or compass","Prayer times app set to each city","Prayer beads (optional)","Modest clothing for mosques (long sleeves, long trousers, headscarf)","Halal food card in German: “Ist das halal?”"]],["Food and snacks",["Halal snacks for the flight and train","Dates or nuts for the trip","Reusable water bottle or thermal flask","Small bag for leftovers"]],["Documents",["Passport (original)","Passport copies in phone and paper","Visa or residence permit if needed","Driving licence (optional, for rental only)","Printed booking confirmations"]]];
 var PKKID=[["Clothes",["Thermal top and bottom (2 sets)","Fleece","Snow jacket and snow trousers","Warm trousers (3)","Tops (5)","Socks (7) and warm socks (2)","Underwear (7)","Pyjamas","Hat","Mittens (warmer than gloves)","Neck warmer","Spare set of socks, mittens and a top for the day bag"]],["Shoes",["Waterproof boots with warm socks","Slippers"]],["Comfort and fun",["A favourite toy or blanket","Books or a tablet with downloaded films","Snacks for the train","Small notebook and pens","Sunglasses"]],["Care",["Toothbrush and toothpaste","Wet wipes and tissues","Sunscreen and lip balm","Plasters and small first-aid kit","Any medicine they need"]]];
@@ -2120,13 +2308,13 @@ function pkCount(pe){var n=0,d=0;pe.g.forEach(function(g,gi){g[1].forEach(functi
 function vPack(){
   var pe=pkPeople(),tot=0,dn=0;pe.forEach(function(p){var c=pkCount(p);dn+=c[0];tot+=c[1]});
   var cur=null;pe.forEach(function(p){if(p.k===packTab)cur=p});if(!cur){cur=pe[0];packTab=cur.k}
-  var h='<div class="nav"><button class="nb" data-act="tab" data-s="trip">'+ic(IC.back)+'Suggested</button><span class="t">Packing</span><span style="width:44px"></span></div><div class="head"><h1>Packing list</h1><p class="sub">'+dn+' of '+tot+' packed</p></div>';
+  var h=navBar("tips")+'<div class="head"><h1>Packing list</h1><p class="sub">'+dn+' of '+tot+' packed</p><div class="pbar" aria-hidden="true"><i style="width:'+(tot?Math.round(dn/tot*100):0)+'%"></i></div></div>';
   h+='<div class="segwrap"><div class="seg pks">'+pe.map(function(p){var c=pkCount(p);return'<button data-act="pack-tab" data-t="'+p.k+'" aria-pressed="'+(p.k===cur.k)+'">'+esc(p.l)+'<small>'+c[0]+'/'+c[1]+'</small></button>'}).join("")+'</div></div>';
-  cur.g.forEach(function(g,gi){h+='<div class="sech" style="margin-top:12px;margin-bottom:5px"><span>'+g[0]+'</span></div><div class="group">';g[1].forEach(function(t,ti){var id=cur.k+"."+gi+"."+ti,on=!!(store.pack&&store.pack[id]);h+='<button class="row tap srow pk'+(on?' on':'')+'" data-act="pack-tick" data-id="'+id+'" role="checkbox" aria-checked="'+on+'"><span class="ck">'+(on?ic(IC.check):'')+'</span><span class="grow">'+esc(t)+'</span></button>'});h+='</div>'});
-  h+='<p class="foot">Ticks are saved on this phone and go with “Send my plan”. Tap a tab to switch person. The Home tab is for the things to do before you leave.</p>';return h}
+  cur.g.forEach(function(g,gi){h+='<div class="sech" style="margin-top:12px;margin-bottom:5px"><span>'+g[0]+'</span></div><div class="group">';g[1].forEach(function(t,ti){var id=cur.k+"."+gi+"."+ti,on=!!(store.pack&&store.pack[id]);h+='<button class="row tap srow pk'+(on?' on':'')+'" data-act="pack-tick" data-id="'+id+'" role="checkbox" aria-checked="'+on+'"><span class="cbx">'+(on?ic(IC.check):'')+'</span><span class="grow">'+esc(t)+'</span></button>'});h+='</div>'});
+  h+='<p class="foot">Choose a person above. <b>Home</b> holds the jobs to do before you leave. Ticks are saved on this phone and go with Send my plan.</p>';return h}
 /* ---------- share / import ---------- */
 var tipSec=null,pendImp=null,impMsg="";
-var SHKEYS=["stay","hotels","spot","list","done","pack"];
+var SHKEYS=["stay","hotels","spot","list","done","pack","ld"];
 function planCode(){var o={app:"aut26",v:APP_VERSION};SHKEYS.forEach(function(k){if(store[k]!==undefined)o[k]=store[k]});return btoa(unescape(encodeURIComponent(JSON.stringify(o))))}
 function planLink(){return location.origin+location.pathname+"#plan="+encodeURIComponent(planCode())}
 function decodePlan(txt){
@@ -2151,6 +2339,8 @@ function doImport(){
   store.planImported=today();save();pendImp=null;impMsg="";
   try{applyAll()}catch(e){}try{buildItin()}catch(e){}toast("Plan imported");go("trip")}
 var SIC={
+ route:'<circle cx="6" cy="18" r="2.2"/><circle cx="18" cy="6" r="2.2"/><path d="M8.2 18h7.3a3 3 0 0 0 0-6h-7a3 3 0 0 1 0-6h7.3"/>',
+ bowl:'<path d="M4 11.5h16a8 8 0 0 1-16 0z"/><path d="M9.5 8c0-1.6 1.2-1.6 1.2-3.3M13.5 8c0-1.6 1.2-1.6 1.2-3.3"/>',
  coin:'<circle cx="12" cy="12" r="8.5"/><path d="M15.2 9.3a4 4 0 1 0 0 5.4M7.6 11h5.2M7.6 13h5.2"/>',
  print:'<path d="M7 9V3.5h10V9"/><rect x="4" y="9" width="16" height="7.5" rx="2"/><path d="M7 14h10v6.5H7z"/>',
  house:'<path d="M4 11 12 4l8 7v9H4z"/><path d="M10 20v-5h4v5"/>',
@@ -2179,7 +2369,7 @@ var SIC={
  drop:'<path d="M12 3.5s6 6.2 6 10.5a6 6 0 0 1-12 0c0-4.3 6-10.5 6-10.5z"/>',
  phone:'<rect x="7" y="3" width="10" height="18" rx="2.5"/><path d="M11 18h2"/>',
  wifi:'<path d="M3 9a14 14 0 0 1 18 0M6 12.5a9.5 9.5 0 0 1 12 0M9 16a5 5 0 0 1 6 0"/><path d="M12 19.2v.1"/>'};
-function sI(k,c){return'<span class="si" style="background:'+c+'"><svg viewBox="0 0 24 24">'+SIC[k]+'</svg></span>'}
+function sI(k){return'<span class="si" aria-hidden="true"><svg viewBox="0 0 24 24">'+(SIC[k]||SIC.list)+'</svg></span>'}
 function sRow(k,c,t,sub,right,act,more){
   var inner=sI(k,c)+'<span class="grow"><span class="stt">'+t+'</span>'+(sub?'<span class="sm" style="display:block">'+sub+'</span>':'')+'</span>'+(right||'');
   return act?'<button class="row tap srow" data-act="'+act+'"'+(more||'')+'>'+inner+'</button>':'<div class="row srow">'+inner+'</div>'}
@@ -2218,6 +2408,7 @@ var STAYC={
   vienna:{n:"Vienna",c:CITY.vienna.c,rank:5,lat:48.1853,lng:16.377}
 };
 var HUB=STAYC;
+var HTIP={munich:"Area tip: near the main station (Hbf) or Marienplatz. Trains to Salzburg leave from Hbf and the old town is walkable.",salzburg:"Area tip: the Old Town or near the main station. Most sights are walkable and buses cover the rest.",vienna:"Area tip: inside the Ring or near a U-Bahn line (U1, U3 or U4) for quick trips to the sights."};
 function SN(c){return STAYC[c]?STAYC[c].n:(CITY[c]?CITY[c].n:c)}
 function SC(c){return STAYC[c]?STAYC[c].c:"#555"}
 var TO_SZ={munich:105,vienna:150,hallstatt:130,kaprun:105,stgilgen:50,salzburg:0};
@@ -2383,18 +2574,18 @@ function planCard(s,k,rows,stats,isCur,btn){
 function vStay(){
   var s=stay(),sum=sumNights(s),unp=s.total-sum,sc=schedule(s),rm=roadmap(s),wn=warnings(s),gn=guideNights();
   var airOpts=function(sel){return Object.keys(AIR).map(function(k){return'<option value="'+k+'"'+(sel===k?" selected":"")+'>'+AIR[k].n+'</option>'}).join("")};
-  var h='<div class="nav"><button class="nb" data-act="tab" data-s="trip">'+ic(IC.back)+'Suggested</button><span class="t">Where to stay</span><span style="width:44px"></span></div>';
-  h+='<div class="head"><div class="eyebrow">Hotel nights</div><h1>Trip setup</h1><p class="sub">'+s.total+' nights · '+fd(s.start)+' to '+fd(stayEnd(s))+'</p></div>';
-  if(!store.hideStayHow)h+='<div class="how"><b class="h">How it works</b><ol><li><i>1</i><span>Check <b>your journey</b> and <b>family</b>.</span></li><li><i>2</i><span>Pick a <b>city for each night</b>. Add hotel names if you like.</span></li><li><i>3</i><span>Your <b>route and map</b> appear by themselves.</span></li></ol><button class="btn solid" data-act="stay-how">Got it</button></div>';
+  var h=navBar("list");
+  h+='<div class="head"><h1>Trip details</h1><p class="sub">'+s.total+' nights · '+fd(s.start)+' to '+fd(stayEnd(s))+'. Day ideas and your itinerary follow this plan.</p></div>';
+  if(!store.hideStayHow)h+='<div class="how"><b class="h">How it works</b><ol><li><i>1</i><span>Check your <b>journey</b> and <b>travellers</b>.</span></li><li><i>2</i><span>Pick a <b>city for each night</b>. Add hotel names if you like.</span></li><li><i>3</i><span>Your <b>route and map</b> appear by themselves.</span></li></ol><button class="btn solid" data-act="stay-how">Got it</button></div>';
   /* 1 journey */
-  h+='<div class="sech"><span>1 · My journey</span></div><div class="group">';
+  h+='<div class="sech"><span>Journey</span></div><div class="group">';
   h+='<div class="row"><span class="k">Arrive at</span><select data-f="arr" aria-label="Arrival airport">'+airOpts(s.arr)+'</select></div>';
   h+='<div class="row"><span class="k">Arriving date</span><input type="date" data-f="start" value="'+s.start+'" aria-label="Arriving date"></div>';
   h+='<div class="row"><span class="k">Total nights</span><div class="stepper" style="margin-left:auto"><button data-act="stay-tot" data-d="-1" aria-label="One night less">−</button><b>'+s.total+'</b><button data-act="stay-tot" data-d="1" aria-label="One night more">+</button></div></div>';
   h+='<div class="row"><span class="k">Last day</span><span class="v">'+fd(stayEnd(s))+'<span class="sm" style="display:block">Worked out for you: '+s.total+' nights, '+(s.total+1)+' calendar days.</span></span></div>';
   h+='<div class="row"><span class="k">Leave from</span><select data-f="dep" aria-label="Departure airport">'+airOpts(s.dep)+'</select></div></div>';
   /* 2 family */
-  h+='<div class="sech"><span>2 · Family</span>'+(famEdit?'':'<button class="lnk" data-act="stay-fam">Edit</button>')+'</div><div class="group">';
+  h+='<div class="sech"><span>Travellers</span>'+(famEdit?'':'<button class="lnk" data-act="stay-fam">Edit</button>')+'</div><div class="group">';
   if(!famEdit){
     h+='<div class="row" style="display:block"><b>'+famSummary(s)+'</b><span class="sm" style="display:block;margin-top:2px">'+({relaxed:"Relaxed pace",balanced:"Balanced pace",fast:"Fast pace"})[s.pace]+' · '+(s.transport==="public"?"Public transport first":"Automatic transport")+'</span></div>';
   }else{
@@ -2408,7 +2599,7 @@ function vStay(){
   h+='</div>';
   /* 3 night by night */
   var open=!s.planDone||planEdit||unp>0;
-  h+='<div class="sech"><span>3 · Night by night plan</span>'+(open?'<span class="r" style="color:'+(unp===0?"var(--accent)":"var(--warn)")+';font-weight:600">'+(unp===0?"All "+s.total+" nights set":unp+" without a city")+'</span>':'<button class="lnk" data-act="stay-edit">Edit</button>')+'</div><div class="group">';
+  h+='<div class="sech"><span>Nights</span>'+(open?'<span class="r" style="color:'+(unp===0?"var(--accent)":"var(--warn)")+';font-weight:600">'+(unp===0?"All "+s.total+" nights set":unp+" without a city")+'</span>':'<button class="lnk" data-act="stay-edit">Edit</button>')+'</div><div class="group">';
   if(!open){
     sc.forEach(function(r,ix){h+='<div class="row"><span class="dn" style="--c:'+SC(r.c)+'">'+(ix+1)+'</span><span class="grow"><b>'+SN(r.c)+(r.visit>1?' <span class="sm">(back again)</span>':'')+'</b><span class="sm" style="display:block">'+r.n+' night'+(r.n>1?"s":"")+' · '+fd(r.in)+' to '+fd(r.out)+'</span>'+(s.hn[r.key]?'<span class="sm" style="display:block">Hotel: '+esc(s.hn[r.key])+'</span>':'')+'</span></div>'});
   }else{
@@ -2419,31 +2610,31 @@ function vStay(){
     }
     h+='</div><p class="foot">Choose where you sleep each night. The same city can appear again later, for example Salzburg, then Kaprun, then Salzburg.</p>';
     if(sc.length){
-      h+='<div class="sech"><span>Hotel names (optional)</span></div><div class="group">';
+      h+='<div class="sech"><span>Where you stay</span></div><div class="group">';
       sc.forEach(function(r,ix){
         var prev=null;for(var q=ix-1;q>=0;q--){if(sc[q].c===r.c){prev=sc[q];break}}
-        h+='<div class="row" style="display:block"><div style="display:flex;align-items:center;gap:10px"><span class="dn" style="--c:'+SC(r.c)+'">'+(ix+1)+'</span><span class="grow"><b>'+SN(r.c)+(r.visit>1?' <span class="sm">(back again)</span>':'')+'</b><span class="sm" style="display:block">'+r.n+' night'+(r.n>1?"s":"")+' · '+fd(r.in)+' to '+fd(r.out)+'</span></span></div><div style="display:flex;gap:8px;margin-top:8px"><input type="text" class="hin" data-f="hotel" data-key="'+r.key+'" value="'+esc(s.hn[r.key]||"")+'" placeholder="Hotel name" aria-label="Hotel for stay '+(ix+1)+'" autocomplete="off">'+(prev?'<button class="btn" style="min-height:36px;padding:0 12px;white-space:nowrap" data-act="stay-samehotel" data-key="'+r.key+'" data-from="'+prev.key+'">Same as before</button>':'')+'</div></div>';
+        h+='<div class="row" style="display:block"><div style="display:flex;align-items:center;gap:10px"><span class="dn" style="--c:'+SC(r.c)+'">'+(ix+1)+'</span><span class="grow"><b>'+SN(r.c)+(r.visit>1?' <span class="sm">(back again)</span>':'')+'</b><span class="sm" style="display:block">'+r.n+' night'+(r.n>1?"s":"")+' · '+fd(r.in)+' to '+fd(r.out)+'</span></span></div><p class="htip">'+esc(HTIP[r.c]||(STAYC[r.c]&&STAYC[r.c].info)||"")+'</p><div style="display:flex;gap:8px;margin-top:8px"><input type="text" class="hin" data-f="hotel" data-key="'+r.key+'" value="'+esc(s.hn[r.key]||"")+'" placeholder="Hotel name" aria-label="Hotel for stay '+(ix+1)+'" autocomplete="off">'+(prev?'<button class="btn" style="min-height:36px;padding:0 12px;white-space:nowrap" data-act="stay-samehotel" data-key="'+r.key+'" data-from="'+prev.key+'">Same as before</button>':'')+'</div></div>';
       });
     }
     h+='<div class="row"><button class="btn solid full" data-act="stay-done"'+(unp>0?' disabled':'')+'>'+(unp>0?"Pick a city for every night first":"Done")+'</button></div>';
   }
   h+='</div>';
   /* 4 route */
-  h+='<div class="sech"><span>Your route</span></div><div class="group" style="padding:6px 0">';
+  h+='<div class="sech"><span>Route</span></div><div class="group" style="padding:6px 0">';
   rm.forEach(function(r){
     if(r.t==="air")h+='<div class="tl"><span class="tdot a">✈</span><div><b>'+esc(r.n)+'</b><span class="sm" style="display:block">'+r.sub+'</span></div></div>';
     else if(r.t==="go")h+='<div class="tl go"><span class="tline"></span><span class="sm">'+ic(IC.train)+r.how+' · about '+hm(r.m)+' <i>estimate</i></span></div>';
     else h+='<div class="tl"><span class="tdot" style="background:'+SC(r.c)+'">'+r.idx+'</span><div><b>'+SN(r.c)+'</b>'+(r.visit>1?' <span class="sm">(back again)</span>':'')+' · '+r.n+' night'+(r.n>1?"s":"")+'<span class="sm" style="display:block">Check in '+fd(r.in)+' · check out '+fd(r.out)+'</span>'+(s.hn[r.c+"_"+r.visit]?'<span class="sm" style="display:block">Hotel: '+esc(s.hn[r.c+"_"+r.visit])+'</span>':'')+(r.c==="salzburg"&&dayTripNames(sc.map(function(x){return x.c})).length?'<span class="sm" style="display:block">Day trips from here: '+dayTripNames(sc.map(function(x){return x.c})).join(", ")+'</span>':'')+'</div></div>';
   });
   if(!rm.length)h+='<div class="row"><span class="v sm">Pick a city for each night to see your route.</span></div>';
-  h+='</div><p class="foot">Travel times are typical train times, not a timetable. Check DB Navigator or the ÖBB app for real times and prices. The <b>Trip</b> tab follows this plan.</p>';
+  h+='</div><p class="foot">Travel times are typical train times, not a timetable. Check DB Navigator or the ÖBB app for real times and prices. Day ideas follow this plan.</p>';
   var cnn=countsNc(s),gsame=["munich","salzburg","vienna"].every(function(c){return(cnn[c]||0)===gn[c]})&&Object.keys(cnn).length===3&&s.total===9;
   h+='<p class="foot">The daily guide was written for <b>Munich '+gn.munich+', Salzburg '+gn.salzburg+', Vienna '+gn.vienna+'</b> nights. '+(gsame?"Your route matches it.":'<button class="lnk" data-act="stay-guide">Go back to the guide’s route</button>')+'</p>';
   if(wn.length){h+='<div class="sech"><span>Check this</span></div>';wn.forEach(function(t){h+='<div class="callout w">'+t+'</div>'})}
   /* 5 map */
   h+='<div class="sech"><span>Route map</span></div><div class="smapw" id="smapw"><div id="smap"></div><button class="btn smapb" data-act="stay-full" id="smapb">Expand map</button></div>';
   /* 6 plans */
-  h+='<div class="sech"><span>Other night plans</span></div><details class="group"><summary>Plan A (your route), Plan B, Plan C</summary><div class="in" style="padding:0">';
+  h+='<div class="sech"><span>Other plans</span></div><details class="group"><summary>Plan A (your route), Plan B, Plan C</summary><div class="in" style="padding:0">';
   var curStats=stayRowsStats(sc),pA;
   if(s.prevNc){var prow=schedule(s,s.prevNc);h+=planCard(s,"A",prow,stayRowsStats(prow),false,'<button class="btn" data-act="stay-planA">Go back to this route</button>')}
   else h+=planCard(s,"A",sc,curStats,true,'<button class="btn" disabled>✓ This is your route</button>');
@@ -2454,8 +2645,6 @@ function vStay(){
     h+=planCard(s,k,rows,{hotels:r.hotels,changes:r.changes,longest:r.longest},cur,cur?'<button class="btn" disabled>✓ This is your route</button>':'<button class="btn'+(s.manual?'':' solid')+'" data-act="stay-plan" data-p="'+k+'">'+(s.manual?"Replace my route with this plan":"Use this plan")+'</button>');
   });
   h+='</div></details><p class="foot">Plan B and C are ideas. Your route changes only when you tap a plan, and you can go back to your earlier route.</p>';
-  /* 7 print */
-  h+='<div class="sech"><span>Print or save</span></div><div class="group"><button class="row tap" data-act="print-open"><span class="dn" style="--c:var(--accent)">'+ic(IC.copy)+'</span><span class="grow"><span class="ttl" style="display:block;font-weight:600">Print or save the whole trip as PDF</span><span class="sm" style="display:block">Route, hotels, every day and your places, with links</span></span>'+ic(IC.fwd,"chev")+'</button></div>';
   return h;
 }
 
@@ -2487,7 +2676,7 @@ function printHtml(){
 }
 function printOpen(){
   var el=document.getElementById("printdoc");if(!el){el=document.createElement("div");el.id="printdoc";document.body.appendChild(el)}
-  el.innerHTML='<div class="ptool"><button class="btn" data-act="print-close">Close</button><span class="grow" style="flex:1;font-weight:600;text-align:center">Preview</span><button class="btn solid" data-act="print-go">Print / Save as PDF</button></div><div class="pbody">'+printHtml()+'</div>';
+  el.innerHTML='<div class="ptool"><button class="btn" data-act="print-close">Close</button><span class="grow" style="flex:1;font-weight:600;text-align:center">Your trip</span><button class="btn solid" data-act="print-go">Save as PDF</button></div><div class="pbody">'+printHtml()+'</div>';
   el.classList.add("show");document.body.classList.add("printing");document.body.style.overflow="hidden";el.scrollTop=0;
 }
 function printClose(){var el=document.getElementById("printdoc");if(el)el.classList.remove("show");document.body.classList.remove("printing");document.body.style.overflow=""}
@@ -2503,14 +2692,14 @@ function mkT(id,city,tplId,o){
   mkT("d2","munich","d2",{mor:["b5","b1"],clim:"Plan for about 0–8 °C, cloudy, possibly light rain or snow. Sunset around 16:20.",title:"Glockenspiel, old town and the Deutsches Museum",lede:"A museum day that works in any weather: the old town first, then the Deutsches Museum for the kids.",stops:["b5","b1"],st:"Walk in the old town, and take the U-Bahn or tram to the museum (tickets at mvv-muenchen.de).",wrule:"Mostly indoors: good in any weather."});
   mkT("d3","salzburg","d3",{mor:["d3","e5"]});var SH="You sleep here, so keep travel short. Buses and trains connect the villages (check times).";mkT("d4","kaprun","d4",{trip:"kaprun",st:SH});mkT("d5","hallstatt","d5",{trip:"hallstatt",st:SH});mkT("d6","stgilgen","d6",{trip:"stgilgen",st:SH});mkT("d7","salzburg","d7",{mor:["k4","d1"]});
   mkT("d8","vienna","d8",{st:"The old town is compact. Walk, and use the U-Bahn for longer hops."});mkT("d9","vienna","d9",{});mkT("d10","vienna","d10",{lastOnly:true});
-  mkT("x-m3","munich","d2",{mor:["bx-residenz"],clim:"Plan for about 0–8 °C, cloudy, possibly rain or snow. Sunset around 16:20.",title:"Palaces, parks and the Englischer Garten",lede:"A calmer day with space to run: a palace, a big park and a market snack.",stops:["bx-residenz","bx-nymph","bx-english"],extras:["bx-vik","ax-peter","ax-sendlinger"],startPt:{n:"Munich Residenz",lat:48.1413,lng:11.5789},start:"Munich Residenz (10 min on foot from Marienplatz)",getting:["The Residenz is about 10 min on foot from Marienplatz. Nymphenburg is 25–30 min by tram and U-Bahn.","The Englischer Garten is big: wear warm shoes and bring a hot drink.","Check winter opening hours of the Residenz and Nymphenburg on their websites."],rain:["The Residenz and its treasury are indoors.","Nymphenburg’s palace rooms are indoors, the park is not.","If it pours, swap the park for the Deutsches Museum."],facts:["The Residenz was home to Bavarian dukes, electors and kings for centuries.","Nymphenburg Palace has a museum of royal carriages.","The Englischer Garten is one of the largest city parks in the world."],spot:["Find the Chinese Tower","Look for swans at Nymphenburg","Find the river surfers on the Eisbach, if it is not frozen"],budget:"€85",budgetNote:"Palace tickets ≈€40–50 for the family (check) · lunch ≈€40",st:"Take tram or U-Bahn between sights (tickets at mvv-muenchen.de)."});
+  mkT("x-m3","munich","d2",{mor:["bx-residenz"],clim:"Plan for about 0–8 °C, cloudy, possibly rain or snow. Sunset around 16:20.",title:"Palaces, parks and the Englischer Garten",lede:"A calmer day with space to run: a palace, a big park and a market snack.",stops:["bx-residenz","bx-nymph","bx-english"],extras:["bx-vik","ax-peter","ax-sendlinger"],startPt:{n:"Munich Residenz",lat:48.1413,lng:11.5789},start:"Munich Residenz (10 min on foot from Marienplatz)",getting:["The Residenz is about 10 min on foot from Marienplatz. Nymphenburg is 25–30 min by tram and U-Bahn.","The Englischer Garten is big: wear warm shoes and bring a hot drink.","Check winter opening hours of the Residenz and Nymphenburg on their websites."],rain:["The Residenz and its treasury are indoors.","Nymphenburg’s palace rooms are indoors, the park is not.","If it pours, swap the park for the Deutsches Museum."],facts:["The Residenz was home to Bavarian dukes, electors and kings for centuries.","Nymphenburg Palace has a museum of royal carriages.","The Englischer Garten is one of the largest city parks in the world."],spot:["Find the Chinese Tower","Look for swans at Nymphenburg","Find the river surfers on the Eisbach, if it is not frozen"],budget:"€85",budgetNote:"Palace tickets ≈€40–50 for 2 adults and 2 children (check) · lunch ≈€40",st:"Take tram or U-Bahn between sights (tickets at mvv-muenchen.de)."});
   mkT("x-m4","munich","d2",{clim:"Plan for about 0–8 °C, cloudy, possibly rain or snow. Sunset around 16:20.",title:"Olympic Park, BMW Welt and market snacks",lede:"Big views, cars to sit in and a market for lunch.",stops:["bx-olympia","bx-bmw","bx-vik"],extras:["ax-kripperl","ax-peter","ax-sendlinger"],startPt:{n:"Olympiazentrum (U3)",lat:48.1792,lng:11.5560},start:"Olympiazentrum station (U3)",getting:["Olympiapark and BMW Welt are next to each other: U3 to Olympiazentrum.","Tower views are best on a clear day: check the webcam first.","BMW Welt is free to enter. The museum is paid."],rain:["BMW Welt and the BMW Museum are indoors.","Skip the tower in fog or rain.","Viktualienmarkt has covered stalls and cafés."],facts:["The Olympiapark was built for the 1972 Summer Olympics.","The Olympic Tower is about 290 m tall.","BMW Welt lets you sit in the cars for free."],spot:["Find the tent-like roof of the stadium","Spot an old BMW","Eat a fresh pretzel"],budget:"€80",budgetNote:"Tower ≈€10 per adult (check) · lunch ≈€40 · BMW Welt free",st:"Use the U-Bahn (tickets at mvv-muenchen.de)."});
   mkT("x-s0","salzburg","d3",{clim:"Plan for about 0–8 °C, cloudy, possibly rain or snow. Sunset around 16:20.",title:"The Christmas market after dark",lede:"Settle in and walk to the market in the evening.",stops:["d5","dx-mozartplatz"],extras:["dx-cathedral","dx-sphaera","dx-peter"],getting:["From the Hauptbahnhof the old town is about 20 min on foot, or a short bus ride.","Check in first, then go to the market after dark: it is prettiest at night.","Domplatz and Residenzplatz are right next to each other."],rain:["The cathedral is indoors and free.","The market stalls have roofs: warm up with a hot chocolate.","If everyone is tired, eat near the hotel."],facts:["Salzburg’s Christkindlmarkt is one of the oldest in Europe.","The Residenz was the home of the prince-archbishops.","The carol Silent Night was first sung near Salzburg in 1818."],spot:["Find a gingerbread heart","Look for the golden ball at Kapitelplatz","Listen for the cathedral bells"],budget:"€70",budgetNote:"Market snacks and dinner ≈€55 · sights are free",st:"The old town is walkable."});
   mkT("x-k2","kaprun","d4",{clim:"Plan for about 0–8 °C, cloudy, possibly rain or snow. Sunset around 16:20.",title:"Zell am See and the Schmittenhöhe",lede:"A lake town and a cable car with mountain views.",stops:["fx-schmitten","fx-zell","fx-burg"],extras:[],trip:"kaprun",getting:["Zell am See station is a short walk from the lake.","The Schmittenhöhe cable car starts at the edge of town: check opening times online.","Dress warm: it is much colder at the top."],rain:["The lake walk is outdoors: take a hot drink.","Cable car views are best on clear days: check the webcam first.","Warm up in a café in the town centre."],facts:["Zell am See sits on a lake that can freeze in winter.","The Schmittenhöhe is almost 2,000 m high.","Kaprun has a medieval castle above the village."],spot:["Find the lake and the mountains in one view","Count the cable car cabins","Spot a snow-covered peak"],startPt:{n:"Zell am See station",lat:47.3228,lng:12.7956},start:"Zell am See station",budget:"€110",budgetNote:"Cable car ≈€30–35 per adult (check) · lunch ≈€45",st:"You sleep here, so keep travel short. Buses and trains connect Kaprun and Zell am See."});
   mkT("x-h2","hallstatt","d5",{clim:"Plan for about 0–8 °C, cloudy, possibly rain or snow. Sunset around 16:20.",title:"Dachstein, Bad Ischl and the museum",lede:"Mountains, an emperor’s town and an indoor stop.",stops:["gx-krippen","gx-ischl","gx-museum"],extras:["gx-skywalk","gx-advent"],trip:"hallstatt",getting:["Obertraun is near Hallstatt: check bus and ferry times.","The Krippenstein cable car and ice caves are seasonal: check winter opening on dachstein.at.","Bad Ischl is an easy stop on the train."],rain:["Hallstatt Museum is indoors.","Cable cars can close in wind or fog.","Cafés in Bad Ischl are a good warm-up."],facts:["The Dachstein is a glacier mountain above Hallstatt.","Bad Ischl was the summer home of Emperor Franz Joseph.","The Krippenstein cable car climbs to about 2,100 m."],spot:["Look for the ice cave","Find the emperor’s villa in Bad Ischl","Count the cable car cabins"],budget:"€110",budgetNote:"Cable car ≈€35 per adult (check) · lunch ≈€45",st:"You sleep here, so keep travel short. Check bus and ferry times."});
   mkT("x-g2","stgilgen","d6",{clim:"Plan for about 0–8 °C, cloudy, possibly rain or snow. Sunset around 16:20.",title:"Zwölferhorn and Strobl",lede:"A cable car, a quiet lakeside town and another small market.",stops:["kx-zwolf","kx-strobl","k3"],extras:[],trip:"stgilgen",getting:["Buses and the lake boat connect St. Gilgen, St. Wolfgang and Strobl: check winter timetables.","The Zwölferhorn cable car may close in bad weather.","Markets open in the afternoon and evening: check dates."],rain:["Cafés by the lake are a good warm-up.","Cable car views need clear weather.","Stalls at the markets have roofs."],facts:["Wolfgangsee is about 11 km long and very clear.","St. Wolfgang’s church has a famous carved altar.","The White Horse Inn at St. Wolfgang is the setting of a famous operetta."],spot:["Find a swan on the lake","Count the church towers","Spot a boat on the lake"],budget:"€90",budgetNote:"Cable car ≈€25–30 per adult (check) · lunch ≈€40",st:"You sleep here, so keep travel short."});
-  mkT("x-v4","vienna","d8",{clim:"Plan for about 0–8 °C, cloudy, possibly rain or snow. Sunset around 16:20.",title:"Hofburg, opera and museums",lede:"The Habsburg palace and an art museum, all within a short walk.",stops:["hx-hofburg","hx-albertina","jx-albertina","ix-nhm"],extras:["jx-stroll","hx-krampus"],startPt:{n:"Michaelerplatz",lat:48.2086,lng:16.3659},start:"Michaelerplatz",getting:["The Hofburg, Albertina and State Opera are within 10 min on foot of each other.","The Natural History Museum is on the Ring: take tram 1, 2 or D.","Check each museum’s closing day."],rain:["Everything today is indoors except the walks between sights.","The Natural History Museum is great for kids.","Warm up in a Viennese café."],facts:["The Hofburg was the winter palace of the Habsburgs.","The Albertina has paintings by Monet and Picasso.","The Natural History Museum shows a famous prehistoric statue, the Venus of Willendorf."],spot:["Find a Habsburg crown","Spot a dinosaur skeleton","Look for a painting by Monet"],budget:"€95",budgetNote:"Museum tickets ≈€45–60 for the family (check) · lunch ≈€40",st:"Walk and use trams (tickets at wienerlinien.at)."});
-  mkT("x-v5","vienna","d9",{clim:"Plan for about 0–8 °C, cloudy, possibly rain or snow. Sunset around 16:20.",title:"Aquarium, music and a hill with a view",lede:"Two indoor museums kids like, with a view if the weather is clear.",stops:["ix-meer","ix-musik"],extras:["ix-gloriette"],startPt:{n:"Haus des Meeres",lat:48.1978,lng:16.3535},start:"Haus des Meeres (Esterházypark)",getting:["Haus des Meeres and Haus der Musik are 10–15 min apart by U-Bahn or tram.","Book tickets online if you can.","Haus des Meeres is inside a large old tower: there are many steps, with lifts."],rain:["Both museums are indoors: this is a good bad-weather day.","Skip the Gloriette in fog."],facts:["Haus des Meeres is inside a World War II flak tower.","In Haus der Musik you can play with sounds and instruments.","The Gloriette stands on the hill above Schönbrunn."],spot:["Find a shark","Make a sound with a big instrument","Look for the Stephansdom roof from above"],budget:"€95",budgetNote:"Tickets ≈€50–60 for the family (check) · lunch ≈€40",st:"Use U-Bahn and trams (tickets at wienerlinien.at)."});
+  mkT("x-v4","vienna","d8",{clim:"Plan for about 0–8 °C, cloudy, possibly rain or snow. Sunset around 16:20.",title:"Hofburg, opera and museums",lede:"The Habsburg palace and an art museum, all within a short walk.",stops:["hx-hofburg","hx-albertina","jx-albertina","ix-nhm"],extras:["jx-stroll","hx-krampus"],startPt:{n:"Michaelerplatz",lat:48.2086,lng:16.3659},start:"Michaelerplatz",getting:["The Hofburg, Albertina and State Opera are within 10 min on foot of each other.","The Natural History Museum is on the Ring: take tram 1, 2 or D.","Check each museum’s closing day."],rain:["Everything today is indoors except the walks between sights.","The Natural History Museum is great for kids.","Warm up in a Viennese café."],facts:["The Hofburg was the winter palace of the Habsburgs.","The Albertina has paintings by Monet and Picasso.","The Natural History Museum shows a famous prehistoric statue, the Venus of Willendorf."],spot:["Find a Habsburg crown","Spot a dinosaur skeleton","Look for a painting by Monet"],budget:"€95",budgetNote:"Museum tickets ≈€45–60 for 2 adults and 2 children (check) · lunch ≈€40",st:"Walk and use trams (tickets at wienerlinien.at)."});
+  mkT("x-v5","vienna","d9",{clim:"Plan for about 0–8 °C, cloudy, possibly rain or snow. Sunset around 16:20.",title:"Aquarium, music and a hill with a view",lede:"Two indoor museums kids like, with a view if the weather is clear.",stops:["ix-meer","ix-musik"],extras:["ix-gloriette"],startPt:{n:"Haus des Meeres",lat:48.1978,lng:16.3535},start:"Haus des Meeres (Esterházypark)",getting:["Haus des Meeres and Haus der Musik are 10–15 min apart by U-Bahn or tram.","Book tickets online if you can.","Haus des Meeres is inside a large old tower: there are many steps, with lifts."],rain:["Both museums are indoors: this is a good bad-weather day.","Skip the Gloriette in fog."],facts:["Haus des Meeres is inside a World War II flak tower.","In Haus der Musik you can play with sounds and instruments.","The Gloriette stands on the hill above Schönbrunn."],spot:["Find a shark","Make a sound with a big instrument","Look for the Stephansdom roof from above"],budget:"€95",budgetNote:"Tickets ≈€50–60 for 2 adults and 2 children (check) · lunch ≈€40",st:"Use U-Bahn and trams (tickets at wienerlinien.at)."});
 })();
 function consumedT(t,shown){var n=0;t.stops.forEach(function(id){if(shown[id])n++});return n>Math.floor(t.stops.length/2)}
 function freeT(b,shown,cnt){
@@ -2664,6 +2853,6 @@ function updNotice(){
   return'<div class="callout" style="background:var(--accent-soft)"><b style="color:var(--accent)">Update ready</b>Version '+esc(upd.latest)+' is available. <button class="lnk" data-act="tab" data-s="settings">Install in Settings</button></div>';
 }
 
-initFx();parseHash();render();loadWx();
+NAVS=[curH()];lastH=curH();initFx();parseHash();render();loadWx();
 })();
 </script><script>if('serviceWorker' in navigator)window.addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){})})</script></body></html>
