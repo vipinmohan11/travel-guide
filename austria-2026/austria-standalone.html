@@ -1004,8 +1004,24 @@ select,input[type=date]{margin-left:auto;font:inherit;font-size:.9375rem;color:v
 .tg3 .tile .si svg{width:22px;height:22px}
 
 .hrow{justify-content:flex-end;margin:-4px 14px 8px}
+
+#fxbar{display:flex;gap:8px;align-items:center;justify-content:space-between;padding:calc(env(safe-area-inset-top,0px) + 4px) 12px 4px;background:var(--bar);border-bottom:.5px solid var(--line);font-size:.8125rem;position:relative;z-index:30}
+.fxp{display:flex;align-items:center;gap:5px;min-width:0}
+.fxp input{width:46px;border:1px solid var(--line);border-radius:7px;padding:3px 5px;font:inherit;text-align:center;background:var(--bg);color:var(--fg);min-width:0}
+.fxs{display:flex;align-items:center;gap:2px;border:0;background:var(--accent-soft);color:var(--accent);border-radius:7px;padding:3px 6px;font:inherit;font-weight:600}
+.fxs svg{width:12px;height:12px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.fxo{white-space:nowrap}
+#v-map{top:var(--fxh,0)!important}
+.pks{overflow-x:auto}
+.pks button{flex:1 0 auto;display:flex;flex-direction:column;align-items:center;line-height:1.15;padding:5px 10px}
+.pks small{font-size:.625rem;opacity:.7}
+.ck{width:24px;height:24px;border-radius:50%;border:2px solid var(--line);flex:none;display:flex;align-items:center;justify-content:center;color:#fff}
+.ck svg{width:14px;height:14px;stroke:#fff}
+.pk.on .ck{background:var(--accent);border-color:var(--accent)}
+.pk.on .grow{text-decoration:line-through;color:var(--sub)}
 </style></head><body>
-<main id="app"><section id="v-trip"></section><section id="v-day" hidden></section><section id="v-map" hidden></section><section id="v-list" hidden></section><section id="v-tips" hidden></section><section id="v-stay" hidden></section><section id="v-more" hidden></section><section id="v-settings" hidden></section></main>
+<div id="fxbar"></div>
+<main id="app"><section id="v-trip"></section><section id="v-day" hidden></section><section id="v-map" hidden></section><section id="v-list" hidden></section><section id="v-tips" hidden></section><section id="v-stay" hidden></section><section id="v-more" hidden></section><section id="v-settings" hidden></section><section id="v-pack" hidden></section></main>
 <div id="detail" class="page" hidden></div>
 <nav class="tabbar" aria-label="Main"><div class="in"><button data-act="tab" data-s="trip"><svg class="ic" viewBox="0 0 24 24"><rect x="4" y="8" width="16" height="12" rx="2.5"/><path d="M9 8V6a1.5 1.5 0 0 1 1.5-1.5h3A1.5 1.5 0 0 1 15 6v2M4 13.5h16M10.5 13.5v1.5h3v-1.5"/></svg><span class="nd" id="nd-trip" hidden></span>Trip</button><button data-act="tab" data-s="map"><svg class="ic" viewBox="0 0 24 24"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.3"/></svg>Trip map</button><button data-act="tab" data-s="list"><svg class="ic" viewBox="0 0 24 24"><path d="M6.5 4h11a1 1 0 0 1 1 1v15l-6.5-4-6.5 4V5a1 1 0 0 1 1-1z"/><path d="m9.3 10 1.9 1.9 3.5-3.7"/></svg><span class="badge" id="tabbadge" hidden></span>My list</button><button data-act="tab" data-s="tips"><svg class="ic" viewBox="0 0 24 24"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.6 10.8c.6.5 1 1.2 1 2V16h5.2v-.2c0-.8.4-1.5 1-2A6 6 0 0 0 12 3z"/></svg><span class="nd" id="nd-tips" hidden></span>Tips</button><button data-act="tab" data-s="settings"><svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 14.5a1.5 1.5 0 0 0 .3 1.7l.1.1a1.8 1.8 0 1 1-2.6 2.6l-.1-.1a1.5 1.5 0 0 0-1.7-.3 1.5 1.5 0 0 0-.9 1.4v.2a1.8 1.8 0 1 1-3.6 0v-.1a1.5 1.5 0 0 0-1-1.4 1.5 1.5 0 0 0-1.7.3l-.1.1a1.8 1.8 0 1 1-2.6-2.6l.1-.1a1.5 1.5 0 0 0 .3-1.7 1.5 1.5 0 0 0-1.4-.9h-.2a1.8 1.8 0 1 1 0-3.6h.1a1.5 1.5 0 0 0 1.4-1 1.5 1.5 0 0 0-.3-1.7l-.1-.1a1.8 1.8 0 1 1 2.6-2.6l.1.1a1.5 1.5 0 0 0 1.7.3h0a1.5 1.5 0 0 0 .9-1.4v-.2a1.8 1.8 0 1 1 3.6 0v.1a1.5 1.5 0 0 0 .9 1.4 1.5 1.5 0 0 0 1.7-.3l.1-.1a1.8 1.8 0 1 1 2.6 2.6l-.1.1a1.5 1.5 0 0 0-.3 1.7v0a1.5 1.5 0 0 0 1.4.9h.2a1.8 1.8 0 1 1 0 3.6h-.1a1.5 1.5 0 0 0-1.4.9z"/></svg><span class="nd" id="nd-settings" hidden></span>Settings</button></div></nav>
 <div class="toast" id="toast" hidden></div>
@@ -1311,6 +1327,7 @@ function listCount(d){return d.stops.concat(d.extras).filter(inList).length}
 function totalList(){return ALL.filter(inList).length}
 function dlabel(d){return "Day "+(d.i+1)+" · "+d.dow+" "+d.date}
 function gmq(s){return GM[s.id]||(s.n.replace(/\s*\(.*?\)/g,"")+", "+(s.f.cy||DAYS[s.day].cy))}
+function appleMaps(s){return"https://maps.apple.com/?ll="+s.lat+","+s.lng+"&q="+encodeURIComponent(gmq(s))}
 function mapsPlace(s){return "https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(gmq(s))}
 function ref(o){return o.lat!=null?o.lat+","+o.lng:q(o.n)}
 function mapsDir(a,b,mode){return "https://www.google.com/maps/dir/?api=1&travelmode="+(mode||"transit")+"&origin="+ref(a)+"&destination="+ref(b)}
@@ -1342,7 +1359,7 @@ function wxDay(k,wi){if(!WX)return null;var o=WX[wi||0];if(!o||!o.daily)return n
 var deferredInstall=null;window.addEventListener("beforeinstallprompt",function(e){e.preventDefault();deferredInstall=e;if(view==="tips"||view==="settings")render(true)});window.addEventListener("appinstalled",function(){deferredInstall=null;if(view==="tips"||view==="settings")render(true)});
 /* ---------- state ---------- */
 var view="trip",cur=0,mapSg="all",mapDay="all",selId=null,hotelEdit=null,detailId=null;
-var VIEWS=["trip","day","map","list","tips","stay","more","settings"];
+var VIEWS=["trip","day","map","list","tips","stay","more","settings","pack"];
 
 /* ---------- views ---------- */
 function addBtn(s,full){var on=inList(s);return '<button class="add'+(on?" on":"")+'" data-act="add" data-id="'+s.id+'" aria-pressed="'+on+'" aria-label="'+(on?"Remove from my list: ":"Add to my list: ")+esc(s.n)+'">'+ic(on?IC.check:IC.plus)+(on?"Added":"Add")+'</button>'}
@@ -1350,6 +1367,7 @@ function addBtn(s,full){var on=inList(s);return '<button class="add'+(on?" on":"
 function vTrip(){
   var s=stay(),cs=[];ITIN.forEach(function(D){if(D.i<s.total&&cs.indexOf(D.b)<0)cs.push(D.b)});
   var h='<div class="head"><div class="headrow"><div><div class="eyebrow">'+fd(s.start)+' – '+fd(stayEnd(s))+' '+s.start.slice(0,4)+'</div><h1>'+esc(cs.map(function(c){return SN(c)}).join(", ")||"Your trip")+'</h1><p class="sub">'+(s.total+1)+' days · '+esc(famSummary(s))+'</p></div><button class="aa" data-act="settings" aria-label="Text size and colours">Aa</button></div></div>';
+  h+=todayCard();
   if(!store.hideHow)h+='<div class="how"><b class="h">How this guide works</b><ol><li><i>1</i><span>Open a day below.</span></li><li><i>2</i><span>Tap <b>Add</b> next to the places you want to visit.</span></li><li><i>3</i><span>Find your own plan in <b>My list</b> at the bottom.</span></li></ol><button class="btn solid" data-act="hidehow">Got it</button></div>';
   h+=newBanner('trip')+updNotice()+tripStayRow()+moreRow();
   if(sumNights(s)<s.total)h+='<div class="callout w"><b>Some nights have no city yet</b>The days below follow your night-by-night plan. <button class="lnk" data-act="stay-open">Finish the plan</button></div>';
@@ -1605,14 +1623,14 @@ function openDetail(id,nav){
   h+='<div class="sech"><span>Details</span></div><div class="group">';
   if(f.i)h+='<div class="fact"><b>What to see</b><ol>'+f.i.map(function(t){return '<li>'+esc(t)+'</li>'}).join("")+'</ol></div>';
   h+=fact("Time needed",f.tm)+fact("Tickets and rules",f.tx)+fact("Getting there",leg)+fact("Nearest stop",f.st)+fact("Facilities",f.fa)+fact("Local tip",f.tp)+fact("For the kids",s.kid);
-  h+='</div><div class="actions">'+(URLS[s.id]?'<a class="btn full solid" href="'+URLS[s.id]+'" target="_blank" rel="noopener">'+ic(IC.pin)+'Official website (hours, tickets)</a>':'')+'<a class="btn full" href="'+mapsPlace(s)+'" target="_blank" rel="noopener">'+ic(IC.pin)+'Open in Google Maps</a><button class="btn full" data-act="showmap" data-id="'+s.id+'">'+ic(IC.map)+'See on Trip map</button></div><p class="foot">“Open in Google Maps” searches for <b>'+esc(gmq(s))+'</b>. If Google shows several results, choose the one with this name.</p></div>';
+  h+='</div><div class="actions">'+(URLS[s.id]?'<a class="btn full solid" href="'+URLS[s.id]+'" target="_blank" rel="noopener">'+ic(IC.pin)+'Official website (hours, tickets)</a>':'')+'<a class="btn full" href="'+mapsPlace(s)+'" target="_blank" rel="noopener">'+ic(IC.pin)+'Open in Google Maps</a><a class="btn full" href="'+appleMaps(s)+'" target="_blank" rel="noopener">'+ic(IC.pin)+'Open in Apple Maps</a><button class="btn full" data-act="showmap" data-id="'+s.id+'">'+ic(IC.map)+'See on Trip map</button></div><p class="foot">“Open in Google Maps” and “Open in Apple Maps” search for <b>'+esc(gmq(s))+'</b>. If Google shows several results, choose the one with this name.</p></div>';
   h+='<div class="dbar"><button class="dn2" data-act="dnav" data-d="-1"'+(pv?'':' disabled')+'>'+ic(IC.back)+'<span><small>Previous</small>'+(pv?esc(pv.n):'')+'</span></button><button class="dn2 r" data-act="dnav" data-d="1"'+(nx?'':' disabled')+'><span><small>Next</small>'+(nx?esc(nx.n):'')+'</span>'+ic(IC.fwd)+'</button></div>';
   var top=nav?0:box.scrollTop;box.innerHTML=h;
   if(box.hidden){box.hidden=false;box.scrollTop=0;try{history.pushState({detail:id},"")}catch(e){}}else box.scrollTop=top}
 function closeDetail(viaPop){var box=$("detail");if(box.hidden)return;box.hidden=true;detailId=null;if(!viaPop&&history.state&&history.state.detail){try{history.back()}catch(e){}}}
 
 /* ---------- render + routing ---------- */
-var TABOF={trip:"trip",day:"trip",stay:"trip",more:"trip",map:"map",list:"list",tips:"tips",settings:"settings"};
+var TABOF={trip:"trip",day:"trip",stay:"trip",more:"trip",map:"map",list:"list",tips:"tips",settings:"settings",pack:"trip"};
 function fixHtml(err){try{console.error(err)}catch(e){}return'<div class="head"><h1>Something went wrong</h1></div><div class="callout w"><b>This page could not open</b>Your saved plan and list are safe. Tap the button to load the newest version of the guide.</div><div class="actions"><button class="btn full solid" data-act="hard-update">Load the newest version</button><button class="btn full" data-act="tab" data-s="trip">Back to Trip</button></div>'}
 function hardUpdate(){try{dailyBackup(true)}catch(e){}var go2=function(){location.reload()};var p=[];if(window.caches)p.push(caches.keys().then(function(ks){return Promise.all(ks.filter(function(k){return k.indexOf("tiles")<0}).map(function(k){return caches.delete(k)}))}));if(navigator.serviceWorker)p.push(navigator.serviceWorker.getRegistrations().then(function(rs){return Promise.all(rs.map(function(r){return r.unregister()}))}));Promise.all(p).then(go2,go2);setTimeout(go2,4000)}
 function render(keepScroll){
@@ -1623,11 +1641,11 @@ function render(keepScroll){
   if(view==="map"){document.body.style.paddingBottom="0";mapShow();return}
   document.body.style.paddingBottom="";
   var el=$("v-"+view);
-  try{el.innerHTML=view==="trip"?vTrip():view==="day"?vDay():view==="list"?vList():view==="stay"?vStay():view==="more"?vMore():view==="settings"?vSettings():vTips()}catch(err){el.innerHTML=fixHtml(err)}if(view==="stay")setTimeout(stayMap,0);else if(document.body.style.overflow==="hidden")document.body.style.overflow="";
+  try{el.innerHTML=view==="trip"?vTrip():view==="day"?vDay():view==="list"?vList():view==="stay"?vStay():view==="more"?vMore():view==="settings"?vSettings():view==="pack"?vPack():vTips()}catch(err){el.innerHTML=fixHtml(err)}if(view==="stay")setTimeout(stayMap,0);else if(document.body.style.overflow==="hidden")document.body.style.overflow="";
   if(keepScroll)window.scrollTo(0,y);else window.scrollTo(0,0)}
 function parseHash(){
   var h=(location.hash||"").replace("#","");if(h.indexOf("plan=")===0){var po=decodePlan(h.slice(5));try{history.replaceState(null,"","#settings")}catch(e){}if(po){pendImp=po;impMsg=""}h="settings"}var m=h.match(/^day-(\d+)$/);
-  buildItin();if(m&&ITIN[+m[1]-1]){view="day";cur=+m[1]-1;mapSg=ITIN[cur].sg;mapDay="all"}else if(["trip","map","list","tips","stay","more","settings"].indexOf(h)>-1)view=h;else view="trip"}
+  buildItin();if(m&&ITIN[+m[1]-1]){view="day";cur=+m[1]-1;mapSg=ITIN[cur].sg;mapDay="all"}else if(["trip","map","list","tips","stay","more","settings","pack"].indexOf(h)>-1)view=h;else view="trip"}
 function go(hash){if(location.hash==="#"+hash){parseHash();render();return}location.hash=hash}
 window.addEventListener("hashchange",function(){closeDetail(true);parseHash();render()});
 window.addEventListener("popstate",function(){if(!$("detail").hidden&&!(history.state&&history.state.detail))closeDetail(true)});
@@ -1687,6 +1705,9 @@ document.addEventListener("click",function(e){
    case"hotel-gps":{var c=t.getAttribute("data-c");gps(function(g){store.hotels[c]={lat:g.lat,lng:g.lng};save();hotelEdit=null;render(true)});break}
    case"hard-update":hardUpdate();break;
    case"more-open":go("more");break;
+   case"pack-open":go("pack");break;
+   case"pack-tab":packTab=t.getAttribute("data-t");render(true);break;
+   case"pack-tick":{var pid=t.getAttribute("data-id");store.pack=store.pack||{};if(store.pack[pid])delete store.pack[pid];else store.pack[pid]=1;save();render(true);break}
    case"more-tab":moreTab=t.getAttribute("data-t");render(true);break;
    case"food-nopork":store.foodNoPork=!store.foodNoPork;save();render(true);break;
    case"install":if(deferredInstall){deferredInstall.prompt();deferredInstall=null}break;
@@ -1796,7 +1817,7 @@ var FOOD=[
 function fchip(t){return'<span class="ft ft-'+t.toLowerCase()+'">'+FDET[t]+'</span>'}
 function planCities(){var o=[];ITIN.forEach(function(D){if(o.indexOf(D.b)<0)o.push(D.b)});return o}
 function moreRow(){
-  return'<div class="group"><button class="row tap" data-act="more-open" style="--c:var(--accent)"><span class="dn">'+ic(IC.pin)+'</span><span class="grow"><span class="ttl" style="display:block;font-weight:600">Events, savings and food</span><span class="sm" style="display:block">Markets and events for your dates, ways to save money, food with veg, pork and beef tags</span></span>'+ic(IC.fwd,"chev")+'</button></div>'}
+  return'<div class="group"><button class="row tap srow" data-act="more-open">'+sI("cal","#ff9500")+'<span class="grow"><span class="stt">Events, savings and food</span><span class="sm" style="display:block">Markets, free offers, what to eat</span></span>'+ic(IC.fwd,"chev")+'</button><button class="row tap srow" data-act="pack-open">'+sI("box","#007aff")+'<span class="grow"><span class="stt">Packing list</span><span class="sm" style="display:block">Per person, with ticks</span></span>'+ic(IC.fwd,"chev")+'</button></div>'}
 function vMore(){
   var s=stay(),pc=planCities();
   var h='<div class="nav"><button class="nb" data-act="tab" data-s="trip">'+ic(IC.back)+'Trip</button><span class="t">Good to know</span><span style="width:44px"></span></div>';
@@ -1851,7 +1872,7 @@ function vMore(){
   return h}
 
 /* ================= PHASE 1: update, backup, where to stay ================= */
-var APP_VERSION="1.8.5",SCHEMA=3;
+var APP_VERSION="1.9.0",SCHEMA=3;
 function pad2(n){return("0"+n).slice(-2)}
 function today(){var d=new Date();return d.getFullYear()+"-"+pad2(d.getMonth()+1)+"-"+pad2(d.getDate())}
 var WD=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"],MN=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
@@ -1912,7 +1933,7 @@ function migrate(){
 if(typeof loadErr!=="undefined"&&loadErr){var rr=restoreLatest();setTimeout(function(){toast(rr?"Your saved data was recovered from the backup of "+rr:"Saved data could not be read")},600)}
 var wasExisting=!!store.schema;
 migrate();dailyBackup(false);
-var NEWIN={"1.8.5":{tips:"Tips rewritten in general terms: adults, older kids and younger kids. Weather and clothes tidied up."},"1.8.0":{tips:"Tips are now grouped with icons: tap a tile to open it."},"1.7.0":{settings:"New Settings tab: appearance, updates and backup moved here. New: Share my plan with another phone."},"1.6.1":{tips:"New: What to wear, for adults and both children, with the reason for each item, for the city, the glacier and the lakes."},"1.6.0":{trip:"New: Events and markets for your dates, ways to save money, and food to try with veg, pork and beef tags."},"1.5.3":{tips:"Fixed: the Tips tab did not open. Everything you saved is unchanged."},"1.5.2":{trip:"The Trip map now follows your stays: a Route view and one tab per stay, with a square pin where you sleep."},"1.5.0":{trip:"Your days now follow your night-by-night plan: same length and same order, with enough places for every stay."},"1.4.0":{trip:"Where to stay is simpler: journey, family, night plan and route in one page. New: print your whole trip as a PDF with links."},"1.3.0":{trip:"Where to stay is now night by night: pick a city for every night, and the same city can come back later. Each stay gets its own hotel name."},"1.2.0":{trip:"Where to stay: add Hallstatt, Kaprun and St. Gilgen, and pick one of three night plans.",tips:"Updates now install by themselves. You can turn this off."}};
+var NEWIN={"1.9.0":{trip:"New: Today card, Packing list, Open in Apple Maps, and a euro and temperature converter at the top of every page."},"1.8.5":{tips:"Tips rewritten in general terms: adults, older kids and younger kids. Weather and clothes tidied up."},"1.8.0":{tips:"Tips are now grouped with icons: tap a tile to open it."},"1.7.0":{settings:"New Settings tab: appearance, updates and backup moved here. New: Share my plan with another phone."},"1.6.1":{tips:"New: What to wear, for adults and both children, with the reason for each item, for the city, the glacier and the lakes."},"1.6.0":{trip:"New: Events and markets for your dates, ways to save money, and food to try with veg, pork and beef tags."},"1.5.3":{tips:"Fixed: the Tips tab did not open. Everything you saved is unchanged."},"1.5.2":{trip:"The Trip map now follows your stays: a Route view and one tab per stay, with a square pin where you sleep."},"1.5.0":{trip:"Your days now follow your night-by-night plan: same length and same order, with enough places for every stay."},"1.4.0":{trip:"Where to stay is simpler: journey, family, night plan and route in one page. New: print your whole trip as a PDF with links."},"1.3.0":{trip:"Where to stay is now night by night: pick a city for every night, and the same city can come back later. Each stay gets its own hotel name."},"1.2.0":{trip:"Where to stay: add Hallstatt, Kaprun and St. Gilgen, and pick one of three night plans.",tips:"Updates now install by themselves. You can turn this off."}};
 (function(){var seen=store.seenVer;
   if(seen!==APP_VERSION){
     if((seen||wasExisting)&&NEWIN[APP_VERSION]){store.newTabs=store.newTabs||{};Object.keys(NEWIN[APP_VERSION]).forEach(function(k){store.newTabs[k]={v:APP_VERSION,t:NEWIN[APP_VERSION][k]}})}
@@ -1997,9 +2018,62 @@ function vUpdateBlock(){
 }
 
 
+/* ===== converter, today, packing ===== */
+var FXD={r:4.3};
+function fxs(){var f=store.fx;if(!f||typeof f!=="object")f=store.fx={};if(!(f.r>0))f.r=FXD.r;if(f.ev==null)f.ev=10;if(f.tv==null)f.tv=5;return f}
+function fxN(n,d){var s=(Math.round(n*Math.pow(10,d))/Math.pow(10,d)).toFixed(d);return s.replace(/\.?0+$/,"")||"0"}
+function fxCalc(){
+  var f=fxs(),e=parseFloat(String(f.ev).replace(",",".")),t=parseFloat(String(f.tv).replace(",","."));
+  var eo=document.getElementById("fxeo"),to=document.getElementById("fxto");if(!eo||!to)return;
+  eo.textContent=isNaN(e)?"–":(f.es?fxN(e/f.r,2)+" €":fxN(e*f.r,2)+" SAR");
+  to.textContent=isNaN(t)?"–":(f.ts?fxN((t-32)*5/9,1)+" °C":fxN(t*9/5+32,1)+" °F");
+  document.getElementById("fxea").textContent=f.es?"SAR":"€";document.getElementById("fxta").textContent=f.ts?"°F":"°C";
+  document.getElementById("fxei").value=f.ev;document.getElementById("fxti").value=f.tv}
+function initFx(){
+  var b=document.getElementById("fxbar");if(!b)return;var f=fxs();
+  b.innerHTML='<div class="fxp"><button class="fxs" data-fx="es" aria-label="Swap euro and riyal"><b id="fxea">€</b><svg viewBox="0 0 24 24"><path d="M7 9h12l-3-3M17 15H5l3 3"/></svg></button><input id="fxei" inputmode="decimal" autocomplete="off" aria-label="Amount"><span>=</span><b class="fxo" id="fxeo"></b></div><div class="fxp"><button class="fxs" data-fx="ts" aria-label="Swap Celsius and Fahrenheit"><b id="fxta">°C</b><svg viewBox="0 0 24 24"><path d="M7 9h12l-3-3M17 15H5l3 3"/></svg></button><input id="fxti" inputmode="decimal" autocomplete="off" aria-label="Temperature"><span>=</span><b class="fxo" id="fxto"></b></div>';
+  b.addEventListener("click",function(e){var t=e.target.closest("[data-fx]");if(!t)return;var k=t.getAttribute("data-fx");f=fxs();f[k]=f[k]?0:1;save();fxCalc()});
+  b.addEventListener("input",function(e){var t=e.target;f=fxs();if(t.id==="fxei")f.ev=t.value;if(t.id==="fxti")f.tv=t.value;save();var eo=document.getElementById("fxeo"),to=document.getElementById("fxto"),ev=parseFloat(String(f.ev).replace(",",".")),tv=parseFloat(String(f.tv).replace(",","."));eo.textContent=isNaN(ev)?"–":(f.es?fxN(ev/f.r,2)+" €":fxN(ev*f.r,2)+" SAR");to.textContent=isNaN(tv)?"–":(f.ts?fxN((tv-32)*5/9,1)+" °C":fxN(tv*9/5+32,1)+" °F")});
+  fxCalc();document.documentElement.style.setProperty("--fxh",b.offsetHeight+"px");
+  if(!f.rd||f.rd!==today()){try{fetch("https://api.frankfurter.dev/v1/latest?base=EUR&symbols=USD").then(function(r){return r.json()}).then(function(j){var u=j&&j.rates&&j.rates.USD;if(u>0.5&&u<2){var g=fxs();g.r=Math.round(u*3.75*1000)/1000;g.rd=today();save();fxCalc()}}).catch(function(){})}catch(e){}}}
+function fxNote(){var f=fxs();return'1 € ≈ '+fxN(f.r,3)+' SAR'+(f.rd?' (updated '+f.rd+')':' (estimate: connect to the internet to update)')}
+/* sun */
+function sunTimes(iso,lat,lng){
+  var d=new Date(iso+"T12:00:00Z"),n=Math.floor((d-Date.UTC(d.getUTCFullYear(),0,0))/864e5),R=Math.PI/180,g=2*Math.PI/365*(n-1);
+  var eq=229.18*(0.000075+0.001868*Math.cos(g)-0.032077*Math.sin(g)-0.014615*Math.cos(2*g)-0.040849*Math.sin(2*g));
+  var dc=0.006918-0.399912*Math.cos(g)+0.070257*Math.sin(g)-0.006758*Math.cos(2*g)+0.000907*Math.sin(2*g)-0.002697*Math.cos(3*g)+0.00148*Math.sin(3*g);
+  var c=Math.cos(90.833*R)/(Math.cos(lat*R)*Math.cos(dc))-Math.tan(lat*R)*Math.tan(dc);if(c>1||c<-1)return null;
+  var ha=Math.acos(c)/R,f=function(m){m=Math.round(m+60);return pad2(Math.floor(m/60))+":"+pad2(m%60)};
+  return[f(720-4*(lng+ha)-eq),f(720-4*(lng-ha)-eq)]}
+function todayCard(){
+  var t=today(),D=null;ITIN.forEach(function(x){if(x.date===t)D=x});
+  var s=stay();
+  if(!D){
+    var days=Math.round((new Date(pd(s.start))-new Date(pd(t)))/864e5);
+    if(days>0&&days<=120)return'<div class="group"><div class="row srow">'+sI("clock","#34c759")+'<span class="grow"><span class="stt">Your trip starts in '+days+' day'+(days>1?'s':'')+'</span><span class="sm" style="display:block">'+fd(s.start)+' · '+esc(SN(ITIN[0].b))+'</span></span></div></div>';
+    return''}
+  var w=wxDay(D.date,WXI[D.b]),c=STAYC[D.b]||{},sun=c.lat?sunTimes(D.date,c.lat,c.lng):null;
+  var nx=null;(D.pl||[]).forEach(function(p){if(!nx&&!store.done[p.id])nx=p});
+  var line=[];if(w)line.push(w.hi+'° / '+w.lo+'°'+(w.pp==null?'':' · rain '+w.pp+'%'));if(sun)line.push('Sunrise '+sun[0]+' · Sunset '+sun[1]);
+  return'<div class="group"><button class="row tap" data-act="day" data-i="'+D.i+'" style="display:block"><span class="sm" style="display:block;color:var(--accent);font-weight:600;text-transform:uppercase;letter-spacing:.04em">Today · Day '+(D.i+1)+' · '+esc(SN(D.b))+'</span><b style="display:block;margin:2px 0">'+esc(D.title)+'</b>'+(line.length?'<span class="sm" style="display:block">'+line.join(' · ')+'</span>':'')+(nx?'<span class="sm" style="display:block;color:var(--fg);margin-top:4px">Next up: <b>'+esc(nx.n)+'</b></span>':'<span class="sm" style="display:block;margin-top:4px">All stops done. Enjoy the evening.</span>')+'</button></div>'}
+/* packing */
+var packTab="s";
+var PKC=[["Clothes",["Winter jacket","Fleece or sweater (2)","Thermal base layers (2 sets)","Warm trousers (3)","Tops (5)","Socks (7) and warm socks (2)","Underwear","Sleepwear","Hat that covers the ears","Scarf or neck warmer","Gloves, plus a spare pair"]],["Shoes and extras",["Waterproof shoes with grip","Hotel slippers","Sunglasses","Swimwear (optional)"]]];
+var PKA=PKC.concat([["Bag",["Day backpack"]]]);
+var PKY=[["Clothes",["Thermal top and bottom (2 sets)","Fleece","Snow jacket","Snow trousers","Warm trousers (3)","Tops (5)","Socks (7) and warm socks (2)","Underwear","Pyjamas","Hat","Mittens","Neck warmer"]],["Shoes and extras",["Waterproof boots","Slippers","Spare socks, mittens and top for the day bag","Snack or small toy for trains","Sunglasses"]]];
+var PKS=[["Documents and money",["Passports and visas (check the rules)","Travel insurance","Booking confirmations and tickets","Bank card and some cash (€5 and €10 notes)"]],["Tech",["EU plug adaptor","Power bank and cables","eSIM or SIM","DB Navigator and ÖBB apps","Open this guide once online"]],["Health and small things",["Medicines and prescriptions","Small first-aid kit","Wet wipes and tissues","Sunscreen and lip balm","Thermal flask","Reusable bag"]]];
+function pkPeople(){var s=stay(),p=[];for(var i=0;i<s.adults;i++)p.push({k:"a"+i,l:s.adults>1?"Adult "+(i+1):"Adult",g:PKA});(s.kids||[]).forEach(function(a,i){p.push({k:"c"+i,l:"Kid "+a,g:a>=10?PKC.concat([["Extra",["Neck warmer","Spare gloves"]]]):PKY})});p.push({k:"s",l:"Shared",g:PKS});return p}
+function pkCount(pe){var n=0,d=0;pe.g.forEach(function(g,gi){g[1].forEach(function(t,ti){n++;if(store.pack&&store.pack[pe.k+"."+gi+"."+ti])d++})});return[d,n]}
+function vPack(){
+  var pe=pkPeople(),tot=0,dn=0;pe.forEach(function(p){var c=pkCount(p);dn+=c[0];tot+=c[1]});
+  var cur=null;pe.forEach(function(p){if(p.k===packTab)cur=p});if(!cur){cur=pe[0];packTab=cur.k}
+  var h='<div class="nav"><button class="nb" data-act="tab" data-s="trip">'+ic(IC.back)+'Trip</button><span class="t">Packing list</span><span style="width:44px"></span></div><div class="head"><h1>Packing list</h1><p class="sub">'+dn+' of '+tot+' packed</p></div>';
+  h+='<div class="segwrap"><div class="seg pks">'+pe.map(function(p){var c=pkCount(p);return'<button data-act="pack-tab" data-t="'+p.k+'" aria-pressed="'+(p.k===cur.k)+'">'+esc(p.l)+'<small>'+c[0]+'/'+c[1]+'</small></button>'}).join("")+'</div></div>';
+  cur.g.forEach(function(g,gi){h+='<div class="sech" style="margin-top:12px;margin-bottom:5px"><span>'+g[0]+'</span></div><div class="group">';g[1].forEach(function(t,ti){var id=cur.k+"."+gi+"."+ti,on=!!(store.pack&&store.pack[id]);h+='<button class="row tap srow pk'+(on?' on':'')+'" data-act="pack-tick" data-id="'+id+'" role="checkbox" aria-checked="'+on+'"><span class="ck">'+(on?ic(IC.check):'')+'</span><span class="grow">'+esc(t)+'</span></button>'});h+='</div>'});
+  h+='<p class="foot">Ticks are saved on this phone and go with “Send my plan”.</p>';return h}
 /* ---------- share / import ---------- */
 var tipSec=null,pendImp=null,impMsg="";
-var SHKEYS=["stay","hotels","spot","list","done"];
+var SHKEYS=["stay","hotels","spot","list","done","pack"];
 function planCode(){var o={app:"aut26",v:APP_VERSION};SHKEYS.forEach(function(k){if(store[k]!==undefined)o[k]=store[k]});return btoa(unescape(encodeURIComponent(JSON.stringify(o))))}
 function planLink(){return location.origin+location.pathname+"#plan="+encodeURIComponent(planCode())}
 function decodePlan(txt){
@@ -2024,6 +2098,8 @@ function doImport(){
   store.planImported=today();save();pendImp=null;impMsg="";
   try{applyAll()}catch(e){}try{buildItin()}catch(e){}toast("Plan imported");go("trip")}
 var SIC={
+ cal:'<rect x="4" y="5" width="16" height="15" rx="2.5"/><path d="M4 10h16M9 3v4M15 3v4"/>',
+ box:'<path d="M4 8l8-4 8 4v9l-8 4-8-4z"/><path d="M4 8l8 4 8-4M12 12v9"/>',
  bed:'<path d="M3 18V7M3 14h18v4M21 14v-2a3 3 0 0 0-3-3h-7v5"/><circle cx="7" cy="11" r="1.6"/>',
  train:'<rect x="6" y="3.5" width="12" height="13" rx="3"/><path d="M6 11h12M9 20l1.5-3.5M15 20l-1.5-3.5"/><path d="M9.5 14h.1M14.5 14h.1"/>',
  fork:'<path d="M7 3v7a2 2 0 0 0 2 2v9M11 3v7a2 2 0 0 1-2 2M7 3v5M11 3v5"/><path d="M17 21V3c-2 1.5-3 4-3 7h3"/>',
@@ -2071,6 +2147,7 @@ function vSettings(){
   h+='<div class="group sg">'+sRow("share","#ff9500","Send my plan to another phone","AirDrop, Messages or WhatsApp",ic(IC.fwd,"chev"),"plan-share")+'<div class="row srow">'+sI("link","#ff9500")+'<input id="impbox" class="sin" placeholder="Paste received link" autocomplete="off" autocapitalize="off" spellcheck="false"><button class="btn sm1" data-act="imp-paste">Import</button></div>'+(impMsg?'<div class="row"><span class="sm" style="color:var(--warn)">'+esc(impMsg)+'</span></div>':'')+'</div>';
   h+='<p class="foot sf">Tap Send and pick AirDrop or a chat. Your friend opens the link and taps “Replace my plan”. Both phones need the latest version.</p>';
   h+=deferredInstall?'<div class="group sg">'+sRow("phone","#34c759","Install on this phone","",ic(IC.fwd,"chev"),"install")+'</div>':'';
+  h+='<p class="foot sf">Currency: '+fxNote()+'. Temperatures: °C to °F.</p>';
   h+='<p class="foot sf">Add to Home Screen: iPhone, Share then Add to Home Screen. Works offline after you open it once with internet.</p>';
   return h}
 
@@ -2531,6 +2608,6 @@ function updNotice(){
   return'<div class="callout" style="background:var(--accent-soft)"><b style="color:var(--accent)">Update ready</b>Version '+esc(upd.latest)+' is available. <button class="lnk" data-act="tab" data-s="settings">Install in Settings</button></div>';
 }
 
-parseHash();render();loadWx();
+initFx();parseHash();render();loadWx();
 })();
 </script><script>if('serviceWorker' in navigator)window.addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){})})</script></body></html>
