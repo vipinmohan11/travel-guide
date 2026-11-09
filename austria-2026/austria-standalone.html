@@ -982,6 +982,12 @@ select,input[type=date]{margin-left:auto;font:inherit;font-size:.9375rem;color:v
 .hb[aria-pressed="true"]{background:var(--accent-soft);color:var(--accent)}
 .hsep{width:1px;height:18px;background:var(--line);margin:0 4px}
 .cd{width:18px;height:18px;border-radius:50%;display:block}
+
+.tg{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;padding:10px 8px}
+.tile{display:flex;flex-direction:column;align-items:center;gap:6px;border:0;background:none;padding:4px 0;font-family:inherit;font-size:.75rem;font-weight:500;color:var(--fg);cursor:pointer;text-align:center}
+.tile .si{width:44px;height:44px;border-radius:12px}
+.tile .si svg{width:24px;height:24px}
+.tile.off{opacity:.4}
 </style></head><body>
 <main id="app"><section id="v-trip"></section><section id="v-day" hidden></section><section id="v-map" hidden></section><section id="v-list" hidden></section><section id="v-tips" hidden></section><section id="v-stay" hidden></section><section id="v-more" hidden></section><section id="v-settings" hidden></section></main>
 <div id="detail" class="page" hidden></div>
@@ -1815,7 +1821,7 @@ function vMore(){
   return h}
 
 /* ================= PHASE 1: update, backup, where to stay ================= */
-var APP_VERSION="1.7.3",SCHEMA=3;
+var APP_VERSION="1.7.4",SCHEMA=3;
 function pad2(n){return("0"+n).slice(-2)}
 function today(){var d=new Date();return d.getFullYear()+"-"+pad2(d.getMonth()+1)+"-"+pad2(d.getDate())}
 var WD=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"],MN=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
@@ -2011,15 +2017,17 @@ function vSettings(){
   var h='<div class="head sh" id="settings"><h1>Settings</h1><div class="hbar">'+tb("light","Light",SIC.sun)+tb("dark","Dark",'<path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/>')+tb("auto","Automatic",'<circle cx="12" cy="12" r="8.5"/><path d="M12 3.5v17a8.5 8.5 0 0 0 0-17z" fill="currentColor"/>')+'<span class="hsep"></span><button class="hb t" data-act="fs" data-d="-1" aria-label="Smaller text">A−</button><button class="hb t" data-act="fs" data-d="1" aria-label="Larger text">A+</button><span class="hsep"></span><button class="hb" data-act="accent" data-a="'+nx[0]+'" aria-label="Change colour"><i class="cd" style="background:'+THEMES[ai][2]+'"></i></button></div></div>',st=upd.state,ks=bkDates(),lastBk=ks.length?ks[ks.length-1]:null;
   h+=newBanner('settings');
   var last=store.lastCheck?new Date(store.lastCheck):null;
-  var usub=upd.msg?esc(upd.msg):('Version '+esc(APP_VERSION)+(upd.latest&&vcmp(upd.latest,APP_VERSION)<=0?' · up to date':'')+(last?' · checked '+last.getDate()+' '+MN[last.getMonth()]:''));
+  var vl='Installed <b>'+esc(APP_VERSION)+'</b> · Latest <b>'+(upd.latest?esc(upd.latest):'?')+'</b>';var stt=upd.msg?esc(upd.msg):(upd.latest?(vcmp(upd.latest,APP_VERSION)>0?'Update available':'You have the latest version'):'Tap Check to look for updates');
+  var usub=vl+'<span style="display:block">'+stt+(last&&!upd.msg?' · checked '+last.getDate()+' '+MN[last.getMonth()]:'')+'</span>';
   var ur=st==="available"?'<button class="btn solid sm1" data-act="upd-install">Install</button>':(st==="installing"||st==="done")?'<span class="sm">Working…</span>':'<button class="btn sm1" data-act="upd-check">Check</button>';
   h+='<div class="group sg">'+sRow("refresh","#34c759","Software update",usub,ur,null)+(st==="installing"?'<div class="row"><div class="prog"><i></i></div></div>':'')+sRow("clock","#8e8e93","Automatic updates","",sSw(store.autoUpd!==false,"upd-auto"),null)+'</div>';
-  h+='<div class="group sg">'+sRow("clock","#007aff","Back up now",lastBk?'Last: '+fd(lastBk):'No backup yet',ic(IC.fwd,"chev"),"bk-now")+sRow("down","#007aff","Save backup file","",ic(IC.fwd,"chev"),"bk-file")+'<label class="row tap srow" style="cursor:pointer">'+sI("up","#007aff")+'<span class="grow"><span class="stt">Restore from file</span></span>'+ic(IC.fwd,"chev")+'<input type="file" accept="application/json,.json" data-f="bkfile" hidden></label>'+(ks.length?sRow("undo",restoreArm?"#ff3b30":"#007aff",restoreArm?"Tap again to restore":"Restore last backup","",ic(IC.fwd,"chev"),"bk-last"):'')+'</div>';
-  h+='<p class="foot sf">Backups stay on this phone. The last 7 days are kept.</p>';
+  var tl=function(k,c,t,act,x){return'<button class="tile" data-act="'+act+'">'+sI(k,c)+'<span>'+t+'</span></button>'};
+  h+='<div class="group sg tg">'+tl("clock","#007aff","Back up","bk-now")+tl("down","#007aff","Save file","bk-file")+'<label class="tile">'+sI("up","#007aff")+'<span>Restore file</span><input type="file" accept="application/json,.json" data-f="bkfile" hidden></label>'+(ks.length?tl("undo",restoreArm?"#ff3b30":"#007aff",restoreArm?"Tap again":"Last backup","bk-last"):'<span class="tile off">'+sI("undo","#c7c7cc")+'<span>Last backup</span></span>')+'</div>';
+  h+='<p class="foot sf">'+(lastBk?'Last backup: '+fd(lastBk)+'. ':'No backup yet. ')+'Kept on this phone for 7 days.</p>';
   if(pendImp)h+='<div class="group sg"><div class="row" style="display:block"><b>A plan was shared with you</b><span class="sm" style="display:block;color:var(--fg);margin:4px 0 8px">'+impSummary(pendImp)+'</span><div class="btnrow"><button class="btn solid" data-act="imp-ok">Replace my plan</button><button class="btn" data-act="imp-no">Cancel</button></div><p class="sm" style="margin:8px 0 0">Your current plan is backed up first.</p></div></div>';
   h+='<div class="group sg">'+sRow("share","#ff9500","Share my plan","AirDrop, Messages or WhatsApp",ic(IC.fwd,"chev"),"plan-share")+'<div class="row srow">'+sI("link","#ff9500")+'<input id="impbox" class="sin" placeholder="Paste a plan link" autocomplete="off" autocapitalize="off" spellcheck="false"><button class="btn sm1" data-act="imp-paste">Show</button></div>'+(impMsg?'<div class="row"><span class="sm" style="color:var(--warn)">'+esc(impMsg)+'</span></div>':'')+'</div>';
   h+='<p class="foot sf">Tap Share, send it. Your friend opens the link and taps “Replace my plan”. Both phones need the latest version.</p>';
-  h+='<div class="group sg">'+(deferredInstall?sRow("phone","#34c759","Install on this phone","",ic(IC.fwd,"chev"),"install"):sRow("phone","#34c759","Add to Home Screen","iPhone: Share, then Add to Home Screen. Android: ⋮ menu, then Install app.","",null))+sRow("wifi","#8e8e93","Works offline","Open it once with internet. Open the Map once per city.","",null)+'</div>';
+  h+='<div class="group sg">'+(deferredInstall?sRow("phone","#34c759","Install on this phone","",ic(IC.fwd,"chev"),"install"):sRow("phone","#34c759","Add to Home Screen","iPhone: Share, Add to Home Screen","",null))+sRow("wifi","#8e8e93","Works offline","Open the guide and Map once with internet","",null)+'</div>';
   h+='<p class="foot sf">Version '+esc(APP_VERSION)+'</p>';
   return h}
 
