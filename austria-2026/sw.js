@@ -1,4 +1,4 @@
-var V="aut26-v1.7.5",TILES="aut26-tiles";
+var V="aut26-v1.8.0",TILES="aut26-tiles";
 var SHELL=["./","./index.html","./manifest.webmanifest","./icon-192.png","./icon-512.png","./apple-touch-icon.png"];
 self.addEventListener("install",function(e){e.waitUntil(caches.open(V).then(function(c){return c.addAll(SHELL.map(function(u){return new Request(u,{cache:"reload"})}))}).then(function(){return self.skipWaiting()}))});
 self.addEventListener("activate",function(e){e.waitUntil(caches.keys().then(function(ks){return Promise.all(ks.filter(function(k){return k!==V&&k!==TILES}).map(function(k){return caches.delete(k)}))}).then(function(){return self.clients.claim()}))});

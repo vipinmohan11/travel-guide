@@ -994,6 +994,9 @@ select,input[type=date]{margin-left:auto;font:inherit;font-size:.9375rem;color:v
 .uaut .sw{width:42px;height:26px;border-radius:13px}
 .uaut .sw i{width:22px;height:22px}
 .uaut .sw[aria-checked="true"] i{transform:translateX(16px)}
+
+.tg3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px 6px;padding:12px 8px}
+.si.lg{display:inline-flex;vertical-align:middle;margin-right:6px}
 </style></head><body>
 <main id="app"><section id="v-trip"></section><section id="v-day" hidden></section><section id="v-map" hidden></section><section id="v-list" hidden></section><section id="v-tips" hidden></section><section id="v-stay" hidden></section><section id="v-more" hidden></section><section id="v-settings" hidden></section></main>
 <div id="detail" class="page" hidden></div>
@@ -1421,10 +1424,11 @@ function listGroups(){
   return{days:g.filter(function(x){return x.items.length}),un:un}}
 function vTips(){
   var h='<div class="head"><div class="eyebrow">Before and during the trip</div><h1>Tips</h1></div>';
-  function sec(t,body,open){return '<details class="group"'+(open?' open':'')+'><summary>'+t+'</summary><div class="in">'+body+'</div></details>'}
+  var TS=[],cat="";
+  function sec(t,body,open){TS.push({c:cat,t:t,b:body});return''}
   function ul(a){return '<ul class="pl">'+a.map(function(x){return '<li>'+x+'</li>'}).join("")+'</ul>'}
   h+=newBanner('tips');
-  h+='<div class="sech"><span>Plan ahead</span></div>';
+  cat='Plan ahead';
   h+=sec("Before you go",ul([
    "<b>Book long trips early.</b> High-speed train prices are dynamic and can be much higher in the last week.",
    "<b>Apps:</b> use <a href=\"https://www.bahn.de/service/mobile/db-navigator\" target=\"_blank\" rel=\"noopener\">DB Navigator</a> for Germany and the <a href=\"https://www.oebb.at/\" target=\"_blank\" rel=\"noopener\">ÖBB app</a> for Austria. Both have English and Android/iOS versions.",
@@ -1444,7 +1448,7 @@ function vTips(){
    "Take <b>day tickets</b> in each city: unlimited trains, trams and buses. Children usually travel free or reduced. In Germany children under 15 travel free on DB trains with a parent: say so when you buy the ticket.",
    "Single tickets must be <b>validated before the journey</b>. App tickets from DB or ÖBB are already valid.",
    "Reserve seats on long trains (Munich to Salzburg, Salzburg to Vienna)."]));
-  h+='<div class="sech"><span>Eating out and money</span></div>';
+  cat='Eating and money';
   h+=sec("Restaurants: the unwritten rules",ul([
    "Do not trust Google reviews in Germany: bad ratings are often removed after legal threats. Use Reddit or forums.",
    "Ask the waiter “Do you have a table for two?” even if the place is empty. Do not just sit down.",
@@ -1462,7 +1466,7 @@ function vTips(){
    "Most shops close by 20:00 and are <b>closed on Sundays</b>. Restaurants and supermarkets are the exception.",
    "Public toilets usually cost €0.50–1.50. Restaurants have free toilets if you eat there.",
    "A glass of water in a restaurant can cost around €3. Bring a thermal flask: hotels will fill it with hot water."]));
-  h+='<div class="sech"><span>On the trip</span></div>';
+  cat='On the trip';
   h+=sec("Weather and clothes",ul([
    "Plan for about 4–8 °C or lower in Munich, Salzburg and Vienna, and 0–5 °C or lower in Hallstatt. Nights are often below zero. On mountain tops it can be −5 to −10 °C or colder. Snow in the cities is not expected.",
    "Expect clouds and wind. City forecasts are accurate in apps like The Weather Channel or AccuWeather; mountain forecasts are less so.",
@@ -1503,7 +1507,21 @@ function vTips(){
    "Paths and pavements can be icy: wear shoes with grip."]));
   h+=sec("Useful German",ul([
    "Hallo / Guten Tag / Grüß Gott: hello","Danke / Bitte: thanks / please","Haben Sie einen Tisch für vier? Do you have a table for four?","Eine Tageskarte für zwei Erwachsene und zwei Kinder, bitte: a day ticket for two adults and two children, please","Zusammen, bitte: together, please (paying)","Die Rechnung, bitte: the bill, please","Kinderpunsch, bitte: a children’s punch, please","Ist da Schweinefleisch drin? Is there pork in it?","Ohne Schweinefleisch, bitte: without pork, please","Stilles Wasser, bitte: still water, please"]));
-  h+='<p class="foot">Emergency: 112 (all of Europe). Prices, hours and train times are estimates and change: check the official sites before you go.</p>';
+  var TI={"Before you go":["list","Before you go","#007aff"],"Hotels":["bed","Hotels","#007aff"],"Trains, tickets and transport":["train","Trains","#007aff"],
+   "Restaurants: the unwritten rules":["fork","Restaurants","#ff9500"],"Cash, cards and bottle deposits":["card","Cash and cards","#ff9500"],"Opening times, water and toilets":["clock","Opening times","#ff9500"],
+   "Weather and clothes":["cloud","Weather","#34c759"],"What to wear: everyone, and why":["coat","What to wear","#34c759"],"Christmas markets with children":["tree","Markets","#34c759"],"Krampus and Nikolaus":["mask","Krampus","#34c759"],"Mountain days and swapping days":["mount","Mountains","#34c759"],"Useful German":["chat","German","#34c759"]};
+  var cur=null;TS.forEach(function(x){if(x.t===tipSec)cur=x});
+  if(cur){
+    var ti=TI[cur.t]||["list",cur.t,"#007aff"];
+    return'<div class="nav"><button class="nb" data-act="tip-back">'+ic(IC.back)+'Tips</button><span class="t">'+esc(ti[1])+'</span><span style="width:44px"></span></div><div class="head sh"><h1 style="font-size:1.5rem">'+sI(ti[0],ti[2]).replace('class="si"','class="si lg"')+' '+cur.t+'</h1></div><div class="group"><div class="in" style="padding:6px 16px 12px">'+cur.b+'</div></div><p class="foot">Emergency: 112 (all of Europe). Prices, hours and train times are estimates: check the official sites.</p>'}
+  h=h.replace('<div class="eyebrow">Before and during the trip</div>','');
+  var cats=[];TS.forEach(function(x){if(cats.indexOf(x.c)<0)cats.push(x.c)});
+  cats.forEach(function(cn){
+    h+='<div class="sech"><span>'+cn+'</span></div><div class="group tg3">';
+    TS.forEach(function(x){if(x.c!==cn)return;var ti=TI[x.t]||["list",x.t,"#007aff"];h+='<button class="tile" data-act="tip-open" data-t="'+esc(x.t)+'">'+sI(ti[0],ti[2])+'<span>'+ti[1]+'</span></button>'});
+    h+='</div>'});
+  h+=newBanner('tips');
+  h+='<div class="callout w" style="margin-top:14px"><b>Emergency: 112</b>Works all over Europe. Prices, hours and train times are estimates: check the official sites.</div>';
   return h}
 
 /* ---------- map ---------- */
@@ -1640,6 +1658,8 @@ document.addEventListener("click",function(e){
    case"detailx":closeDetail();break;
    case"dnav":{var ci=dctx.indexOf(detailId),n=dctx[ci+ +t.getAttribute("data-d")];if(n)openDetail(n,true);break}
    case"day":{var i=+t.getAttribute("data-i");if(ITIN[i])go("day-"+(i+1));break}
+   case"tip-open":tipSec=t.getAttribute("data-t");render();break;
+   case"tip-back":tipSec=null;render();break;
    case"tab":go(t.getAttribute("data-s"));break;
    case"hidehow":store.hideHow=true;save();render(true);break;
    case"settings":go("settings");break;
@@ -1827,7 +1847,7 @@ function vMore(){
   return h}
 
 /* ================= PHASE 1: update, backup, where to stay ================= */
-var APP_VERSION="1.7.5",SCHEMA=3;
+var APP_VERSION="1.8.0",SCHEMA=3;
 function pad2(n){return("0"+n).slice(-2)}
 function today(){var d=new Date();return d.getFullYear()+"-"+pad2(d.getMonth()+1)+"-"+pad2(d.getDate())}
 var WD=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"],MN=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
@@ -1888,7 +1908,7 @@ function migrate(){
 if(typeof loadErr!=="undefined"&&loadErr){var rr=restoreLatest();setTimeout(function(){toast(rr?"Your saved data was recovered from the backup of "+rr:"Saved data could not be read")},600)}
 var wasExisting=!!store.schema;
 migrate();dailyBackup(false);
-var NEWIN={"1.7.0":{settings:"New Settings tab: appearance, updates and backup moved here. New: Share my plan with another phone."},"1.6.1":{tips:"New: What to wear, for adults and both children, with the reason for each item, for the city, the glacier and the lakes."},"1.6.0":{trip:"New: Events and markets for your dates, ways to save money, and food to try with veg, pork and beef tags."},"1.5.3":{tips:"Fixed: the Tips tab did not open. Everything you saved is unchanged."},"1.5.2":{trip:"The Trip map now follows your stays: a Route view and one tab per stay, with a square pin where you sleep."},"1.5.0":{trip:"Your days now follow your night-by-night plan: same length and same order, with enough places for every stay."},"1.4.0":{trip:"Where to stay is simpler: journey, family, night plan and route in one page. New: print your whole trip as a PDF with links."},"1.3.0":{trip:"Where to stay is now night by night: pick a city for every night, and the same city can come back later. Each stay gets its own hotel name."},"1.2.0":{trip:"Where to stay: add Hallstatt, Kaprun and St. Gilgen, and pick one of three night plans.",tips:"Updates now install by themselves. You can turn this off."}};
+var NEWIN={"1.8.0":{tips:"Tips are now grouped with icons: tap a tile to open it."},"1.7.0":{settings:"New Settings tab: appearance, updates and backup moved here. New: Share my plan with another phone."},"1.6.1":{tips:"New: What to wear, for adults and both children, with the reason for each item, for the city, the glacier and the lakes."},"1.6.0":{trip:"New: Events and markets for your dates, ways to save money, and food to try with veg, pork and beef tags."},"1.5.3":{tips:"Fixed: the Tips tab did not open. Everything you saved is unchanged."},"1.5.2":{trip:"The Trip map now follows your stays: a Route view and one tab per stay, with a square pin where you sleep."},"1.5.0":{trip:"Your days now follow your night-by-night plan: same length and same order, with enough places for every stay."},"1.4.0":{trip:"Where to stay is simpler: journey, family, night plan and route in one page. New: print your whole trip as a PDF with links."},"1.3.0":{trip:"Where to stay is now night by night: pick a city for every night, and the same city can come back later. Each stay gets its own hotel name."},"1.2.0":{trip:"Where to stay: add Hallstatt, Kaprun and St. Gilgen, and pick one of three night plans.",tips:"Updates now install by themselves. You can turn this off."}};
 (function(){var seen=store.seenVer;
   if(seen!==APP_VERSION){
     if((seen||wasExisting)&&NEWIN[APP_VERSION]){store.newTabs=store.newTabs||{};Object.keys(NEWIN[APP_VERSION]).forEach(function(k){store.newTabs[k]={v:APP_VERSION,t:NEWIN[APP_VERSION][k]}})}
@@ -1974,7 +1994,7 @@ function vUpdateBlock(){
 
 
 /* ---------- share / import ---------- */
-var pendImp=null,impMsg="";
+var tipSec=null,pendImp=null,impMsg="";
 var SHKEYS=["stay","hotels","spot","list","done"];
 function planCode(){var o={app:"aut26",v:APP_VERSION};SHKEYS.forEach(function(k){if(store[k]!==undefined)o[k]=store[k]});return btoa(unescape(encodeURIComponent(JSON.stringify(o))))}
 function planLink(){return location.origin+location.pathname+"#plan="+encodeURIComponent(planCode())}
@@ -2000,6 +2020,17 @@ function doImport(){
   store.planImported=today();save();pendImp=null;impMsg="";
   try{applyAll()}catch(e){}try{buildItin()}catch(e){}toast("Plan imported");go("trip")}
 var SIC={
+ bed:'<path d="M3 18V7M3 14h18v4M21 14v-2a3 3 0 0 0-3-3h-7v5"/><circle cx="7" cy="11" r="1.6"/>',
+ train:'<rect x="6" y="3.5" width="12" height="13" rx="3"/><path d="M6 11h12M9 20l1.5-3.5M15 20l-1.5-3.5"/><path d="M9.5 14h.1M14.5 14h.1"/>',
+ fork:'<path d="M7 3v7a2 2 0 0 0 2 2v9M11 3v7a2 2 0 0 1-2 2M7 3v5M11 3v5"/><path d="M17 21V3c-2 1.5-3 4-3 7h3"/>',
+ card:'<rect x="3" y="6" width="18" height="12" rx="2.5"/><path d="M3 10.5h18M7 15h3"/>',
+ cloud:'<path d="M7 18a4 4 0 0 1-.5-8A5.5 5.5 0 0 1 17 8.5 4.8 4.8 0 0 1 17 18z"/>',
+ coat:'<path d="M9 4 4 7l1.5 4 2.5-1v10h8V10l2.5 1L20 7l-5-3a3 3 0 0 1-6 0z"/>',
+ tree:'<path d="M12 3 7 10h3l-4 6h12l-4-6h3z"/><path d="M12 16v5"/>',
+ mask:'<path d="M5 4c3 2 11 2 14 0v8c0 4-3 8-7 8s-7-4-7-8z"/><path d="M8.5 10h2M13.5 10h2M9 15c2 1.5 4 1.5 6 0"/>',
+ mount:'<path d="M3 19 9.5 7l3 5 2-3L21 19z"/>',
+ chat:'<path d="M4 5h16v11H11l-4 4v-4H4z"/>',
+ list:'<path d="M9 6h11M9 12h11M9 18h11"/><path d="m3.5 6 1.2 1.2L6.8 5M3.5 12l1.2 1.2L6.8 11M3.5 18l1.2 1.2L6.8 17"/>',
  refresh:'<path d="M20 11a8 8 0 0 0-14.5-4M4 4v4h4"/><path d="M4 13a8 8 0 0 0 14.5 4M20 20v-4h-4"/>',
  clock:'<circle cx="12" cy="12" r="8.5"/><path d="M12 7v5l3 2"/>',
  down:'<path d="M12 4v11M7.5 10.5 12 15l4.5-4.5M5 19h14"/>',
