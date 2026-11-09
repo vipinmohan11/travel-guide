@@ -1436,6 +1436,24 @@ function vTips(){
    "<b>Must have:</b> water-resistant, windproof winter jacket · fleece or sweater · warm trousers or thermal leggings (useful for the younger child) · scarf · beanie covering the ears · warm socks · gloves · waterproof shoes (not sneakers) · light day backpack.",
    "<b>For children:</b> spare socks and gloves in the day bag, thermal layers on cold days.",
    "<b>Mountain days:</b> sunglasses, sunscreen, neck warmer. Proper layering matters more than the brand. No need for expensive gear."]));
+  h+=sec("What to wear: everyone, and why",ul([
+   "<b>The 3-layer rule (all four of you):</b> 1) thin thermal or cotton base layer, keeps sweat off the skin · 2) fleece or wool sweater, holds the warmth · 3) windproof, water-resistant jacket, blocks wind and drizzle. Layers can come off in warm trams, shops and museums. Indoors is heated: do not overdress.",
+   "<b>Adults:</b> warm winter jacket (hip length or longer) · sweater or fleece · thermal leggings under trousers on cold days · warm trousers (not thin jeans only) · scarf · beanie covering the ears · lined gloves · wool socks (2 pairs a day if feet get cold) · waterproof shoes with grip. <i>Use:</i> markets and long walks mean standing still outside for 1–2 hours.",
+   "<b>12-year-old:</b> same system as the adults. Add a neck warmer and a spare pair of gloves. Children this age often refuse a hat: a headband over the ears or a hood is enough. <i>Use:</i> ears, hands and feet get cold first.",
+   "<b>6-year-old:</b> thermal base layer (top and bottom) · fleece · snow-proof jacket and trousers if you can borrow or buy cheaply · waterproof boots with warm socks · hat, mittens (warmer than gloves) · neck warmer · 1 spare set of socks, mittens and a top in the day bag. <i>Use:</i> small children lose heat faster and get wet from puddles and snow. Check hands and cheeks often: they should be warm, not red or white.",
+   "<b>Shoes:</b> waterproof, closed, grippy soles. No sneakers or smooth fashion boots: wet cobblestones, ice and slush are slippery. Break in new shoes before the trip. Bring a spare dry pair for the evening. <i>Use:</i> cold, wet feet end a sightseeing day early.",
+   "<b>Day backpack:</b> spare socks and gloves, light snack, water or hot drink in a thermal flask, tissues, sunglasses, phone power bank (cold drains batteries), a small plastic bag for wet gloves.",
+   "<b>Glacier and mountain days (Kaprun, Zwölferhorn, Dachstein):</b> it can be −5 to −10 °C or colder with strong wind and bright sun on snow. Wear the full 3 layers plus: sunglasses (snow glare), sunscreen on the face, lip balm, neck warmer or scarf up to the nose, spare mittens. Good boots with grip. Lift and cable car cabins are warm, so keep the jacket easy to open. Children: add an extra fleece and a hot drink at the top.",
+   "<b>Hallstatt and lakes:</b> damp and windy at the water, often colder than the cities. Wear a hat and gloves even if the city was mild. Ferries and lake paths are slippery.",
+   "<b>Evenings and Christmas markets:</b> temperatures fall quickly after sunset (around 16:20). Put on the extra layer before leaving the hotel. Avoid standing on cold stone: stand on wood boards or keep moving. Warm drinks (Kinderpunsch, tea) help but do not replace clothes.",
+   "<b>Rain or wet snow:</b> hooded jacket (an umbrella is hard in wind and crowds), waterproof trousers for the 6-year-old, shoe waterproofing spray before the trip.",
+   "<b>Churches, museums and restaurants:</b> no special dress code in Austria and Germany. Shoulders and knees covered are polite in churches and monasteries, and hats are taken off inside. Coats are usually left at the cloakroom (about €1–3) or on the seat.",
+   "<b>Indoors:</b> trains, hotels and shops are warm. Wear a T-shirt or light top under the sweater so you can strip a layer.",
+   "<b>Pool or thermal spa (optional):</b> swimsuits, a towel and flip-flops. Hotels may charge for towels. Many spas ask for swimwear only in the water, and some saunas are nude (check the rules).",
+   "<b>Sleeping:</b> hotels are warm and heated, so light pyjamas are enough. Bring a hair dryer only if you need your own (most hotels have one).",
+   "<b>Buying here is OK:</b> if you forget something, supermarkets (Hofer, Lidl, Rewe, Billa) and Primark/C&amp;A/H&amp;M sell gloves, hats, socks and thermal layers cheaply. Sports shops (Decathlon, Intersport) have ski gloves and layers.",
+   "<b>Quick packing list per person:</b> 1 jacket · 2 sweaters or fleeces · 2 thermal sets · 3 trousers · 5 T-shirts or base tops · 7 pairs of socks (+2 warm) · 1 hat · 1 scarf or neck warmer · 1 pair of gloves (+1 spare) · 1 pair of waterproof shoes · light shoes or slippers for the hotel · underwear · sleepwear · swimwear (optional).",
+   "<b>Check before you go:</b> forecast the evening before; wear what the <i>feels-like</i> temperature says, not the number. Wind makes it feel 3–6 degrees colder."]));
   h+=sec("Christmas markets with children",ul([
    "Most markets run from mid or late November to 24–26 December. Check exact dates and hours.",
    "Go late afternoon to evening for the lights. Weekends are the busiest.",
@@ -1772,7 +1790,7 @@ function vMore(){
   return h}
 
 /* ================= PHASE 1: update, backup, where to stay ================= */
-var APP_VERSION="1.6.0",SCHEMA=3;
+var APP_VERSION="1.6.1",SCHEMA=3;
 function pad2(n){return("0"+n).slice(-2)}
 function today(){var d=new Date();return d.getFullYear()+"-"+pad2(d.getMonth()+1)+"-"+pad2(d.getDate())}
 var WD=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"],MN=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
@@ -1833,7 +1851,7 @@ function migrate(){
 if(typeof loadErr!=="undefined"&&loadErr){var rr=restoreLatest();setTimeout(function(){toast(rr?"Your saved data was recovered from the backup of "+rr:"Saved data could not be read")},600)}
 var wasExisting=!!store.schema;
 migrate();dailyBackup(false);
-var NEWIN={"1.6.0":{trip:"New: Events and markets for your dates, ways to save money, and food to try with veg, pork and beef tags."},"1.5.3":{tips:"Fixed: the Tips tab did not open. Everything you saved is unchanged."},"1.5.2":{trip:"The Trip map now follows your stays: a Route view and one tab per stay, with a square pin where you sleep."},"1.5.0":{trip:"Your days now follow your night-by-night plan: same length and same order, with enough places for every stay."},"1.4.0":{trip:"Where to stay is simpler: journey, family, night plan and route in one page. New: print your whole trip as a PDF with links."},"1.3.0":{trip:"Where to stay is now night by night: pick a city for every night, and the same city can come back later. Each stay gets its own hotel name."},"1.2.0":{trip:"Where to stay: add Hallstatt, Kaprun and St. Gilgen, and pick one of three night plans.",tips:"Updates now install by themselves. You can turn this off."}};
+var NEWIN={"1.6.1":{tips:"New: What to wear, for adults and both children, with the reason for each item, for the city, the glacier and the lakes."},"1.6.0":{trip:"New: Events and markets for your dates, ways to save money, and food to try with veg, pork and beef tags."},"1.5.3":{tips:"Fixed: the Tips tab did not open. Everything you saved is unchanged."},"1.5.2":{trip:"The Trip map now follows your stays: a Route view and one tab per stay, with a square pin where you sleep."},"1.5.0":{trip:"Your days now follow your night-by-night plan: same length and same order, with enough places for every stay."},"1.4.0":{trip:"Where to stay is simpler: journey, family, night plan and route in one page. New: print your whole trip as a PDF with links."},"1.3.0":{trip:"Where to stay is now night by night: pick a city for every night, and the same city can come back later. Each stay gets its own hotel name."},"1.2.0":{trip:"Where to stay: add Hallstatt, Kaprun and St. Gilgen, and pick one of three night plans.",tips:"Updates now install by themselves. You can turn this off."}};
 (function(){var seen=store.seenVer;
   if(seen!==APP_VERSION){
     if((seen||wasExisting)&&NEWIN[APP_VERSION]){store.newTabs=store.newTabs||{};Object.keys(NEWIN[APP_VERSION]).forEach(function(k){store.newTabs[k]={v:APP_VERSION,t:NEWIN[APP_VERSION][k]}})}
