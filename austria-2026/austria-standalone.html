@@ -988,6 +988,12 @@ select,input[type=date]{margin-left:auto;font:inherit;font-size:.9375rem;color:v
 .tile .si{width:44px;height:44px;border-radius:12px}
 .tile .si svg{width:24px;height:24px}
 .tile.off{opacity:.4}
+
+.ucol{display:flex;flex-direction:column;align-items:flex-end;gap:8px;flex:none}
+.uaut{display:flex;align-items:center;gap:8px;font-size:.75rem;color:var(--sub);font-weight:500}
+.uaut .sw{width:42px;height:26px;border-radius:13px}
+.uaut .sw i{width:22px;height:22px}
+.uaut .sw[aria-checked="true"] i{transform:translateX(16px)}
 </style></head><body>
 <main id="app"><section id="v-trip"></section><section id="v-day" hidden></section><section id="v-map" hidden></section><section id="v-list" hidden></section><section id="v-tips" hidden></section><section id="v-stay" hidden></section><section id="v-more" hidden></section><section id="v-settings" hidden></section></main>
 <div id="detail" class="page" hidden></div>
@@ -1821,7 +1827,7 @@ function vMore(){
   return h}
 
 /* ================= PHASE 1: update, backup, where to stay ================= */
-var APP_VERSION="1.7.4",SCHEMA=3;
+var APP_VERSION="1.7.5",SCHEMA=3;
 function pad2(n){return("0"+n).slice(-2)}
 function today(){var d=new Date();return d.getFullYear()+"-"+pad2(d.getMonth()+1)+"-"+pad2(d.getDate())}
 var WD=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"],MN=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
@@ -2019,15 +2025,18 @@ function vSettings(){
   var last=store.lastCheck?new Date(store.lastCheck):null;
   var stt=upd.msg?esc(upd.msg):(upd.latest?(vcmp(upd.latest,APP_VERSION)>0?'Version '+esc(upd.latest)+' is available':'You have the latest version'):'Tap Check to look for updates');
   var usub='<b>Version '+esc(APP_VERSION)+'</b><span style="display:block">'+stt+(last&&!upd.msg?' · checked '+last.getDate()+' '+MN[last.getMonth()]:'')+'</span>';
-  var ur=st==="available"?'<button class="btn solid sm1" data-act="upd-install">Install</button>':(st==="installing"||st==="done")?'<span class="sm">Working…</span>':'<button class="btn sm1" data-act="upd-check">Check</button>';
-  h+='<div class="group sg">'+sRow("refresh","#34c759","Software",usub,ur,null)+(st==="installing"?'<div class="row"><div class="prog"><i></i></div></div>':'')+sRow("clock","#8e8e93","Automatic updates","",sSw(store.autoUpd!==false,"upd-auto"),null)+'</div>';
+  var ur=(st==="available"?'<button class="btn solid sm1" data-act="upd-install">Install</button>':(st==="installing"||st==="done")?'<span class="sm">Working…</span>':'<button class="btn sm1" data-act="upd-check">Check</button>');
+  var au=store.autoUpd!==false;
+  var right='<span class="ucol">'+ur+'<span class="uaut">Auto'+sSw(au,"upd-auto")+'</span></span>';
+  h+='<div class="group sg">'+sRow("refresh","#34c759","App",usub,right,null)+(st==="installing"?'<div class="row"><div class="prog"><i></i></div></div>':'')+'</div>';
   var tl=function(k,c,t,act,x){return'<button class="tile" data-act="'+act+'">'+sI(k,c)+'<span>'+t+'</span></button>'};
   h+='<div class="group sg tg">'+tl("clock","#007aff","Back up","bk-now")+tl("down","#007aff","Save file","bk-file")+'<label class="tile">'+sI("up","#007aff")+'<span>Restore file</span><input type="file" accept="application/json,.json" data-f="bkfile" hidden></label>'+(ks.length?tl("undo",restoreArm?"#ff3b30":"#007aff",restoreArm?"Tap again":"Last backup","bk-last"):'<span class="tile off">'+sI("undo","#c7c7cc")+'<span>Last backup</span></span>')+'</div>';
   h+='<p class="foot sf">'+(lastBk?'Last backup: '+fd(lastBk)+'. ':'No backup yet. ')+'Kept on this phone for 7 days.</p>';
   if(pendImp)h+='<div class="group sg"><div class="row" style="display:block"><b>A plan was shared with you</b><span class="sm" style="display:block;color:var(--fg);margin:4px 0 8px">'+impSummary(pendImp)+'</span><div class="btnrow"><button class="btn solid" data-act="imp-ok">Replace my plan</button><button class="btn" data-act="imp-no">Cancel</button></div><p class="sm" style="margin:8px 0 0">Your current plan is backed up first.</p></div></div>';
-  h+='<div class="group sg">'+sRow("share","#ff9500","Share my plan","AirDrop, Messages or WhatsApp",ic(IC.fwd,"chev"),"plan-share")+'<div class="row srow">'+sI("link","#ff9500")+'<input id="impbox" class="sin" placeholder="Paste a plan link" autocomplete="off" autocapitalize="off" spellcheck="false"><button class="btn sm1" data-act="imp-paste">Show</button></div>'+(impMsg?'<div class="row"><span class="sm" style="color:var(--warn)">'+esc(impMsg)+'</span></div>':'')+'</div>';
+  h+='<div class="group sg">'+sRow("share","#ff9500","Share my plan","AirDrop, Messages or WhatsApp",ic(IC.fwd,"chev"),"plan-share")+'<div class="row srow">'+sI("link","#ff9500")+'<input id="impbox" class="sin" placeholder="Paste the plan link here" autocomplete="off" autocapitalize="off" spellcheck="false"><button class="btn sm1" data-act="imp-paste">Add</button></div>'+(impMsg?'<div class="row"><span class="sm" style="color:var(--warn)">'+esc(impMsg)+'</span></div>':'')+'</div>';
   h+='<p class="foot sf">Tap Share, send it. Your friend opens the link and taps “Replace my plan”. Both phones need the latest version.</p>';
-  h+='<div class="group sg">'+(deferredInstall?sRow("phone","#34c759","Install on this phone","",ic(IC.fwd,"chev"),"install"):sRow("phone","#34c759","Add to Home Screen","iPhone: Share, Add to Home Screen","",null))+sRow("wifi","#8e8e93","Works offline","Open the guide and Map once with internet","",null)+'</div>';
+  h+=deferredInstall?'<div class="group sg">'+sRow("phone","#34c759","Install on this phone","",ic(IC.fwd,"chev"),"install")+'</div>':'';
+  h+='<p class="foot sf">Add to Home Screen: iPhone, Share then Add to Home Screen. Works offline after you open it once with internet.</p>';
   return h}
 
 /* ---------- where to stay ---------- */
