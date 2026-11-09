@@ -1037,6 +1037,11 @@ select,input[type=date]{margin-left:auto;font:inherit;font-size:.9375rem;color:v
 .fxdiv{width:1px;height:18px;background:var(--line);margin:0 6px}
 #fxbar{display:flex;justify-content:center;padding:calc(env(safe-area-inset-top,0px) + 6px) 12px 6px}
 .fxseg,.fxr{display:none}
+
+.unit{justify-content:space-between;gap:8px}
+.useg{flex:1;min-width:0}
+.useg button{padding:6px 0}
+.usep{width:1px;height:22px;background:var(--line);flex:none}
 </style></head><body>
 <main id="app"><section id="v-trip"></section><section id="v-day" hidden></section><section id="v-map" hidden></section><section id="v-list" hidden></section><section id="v-tips" hidden></section><section id="v-stay" hidden></section><section id="v-more" hidden></section><section id="v-settings" hidden></section><section id="v-pack" hidden></section></main>
 <div id="detail" class="page" hidden></div>
@@ -1893,7 +1898,7 @@ function vMore(){
   return h}
 
 /* ================= PHASE 1: update, backup, where to stay ================= */
-var APP_VERSION="1.9.3",SCHEMA=3;
+var APP_VERSION="1.9.4",SCHEMA=3;
 function pad2(n){return("0"+n).slice(-2)}
 function today(){var d=new Date();return d.getFullYear()+"-"+pad2(d.getMonth()+1)+"-"+pad2(d.getDate())}
 var WD=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"],MN=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
@@ -2176,8 +2181,8 @@ function vSettings(){
   var tl=function(k,c,t,act,x){return'<button class="tile" data-act="'+act+'">'+sI(k,c)+'<span>'+t+'</span></button>'};
   h+='<div class="group sg tg">'+tl("clock","#007aff","Back up","bk-now")+tl("down","#007aff","Save file","bk-file")+'<label class="tile">'+sI("up","#007aff")+'<span>Restore file</span><input type="file" accept="application/json,.json" data-f="bkfile" hidden></label>'+(ks.length?tl("undo",restoreArm?"#ff3b30":"#007aff",restoreArm?"Tap again":"Last backup","bk-last"):'<span class="tile off">'+sI("undo","#c7c7cc")+'<span>Last backup</span></span>')+'</div>';
   h+='<p class="foot sf">'+(lastBk?'Last backup: '+fd(lastBk)+'. ':'No backup yet. ')+'Kept on this phone for 7 days.</p>';
-  var fxs0=fxs(),uSeg=function(k,opts){return'<div class="seg" style="margin-left:auto;min-width:150px">'+opts.map(function(o){return'<button data-act="fx-set" data-k="'+k+'" data-v="'+o[0]+'" aria-pressed="'+((k==="cur"?fxs0.cur:fxs0.tmp)===o[0])+'">'+o[1]+'</button>'}).join("")+'</div>'};
-  h+='<div class="group sg"><div class="row srow">'+sI("card","#34c759")+'<span class="stt">Currency</span>'+uSeg("cur",[["EUR","€ Euro"],["SAR","SAR"]])+'</div><div class="row srow">'+sI("cloud","#5ac8fa")+'<span class="stt">Temperature</span>'+uSeg("tmp",[["C","°C"],["F","°F"]])+'</div></div>';
+  var fxs0=fxs(),uSeg=function(k,opts){return'<div class="seg useg">'+opts.map(function(o){return'<button data-act="fx-set" data-k="'+k+'" data-v="'+o[0]+'" aria-pressed="'+((k==="cur"?fxs0.cur:fxs0.tmp)===o[0])+'">'+o[1]+'</button>'}).join("")+'</div>'};
+  h+='<div class="group sg"><div class="row srow unit">'+sI("card","#34c759")+uSeg("cur",[["EUR","€"],["SAR","SAR"]])+'<span class="usep"></span>'+sI("cloud","#5ac8fa")+uSeg("tmp",[["C","°C"],["F","°F"]])+'</div></div>';
   h+='<p class="foot sf">Applies to prices and temperatures across the whole guide. 1 EUR ≈ '+fxN(fxs0.r,2)+' SAR'+(fxs0.rd?', rate updated '+fxs0.rd:', rate estimated')+'.</p>';
   if(pendImp)h+='<div class="group sg"><div class="row" style="display:block"><b>A plan was shared with you</b><span class="sm" style="display:block;color:var(--fg);margin:4px 0 8px">'+impSummary(pendImp)+'</span><div class="btnrow"><button class="btn solid" data-act="imp-ok">Replace my plan</button><button class="btn" data-act="imp-no">Cancel</button></div><p class="sm" style="margin:8px 0 0">Your current plan is backed up first.</p></div></div>';
   h+='<div class="group sg">'+sRow("share","#ff9500","Send my plan to another phone","AirDrop, Messages or WhatsApp",ic(IC.fwd,"chev"),"plan-share")+'<div class="row srow">'+sI("link","#ff9500")+'<input id="impbox" class="sin" placeholder="Paste received link" autocomplete="off" autocapitalize="off" spellcheck="false"><button class="btn sm1" data-act="imp-paste">Import</button></div>'+(impMsg?'<div class="row"><span class="sm" style="color:var(--warn)">'+esc(impMsg)+'</span></div>':'')+'</div>';
