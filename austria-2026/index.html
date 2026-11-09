@@ -1280,7 +1280,7 @@ function okWx(j){return Array.isArray(j)&&j.length===3&&j[0]&&j[0].daily}
 function loadWx(){var c=null;try{c=JSON.parse(localStorage.getItem("aut26wx")||"null")}catch(e){}if(c&&c.t&&Date.now()-c.t<3*3600*1000&&okWx(c.j))WX=c.j;
   try{fetch(WX_URL).then(function(r){return r.json()}).then(function(j){if(okWx(j)){WX=j;try{localStorage.setItem("aut26wx",JSON.stringify({t:Date.now(),j:j}))}catch(e){}if(view==="day")render()}}).catch(function(){})}catch(e){}}
 function wxIcon(c){return c===0?IC.sun:c<=3?IC.cloud:c<=48?IC.cloud:c<=67?IC.rain:c<=77?IC.snow:IC.rain}
-function wxDay(di){if(!WX)return null;var o=WX[DAYS[di].wxi];if(!o||!o.daily)return null;var k=new Date(Date.UTC(2026,10,28+di)).toISOString().slice(0,10),i=o.daily.time.indexOf(k);if(i<0)return null;var d=o.daily;return{code:d.weather_code[i],hi:Math.round(d.temperature_2m_max[i]),lo:Math.round(d.temperature_2m_min[i]),pp:d.precipitation_probability_max[i],sun:(d.sunset[i]||"").slice(11,16)}}
+function wxDay(k,wi){if(!WX)return null;var o=WX[wi||0];if(!o||!o.daily)return null;var i=o.daily.time.indexOf(k);if(i<0)return null;var d=o.daily;return{code:d.weather_code[i],hi:Math.round(d.temperature_2m_max[i]),lo:Math.round(d.temperature_2m_min[i]),pp:d.precipitation_probability_max[i],sun:(d.sunset[i]||"").slice(11,16)}}
 
 var deferredInstall=null;window.addEventListener("beforeinstallprompt",function(e){e.preventDefault();deferredInstall=e;if(view==="tips")render(true)});window.addEventListener("appinstalled",function(){deferredInstall=null;if(view==="tips")render(true)});
 /* ---------- state ---------- */
@@ -1291,47 +1291,51 @@ var VIEWS=["trip","day","map","list","tips","stay"];
 function addBtn(s,full){var on=inList(s);return '<button class="add'+(on?" on":"")+'" data-act="add" data-id="'+s.id+'" aria-pressed="'+on+'" aria-label="'+(on?"Remove from my list: ":"Add to my list: ")+esc(s.n)+'">'+ic(on?IC.check:IC.plus)+(on?"Added":"Add")+'</button>'}
 
 function vTrip(){
-  var h='<div class="head"><div class="headrow"><div><div class="eyebrow">28 Nov – 7 Dec 2026</div><h1>Munich, Salzburg, Vienna</h1><p class="sub">10 days · 2 adults, 2 children</p></div><button class="aa" data-act="settings" aria-label="Text size and colours">Aa</button></div></div>';
+  var s=stay(),cs=[];ITIN.forEach(function(D){if(D.i<s.total&&cs.indexOf(D.b)<0)cs.push(D.b)});
+  var h='<div class="head"><div class="headrow"><div><div class="eyebrow">'+fd(s.start)+' – '+fd(stayEnd(s))+' '+s.start.slice(0,4)+'</div><h1>'+esc(cs.map(function(c){return SN(c)}).join(", ")||"Your trip")+'</h1><p class="sub">'+(s.total+1)+' days · '+esc(famSummary(s))+'</p></div><button class="aa" data-act="settings" aria-label="Text size and colours">Aa</button></div></div>';
   if(!store.hideHow)h+='<div class="how"><b class="h">How this guide works</b><ol><li><i>1</i><span>Open a day below.</span></li><li><i>2</i><span>Tap <b>Add</b> next to the places you want to visit.</span></li><li><i>3</i><span>Find your own plan in <b>My list</b> at the bottom.</span></li></ol><button class="btn solid" data-act="hidehow">Got it</button></div>';
   h+=newBanner('trip')+updNotice()+tripStayRow();
-  CKEYS.forEach(function(g){
-    var ds=daysOf(g);
-    h+='<div class="sech"><span>'+CITY[g].n+'</span><span class="r">'+ds.length+(ds.length===1?" day":" days")+'</span></div><div class="group">';
-    ds.forEach(function(d){var n=listCount(d);
-      h+='<button class="row tap" data-act="day" data-i="'+d.i+'" style="--c:'+cvar(g)+'"><span class="dn">'+(d.i+1)+'</span><span class="grow"><span class="sm" style="display:block">'+dayFlags(d)+d.dow+' '+d.date+(d.wx?' · weather-dependent':'')+'</span><span class="ttl">'+esc(d.title)+'</span></span>'+(n?'<span class="cnt">'+n+' in list</span>':'')+ic(IC.fwd,"chev")+'</button>'});
-    h+='</div>'});
-  h+='<p class="foot">Dates and times are a plan, not bookings. Check opening hours and prices on the official sites before you go.</p>';
+  if(sumNights(s)<s.total)h+='<div class="callout w"><b>Some nights have no city yet</b>The days below follow your night-by-night plan. <button class="lnk" data-act="stay-open">Finish the plan</button></div>';
+  var g=-1;
+  ITIN.forEach(function(D){
+    if(D.sg!==g){if(g>=0)h+='</div>';g=D.sg;var r=D.row;
+      h+='<div class="sech"><span>'+(r?SN(r.c)+(r.visit>1?" (back again)":""):SN(D.b))+'</span><span class="r">'+(r?r.n+(r.n===1?" night":" nights"):"")+'</span></div><div class="group">'}
+    var n=listCount({stops:D.pl,extras:D.exo});
+    h+='<button class="row tap" data-act="day" data-i="'+D.i+'" style="--c:'+SC(D.b)+'"><span class="dn">'+(D.i+1)+'</span><span class="grow"><span class="sm" style="display:block">'+dayFlags({stops:D.pl})+D.dow+' '+D.dm+(D.th.wx&&D.kind!=="move"?' · weather-dependent':'')+(D.kind==="move"?' · travel from '+SN(D.mc):'')+(D.kind==="last"?' · departure day':'')+'</span><span class="ttl">'+esc(D.title)+'</span></span>'+(n?'<span class="cnt">'+n+' in list</span>':'')+ic(IC.fwd,"chev")+'</button>'});
+  if(g>=0)h+='</div>';
+  h+='<p class="foot">The days follow your plan in <b>Where to stay</b>. Change the nights there and this page updates. Dates and times are a plan, not bookings. Check opening hours and prices on the official sites before you go.</p>';
   return h}
 
 function vDay(){
-  var d=DAYS[cur],g=d.grp,ds=daysOf(g),w=wxDay(cur);
-  var h='<div class="nav"><button class="nb" data-act="tab" data-s="trip">'+ic(IC.back)+'Trip</button><span class="t">Day '+(cur+1)+'</span><span class="navr"><button class="nb" data-act="day" data-i="'+(cur-1)+'" aria-label="Previous day"'+(cur===0?' disabled':'')+'>'+ic(IC.back)+'</button><button class="nb" data-act="day" data-i="'+(cur+1)+'" aria-label="Next day"'+(cur===9?' disabled':'')+'>'+ic(IC.fwd)+'</button></span></div>';
-  h+='<div class="head"><div class="eyebrow" style="color:'+cvar(g)+'">'+dayFlags(d)+esc(CITY[g].n)+' · '+d.dow+' '+d.date+'</div><h1>'+esc(d.title)+'</h1></div>';
-  h+='<div class="segwrap"><div class="cap">Days in '+CITY[g].n+'</div><div class="seg">'+ds.map(function(x){return '<button data-act="day" data-i="'+x.i+'" aria-pressed="'+(x.i===cur)+'">'+(x.i+1)+'<small>'+x.dow+'</small></button>'}).join("")+'</div></div>';
-  h+='<p class="lede">'+esc(d.lede)+'</p>';
-  /* facts group */
+  var D=ITIN[cur];if(!D){cur=0;D=ITIN[0]}
+  var th=D.th,g=D.b,ds=ITIN.filter(function(x){return x.sg===D.sg}),w=wxDay(D.date,WXI[g]),s=stay(),col=SC(g);
+  var h='<div class="nav"><button class="nb" data-act="tab" data-s="trip">'+ic(IC.back)+'Trip</button><span class="t">Day '+(cur+1)+'</span><span class="navr"><button class="nb" data-act="day" data-i="'+(cur-1)+'" aria-label="Previous day"'+(cur===0?' disabled':'')+'>'+ic(IC.back)+'</button><button class="nb" data-act="day" data-i="'+(cur+1)+'" aria-label="Next day"'+(cur>=ITIN.length-1?' disabled':'')+'>'+ic(IC.fwd)+'</button></span></div>';
+  h+='<div class="head"><div class="eyebrow" style="color:'+col+'">'+dayFlags({stops:D.pl})+esc(SN(g))+' · '+D.dow+' '+D.dm+'</div><h1>'+esc(D.title)+'</h1></div>';
+  h+='<div class="segwrap"><div class="cap">Days in this stay · '+esc(SN(g))+'</div><div class="seg">'+ds.map(function(x){return '<button data-act="day" data-i="'+x.i+'" aria-pressed="'+(x.i===cur)+'">'+(x.i+1)+'<small>'+x.dow+'</small></button>'}).join("")+'</div></div>';
+  h+='<p class="lede">'+esc(th.lede)+'</p>';
   h+='<div class="sech"><span>Today</span></div><div class="group">';
-  h+='<div class="row"><span class="k">Travel</span><span class="v">'+esc(d.trans)+'</span></div>';
-  h+='<div class="row"><span class="k">Start</span><span class="v">'+esc(d.start)+'</span></div>';
-  h+='<div class="row"><span class="k">Sleep</span><span class="v">'+esc(d.sleep)+'</span></div>';
-  h+='<div class="row"><span class="k">Cost</span><span class="v"><b>'+esc(d.budget)+'</b> estimate for the family. '+esc(d.budgetNote)+'</span></div>';
-  h+='<div class="row"><span class="k">Weather</span><span class="v">'+(w?'<span class="wx">'+ic(wxIcon(w.code))+'<b>'+w.hi+'° / '+w.lo+'°</b> · rain chance '+(w.pp==null?"n/a":w.pp+"%")+(w.sun?' · sunset '+w.sun:'')+'</span>':esc(d.clim)+'<span class="sm" style="display:block">Live forecast appears here about two weeks before the trip.</span>')+'</span></div>';
-  h+=hotelRow(d);
+  h+='<div class="row"><span class="k">Travel</span><span class="v">'+esc(D.trans)+'</span></div>';
+  h+='<div class="row"><span class="k">Start</span><span class="v">'+esc(D.start)+'</span></div>';
+  h+='<div class="row"><span class="k">Sleep</span><span class="v">'+esc(D.sleep)+'</span></div>';
+  h+='<div class="row"><span class="k">Cost</span><span class="v"><b>'+esc(th.budget)+'</b> estimate for the family. '+esc(th.budgetNote)+'</span></div>';
+  h+='<div class="row"><span class="k">Weather</span><span class="v">'+(w?'<span class="wx">'+ic(wxIcon(w.code))+'<b>'+w.hi+'° / '+w.lo+'°</b> · rain chance '+(w.pp==null?"n/a":w.pp+"%")+(w.sun?' · sunset '+w.sun:'')+'</span>':esc(th.clim)+'<span class="sm" style="display:block">Live forecast appears here about two weeks before the trip.</span>')+'</span></div>';
+  if(CKEYS.indexOf(g)>-1)h+=hotelRow({hc:g,startPt:th.startPt});
   h+='</div>';
-  if(d.wrule)h+='<div class="callout w"><b>Weather rule</b>'+esc(d.wrule)+'</div>';
-  var sn=stayNightCity(cur),gcty=sleepCity(d);if(sn&&gcty&&sn!==gcty)h+='<div class="callout w"><b>Your stay plan is different</b>Tonight your stay plan has you in '+SN(sn)+'. This day of the guide was planned for a night in '+SN(gcty)+'. <button class="lnk" data-act="stay-open">Open Where to stay</button></div>';
-  /* places */
-  var n=listCount(d);
+  if(th.wrule&&D.kind!=="move")h+='<div class="callout w"><b>Weather rule</b>'+esc(th.wrule)+'</div>';
+  var n=listCount({stops:D.pl,extras:D.exo});
   h+='<div class="sech"><span>Places</span><span class="r">'+n+' in your list</span></div>';
   h+='<p class="foot" style="margin:-2px 20px 8px">Tap <b>Add</b> on the places you want to visit. Tap a name for details.</p>';
-  h+='<div class="group" style="--c:'+cvar(g)+'">'+d.stops.map(function(s){return prow(s)}).join("")+'</div>';
-  if(d.extras.length){h+='<div class="sech"><span>More options</span><span class="r">'+d.extras.length+'</span></div><div class="group" style="--c:'+cvar(g)+'">'+d.extras.map(function(s){return prow(s)}).join("")+'</div>'}
+  var rows=function(list){return list.map(function(p){return prow(p,String(D.pos[p.id]))}).join("")};
+  if(D.morning){
+    h+='<div class="sech"><span>Morning in '+esc(SN(D.mc))+'</span></div><div class="group" style="--c:'+col+'">'+rows(D.mpl)+'</div>';
+    h+='<div class="sech"><span>Then in '+esc(SN(g))+'</span></div><div class="group" style="--c:'+col+'">'+rows(D.apl)+'</div>';
+  }else h+='<div class="group" style="--c:'+col+'">'+rows(D.apl)+'</div>';
+  if(D.exo.length)h+='<div class="sech"><span>More options</span><span class="r">'+D.exo.length+'</span></div><div class="group" style="--c:'+col+'">'+D.exo.map(function(p){return prow(p)}).join("")+'</div>';
   h+='<div class="actions"><button class="btn full" data-act="daymap">'+ic(IC.map)+'Show this day on Trip map</button></div>';
-  /* info */
   h+='<div class="sech"><span>Good to know</span></div>';
-  h+='<details class="group"><summary>Getting around</summary><div class="in"><ul class="pl">'+d.getting.map(function(x){return '<li>'+esc(x)+'</li>'}).join("")+'</ul></div></details>';
-  h+='<details class="group"><summary>If it rains</summary><div class="in"><ul class="pl">'+d.rain.map(function(x){return '<li>'+esc(x)+'</li>'}).join("")+'</ul></div></details>';
-  h+='<details class="group"><summary>For the kids (6 and 12)</summary><div class="in"><ul class="pl">'+d.facts.map(function(x){return '<li>'+esc(x)+'</li>'}).join("")+'</ul><div class="sech" style="margin:8px 16px 0"><span>Spot list</span></div><ul class="spot">'+d.spot.map(function(t,i){var key=d.id+"_"+i;return '<li><label><input type="checkbox" data-act="spot" data-k="'+key+'"'+(store.spot[key]?" checked":"")+'><span>'+esc(t)+'</span></label></li>'}).join("")+'</ul></div></details>';
+  h+='<details class="group"><summary>Getting around</summary><div class="in"><ul class="pl">'+th.getting.map(function(x){return '<li>'+esc(x)+'</li>'}).join("")+'</ul></div></details>';
+  h+='<details class="group"><summary>If it rains</summary><div class="in"><ul class="pl">'+th.rain.map(function(x){return '<li>'+esc(x)+'</li>'}).join("")+'</ul></div></details>';
+  h+='<details class="group"><summary>For the kids'+(s.kids.length?' ('+esc(s.kids.join(", "))+')':'')+'</summary><div class="in"><ul class="pl">'+th.facts.map(function(x){return '<li>'+esc(x)+'</li>'}).join("")+'</ul><div class="sech" style="margin:8px 16px 0"><span>Spot list</span></div><ul class="spot">'+th.spot.map(function(t,i){var key=th.id+"_"+i;return '<li><label><input type="checkbox" data-act="spot" data-k="'+key+'"'+(store.spot[key]?" checked":"")+'><span>'+esc(t)+'</span></label></li>'}).join("")+'</ul></div></details>';
   return h}
 
 function hotelRow(d){
@@ -1342,24 +1346,31 @@ function hotelRow(d){
   var k=km(hh,d.startPt),est=Math.round(10+k*1.35/18*60);
   return '<div class="row"><span class="k">Hotel</span><span class="v">'+k.toFixed(1)+' km to '+esc(d.startPt.n)+', about '+est+' min by public transport.</span><a class="btn" style="min-height:36px;padding:0 12px" href="'+mapsDir(hh,d.startPt,"transit")+'" target="_blank" rel="noopener">Route</a><button class="rm" data-act="hotel-clear" data-c="'+d.hc+'">Change</button></div>'}
 
-function prow(s){
-  var lab=s.x?ic(IC[s.k]):String(s.idx+1);
-  return '<div class="prow" style="--c:'+cvar(s.city)+'"><button class="pmain" data-act="place" data-id="'+s.id+'"><span class="pn'+(s.x?" x":"")+'">'+lab+'</span><span class="pt"><span class="nm">'+esc(s.n)+'</span><span class="mt">'+(s.x?esc(s.cat):KIND[s.k]+(s.t?" · "+esc(s.t):""))+' · '+esc(s.c)+'</span><span class="tg">'+tags(s)+'</span></span></button>'+addBtn(s)+'</div>'}
+function prow(s,lb){
+  var lab=lb!=null?lb:(s.x?ic(IC[s.k]):String(s.idx+1)),xx=lb==null&&s.x;
+  return '<div class="prow" style="--c:'+cvar(s.city)+'"><button class="pmain" data-act="place" data-id="'+s.id+'"><span class="pn'+(xx?" x":"")+'">'+lab+'</span><span class="pt"><span class="nm">'+esc(s.n)+'</span><span class="mt">'+(s.x?esc(s.cat):KIND[s.k]+(s.t?" · "+esc(s.t):""))+' · '+esc(s.c)+'</span><span class="tg">'+tags(s)+'</span></span></button>'+addBtn(s)+'</div>'}
 
 function vList(){
   var n=totalList();
   var h='<div class="head"><div class="headrow"><div><div class="eyebrow">Your own plan</div><h1>My list</h1><p class="sub">'+(n?n+(n===1?" place":" places")+" · "+Object.keys(store.done).filter(function(k){return store.done[k]&&store.list[k]}).length+" done":"Nothing added yet")+'</p></div>'+(n?'<button class="aa" data-act="copy" aria-label="Copy my list as text">'+ic(IC.copy)+'</button>':'')+'</div></div>';
   if(!n){
     h+='<div class="empty"><svg viewBox="0 0 24 24" aria-hidden="true">'+IC.list+'</svg><b>Your list is empty</b><p>Open a day and tap <b style="display:inline;font-size:inherit;color:var(--fg)">Add</b> next to a place. It will appear here, sorted by day.</p><p>You can also start with all the highlights.</p><div class="btnrow"><button class="btn solid" data-act="addmust">Add all “Must see” places</button></div><div class="btnrow" style="margin-top:10px"><button class="btn" data-act="tab" data-s="trip">Browse the days</button></div></div>';return h}
-  DAYS.forEach(function(d){
-    var items=d.stops.concat(d.extras).filter(inList);if(!items.length)return;
-    h+='<div class="daych" style="--c:'+cvar(d.grp)+'"><i></i>'+dayFlags(d)+esc(dlabel(d))+' · '+esc(CITY[d.grp].n)+'</div><div class="group">';
+  var LG=listGroups();
+  function grp(label,col,flags,items){
+    h+='<div class="daych" style="--c:'+col+'"><i></i>'+flags+esc(label)+'</div><div class="group">';
     items.forEach(function(s){var dn=!!store.done[s.id];
       h+='<div class="lrow'+(dn?" done":"")+'" style="--c:'+cvar(s.city)+'"><button class="ck" data-act="done" data-id="'+s.id+'" aria-pressed="'+dn+'" aria-label="Tick as visited: '+esc(s.n)+'">'+ic(IC.check)+'</button><button class="pmain" style="padding:0" data-act="place" data-id="'+s.id+'"><span class="pt"><span class="nm">'+esc(s.n)+'</span><span class="mt">'+(s.x?esc(s.cat):KIND[s.k]+(s.t?" · "+esc(s.t):""))+' · '+esc(s.c)+'</span></span></button><button class="rm" data-act="add" data-id="'+s.id+'" aria-label="Remove '+esc(s.n)+'">Remove</button></div>'});
-    h+='</div>'});
+    h+='</div>'}
+  LG.days.forEach(function(x){grp('Day '+(x.D.i+1)+' · '+x.D.dow+' '+x.D.dm+' · '+SN(x.D.b),SC(x.D.b),dayFlags({stops:x.items}),x.items)});
+  if(LG.un.length){grp('Not in your itinerary','#8e8e93','',LG.un);h+='<p class="foot">These places are in cities or days your night-by-night plan does not include. Change the nights in Where to stay to add them.</p>'}
   h+='<p class="foot">Tick the circle when you have been there. Your list is saved on this phone only.</p>';
   return h}
 
+function listGroups(){
+  var g=ITIN.map(function(D){return{D:D,items:[]}}),un=[];
+  ALL.filter(inList).forEach(function(s){var i=ITD[s.id];if(i!=null&&g[i])g[i].items.push(s);else un.push(s)});
+  g.forEach(function(x){x.items.sort(function(p,q){return x.D.all.indexOf(p.id)-x.D.all.indexOf(q.id)})});
+  return{days:g.filter(function(x){return x.items.length}),un:un}}
 function vTips(){
   var h='<div class="head"><div class="eyebrow">Before and during the trip</div><h1>Tips</h1></div>';
   function sec(t,body,open){return '<details class="group"'+(open?' open':'')+'><summary>'+t+'</summary><div class="in">'+body+'</div></details>'}
@@ -1440,7 +1451,7 @@ function dayFlags(d){var set={};d.stops.forEach(function(s){set[cOf(s)]=1});retu
 var GM={"a1": "Karlstor, Munich", "a2": "Frauenkirche, Munich", "a3": "Viktualienmarkt, Munich", "a4": "Münchner Christkindlmarkt Marienplatz, Munich", "ax-peter": "Alter Peter, Munich", "ax-sendlinger": "Asamkirche München", "ax-kripperl": "Kripperlmarkt Munich Rindermarkt", "b5": "Rathaus-Glockenspiel, Marienplatz, Munich", "b1": "Deutsches Museum, Munich", "d5": "Salzburger Christkindlmarkt, Domplatz, Salzburg", "bx-bmw": "BMW Welt, Munich", "bx-nymph": "Schloss Nymphenburg, Munich", "bx-english": "Chinesischer Turm, Englischer Garten, Munich", "bx-residenz": "Münchner Residenz", "bx-olympia": "Olympiaturm, Munich", "bx-vik": "Viktualienmarkt, Munich", "e1": "Festung Hohensalzburg, Salzburg", "d3": "Getreidegasse, Salzburg", "e5": "Mozarts Geburtshaus, Salzburg", "e3": "Haus der Natur, Salzburg", "e4": "Café Tomaselli, Alter Markt, Salzburg", "dx-cathedral": "Salzburger Dom", "dx-peter": "Stift St. Peter, Salzburg", "dx-mozartplatz": "Mozartplatz, Salzburg", "dx-sphaera": "Sphaera Stephan Balkenhol, Kapitelplatz, Salzburg", "ex-mozarthome": "Mozart-Wohnhaus, Salzburg", "f1": "Zell am See Bahnhof", "f2": "Kaprun Ortszentrum", "f3": "Kitzsteinhorn Gletscherbahn Talstation, Kaprun", "f4": "Gipfelwelt 3000, Kitzsteinhorn", "f5": "Alpincenter Kitzsteinhorn, Kaprun", "fx-zell": "Zell am See Seepromenade", "fx-schmitten": "Schmittenhöhebahn Talstation, Zell am See", "fx-burg": "Burg Kaprun", "g1": "Hallstatt Bahnhof", "g2": "Marktplatz Hallstatt", "g3": "Salzbergbahn Talstation, Hallstatt", "g4": "Salzwelten Hallstatt", "g5": "Pfarrkirche Hallstatt", "gx-museum": "Welterbemuseum Hallstatt", "gx-ischl": "Bad Ischl Zentrum", "gx-advent": "Hallstatt Marktplatz", "gx-krippen": "Dachstein Krippenstein Seilbahn Obertraun", "gx-skywalk": "Dachstein Gletscherbahn Ramsau am Dachstein", "k1": "St. Gilgen am Wolfgangsee", "k2": "Kirchenplatz St. Wolfgang im Salzkammergut", "k3": "Seepromenade St. Wolfgang im Salzkammergut", "kx-zwolf": "Zwölferhorn Seilbahn St. Gilgen", "kx-strobl": "Strobl am Wolfgangsee", "d1": "Schloss Mirabell, Salzburg", "k4": "Mönchsberg Aufzug, Salzburg", "k5": "Schloss Hellbrunn, Salzburg", "k6": "Salzburg Museum, Mozartplatz", "kx-kehl": "Kehlsteinhaus, Berchtesgaden", "kx-eis": "Eisriesenwelt, Werfen", "h1": "Stephansdom, Wien", "h2": "Pestsäule Graben, Wien", "h3": "Café Demel, Kohlmarkt, Wien", "h4": "Wiener Christkindlmarkt Rathausplatz", "hx-krampus": "Rathausplatz, Wien", "hx-albertina": "Wiener Staatsoper", "hx-hofburg": "Heldenplatz, Wien", "i1": "Schloss Schönbrunn, Wien", "i2": "Tiergarten Schönbrunn, Wien", "i3": "Weihnachtsmarkt Schloss Schönbrunn, Wien", "i4": "Wiener Riesenrad, Wien", "ix-gloriette": "Gloriette Schönbrunn, Wien", "ix-meer": "Haus des Meeres, Wien", "ix-musik": "Haus der Musik, Wien", "ix-nhm": "Naturhistorisches Museum Wien", "j1": "Schloss Belvedere, Wien", "j2": "Karlskirche, Wien", "j3": "Naschmarkt, Wien", "jx-albertina": "Albertina Museum, Wien", "jx-stroll": "Michaelerplatz, Wien"};
 var URLS={"a2": "https://www.muenchner-dom.de", "a3": "https://www.viktualienmarkt-muenchen.de", "bx-vik": "https://www.viktualienmarkt-muenchen.de", "b1": "https://www.deutsches-museum.de", "bx-bmw": "https://www.bmw-welt.com", "bx-nymph": "https://www.schloss-nymphenburg.de", "bx-residenz": "https://www.residenz-muenchen.de", "bx-olympia": "https://www.olympiapark.de", "d5": "https://www.christkindlmarkt.co.at", "e1": "https://www.festung-hohensalzburg.at", "e5": "https://mozarteum.at/museen/mozarts-geburtshaus", "ex-mozarthome": "https://mozarteum.at/museen/mozart-wohnhaus", "e3": "https://www.hausdernatur.at", "dx-cathedral": "https://www.salzburger-dom.at", "dx-peter": "https://www.stift-stpeter.at", "k5": "https://www.hellbrunn.at", "k6": "https://www.salzburgmuseum.at", "f1": "https://www.zellamsee-kaprun.com", "f3": "https://www.kitzsteinhorn.at", "f4": "https://www.kitzsteinhorn.at", "f5": "https://www.kitzsteinhorn.at", "fx-schmitten": "https://www.schmittenhoehe.at", "g3": "https://www.salzwelten.at", "g4": "https://www.salzwelten.at", "g2": "https://www.hallstatt.net", "gx-museum": "https://www.museum-hallstatt.at", "gx-krippen": "https://www.dachstein.at", "gx-skywalk": "https://www.dachstein.at", "k1": "https://www.wolfgangseer-advent.at/en", "k2": "https://www.wolfgangseer-advent.at/en", "kx-strobl": "https://www.wolfgangseer-advent.at/en", "kx-zwolf": "https://www.12erhorn.at", "kx-kehl": "https://kehlsteinhaus.de", "kx-eis": "https://www.eisriesenwelt.at/en", "h1": "https://www.stephanscom.at", "h3": "https://www.demel.at", "h4": "https://www.wienerchristkindlmarkt.at", "hx-hofburg": "https://www.hofburg-wien.at", "hx-albertina": "https://www.wiener-staatsoper.at", "i1": "https://www.schoenbrunn.at", "i3": "https://www.schoenbrunn.at", "ix-gloriette": "https://www.schoenbrunn.at", "i2": "https://www.zoovienna.at", "i4": "https://www.wienerriesenrad.com", "ix-meer": "https://www.haus-des-meeres.at", "ix-musik": "https://www.hausdermusik.com", "ix-nhm": "https://www.nhm-wien.ac.at", "j1": "https://www.belvedere.at", "j2": "https://www.karlskirche.at", "j3": "https://www.naschmarkt-vienna.com", "jx-albertina": "https://www.albertina.at"};
 function vMapHtml(){
-  var days=cityDays(mapCity);
+  var days=ITIN.filter(function(D){return D.pl.concat(D.exo).some(function(s){return s.city===mapCity})});
   var h='<div class="mapbar"><div class="seg">'+CKEYS.map(function(g){return '<button data-act="mapcity" data-c="'+g+'" aria-pressed="'+(g===mapCity)+'">'+flag(g)+CITY[g].n+'</button>'}).join("")+'</div>';
   h+='<div class="dpills"><span class="lab">Day</span><button data-act="mapday" data-d="all" aria-pressed="'+(mapDay==="all")+'">All</button>'+days.map(function(d){return '<button data-act="mapday" data-d="'+d.i+'" aria-pressed="'+(mapDay===d.i)+'">'+(d.i+1)+'</button>'}).join("")+'</div>';
   h+='<div class="legend"><span><i></i>Not in my list</span><span><i class="f"></i>In my list</span><span>Tap a pin for details</span></div></div>';
@@ -1453,15 +1464,17 @@ function initMap(){
   L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,attribution:"© OpenStreetMap"}).addTo(map);
   layer=L.layerGroup().addTo(map);meLayer=L.layerGroup().addTo(map);
   map.on("click",function(){closeSheet()})}
+function pinMain(s){if(mapDay!=="all"&&ITIN[mapDay])return(ITIN[mapDay].pos[s.id]||0)>0;return s.idx>=0}
+function pinLab(s){if(mapDay!=="all"&&ITIN[mapDay])return String(ITIN[mapDay].pos[s.id]||"");var i=ITD[s.id];return s.idx>=0?((i!=null?i+1:s.day+1)+"."+(s.idx+1)):""}
 function pinIcon(s,dim,sel){
-  var lab=s.idx>=0?(mapDay==="all"?(s.day+1)+"."+(s.idx+1):String(s.idx+1)):"";
-  var cls="pin"+(s.idx<0?" sm":"")+(inList(s)?" in":"")+(dim?" dim":"")+(sel?" sel":"");
-  var sz=s.idx<0?20:30;
+  var mn=pinMain(s),lab=pinLab(s);
+  var cls="pin"+(mn?"":" sm")+(inList(s)?" in":"")+(dim?" dim":"")+(sel?" sel":"");
+  var sz=mn?30:20;
   return L.divIcon({className:"pinw",html:'<div class="'+cls+'" style="--c:'+cvar(s.city)+'">'+lab+'</div>',iconSize:[sz,sz],iconAnchor:[sz/2,sz/2]})}
 function drawMap(fit){
   if(!map)return;layer.clearLayers();meLayer.clearLayers();var pts=[];
   ALL.filter(function(s){return s.city===mapCity}).forEach(function(s){
-    var dim=mapDay!=="all"&&s.day!==mapDay,sel=selId===s.id;if(!dim)pts.push([s.lat,s.lng]);
+    var dim=mapDay!=="all"&&!(ITIN[mapDay]&&ITIN[mapDay].has[s.id]),sel=selId===s.id;if(!dim)pts.push([s.lat,s.lng]);
     var m=L.marker([s.lat,s.lng],{icon:pinIcon(s,dim,sel),zIndexOffset:sel?1000:(dim?0:(s.idx>=0?200:100)),keyboard:false,title:s.n});
     m.on("click",function(e){if(e&&e.originalEvent)L.DomEvent.stopPropagation(e);openSheet(s.id)});m.addTo(layer)});
   Object.keys(store.hotels).forEach(function(k){var h=store.hotels[k];if(h&&k===mapCity&&typeof h.lat==="number"){L.marker([h.lat,h.lng],{icon:L.divIcon({className:"pinw",html:'<div class="hpin">H</div>',iconSize:[28,28],iconAnchor:[14,14]}),zIndexOffset:500,title:"Hotel"}).addTo(layer)}});
@@ -1469,7 +1482,7 @@ function drawMap(fit){
   if(fit&&pts.length)map.fitBounds(L.latLngBounds(pts),{padding:[40,40],maxZoom:16,animate:false})}
 function openSheet(id){
   selId=id;var s=P[id],box=$("sheet");
-  box.innerHTML='<div class="top"><div class="grow" style="flex:1;min-width:0"><span class="mt" style="margin:0 0 2px;color:'+cvar(s.city)+';font-weight:600">'+esc(dlabel(DAYS[s.day]))+'</span><span class="nm">'+esc(s.n)+'</span><span class="mt">'+(s.x?esc(s.cat):KIND[s.k]+(s.t?" · "+esc(s.t):""))+' · '+esc(s.c)+'</span><div style="margin-top:6px;display:flex;gap:5px;flex-wrap:wrap">'+tags(s)+'</div></div><button class="x" data-act="sheetx" aria-label="Close">'+ic(IC.close)+'</button></div><p>'+esc(s.why)+'</p><p class="sm" style="margin:0 0 8px">Google Maps name: '+esc(gmq(s))+'</p><div class="btnrow">'+addBtn(s)+'<button class="btn" data-act="place" data-id="'+s.id+'">Details</button><a class="btn" href="'+mapsPlace(s)+'" target="_blank" rel="noopener">Google Maps</a>'+(URLS[id]?'<a class="btn" href="'+URLS[id]+'" target="_blank" rel="noopener">Website</a>':'')+'</div>';
+  box.innerHTML='<div class="top"><div class="grow" style="flex:1;min-width:0"><span class="mt" style="margin:0 0 2px;color:'+cvar(s.city)+';font-weight:600">'+esc(dl(s))+'</span><span class="nm">'+esc(s.n)+'</span><span class="mt">'+(s.x?esc(s.cat):KIND[s.k]+(s.t?" · "+esc(s.t):""))+' · '+esc(s.c)+'</span><div style="margin-top:6px;display:flex;gap:5px;flex-wrap:wrap">'+tags(s)+'</div></div><button class="x" data-act="sheetx" aria-label="Close">'+ic(IC.close)+'</button></div><p>'+esc(s.why)+'</p><p class="sm" style="margin:0 0 8px">Google Maps name: '+esc(gmq(s))+'</p><div class="btnrow">'+addBtn(s)+'<button class="btn" data-act="place" data-id="'+s.id+'">Details</button><a class="btn" href="'+mapsPlace(s)+'" target="_blank" rel="noopener">Google Maps</a>'+(URLS[id]?'<a class="btn" href="'+URLS[id]+'" target="_blank" rel="noopener">Website</a>':'')+'</div>';
   box.hidden=false;drawMap(false);map.panTo([s.lat,s.lng],{animate:true})}
 function closeSheet(){var b=$("sheet");if(b&&!b.hidden){b.hidden=true;b.innerHTML=""}if(selId){selId=null;drawMap(false)}}
 function mapShow(){
@@ -1483,15 +1496,15 @@ function ctxFor(id){
   var s=P[id],ids;
   if(view==="list"){ids=[];DAYS.forEach(function(d){d.stops.concat(d.extras).forEach(function(x){if(inList(x))ids.push(x.id)})});dback="My list"}
   else if(view==="map"){ids=ALL.filter(function(x){return x.city===mapCity&&(mapDay==="all"||x.day===mapDay)}).map(function(x){return x.id});dback="Map"}
-  else{var d=DAYS[s.day];ids=d.stops.concat(d.extras).map(function(x){return x.id});dback="Day "+(s.day+1)}
-  if(ids.indexOf(id)<0){var d2=DAYS[s.day];ids=d2.stops.concat(d2.extras).map(function(x){return x.id});dback="Day "+(s.day+1)}
+  else{var DD=ITIN[cur];ids=(view==="day"&&DD)?DD.all.slice():[];dback="Day "+(cur+1)}
+  if(ids.indexOf(id)<0){var DI=itinPlace(id);ids=DI?DI.all.slice():[id];dback=DI?"Day "+(DI.i+1):"Back"}
   return ids}
 function openDetail(id,nav){
   var s=P[id],f=s.f,d=DAYS[s.day],box=$("detail");detailId=id;if(box.hidden)dctx=ctxFor(id);var ci=dctx.indexOf(id),pv=ci>0?P[dctx[ci-1]]:null,nx=ci>=0&&ci<dctx.length-1?P[dctx[ci+1]]:null;
-  var on=inList(s),prev=!s.x&&s.idx>0?d.stops[s.idx-1]:null,leg="";
+  var on=inList(s),prev=(ci>0&&view==='day'&&!s.x&&P[dctx[ci-1]]&&!P[dctx[ci-1]].x&&walkKm(P[dctx[ci-1]],s)<30)?P[dctx[ci-1]]:null,leg="";
   if(f.lg)leg=f.lg;else if(prev){var k=walkKm(prev,s);leg=(k>1.8?"Public transport":"Walk about "+Math.max(1,Math.round(k/4.3*60))+" min")+" · "+fmtKm(k)+" from the previous stop"}
   var h='<div class="nav"><button class="nb" data-act="detailx">'+ic(IC.back)+esc(dback)+'</button><span class="t">'+(ci>=0?(ci+1)+' of '+dctx.length:esc(KIND[s.k]))+'</span><span style="width:44px"></span></div><div class="body" style="--c:'+cvar(s.city)+'">';
-  h+='<div class="group"><div class="pbody"><div class="sm" style="color:'+cvar(s.city)+';font-weight:600">'+flagC(cOf(s))+esc(dlabel(d))+'</div><h2 class="dtitle">'+esc(s.n)+'</h2><div class="tglist">'+tags(s)+'</div><p class="sm" style="margin-top:10px">'+(s.x?esc(s.cat):(s.t?"Suggested time "+esc(s.t)+" · ":"")+"")+esc(s.c)+'</p><p>'+esc(s.why)+'</p></div></div>';
+  h+='<div class="group"><div class="pbody"><div class="sm" style="color:'+cvar(s.city)+';font-weight:600">'+flagC(cOf(s))+esc(dl(s))+'</div><h2 class="dtitle">'+esc(s.n)+'</h2><div class="tglist">'+tags(s)+'</div><p class="sm" style="margin-top:10px">'+(s.x?esc(s.cat):(s.t?"Suggested time "+esc(s.t)+" · ":"")+"")+esc(s.c)+'</p><p>'+esc(s.why)+'</p></div></div>';
   h+='<div class="actions"><button class="btn full '+(on?"line":"solid")+'" data-act="add" data-id="'+s.id+'">'+ic(on?IC.check:IC.plus)+(on?"Saved to my list. Tap to remove":"Add to my list")+'</button>'+(on?'<button class="btn full" data-act="done" data-id="'+s.id+'">'+ic(IC.check)+(store.done[s.id]?"Visited. Tap to undo":"Tick as visited")+'</button>':'')+'</div>';
   h+='<div class="sech"><span>Details</span></div><div class="group">';
   if(f.i)h+='<div class="fact"><b>What to see</b><ol>'+f.i.map(function(t){return '<li>'+esc(t)+'</li>'}).join("")+'</ol></div>';
@@ -1505,7 +1518,7 @@ function closeDetail(viaPop){var box=$("detail");if(box.hidden)return;box.hidden
 /* ---------- render + routing ---------- */
 var TABOF={trip:"trip",day:"trip",stay:"trip",map:"map",list:"list",tips:"tips"};
 function render(keepScroll){
-  var y=window.pageYOffset;
+  var y=window.pageYOffset;buildItin();
   VIEWS.forEach(function(v){var e=$("v-"+v);if(e)e.hidden=(v!==view)});
   document.querySelectorAll(".tabbar button").forEach(function(b){if(b.getAttribute("data-s")===TABOF[view])b.setAttribute("aria-current","page");else b.removeAttribute("aria-current")});
   var n=totalList(),bd=$("tabbadge");bd.textContent=n;bd.hidden=!n;updNewDots();
@@ -1516,7 +1529,7 @@ function render(keepScroll){
   if(keepScroll)window.scrollTo(0,y);else window.scrollTo(0,0)}
 function parseHash(){
   var h=(location.hash||"").replace("#","");var m=h.match(/^day-(\d+)$/);
-  if(m&&DAYS[+m[1]-1]){view="day";cur=+m[1]-1;mapCity=DAYS[cur].grp;mapDay="all"}else if(["trip","map","list","tips","stay"].indexOf(h)>-1)view=h;else view="trip"}
+  buildItin();if(m&&ITIN[+m[1]-1]){view="day";cur=+m[1]-1;mapCity=(ITIN[cur].pl[0]||{}).city||"munich";mapDay="all"}else if(["trip","map","list","tips","stay"].indexOf(h)>-1)view=h;else view="trip"}
 function go(hash){if(location.hash==="#"+hash){parseHash();render();return}location.hash=hash}
 window.addEventListener("hashchange",function(){closeDetail(true);parseHash();render()});
 window.addEventListener("popstate",function(){if(!$("detail").hidden&&!(history.state&&history.state.detail))closeDetail(true)});
@@ -1538,7 +1551,7 @@ function parseHotel(raw){
 function gps(cb){if(!navigator.geolocation){toast("GPS is not available here");return}toast("Finding you…");navigator.geolocation.getCurrentPosition(function(p){cb({lat:p.coords.latitude,lng:p.coords.longitude})},function(){toast("Could not get your location. Allow location access.")},{enableHighAccuracy:true,timeout:12000,maximumAge:30000})}
 function copyList(){
   var t="My Munich, Salzburg and Vienna list\n";
-  DAYS.forEach(function(d){var items=d.stops.concat(d.extras).filter(inList);if(!items.length)return;t+="\n"+dlabel(d)+"\n";items.forEach(function(s){t+="- "+s.n+(s.t?" ("+s.t+")":"")+"\n"})});
+  var LG=listGroups();LG.days.forEach(function(x){t+="\nDay "+(x.D.i+1)+" · "+x.D.dow+" "+x.D.dm+" · "+SN(x.D.b)+"\n";x.items.forEach(function(s){t+="- "+s.n+(s.t?" ("+s.t+")":"")+"\n"})});if(LG.un.length){t+="\nNot in your itinerary\n";LG.un.forEach(function(s){t+="- "+s.n+"\n"})}
   if(navigator.share){navigator.share({text:t}).catch(function(){})}
   else if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(function(){toast("List copied")},function(){toast("Could not copy")})}
   else toast("Copy is not available here")}
@@ -1550,15 +1563,15 @@ document.addEventListener("click",function(e){
    case"place":openDetail(id);break;
    case"detailx":closeDetail();break;
    case"dnav":{var ci=dctx.indexOf(detailId),n=dctx[ci+ +t.getAttribute("data-d")];if(n)openDetail(n,true);break}
-   case"day":{var i=+t.getAttribute("data-i");if(DAYS[i])go("day-"+(i+1));break}
+   case"day":{var i=+t.getAttribute("data-i");if(ITIN[i])go("day-"+(i+1));break}
    case"tab":go(t.getAttribute("data-s"));break;
    case"hidehow":store.hideHow=true;save();render(true);break;
    case"settings":go("tips");break;
    case"done":store.done[id]=!store.done[id];save();refresh();break;
    case"addmust":ALL.forEach(function(s){if(s.r==="m"&&!s.x)store.list[s.id]=true;});save();toast("Added all Must see places");render();break;
    case"copy":copyList();break;
-   case"daymap":mapCity=DAYS[cur].grp;mapDay=cur;selId=null;go("map");break;
-   case"showmap":{var s=P[id];closeDetail();mapCity=s.city;mapDay=s.day;selId=id;go("map");break}
+   case"daymap":mapCity=(ITIN[cur].pl[0]||{}).city||"munich";mapDay=cur;selId=null;go("map");break;
+   case"showmap":{var s=P[id];closeDetail();mapCity=s.city;mapDay=ITD[id]!=null?ITD[id]:"all";selId=id;go("map");break}
    case"mapcity":mapCity=t.getAttribute("data-c");mapDay="all";selId=null;mapShow();break;
    case"mapday":{var d=t.getAttribute("data-d");mapDay=d==="all"?"all":+d;selId=null;mapShow();break}
    case"zin":if(map)map.zoomIn();break;case"zout":if(map)map.zoomOut();break;
@@ -1577,7 +1590,7 @@ document.addEventListener("change",function(e){var t=e.target;if(t.getAttribute&
 
 (function(){var x0=0,y0=0;var dt=$("detail");dt.addEventListener("touchstart",function(e){var t=e.touches[0];x0=t.clientX;y0=t.clientY},{passive:true});dt.addEventListener("touchend",function(e){var t=e.changedTouches[0],dx=t.clientX-x0,dy=t.clientY-y0;if(x0>24&&x0<window.innerWidth-24&&Math.abs(dx)>50&&Math.abs(dx)>Math.abs(dy)*1.4){var ci=dctx.indexOf(detailId),n=dctx[ci+(dx<0?1:-1)];if(n)openDetail(n,true)}},{passive:true})})();
 /* ================= PHASE 1: update, backup, where to stay ================= */
-var APP_VERSION="1.4.0",SCHEMA=3;
+var APP_VERSION="1.5.0",SCHEMA=3;
 function pad2(n){return("0"+n).slice(-2)}
 function today(){var d=new Date();return d.getFullYear()+"-"+pad2(d.getMonth()+1)+"-"+pad2(d.getDate())}
 var WD=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"],MN=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
@@ -1638,7 +1651,7 @@ function migrate(){
 if(typeof loadErr!=="undefined"&&loadErr){var rr=restoreLatest();setTimeout(function(){toast(rr?"Your saved data was recovered from the backup of "+rr:"Saved data could not be read")},600)}
 var wasExisting=!!store.schema;
 migrate();dailyBackup(false);
-var NEWIN={"1.4.0":{trip:"Where to stay is simpler: journey, family, night plan and route in one page. New: print your whole trip as a PDF with links."},"1.3.0":{trip:"Where to stay is now night by night: pick a city for every night, and the same city can come back later. Each stay gets its own hotel name."},"1.2.0":{trip:"Where to stay: add Hallstatt, Kaprun and St. Gilgen, and pick one of three night plans.",tips:"Updates now install by themselves. You can turn this off."}};
+var NEWIN={"1.5.0":{trip:"Your days now follow your night-by-night plan: same length and same order, with enough places for every stay."},"1.4.0":{trip:"Where to stay is simpler: journey, family, night plan and route in one page. New: print your whole trip as a PDF with links."},"1.3.0":{trip:"Where to stay is now night by night: pick a city for every night, and the same city can come back later. Each stay gets its own hotel name."},"1.2.0":{trip:"Where to stay: add Hallstatt, Kaprun and St. Gilgen, and pick one of three night plans.",tips:"Updates now install by themselves. You can turn this off."}};
 (function(){var seen=store.seenVer;
   if(seen!==APP_VERSION){
     if((seen||wasExisting)&&NEWIN[APP_VERSION]){store.newTabs=store.newTabs||{};Object.keys(NEWIN[APP_VERSION]).forEach(function(k){store.newTabs[k]={v:APP_VERSION,t:NEWIN[APP_VERSION][k]}})}
@@ -1951,7 +1964,7 @@ function vStay(){
     else h+='<div class="tl"><span class="tdot" style="background:'+SC(r.c)+'">'+r.idx+'</span><div><b>'+SN(r.c)+'</b>'+(r.visit>1?' <span class="sm">(back again)</span>':'')+' · '+r.n+' night'+(r.n>1?"s":"")+'<span class="sm" style="display:block">Check in '+fd(r.in)+' · check out '+fd(r.out)+'</span>'+(s.hn[r.c+"_"+r.visit]?'<span class="sm" style="display:block">Hotel: '+esc(s.hn[r.c+"_"+r.visit])+'</span>':'')+(r.c==="salzburg"&&dayTripNames(sc.map(function(x){return x.c})).length?'<span class="sm" style="display:block">Day trips from here: '+dayTripNames(sc.map(function(x){return x.c})).join(", ")+'</span>':'')+'</div></div>';
   });
   if(!rm.length)h+='<div class="row"><span class="v sm">Pick a city for each night to see your route.</span></div>';
-  h+='</div><p class="foot">Travel times are typical train times, not a timetable. Check DB Navigator or the ÖBB app for real times and prices.</p>';
+  h+='</div><p class="foot">Travel times are typical train times, not a timetable. Check DB Navigator or the ÖBB app for real times and prices. The <b>Trip</b> tab follows this plan.</p>';
   var cnn=countsNc(s),gsame=["munich","salzburg","vienna"].every(function(c){return(cnn[c]||0)===gn[c]})&&Object.keys(cnn).length===3&&s.total===9;
   h+='<p class="foot">The daily guide was written for <b>Munich '+gn.munich+', Salzburg '+gn.salzburg+', Vienna '+gn.vienna+'</b> nights. '+(gsame?"Your route matches it.":'<button class="lnk" data-act="stay-guide">Go back to the guide’s route</button>')+'</p>';
   if(wn.length){h+='<div class="sech"><span>Check this</span></div>';wn.forEach(function(t){h+='<div class="callout w">'+t+'</div>'})}
@@ -1984,19 +1997,17 @@ function printHtml(){
   if(!sc.length)h+='<tr><td colspan="6">No nights planned yet.</td></tr>';
   h+='</table><p class="pm">Arrive: '+esc(A.n)+' · Leave from: '+esc(D.n)+'. Train times are estimates. Check '+a("https://www.bahn.com","DB Navigator")+' or '+a("https://www.oebb.at/en/","ÖBB")+' for real times and prices.</p>';
   var any=nList>0;
-  DAYS.forEach(function(d,i){
-    if(i>=s.total+1)return;
-    var nc=s.nc[i],tn=nc?SN(nc):(i===s.total?"Departure day":"");
-    h+='<section class="pd"><h2>Day '+(i+1)+' · '+fd(addDays(s.start,i))+' · '+esc(d.title)+'</h2>';
-    if(tn)h+='<p class="pm">'+(nc?'Sleep in: <b>'+tn+'</b>'+(s.hn[(function(){var k=0;for(var q=0;q<=i;q++)if(s.nc[q]===nc&&(q===0||s.nc[q-1]!==nc))k++;return nc+"_"+k})()]?' · '+esc(s.hn[(function(){var k=0;for(var q=0;q<=i;q++)if(s.nc[q]===nc&&(q===0||s.nc[q-1]!==nc))k++;return nc+"_"+k})()]):''):tn)+'</p>';
-    h+='<p><b>Getting there:</b> '+esc(d.trans)+'</p><p><b>Start:</b> '+esc(d.start)+'</p><p><b>Budget idea:</b> '+esc(d.budget)+' (estimate)</p>';
-    var pl=(d.stops||[]).concat(d.extras||[]),mine=pl.filter(function(x){return store.list[x.id]}),rest=pl.filter(function(x){return !store.list[x.id]});
-    if(!any){mine=(d.stops||[]);rest=(d.extras||[])}
+  ITIN.forEach(function(D){
+    h+='<section class="pd"><h2>Day '+(D.i+1)+' · '+D.dow+' '+D.dm+' · '+esc(D.title)+'</h2>';
+    h+='<p class="pm">'+(D.kind==="last"?esc(D.sleep):'Sleep in: <b>'+esc(D.sleep)+'</b>')+'</p>';
+    h+='<p><b>Getting there:</b> '+esc(D.trans)+'</p><p><b>Start:</b> '+esc(D.start)+'</p><p><b>Budget idea:</b> '+esc(D.th.budget)+' (estimate)</p>';
+    var pl=D.pl.concat(D.exo),mine=pl.filter(function(x){return store.list[x.id]}),rest=pl.filter(function(x){return !store.list[x.id]});
+    if(!any){mine=D.pl;rest=D.exo}
     var row=function(x){return'<li><b>'+(store.done[x.id]?"✓ ":"")+esc(x.n)+'</b>'+(x.t?' · '+esc(x.t):'')+' · '+esc(x.c)+'<br>'+esc(x.why)+'<br>'+a(mapsPlace(x),"Google Maps")+(URLS[x.id]?' · '+a(URLS[x.id],"Official website"):'')+'</li>'};
     if(mine.length)h+='<h3>'+(any?'Your places':'Main stops')+'</h3><ul>'+mine.map(row).join("")+'</ul>';
     if(rest.length)h+='<h3>Other suggestions</h3><ul class="sm">'+rest.map(function(x){return'<li>'+esc(x.n)+' · '+a(mapsPlace(x),"Google Maps")+(URLS[x.id]?' · '+a(URLS[x.id],"Website"):'')+'</li>'}).join("")+'</ul>';
-    if(d.rain&&d.rain.length)h+='<h3>If it rains</h3><ul class="sm">'+d.rain.map(function(x){return'<li>'+esc(x)+'</li>'}).join("")+'</ul>';
-    if(d.facts&&d.facts.length)h+='<h3>Fun facts for the kids</h3><ul class="sm">'+d.facts.map(function(x){return'<li>'+esc(x)+'</li>'}).join("")+'</ul>';
+    h+='<h3>If it rains</h3><ul class="sm">'+D.th.rain.map(function(x){return'<li>'+esc(x)+'</li>'}).join("")+'</ul>';
+    h+='<h3>Fun facts for the kids</h3><ul class="sm">'+D.th.facts.map(function(x){return'<li>'+esc(x)+'</li>'}).join("")+'</ul>';
     h+='</section>';
   });
   h+='<h2>Good to know</h2><ul class="sm"><li>Prices and times in this plan are estimates. Check opening hours on the official websites before you go.</li><li>Train tickets: '+a("https://www.bahn.com","bahn.com")+' · '+a("https://www.oebb.at/en/","oebb.at")+'</li><li>Foods are marked “possibly made with pork” where that is likely. Ask when ordering.</li><li>Christmas markets: many stalls are cash only. Carry some euros.</li></ul>';
@@ -2008,6 +2019,99 @@ function printOpen(){
   el.classList.add("show");document.body.classList.add("printing");document.body.style.overflow="hidden";el.scrollTop=0;
 }
 function printClose(){var el=document.getElementById("printdoc");if(el)el.classList.remove("show");document.body.classList.remove("printing");document.body.style.overflow=""}
+/* ===== itinerary: built from the night-by-night plan ===== */
+var ITIN=[],ITD={},THEMES={},ORD={munich:["d1","d2","x-m3","x-m4"],salzburg:["d3","d4","d5","d6","d7"],kaprun:["d4","x-k2"],hallstatt:["d5","x-h2"],stgilgen:["d6","x-g2"],vienna:["d8","d9","d10","x-v4","x-v5"]},TARR={munich:"d1",salzburg:"x-s0",vienna:"d8"},WXI={munich:0,salzburg:1,kaprun:1,hallstatt:1,stgilgen:1,vienna:2};
+function mkT(id,city,tplId,o){
+  var tpl=DAYS.filter(function(x){return x.id===tplId})[0];
+  var t={id:id,city:city,tpl:tpl,title:tpl.title,lede:tpl.lede,stops:tpl.stops.map(function(x){return x.id}),extras:tpl.extras.map(function(x){return x.id}),getting:tpl.getting,rain:tpl.rain,facts:tpl.facts,spot:tpl.spot,startPt:tpl.startPt,start:tpl.start,budget:tpl.budget,budgetNote:tpl.budgetNote,clim:tpl.clim,wrule:tpl.wrule,trans:tpl.trans,st:null,trip:null,wx:tpl.wx,mor:null};
+  for(var k in o)t[k]=o[k];THEMES[id]=t;return t}
+(function(){
+  var P0={n:"",lat:0,lng:0};
+  mkT("d1","munich","d1",{mor:["a2","a3"],st:"Everything today is within 10–15 min on foot of Marienplatz. Wear warm shoes."});
+  mkT("d2","munich","d2",{mor:["b5","b1"],clim:"Plan for about 0–8 °C, cloudy, possibly light rain or snow. Sunset around 16:20.",title:"Glockenspiel, old town and the Deutsches Museum",lede:"A museum day that works in any weather: the old town first, then the Deutsches Museum for the kids.",stops:["b5","b1"],st:"Walk in the old town, and take the U-Bahn or tram to the museum (tickets at mvv-muenchen.de).",wrule:"Mostly indoors: good in any weather."});
+  mkT("d3","salzburg","d3",{mor:["d3","e5"]});var SH="You sleep here, so keep travel short. Buses and trains connect the villages (check times).";mkT("d4","kaprun","d4",{trip:"kaprun",st:SH});mkT("d5","hallstatt","d5",{trip:"hallstatt",st:SH});mkT("d6","stgilgen","d6",{trip:"stgilgen",st:SH});mkT("d7","salzburg","d7",{mor:["k4","d1"]});
+  mkT("d8","vienna","d8",{st:"The old town is compact. Walk, and use the U-Bahn for longer hops."});mkT("d9","vienna","d9",{});mkT("d10","vienna","d10",{lastOnly:true});
+  mkT("x-m3","munich","d2",{mor:["bx-residenz"],clim:"Plan for about 0–8 °C, cloudy, possibly rain or snow. Sunset around 16:20.",title:"Palaces, parks and the Englischer Garten",lede:"A calmer day with space to run: a palace, a big park and a market snack.",stops:["bx-residenz","bx-nymph","bx-english"],extras:["bx-vik","ax-peter","ax-sendlinger"],startPt:{n:"Munich Residenz",lat:48.1413,lng:11.5789},start:"Munich Residenz (10 min on foot from Marienplatz)",getting:["The Residenz is about 10 min on foot from Marienplatz. Nymphenburg is 25–30 min by tram and U-Bahn.","The Englischer Garten is big: wear warm shoes and bring a hot drink.","Check winter opening hours of the Residenz and Nymphenburg on their websites."],rain:["The Residenz and its treasury are indoors.","Nymphenburg’s palace rooms are indoors, the park is not.","If it pours, swap the park for the Deutsches Museum."],facts:["The Residenz was home to Bavarian dukes, electors and kings for centuries.","Nymphenburg Palace has a museum of royal carriages.","The Englischer Garten is one of the largest city parks in the world."],spot:["Find the Chinese Tower","Look for swans at Nymphenburg","Find the river surfers on the Eisbach, if it is not frozen"],budget:"€85",budgetNote:"Palace tickets ≈€40–50 for the family (check) · lunch ≈€40",st:"Take tram or U-Bahn between sights (tickets at mvv-muenchen.de)."});
+  mkT("x-m4","munich","d2",{clim:"Plan for about 0–8 °C, cloudy, possibly rain or snow. Sunset around 16:20.",title:"Olympic Park, BMW Welt and market snacks",lede:"Big views, cars to sit in and a market for lunch.",stops:["bx-olympia","bx-bmw","bx-vik"],extras:["ax-kripperl","ax-peter","ax-sendlinger"],startPt:{n:"Olympiazentrum (U3)",lat:48.1792,lng:11.5560},start:"Olympiazentrum station (U3)",getting:["Olympiapark and BMW Welt are next to each other: U3 to Olympiazentrum.","Tower views are best on a clear day: check the webcam first.","BMW Welt is free to enter. The museum is paid."],rain:["BMW Welt and the BMW Museum are indoors.","Skip the tower in fog or rain.","Viktualienmarkt has covered stalls and cafés."],facts:["The Olympiapark was built for the 1972 Summer Olympics.","The Olympic Tower is about 290 m tall.","BMW Welt lets you sit in the cars for free."],spot:["Find the tent-like roof of the stadium","Spot an old BMW","Eat a fresh pretzel"],budget:"€80",budgetNote:"Tower ≈€10 per adult (check) · lunch ≈€40 · BMW Welt free",st:"Use the U-Bahn (tickets at mvv-muenchen.de)."});
+  mkT("x-s0","salzburg","d3",{clim:"Plan for about 0–8 °C, cloudy, possibly rain or snow. Sunset around 16:20.",title:"The Christmas market after dark",lede:"Settle in and walk to the market in the evening.",stops:["d5","dx-mozartplatz"],extras:["dx-cathedral","dx-sphaera","dx-peter"],getting:["From the Hauptbahnhof the old town is about 20 min on foot, or a short bus ride.","Check in first, then go to the market after dark: it is prettiest at night.","Domplatz and Residenzplatz are right next to each other."],rain:["The cathedral is indoors and free.","The market stalls have roofs: warm up with a hot chocolate.","If everyone is tired, eat near the hotel."],facts:["Salzburg’s Christkindlmarkt is one of the oldest in Europe.","The Residenz was the home of the prince-archbishops.","The carol Silent Night was first sung near Salzburg in 1818."],spot:["Find a gingerbread heart","Look for the golden ball at Kapitelplatz","Listen for the cathedral bells"],budget:"€70",budgetNote:"Market snacks and dinner ≈€55 · sights are free",st:"The old town is walkable."});
+  mkT("x-k2","kaprun","d4",{clim:"Plan for about 0–8 °C, cloudy, possibly rain or snow. Sunset around 16:20.",title:"Zell am See and the Schmittenhöhe",lede:"A lake town and a cable car with mountain views.",stops:["fx-schmitten","fx-zell","fx-burg"],extras:[],trip:"kaprun",getting:["Zell am See station is a short walk from the lake.","The Schmittenhöhe cable car starts at the edge of town: check opening times online.","Dress warm: it is much colder at the top."],rain:["The lake walk is outdoors: take a hot drink.","Cable car views are best on clear days: check the webcam first.","Warm up in a café in the town centre."],facts:["Zell am See sits on a lake that can freeze in winter.","The Schmittenhöhe is almost 2,000 m high.","Kaprun has a medieval castle above the village."],spot:["Find the lake and the mountains in one view","Count the cable car cabins","Spot a snow-covered peak"],startPt:{n:"Zell am See station",lat:47.3228,lng:12.7956},start:"Zell am See station",budget:"€110",budgetNote:"Cable car ≈€30–35 per adult (check) · lunch ≈€45",st:"You sleep here, so keep travel short. Buses and trains connect Kaprun and Zell am See."});
+  mkT("x-h2","hallstatt","d5",{clim:"Plan for about 0–8 °C, cloudy, possibly rain or snow. Sunset around 16:20.",title:"Dachstein, Bad Ischl and the museum",lede:"Mountains, an emperor’s town and an indoor stop.",stops:["gx-krippen","gx-ischl","gx-museum"],extras:["gx-skywalk","gx-advent"],trip:"hallstatt",getting:["Obertraun is near Hallstatt: check bus and ferry times.","The Krippenstein cable car and ice caves are seasonal: check winter opening on dachstein.at.","Bad Ischl is an easy stop on the train."],rain:["Hallstatt Museum is indoors.","Cable cars can close in wind or fog.","Cafés in Bad Ischl are a good warm-up."],facts:["The Dachstein is a glacier mountain above Hallstatt.","Bad Ischl was the summer home of Emperor Franz Joseph.","The Krippenstein cable car climbs to about 2,100 m."],spot:["Look for the ice cave","Find the emperor’s villa in Bad Ischl","Count the cable car cabins"],budget:"€110",budgetNote:"Cable car ≈€35 per adult (check) · lunch ≈€45",st:"You sleep here, so keep travel short. Check bus and ferry times."});
+  mkT("x-g2","stgilgen","d6",{clim:"Plan for about 0–8 °C, cloudy, possibly rain or snow. Sunset around 16:20.",title:"Zwölferhorn and Strobl",lede:"A cable car, a quiet lakeside town and another small market.",stops:["kx-zwolf","kx-strobl","k3"],extras:[],trip:"stgilgen",getting:["Buses and the lake boat connect St. Gilgen, St. Wolfgang and Strobl: check winter timetables.","The Zwölferhorn cable car may close in bad weather.","Markets open in the afternoon and evening: check dates."],rain:["Cafés by the lake are a good warm-up.","Cable car views need clear weather.","Stalls at the markets have roofs."],facts:["Wolfgangsee is about 11 km long and very clear.","St. Wolfgang’s church has a famous carved altar.","The White Horse Inn at St. Wolfgang is the setting of a famous operetta."],spot:["Find a swan on the lake","Count the church towers","Spot a boat on the lake"],budget:"€90",budgetNote:"Cable car ≈€25–30 per adult (check) · lunch ≈€40",st:"You sleep here, so keep travel short."});
+  mkT("x-v4","vienna","d8",{clim:"Plan for about 0–8 °C, cloudy, possibly rain or snow. Sunset around 16:20.",title:"Hofburg, opera and museums",lede:"The Habsburg palace and an art museum, all within a short walk.",stops:["hx-hofburg","hx-albertina","jx-albertina","ix-nhm"],extras:["jx-stroll","hx-krampus"],startPt:{n:"Michaelerplatz",lat:48.2086,lng:16.3659},start:"Michaelerplatz",getting:["The Hofburg, Albertina and State Opera are within 10 min on foot of each other.","The Natural History Museum is on the Ring: take tram 1, 2 or D.","Check each museum’s closing day."],rain:["Everything today is indoors except the walks between sights.","The Natural History Museum is great for kids.","Warm up in a Viennese café."],facts:["The Hofburg was the winter palace of the Habsburgs.","The Albertina has paintings by Monet and Picasso.","The Natural History Museum shows a famous prehistoric statue, the Venus of Willendorf."],spot:["Find a Habsburg crown","Spot a dinosaur skeleton","Look for a painting by Monet"],budget:"€95",budgetNote:"Museum tickets ≈€45–60 for the family (check) · lunch ≈€40",st:"Walk and use trams (tickets at wienerlinien.at)."});
+  mkT("x-v5","vienna","d9",{clim:"Plan for about 0–8 °C, cloudy, possibly rain or snow. Sunset around 16:20.",title:"Aquarium, music and a hill with a view",lede:"Two indoor museums kids like, with a view if the weather is clear.",stops:["ix-meer","ix-musik"],extras:["ix-gloriette"],startPt:{n:"Haus des Meeres",lat:48.1978,lng:16.3535},start:"Haus des Meeres (Esterházypark)",getting:["Haus des Meeres and Haus der Musik are 10–15 min apart by U-Bahn or tram.","Book tickets online if you can.","Haus des Meeres is inside a large old tower: there are many steps, with lifts."],rain:["Both museums are indoors: this is a good bad-weather day.","Skip the Gloriette in fog."],facts:["Haus des Meeres is inside a World War II flak tower.","In Haus der Musik you can play with sounds and instruments.","The Gloriette stands on the hill above Schönbrunn."],spot:["Find a shark","Make a sound with a big instrument","Look for the Stephansdom roof from above"],budget:"€95",budgetNote:"Tickets ≈€50–60 for the family (check) · lunch ≈€40",st:"Use U-Bahn and trams (tickets at wienerlinien.at)."});
+})();
+function consumedT(t,shown){var n=0;t.stops.forEach(function(id){if(shown[id])n++});return n>Math.floor(t.stops.length/2)}
+function freeT(b,shown,cnt){
+  var base=THEMES[(ORD[b]||ORD.salzburg)[0]],pool=[];
+  (ORD[b]||[]).forEach(function(id){THEMES[id].stops.concat(THEMES[id].extras).forEach(function(x){if(pool.indexOf(x)<0)pool.push(x)})});
+  var rest=pool.filter(function(id){return !shown[id]});
+  rest.sort(function(a,c){var o={m:0,g:1,o:2};return(o[P[a].r]||0)-(o[P[c].r]||0)});
+  var st=rest.slice(0,4),ex=rest.slice(4,9);
+  if(!st.length){var all=pool.slice();all.sort(function(a,c){var o={m:0,g:1,o:2};return(o[P[a].r]||0)-(o[P[c].r]||0)});var n0=((cnt||1)-1)*3;for(var z=0;z<3&&z<all.length;z++)st.push(all[(n0+z)%all.length]);ex=[]}
+  var t={};for(var k in base)t[k]=base[k];
+  t.id="free-"+b;t.title="Free day in "+SN(b);t.lede="A flexible day: repeat a favourite, rest, or pick from the places below.";t.stops=st;t.extras=ex;t.trip=null;t.st="Keep the day light. Public transport and walking are enough.";t.budget="€60";t.budgetNote="Food and local transport (estimate)";return t}
+function buildItin(){
+  ITD={};
+  var s=stay(),N=s.total,A=AIR[s.arr]||AIR.MUC,D0=AIR[s.dep]||AIR.VIE,out=[],shown={},stayC={};
+  s.nc.forEach(function(c){if(c)stayC[c]=1});
+  var f=[],lastc=null;for(var q=0;q<N;q++){if(s.nc[q])lastc=s.nc[q];f.push(s.nc[q]||null)}
+  var first=null;for(q=0;q<N;q++)if(f[q]){first=f[q];break}
+  lastc=first||A.c;for(q=0;q<N;q++){if(f[q])lastc=f[q];else f[q]=lastc}
+  var rf=schedule(s,f),rs=schedule(s);
+  var freeCnt={},usedT={};
+  function nextT(b,arr,morn,last){
+    var t=null;
+    if(arr&&!morn&&TARR[b]&&!consumedT(THEMES[TARR[b]],shown))t=THEMES[TARR[b]];
+    if(last&&!t){var l0=ORD[b]||[];for(var k0=0;k0<l0.length;k0++){var c0=THEMES[l0[k0]];if(c0.lastOnly&&!usedT[c0.id]){t=c0;break}}}
+    if(!t){var l=ORD[b]||[];for(var k=0;k<l.length;k++){var c=THEMES[l[k]];if(c.lastOnly&&!last)continue;if(c.trip&&c.trip!==b&&(stayC[c.trip]||arr||morn))continue;if(morn&&!c.mor)continue;if(!consumedT(c,shown)){t=c;break}}}
+    if(!t&&!morn){freeCnt[b]=(freeCnt[b]||0)+1;return freeT(b,shown,freeCnt[b])}return t}
+  for(var i=0;i<=N;i++){
+    var date=addDays(s.start,i),mc=i===0?A.c:f[i-1],sc=i<N?f[i]:null,b=sc||mc;
+    var kind=i===N?"last":(i===0?"arrive":(mc!==sc?"move":"stay"));
+    var th=nextT(b,kind==="arrive"||kind==="move",false,kind==="last");
+    usedT[th.id]=1;
+    var morning=null;
+    if(kind==="move"&&tmin(mc,sc)<=130&&ORD[mc]){var mt=nextT(mc,false,true);if(mt){morning={c:mc,ids:mt.mor.slice()};morning.ids.forEach(function(id){shown[id]=1})}}
+    var ids=th.stops.slice(),ex=th.extras.slice();
+    if(kind==="last"&&ids.length>3){ex=ids.slice(3).concat(ex);ids=ids.slice(0,3)}
+    ids.forEach(function(id){shown[id]=1});
+    var D={i:i,date:date,dow:fd(date).split(" ")[0],dm:fd(date).split(" ").slice(1).join(" "),kind:kind,mc:mc,sc:sc,b:b,th:th,morning:morning,ids:ids,ex:ex};
+    var gi=-1;for(var r=0;r<rf.length;r++){if(i===N){gi=rf.length-1}else if(date>=rf[r].in&&date<rf[r].out){gi=r;break}}
+    D.sg=gi<0?0:gi;D.row=rf[D.sg]||null;
+    D.hrow=null;if(i<N)for(r=0;r<rs.length;r++){if(date>=rs[r].in&&date<rs[r].out){D.hrow=rs[r];break}}
+    D.hotel=D.hrow?(s.hn[D.hrow.key]||""):"";
+    var allids=(morning?morning.ids:[]).concat(ids);
+    D.pos={};allids.forEach(function(id,ix){D.pos[id]=ix+1});
+    D.all=allids.concat(ex);D.has={};D.all.forEach(function(id){D.has[id]=1;if(ITD[id]==null)ITD[id]=i});
+    D.pl=allids.map(function(id){return P[id]});D.exo=ex.map(function(id){return P[id]});
+    D.mpl=morning?morning.ids.map(function(id){return P[id]}):[];D.apl=ids.map(function(id){return P[id]});
+    /* text */
+    if(kind==="arrive"){
+      D.title=th.id==="d1"?th.title:(th.title.indexOf("Arriv")===0||th.title.indexOf("Train")===0?th.title:"Arrival: "+th.title);
+      D.trans=(th.id==="d1"&&A.c==="munich")?th.tpl.trans:"Arrive at "+A.n+". "+(A.c===b?"Take the train or S-Bahn into the city (about "+hm(A.min)+", estimate).":"Then take the train to "+SN(b)+" (about "+hm(A.min+tmin(A.c,b))+" in total, estimate).")+" Check DB Navigator or the ÖBB app for tickets.";
+      D.start=A.c===b&&th.id==="d1"?th.start:A.n;
+    }else if(kind==="move"){
+      D.title=(th.title.indexOf("Train")===0)?th.title:(morning?SN(mc)+" morning, then the train to "+SN(b):(th.id.indexOf("free-")===0?"Train to "+SN(b)+" and a free afternoon":"Train to "+SN(b)+" · "+th.title));
+      var gt=(mc==="munich"&&b==="salzburg")?DAYS[1].trans:(mc==="salzburg"&&b==="vienna")?DAYS[7].trans:"Train from "+SN(mc)+" to "+SN(b)+", about "+hm(tmin(mc,b))+" (estimate). Check DB Navigator or the ÖBB app for times and prices. Check out of your hotel and leave your bags there if you have time before the train.";
+      D.trans=gt;D.start=morning?"Your hotel in "+SN(mc)+": check out and leave your bags":"Your hotel in "+SN(mc)+": check out, then go to the station";
+    }else if(kind==="last"){
+      D.title=(th.id==="d10")?th.title:"Last morning in "+SN(b);
+      D.trans=(th.id==="d10"&&D0.c==="vienna"&&b==="vienna")?th.tpl.trans:"Go to "+D0.n+" (about "+hm(D0.min+tmin(b,D0.c))+" from "+SN(b)+", estimate). Allow about 2 hours before the flight and check out of your hotel first.";
+      D.start="Your hotel in "+SN(b)+": check out and leave your bags if you have time";
+    }else{
+      D.title=th.title;
+      D.trans=(th.trip&&th.trip===b)?th.st:(th.trip?th.trans:(th.st||th.trans));
+      D.start=th.start;
+    }
+    D.sleep=i<N?SN(sc)+(D.hotel?" · "+D.hotel:" · hotel not chosen yet"):"No overnight: departure day";
+    out.push(D);
+  }
+  ITD={};out.forEach(function(D){D.all.forEach(function(id){if(ITD[id]==null)ITD[id]=D.i})});
+  ITIN=out;return out;
+}
+function itinPlace(id){return ITD[id]!=null?ITIN[ITD[id]]:null}
+function dl(s){var D=itinPlace(s.id);return D?"Day "+(D.i+1)+" · "+D.dow+" "+D.dm:"Not in your itinerary · "+SN(s.city)}
+
 var smap=null;
 function stayMap(){
   var el=$("smap");if(!el||typeof L==="undefined")return;
