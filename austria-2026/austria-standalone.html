@@ -973,6 +973,15 @@ select,input[type=date]{margin-left:auto;font:inherit;font-size:.9375rem;color:v
 .sw[aria-checked="true"]{background:#34c759}
 .sw[aria-checked="true"] i{transform:translateX(20px)}
 .srow .chev{margin-left:auto}
+
+.sh{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.sh h1{margin:0}
+.hbar{display:flex;align-items:center;gap:2px}
+.hb{width:32px;height:32px;border:0;border-radius:8px;background:none;color:var(--sub);display:flex;align-items:center;justify-content:center;font:600 .8125rem inherit;padding:0}
+.hb svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.hb[aria-pressed="true"]{background:var(--accent-soft);color:var(--accent)}
+.hsep{width:1px;height:18px;background:var(--line);margin:0 4px}
+.cd{width:18px;height:18px;border-radius:50%;display:block}
 </style></head><body>
 <main id="app"><section id="v-trip"></section><section id="v-day" hidden></section><section id="v-map" hidden></section><section id="v-list" hidden></section><section id="v-tips" hidden></section><section id="v-stay" hidden></section><section id="v-more" hidden></section><section id="v-settings" hidden></section></main>
 <div id="detail" class="page" hidden></div>
@@ -1806,7 +1815,7 @@ function vMore(){
   return h}
 
 /* ================= PHASE 1: update, backup, where to stay ================= */
-var APP_VERSION="1.7.2",SCHEMA=3;
+var APP_VERSION="1.7.3",SCHEMA=3;
 function pad2(n){return("0"+n).slice(-2)}
 function today(){var d=new Date();return d.getFullYear()+"-"+pad2(d.getMonth()+1)+"-"+pad2(d.getDate())}
 var WD=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"],MN=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
@@ -1997,7 +2006,9 @@ function sRow(k,c,t,sub,right,act,more){
   return act?'<button class="row tap srow" data-act="'+act+'"'+(more||'')+'>'+inner+'</button>':'<div class="row srow">'+inner+'</div>'}
 function sSw(on,act){return'<button class="sw" role="switch" aria-checked="'+on+'" data-act="'+act+'" data-v="'+(on?0:1)+'" aria-label="Automatic updates"><i></i></button>'}
 function vSettings(){
-  var h='<div class="head"><h1>Settings</h1></div>',st=upd.state,ks=bkDates(),lastBk=ks.length?ks[ks.length-1]:null;
+  var th=store.theme||"light",ac=store.accent||"green",ai=0;THEMES.forEach(function(t,k){if(t[0]===ac)ai=k});var nx=THEMES[(ai+1)%THEMES.length];
+  var tb=function(k,t,svg){return'<button class="hb" data-act="theme" data-t="'+k+'" aria-label="'+t+'" aria-pressed="'+(th===k)+'"><svg viewBox="0 0 24 24">'+svg+'</svg></button>'};
+  var h='<div class="head sh" id="settings"><h1>Settings</h1><div class="hbar">'+tb("light","Light",SIC.sun)+tb("dark","Dark",'<path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/>')+tb("auto","Automatic",'<circle cx="12" cy="12" r="8.5"/><path d="M12 3.5v17a8.5 8.5 0 0 0 0-17z" fill="currentColor"/>')+'<span class="hsep"></span><button class="hb t" data-act="fs" data-d="-1" aria-label="Smaller text">A−</button><button class="hb t" data-act="fs" data-d="1" aria-label="Larger text">A+</button><span class="hsep"></span><button class="hb" data-act="accent" data-a="'+nx[0]+'" aria-label="Change colour"><i class="cd" style="background:'+THEMES[ai][2]+'"></i></button></div></div>',st=upd.state,ks=bkDates(),lastBk=ks.length?ks[ks.length-1]:null;
   h+=newBanner('settings');
   var last=store.lastCheck?new Date(store.lastCheck):null;
   var usub=upd.msg?esc(upd.msg):('Version '+esc(APP_VERSION)+(upd.latest&&vcmp(upd.latest,APP_VERSION)<=0?' · up to date':'')+(last?' · checked '+last.getDate()+' '+MN[last.getMonth()]:''));
@@ -2008,10 +2019,6 @@ function vSettings(){
   if(pendImp)h+='<div class="group sg"><div class="row" style="display:block"><b>A plan was shared with you</b><span class="sm" style="display:block;color:var(--fg);margin:4px 0 8px">'+impSummary(pendImp)+'</span><div class="btnrow"><button class="btn solid" data-act="imp-ok">Replace my plan</button><button class="btn" data-act="imp-no">Cancel</button></div><p class="sm" style="margin:8px 0 0">Your current plan is backed up first.</p></div></div>';
   h+='<div class="group sg">'+sRow("share","#ff9500","Share my plan","AirDrop, Messages or WhatsApp",ic(IC.fwd,"chev"),"plan-share")+'<div class="row srow">'+sI("link","#ff9500")+'<input id="impbox" class="sin" placeholder="Paste a plan link" autocomplete="off" autocapitalize="off" spellcheck="false"><button class="btn sm1" data-act="imp-paste">Show</button></div>'+(impMsg?'<div class="row"><span class="sm" style="color:var(--warn)">'+esc(impMsg)+'</span></div>':'')+'</div>';
   h+='<p class="foot sf">Tap Share, send it. Your friend opens the link and taps “Replace my plan”. Both phones need the latest version.</p>';
-  var th=store.theme||"light";
-  h+='<div class="group sg" id="settings"><div class="row srow">'+sI("sun","#5856d6")+'<span class="stt">Appearance</span><div class="seg" style="margin-left:auto;min-width:170px">'+[["light","Light"],["dark","Dark"],["auto","Auto"]].map(function(x){return'<button data-act="theme" data-t="'+x[0]+'" aria-pressed="'+(th===x[0])+'">'+x[1]+'</button>'}).join("")+'</div></div>'
-   +'<div class="row srow">'+sI("text","#5856d6")+'<span class="stt">Text size</span><div class="stepper" style="margin-left:auto"><button data-act="fs" data-d="-1" aria-label="Smaller text">A−</button><b>'+FS+'</b><button data-act="fs" data-d="1" aria-label="Larger text">A+</button></div></div>'
-   +'<div class="row srow">'+sI("drop","#5856d6")+'<span class="stt">Colour</span><div class="dots" style="margin-left:auto">'+THEMES.map(function(t){return'<button class="dot" data-act="accent" data-a="'+t[0]+'" style="background:'+t[2]+'" aria-label="'+t[1]+'" aria-pressed="'+((store.accent||"green")===t[0])+'"></button>'}).join("")+'</div></div></div>';
   h+='<div class="group sg">'+(deferredInstall?sRow("phone","#34c759","Install on this phone","",ic(IC.fwd,"chev"),"install"):sRow("phone","#34c759","Add to Home Screen","iPhone: Share, then Add to Home Screen. Android: ⋮ menu, then Install app.","",null))+sRow("wifi","#8e8e93","Works offline","Open it once with internet. Open the Map once per city.","",null)+'</div>';
   h+='<p class="foot sf">Version '+esc(APP_VERSION)+'</p>';
   return h}
