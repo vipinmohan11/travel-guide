@@ -1051,6 +1051,12 @@ select,input[type=date]{margin-left:auto;font:inherit;font-size:.9375rem;color:v
 .tabbar .ic{stroke-width:2.4}
 .tabbar button{color:var(--fg);opacity:.85}
 .tabbar button[aria-current="page"],.tabbar button.on{opacity:1}
+
+.pkhi{display:flex;align-items:center;gap:12px;width:calc(100% - 0px);margin:0 0 12px;padding:14px 16px;border:0;border-radius:16px;background:var(--accent);color:#fff;text-align:left;font:inherit}
+.pkhi .ic{width:28px;height:28px;stroke:#fff}
+.pkhi .chev .ic,.pkhi svg.chev{stroke:#fff}
+.tabbar button[data-s="list"] .ic{width:40px;height:40px;padding:8px;box-sizing:border-box;border-radius:16px;background:var(--accent);color:#fff;stroke-width:2.2;margin-top:-18px}
+.tabbar button[data-s="list"]{color:var(--accent);font-weight:700}
 </style></head><body>
 <main id="app"><section id="v-trip"></section><section id="v-day" hidden></section><section id="v-map" hidden></section><section id="v-list" hidden></section><section id="v-tips" hidden></section><section id="v-stay" hidden></section><section id="v-more" hidden></section><section id="v-settings" hidden></section><section id="v-pack" hidden></section></main>
 <div id="detail" class="page" hidden></div>
@@ -1409,7 +1415,7 @@ function vTrip(){
     var n=listCount({stops:D.pl,extras:D.exo});
     h+='<button class="row tap" data-act="day" data-i="'+D.i+'" style="--c:'+SC(D.b)+'"><span class="dn">'+(D.i+1)+'</span><span class="grow"><span class="sm" style="display:block">'+dayFlags({stops:D.pl})+D.dow+' '+D.dm+(D.th.wx&&D.kind!=="move"?' · weather-dependent':'')+(D.kind==="move"?' · travel from '+SN(D.mc):'')+(D.kind==="last"?' · departure day':'')+'</span><span class="ttl">'+esc(D.title)+'</span></span>'+(n?'<span class="cnt">'+n+' in list</span>':'')+ic(IC.fwd,"chev")+'</button>'});
   if(g>=0)h+='</div>';
-  h+='<p class="foot">The days follow your plan in <b>Where to stay</b>. Change the nights there and this page updates. Dates and times are a plan, not bookings. Check opening hours and prices on the official sites before you go.</p>';
+  h+='<p class="foot">The days follow your plan in <b>Trip setup</b>. Change the nights there and this page updates. Dates and times are a plan, not bookings. Check opening hours and prices on the official sites before you go.</p>';
   return h}
 
 function vDay(){
@@ -1568,11 +1574,12 @@ function vTips(){
     var ti=TI[cur.t]||["list",cur.t,"#007aff"];
     return'<div class="nav"><button class="nb" data-act="tip-back">'+ic(IC.back)+'Tips</button><span class="t">'+esc(ti[1])+'</span><span style="width:44px"></span></div><div class="head sh"><h1 style="font-size:1.5rem">'+sI(ti[0],ti[2]).replace('class="si"','class="si lg"')+' '+cur.t+'</h1></div><div class="group"><div class="in" style="padding:6px 16px 12px">'+cur.b+'</div></div><p class="foot">Emergency: 112 (all of Europe). Prices, hours and train times are estimates: check the official sites.</p>'}
   h=h.replace('<div class="eyebrow">Before and during the trip</div>','');
-  TS.push({c:"On the trip",t:"Events",b:"",more:"events"});TS.push({c:"Eating and money",t:"Save money",b:"",more:"save"});TS.push({c:"Eating and money",t:"Food",b:"",more:"food"});
+  TS.push({c:"On the trip",t:"Events",b:"",more:"events"});TS.push({c:"Eating and money",t:"Save money",b:"",more:"save"});TS.push({c:"Eating and money",t:"Food",b:"",more:"food"});TS.push({c:"Before you go",t:"Print PDF",b:"",more:"print"});
   var cats=[];TS.forEach(function(x){if(cats.indexOf(x.c)<0)cats.push(x.c)});
+  h+='<button class="pkhi" data-act="pack-open">'+sI('box','rgba(255,255,255,0.25)').replace('class="si"','class="si pksi"')+'<span class="grow"><b style="display:block;font-size:1.0625rem">Packing list</b><span style="display:block;opacity:.9;font-size:.8125rem">For each person, with ticks. Start here before you travel.</span></span>'+ic(IC.fwd,'chev')+'</button>';
   cats.forEach(function(cn){
     h+='<div class="sech" style="margin-top:14px;margin-bottom:5px"><span>'+cn+'</span></div><div class="group tg3">';
-    TS.forEach(function(x){if(x.c!==cn)return;var ti=TI[x.t]||["list",x.t,"#007aff"];h+='<button class="tile" data-act="'+(x.more?'tip-more':'tip-open')+'" data-t="'+esc(x.t)+'" data-m="'+(x.more||'')+'">'+sI(ti[0],ti[2])+'<span>'+ti[1]+'</span></button>'});
+    TS.forEach(function(x){if(x.c!==cn)return;var ti=TI[x.t]||["list",x.t,"#007aff"];h+='<button class="tile" data-act="'+(x.more==="print"?'print-open':x.more?'tip-more':'tip-open')+'" data-t="'+esc(x.t)+'" data-m="'+(x.more||'')+'">'+sI(ti[0],ti[2])+'<span>'+ti[1]+'</span></button>'});
     h+='</div>'});
   h+=newBanner('tips');
   h+='<div class="callout w" style="margin-top:14px"><b>Emergency: 112</b>Works all over Europe. Prices, hours and train times are estimates: check the official sites.</div>';
@@ -1853,13 +1860,12 @@ var FOOD=[
 function fchip(t){return'<span class="ft ft-'+t.toLowerCase()+'">'+FDET[t]+'</span>'}
 function planCities(){var o=[];ITIN.forEach(function(D){if(o.indexOf(D.b)<0)o.push(D.b)});return o}
 function planTiles(){
-  var tl=function(act,k,c,t){return'<button class="tile" data-act="'+act+'">'+sI(k,c)+'<span>'+t+'</span></button>'};
-  return'<div class="sech"><span>Plan</span></div><div class="group tg4">'+tl("stay-open","bed","#007aff","Stay")+tl("pack-open","box","#34c759","Packing list")+tl("print-open","print","#8e8e93","Print PDF")+'</div>'}
+  return'<div class="sech"><span>Plan</span></div><div class="group"><button class="row tap srow" data-act="stay-open">'+sI("bed","#007aff")+'<span class="grow"><span class="stt">Trip setup</span><span class="sm" style="display:block">Dates, nights, hotels, people and pace. Everything else is based on this.</span></span>'+ic(IC.fwd,"chev")+'</button></div>'}
 function vMore(){
-  var s=stay(),pc=planCities();
-  var h='<div class="nav"><button class="nb" data-act="tab" data-s="trip">'+ic(IC.back)+'Suggested</button><span class="t">Good to know</span><span style="width:44px"></span></div>';
-  h+='<div class="head"><div class="eyebrow">'+fd(s.start)+' – '+fd(stayEnd(s))+'</div><h1>Events, savings and food</h1><p class="sub">'+MORE_ASOF+'. Dates can change: check the link.</p></div>';
-  h+='<div class="segwrap"><div class="seg">'+[["events","Events"],["save","Save money"],["food","Food"]].map(function(x){return'<button data-act="more-tab" data-t="'+x[0]+'" aria-pressed="'+(moreTab===x[0])+'">'+x[1]+'</button>'}).join("")+'</div></div>';
+  var s=stay(),pc=planCities();var TT={events:["Events","Local markets and events for your dates"],save:["Save money","Free offers, passes and everyday savings"],food:["Food to try","Dishes by city, tagged veg, pork, beef or fish"]};
+  var tt=TT[moreTab]||TT.events;
+  var h='<div class="nav"><button class="nb" data-act="tab" data-s="tips">'+ic(IC.back)+'Tips</button><span class="t">'+tt[0]+'</span><span style="width:44px"></span></div>';
+  h+='<div class="head"><div class="eyebrow">'+fd(s.start)+' – '+fd(stayEnd(s))+'</div><h1>'+tt[0]+'</h1><p class="sub">'+tt[1]+'. '+MORE_ASOF+'. Dates can change: check the link.</p></div>';
   if(moreTab==="events"){
     h+='<p class="foot" style="margin:6px 20px">Events from 28 Nov to 12 Dec. Cities on your route come first, and “On your trip” shows which days fit.</p>';
     ["munich","salzburg","stgilgen","hallstatt","vienna"].sort(function(a,b){return(pc.indexOf(a)<0?1:0)-(pc.indexOf(b)<0?1:0)}).forEach(function(c){
@@ -1909,7 +1915,7 @@ function vMore(){
   return h}
 
 /* ================= PHASE 1: update, backup, where to stay ================= */
-var APP_VERSION="1.9.6",SCHEMA=3;
+var APP_VERSION="1.9.7",SCHEMA=3;
 function pad2(n){return("0"+n).slice(-2)}
 function today(){var d=new Date();return d.getFullYear()+"-"+pad2(d.getMonth()+1)+"-"+pad2(d.getDate())}
 var WD=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"],MN=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
@@ -2378,7 +2384,7 @@ function vStay(){
   var s=stay(),sum=sumNights(s),unp=s.total-sum,sc=schedule(s),rm=roadmap(s),wn=warnings(s),gn=guideNights();
   var airOpts=function(sel){return Object.keys(AIR).map(function(k){return'<option value="'+k+'"'+(sel===k?" selected":"")+'>'+AIR[k].n+'</option>'}).join("")};
   var h='<div class="nav"><button class="nb" data-act="tab" data-s="trip">'+ic(IC.back)+'Suggested</button><span class="t">Where to stay</span><span style="width:44px"></span></div>';
-  h+='<div class="head"><div class="eyebrow">Hotel nights</div><h1>Where to stay</h1><p class="sub">'+s.total+' nights · '+fd(s.start)+' to '+fd(stayEnd(s))+'</p></div>';
+  h+='<div class="head"><div class="eyebrow">Hotel nights</div><h1>Trip setup</h1><p class="sub">'+s.total+' nights · '+fd(s.start)+' to '+fd(stayEnd(s))+'</p></div>';
   if(!store.hideStayHow)h+='<div class="how"><b class="h">How it works</b><ol><li><i>1</i><span>Check <b>your journey</b> and <b>family</b>.</span></li><li><i>2</i><span>Pick a <b>city for each night</b>. Add hotel names if you like.</span></li><li><i>3</i><span>Your <b>route and map</b> appear by themselves.</span></li></ol><button class="btn solid" data-act="stay-how">Got it</button></div>';
   /* 1 journey */
   h+='<div class="sech"><span>1 · My journey</span></div><div class="group">';
