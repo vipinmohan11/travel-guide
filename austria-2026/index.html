@@ -1854,7 +1854,7 @@ function vMore(){
   return h}
 
 /* ================= PHASE 1: update, backup, where to stay ================= */
-var APP_VERSION="1.8.3",SCHEMA=3;
+var APP_VERSION="1.8.4",SCHEMA=3;
 function pad2(n){return("0"+n).slice(-2)}
 function today(){var d=new Date();return d.getFullYear()+"-"+pad2(d.getMonth()+1)+"-"+pad2(d.getDate())}
 var WD=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"],MN=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
@@ -1919,7 +1919,7 @@ var NEWIN={"1.8.0":{tips:"Tips are now grouped with icons: tap a tile to open it
 (function(){var seen=store.seenVer;
   if(seen!==APP_VERSION){
     if((seen||wasExisting)&&NEWIN[APP_VERSION]){store.newTabs=store.newTabs||{};Object.keys(NEWIN[APP_VERSION]).forEach(function(k){store.newTabs[k]={v:APP_VERSION,t:NEWIN[APP_VERSION][k]}})}
-    store.seenVer=APP_VERSION;save();
+    store.seenVer=APP_VERSION;store.verDate=today();save();
   }})();
 function updNewDots(){["trip","map","list","tips","settings"].forEach(function(k){var e=document.getElementById("nd-"+k);if(e)e.hidden=!(store.newTabs&&store.newTabs[k])})}
 function newBanner(k){var n=store.newTabs&&store.newTabs[k];if(!n)return"";return'<div class="callout" style="background:var(--accent-soft)" role="status"><b style="color:var(--accent)">New in version '+esc(n.v)+'</b>'+esc(n.t)+'<div style="margin-top:8px"><button class="btn solid" style="min-height:36px;padding:0 14px" data-act="new-ok" data-t="'+k+'">OK</button></div></div>'}
@@ -2062,11 +2062,11 @@ function vSettings(){
   h+=newBanner('settings');
   var last=store.lastCheck?new Date(store.lastCheck):null;
   var stt=upd.msg?esc(upd.msg):(upd.latest?(vcmp(upd.latest,APP_VERSION)>0?'Version '+esc(upd.latest)+' is available':'You have the latest version'):'Tap Check to look for updates');
-  var usub='<b>'+esc(APP_VERSION)+'</b><span style="display:block">'+stt+(last&&!upd.msg?' · checked '+last.getDate()+' '+MN[last.getMonth()]:'')+'</span>';
-  var ur=(st==="available"?'<button class="btn solid sm1" data-act="upd-install">Install</button>':(st==="installing"||st==="done")?'<span class="sm">Working…</span>':'<button class="btn sm1" data-act="upd-check">Check</button>');
+  var vd=store.verDate?new Date(store.verDate+"T00:00:00"):last;var usub=upd.msg||upd.state==="available"?esc(stt):(vd?'Updated on '+vd.getDate()+' '+MN[vd.getMonth()]:esc(stt));
+  var ur=(st==="available"?'<button class="btn solid sm1" data-act="upd-install">Install</button>':(st==="installing"||st==="done")?'<span class="sm">Working…</span>':'<button class="btn sm1" data-act="upd-check">Check update</button>');
   var au=store.autoUpd!==false;
   var right='<span class="ucol">'+ur+'<span class="uaut">Auto'+sSw(au,"upd-auto")+'</span></span>';
-  h+='<div class="group sg">'+sRow("refresh","#34c759","App version",usub,right,null)+(st==="installing"?'<div class="row"><div class="prog"><i></i></div></div>':'')+'</div>';
+  h+='<div class="group sg">'+sRow("refresh","#34c759","App ver "+esc(APP_VERSION),usub,right,null)+(st==="installing"?'<div class="row"><div class="prog"><i></i></div></div>':'')+'</div>';
   var tl=function(k,c,t,act,x){return'<button class="tile" data-act="'+act+'">'+sI(k,c)+'<span>'+t+'</span></button>'};
   h+='<div class="group sg tg">'+tl("clock","#007aff","Back up","bk-now")+tl("down","#007aff","Save file","bk-file")+'<label class="tile">'+sI("up","#007aff")+'<span>Restore file</span><input type="file" accept="application/json,.json" data-f="bkfile" hidden></label>'+(ks.length?tl("undo",restoreArm?"#ff3b30":"#007aff",restoreArm?"Tap again":"Last backup","bk-last"):'<span class="tile off">'+sI("undo","#c7c7cc")+'<span>Last backup</span></span>')+'</div>';
   h+='<p class="foot sf">'+(lastBk?'Last backup: '+fd(lastBk)+'. ':'No backup yet. ')+'Kept on this phone for 7 days.</p>';
