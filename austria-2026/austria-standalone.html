@@ -947,6 +947,10 @@ select,input[type=date]{margin-left:auto;font:inherit;font-size:.9375rem;color:v
  #printdoc .pd{break-inside:avoid-page;margin-top:10px}
  #printdoc h2{break-after:avoid}
 }
+
+.msegs{overflow-x:auto;scrollbar-width:none}.msegs::-webkit-scrollbar{display:none}
+.msegs button{flex:0 0 auto!important;white-space:nowrap;padding:0 10px!important}
+.spin{min-width:28px;height:28px;border-radius:7px;background:var(--c);color:#fff;border:2px solid #fff;font:700 13px/24px var(--f);text-align:center;padding:0 5px;box-sizing:border-box;white-space:nowrap}
 </style></head><body>
 <main id="app"><section id="v-trip"></section><section id="v-day" hidden></section><section id="v-map" hidden></section><section id="v-list" hidden></section><section id="v-tips" hidden></section><section id="v-stay" hidden></section></main>
 <div id="detail" class="page" hidden></div>
@@ -1284,7 +1288,7 @@ function wxDay(k,wi){if(!WX)return null;var o=WX[wi||0];if(!o||!o.daily)return n
 
 var deferredInstall=null;window.addEventListener("beforeinstallprompt",function(e){e.preventDefault();deferredInstall=e;if(view==="tips")render(true)});window.addEventListener("appinstalled",function(){deferredInstall=null;if(view==="tips")render(true)});
 /* ---------- state ---------- */
-var view="trip",cur=0,mapCity="munich",mapDay="all",selId=null,hotelEdit=null,detailId=null;
+var view="trip",cur=0,mapSg="all",mapDay="all",selId=null,hotelEdit=null,detailId=null;
 var VIEWS=["trip","day","map","list","tips","stay"];
 
 /* ---------- views ---------- */
@@ -1450,11 +1454,16 @@ function cOf(s){return s.id==="kx-kehl"?"de":(s.city==="munich"?"de":"at")}
 function dayFlags(d){var set={};d.stops.forEach(function(s){set[cOf(s)]=1});return(set.de?flagC("de"):"")+(set.at?flagC("at"):"")}
 var GM={"a1": "Karlstor, Munich", "a2": "Frauenkirche, Munich", "a3": "Viktualienmarkt, Munich", "a4": "Münchner Christkindlmarkt Marienplatz, Munich", "ax-peter": "Alter Peter, Munich", "ax-sendlinger": "Asamkirche München", "ax-kripperl": "Kripperlmarkt Munich Rindermarkt", "b5": "Rathaus-Glockenspiel, Marienplatz, Munich", "b1": "Deutsches Museum, Munich", "d5": "Salzburger Christkindlmarkt, Domplatz, Salzburg", "bx-bmw": "BMW Welt, Munich", "bx-nymph": "Schloss Nymphenburg, Munich", "bx-english": "Chinesischer Turm, Englischer Garten, Munich", "bx-residenz": "Münchner Residenz", "bx-olympia": "Olympiaturm, Munich", "bx-vik": "Viktualienmarkt, Munich", "e1": "Festung Hohensalzburg, Salzburg", "d3": "Getreidegasse, Salzburg", "e5": "Mozarts Geburtshaus, Salzburg", "e3": "Haus der Natur, Salzburg", "e4": "Café Tomaselli, Alter Markt, Salzburg", "dx-cathedral": "Salzburger Dom", "dx-peter": "Stift St. Peter, Salzburg", "dx-mozartplatz": "Mozartplatz, Salzburg", "dx-sphaera": "Sphaera Stephan Balkenhol, Kapitelplatz, Salzburg", "ex-mozarthome": "Mozart-Wohnhaus, Salzburg", "f1": "Zell am See Bahnhof", "f2": "Kaprun Ortszentrum", "f3": "Kitzsteinhorn Gletscherbahn Talstation, Kaprun", "f4": "Gipfelwelt 3000, Kitzsteinhorn", "f5": "Alpincenter Kitzsteinhorn, Kaprun", "fx-zell": "Zell am See Seepromenade", "fx-schmitten": "Schmittenhöhebahn Talstation, Zell am See", "fx-burg": "Burg Kaprun", "g1": "Hallstatt Bahnhof", "g2": "Marktplatz Hallstatt", "g3": "Salzbergbahn Talstation, Hallstatt", "g4": "Salzwelten Hallstatt", "g5": "Pfarrkirche Hallstatt", "gx-museum": "Welterbemuseum Hallstatt", "gx-ischl": "Bad Ischl Zentrum", "gx-advent": "Hallstatt Marktplatz", "gx-krippen": "Dachstein Krippenstein Seilbahn Obertraun", "gx-skywalk": "Dachstein Gletscherbahn Ramsau am Dachstein", "k1": "St. Gilgen am Wolfgangsee", "k2": "Kirchenplatz St. Wolfgang im Salzkammergut", "k3": "Seepromenade St. Wolfgang im Salzkammergut", "kx-zwolf": "Zwölferhorn Seilbahn St. Gilgen", "kx-strobl": "Strobl am Wolfgangsee", "d1": "Schloss Mirabell, Salzburg", "k4": "Mönchsberg Aufzug, Salzburg", "k5": "Schloss Hellbrunn, Salzburg", "k6": "Salzburg Museum, Mozartplatz", "kx-kehl": "Kehlsteinhaus, Berchtesgaden", "kx-eis": "Eisriesenwelt, Werfen", "h1": "Stephansdom, Wien", "h2": "Pestsäule Graben, Wien", "h3": "Café Demel, Kohlmarkt, Wien", "h4": "Wiener Christkindlmarkt Rathausplatz", "hx-krampus": "Rathausplatz, Wien", "hx-albertina": "Wiener Staatsoper", "hx-hofburg": "Heldenplatz, Wien", "i1": "Schloss Schönbrunn, Wien", "i2": "Tiergarten Schönbrunn, Wien", "i3": "Weihnachtsmarkt Schloss Schönbrunn, Wien", "i4": "Wiener Riesenrad, Wien", "ix-gloriette": "Gloriette Schönbrunn, Wien", "ix-meer": "Haus des Meeres, Wien", "ix-musik": "Haus der Musik, Wien", "ix-nhm": "Naturhistorisches Museum Wien", "j1": "Schloss Belvedere, Wien", "j2": "Karlskirche, Wien", "j3": "Naschmarkt, Wien", "jx-albertina": "Albertina Museum, Wien", "jx-stroll": "Michaelerplatz, Wien"};
 var URLS={"a2": "https://www.muenchner-dom.de", "a3": "https://www.viktualienmarkt-muenchen.de", "bx-vik": "https://www.viktualienmarkt-muenchen.de", "b1": "https://www.deutsches-museum.de", "bx-bmw": "https://www.bmw-welt.com", "bx-nymph": "https://www.schloss-nymphenburg.de", "bx-residenz": "https://www.residenz-muenchen.de", "bx-olympia": "https://www.olympiapark.de", "d5": "https://www.christkindlmarkt.co.at", "e1": "https://www.festung-hohensalzburg.at", "e5": "https://mozarteum.at/museen/mozarts-geburtshaus", "ex-mozarthome": "https://mozarteum.at/museen/mozart-wohnhaus", "e3": "https://www.hausdernatur.at", "dx-cathedral": "https://www.salzburger-dom.at", "dx-peter": "https://www.stift-stpeter.at", "k5": "https://www.hellbrunn.at", "k6": "https://www.salzburgmuseum.at", "f1": "https://www.zellamsee-kaprun.com", "f3": "https://www.kitzsteinhorn.at", "f4": "https://www.kitzsteinhorn.at", "f5": "https://www.kitzsteinhorn.at", "fx-schmitten": "https://www.schmittenhoehe.at", "g3": "https://www.salzwelten.at", "g4": "https://www.salzwelten.at", "g2": "https://www.hallstatt.net", "gx-museum": "https://www.museum-hallstatt.at", "gx-krippen": "https://www.dachstein.at", "gx-skywalk": "https://www.dachstein.at", "k1": "https://www.wolfgangseer-advent.at/en", "k2": "https://www.wolfgangseer-advent.at/en", "kx-strobl": "https://www.wolfgangseer-advent.at/en", "kx-zwolf": "https://www.12erhorn.at", "kx-kehl": "https://kehlsteinhaus.de", "kx-eis": "https://www.eisriesenwelt.at/en", "h1": "https://www.stephanscom.at", "h3": "https://www.demel.at", "h4": "https://www.wienerchristkindlmarkt.at", "hx-hofburg": "https://www.hofburg-wien.at", "hx-albertina": "https://www.wiener-staatsoper.at", "i1": "https://www.schoenbrunn.at", "i3": "https://www.schoenbrunn.at", "ix-gloriette": "https://www.schoenbrunn.at", "i2": "https://www.zoovienna.at", "i4": "https://www.wienerriesenrad.com", "ix-meer": "https://www.haus-des-meeres.at", "ix-musik": "https://www.hausdermusik.com", "ix-nhm": "https://www.nhm-wien.ac.at", "j1": "https://www.belvedere.at", "j2": "https://www.karlskirche.at", "j3": "https://www.naschmarkt-vienna.com", "jx-albertina": "https://www.albertina.at"};
+function mapStays(){var out=[];ITIN.forEach(function(D){var o=out[D.sg];if(!o){o=out[D.sg]={g:D.sg,c:D.row?D.row.c:D.b,days:[]}}o.days.push(D)});return out.filter(Boolean)}
+function mapDays(){return mapSg==="all"?ITIN:ITIN.filter(function(D){return D.sg===mapSg})}
+function mapScope(){var ids={};mapDays().forEach(function(D){D.all.forEach(function(id){ids[id]=1})});if(mapSg==="all")ALL.forEach(function(s){if(inList(s))ids[s.id]=1});return ALL.filter(function(s){return ids[s.id]})}
+function mapFix(){var st=mapStays();if(mapSg!=="all"&&!st[mapSg])mapSg="all";if(mapDay!=="all"&&(!ITIN[mapDay]||(mapSg!=="all"&&ITIN[mapDay].sg!==mapSg)))mapDay="all"}
+function shortN(c){return SN(c).replace(/\s*\(.*\)/,"").split(" and ")[0]}
 function vMapHtml(){
-  var days=ITIN.filter(function(D){return D.pl.concat(D.exo).some(function(s){return s.city===mapCity})});
-  var h='<div class="mapbar"><div class="seg">'+CKEYS.map(function(g){return '<button data-act="mapcity" data-c="'+g+'" aria-pressed="'+(g===mapCity)+'">'+flag(g)+CITY[g].n+'</button>'}).join("")+'</div>';
+  mapFix();var st=mapStays(),days=mapDays();
+  var h='<div class="mapbar"><div class="seg msegs"><button data-act="mapcity" data-c="all" aria-pressed="'+(mapSg==="all")+'">Route</button>'+st.map(function(x){return '<button data-act="mapcity" data-c="'+x.g+'" aria-pressed="'+(x.g===mapSg)+'">'+flagC(x.c==="munich"?"de":"at")+(x.g+1)+' '+esc(shortN(x.c))+'</button>'}).join("")+'</div>';
   h+='<div class="dpills"><span class="lab">Day</span><button data-act="mapday" data-d="all" aria-pressed="'+(mapDay==="all")+'">All</button>'+days.map(function(d){return '<button data-act="mapday" data-d="'+d.i+'" aria-pressed="'+(mapDay===d.i)+'">'+(d.i+1)+'</button>'}).join("")+'</div>';
-  h+='<div class="legend"><span><i></i>Not in my list</span><span><i class="f"></i>In my list</span><span>Tap a pin for details</span></div></div>';
+  h+='<div class="legend"><span><i></i>Not in my list</span><span><i class="f"></i>In my list</span><span>Square = where you sleep</span></div></div>';
   h+='<div class="mapwrap"><div id="map"></div><div class="mctl"><button data-act="zin" aria-label="Zoom in">+</button><button data-act="zout" aria-label="Zoom out">−</button><button data-act="locate" id="locbtn" aria-label="Show my location">'+ic(IC.loc)+'</button></div><div class="sheet" id="sheet" hidden></div></div>';
   return h}
 function initMap(){
@@ -1473,11 +1482,16 @@ function pinIcon(s,dim,sel){
   return L.divIcon({className:"pinw",html:'<div class="'+cls+'" style="--c:'+cvar(s.city)+'">'+lab+'</div>',iconSize:[sz,sz],iconAnchor:[sz/2,sz/2]})}
 function drawMap(fit){
   if(!map)return;layer.clearLayers();meLayer.clearLayers();var pts=[];
-  ALL.filter(function(s){return s.city===mapCity}).forEach(function(s){
+  var sts=mapStays().filter(function(x){return mapSg==="all"||x.g===mapSg}),hubs=[];
+  mapScope().forEach(function(s){
     var dim=mapDay!=="all"&&!(ITIN[mapDay]&&ITIN[mapDay].has[s.id]),sel=selId===s.id;if(!dim)pts.push([s.lat,s.lng]);
     var m=L.marker([s.lat,s.lng],{icon:pinIcon(s,dim,sel),zIndexOffset:sel?1000:(dim?0:(s.idx>=0?200:100)),keyboard:false,title:s.n});
     m.on("click",function(e){if(e&&e.originalEvent)L.DomEvent.stopPropagation(e);openSheet(s.id)});m.addTo(layer)});
-  Object.keys(store.hotels).forEach(function(k){var h=store.hotels[k];if(h&&k===mapCity&&typeof h.lat==="number"){L.marker([h.lat,h.lng],{icon:L.divIcon({className:"pinw",html:'<div class="hpin">H</div>',iconSize:[28,28],iconAnchor:[14,14]}),zIndexOffset:500,title:"Hotel"}).addTo(layer)}});
+  var scs={};sts.forEach(function(x){scs[x.c]=1});
+  var lab={};sts.forEach(function(x){(lab[x.c]=lab[x.c]||[]).push(x.g+1)});
+  if(mapSg==="all"){var rp=sts.map(function(x){return[HUB[x.c].lat,HUB[x.c].lng]});if(rp.length>1)L.polyline(rp,{color:getComputedStyle(document.documentElement).getPropertyValue("--accent")||"#1b7f3f",weight:3,dashArray:"6 6",opacity:.8}).addTo(layer)}
+  Object.keys(lab).forEach(function(c){var t=lab[c].join("/"),w=t.length>1?40:28;pts.push([HUB[c].lat,HUB[c].lng]);L.marker([HUB[c].lat,HUB[c].lng],{icon:L.divIcon({className:"pinw",html:'<div class="spin" style="--c:'+SC(c)+'">'+t+'</div>',iconSize:[w,28],iconAnchor:[w/2,14]}),zIndexOffset:600,title:"You sleep here: "+SN(c)}).addTo(layer)});
+  Object.keys(store.hotels).forEach(function(k){var h=store.hotels[k];if(h&&scs[k]&&typeof h.lat==="number"){L.marker([h.lat,h.lng],{icon:L.divIcon({className:"pinw",html:'<div class="hpin">H</div>',iconSize:[28,28],iconAnchor:[14,14]}),zIndexOffset:500,title:"Hotel"}).addTo(layer)}});
   if(store.me&&store.meOn!==false)L.marker([store.me.lat,store.me.lng],{icon:L.divIcon({className:"pinw",html:'<div class="medot"></div>',iconSize:[20,20],iconAnchor:[10,10]}),interactive:false,zIndexOffset:2000}).addTo(meLayer);
   if(fit&&pts.length)map.fitBounds(L.latLngBounds(pts),{padding:[40,40],maxZoom:16,animate:false})}
 function openSheet(id){
@@ -1487,7 +1501,7 @@ function openSheet(id){
 function closeSheet(){var b=$("sheet");if(b&&!b.hidden){b.hidden=true;b.innerHTML=""}if(selId){selId=null;drawMap(false)}}
 function mapShow(){
   $("v-map").innerHTML=vMapHtml();map=null;layer=null;meLayer=null;
-  requestAnimationFrame(function(){initMap();if(!map)return;map.invalidateSize();drawMap(true);if(selId&&P[selId]&&P[selId].city===mapCity)openSheet(selId);else selId=null})}
+  requestAnimationFrame(function(){initMap();if(!map)return;map.invalidateSize();drawMap(true);if(selId&&P[selId]&&mapScope().indexOf(P[selId])>-1)openSheet(selId);else selId=null})}
 
 /* ---------- detail ---------- */
 function fact(l,t){return t?'<div class="fact"><b>'+l+'</b><span>'+esc(t)+'</span></div>':''}
@@ -1495,7 +1509,7 @@ var dctx=[],dback="Back";
 function ctxFor(id){
   var s=P[id],ids;
   if(view==="list"){ids=[];DAYS.forEach(function(d){d.stops.concat(d.extras).forEach(function(x){if(inList(x))ids.push(x.id)})});dback="My list"}
-  else if(view==="map"){ids=ALL.filter(function(x){return x.city===mapCity&&(mapDay==="all"||x.day===mapDay)}).map(function(x){return x.id});dback="Map"}
+  else if(view==="map"){ids=mapScope().filter(function(x){return mapDay==="all"||(ITIN[mapDay]&&ITIN[mapDay].has[x.id])}).map(function(x){return x.id});dback="Map"}
   else{var DD=ITIN[cur];ids=(view==="day"&&DD)?DD.all.slice():[];dback="Day "+(cur+1)}
   if(ids.indexOf(id)<0){var DI=itinPlace(id);ids=DI?DI.all.slice():[id];dback=DI?"Day "+(DI.i+1):"Back"}
   return ids}
@@ -1529,7 +1543,7 @@ function render(keepScroll){
   if(keepScroll)window.scrollTo(0,y);else window.scrollTo(0,0)}
 function parseHash(){
   var h=(location.hash||"").replace("#","");var m=h.match(/^day-(\d+)$/);
-  buildItin();if(m&&ITIN[+m[1]-1]){view="day";cur=+m[1]-1;mapCity=(ITIN[cur].pl[0]||{}).city||"munich";mapDay="all"}else if(["trip","map","list","tips","stay"].indexOf(h)>-1)view=h;else view="trip"}
+  buildItin();if(m&&ITIN[+m[1]-1]){view="day";cur=+m[1]-1;mapSg=ITIN[cur].sg;mapDay="all"}else if(["trip","map","list","tips","stay"].indexOf(h)>-1)view=h;else view="trip"}
 function go(hash){if(location.hash==="#"+hash){parseHash();render();return}location.hash=hash}
 window.addEventListener("hashchange",function(){closeDetail(true);parseHash();render()});
 window.addEventListener("popstate",function(){if(!$("detail").hidden&&!(history.state&&history.state.detail))closeDetail(true)});
@@ -1570,9 +1584,9 @@ document.addEventListener("click",function(e){
    case"done":store.done[id]=!store.done[id];save();refresh();break;
    case"addmust":ALL.forEach(function(s){if(s.r==="m"&&!s.x)store.list[s.id]=true;});save();toast("Added all Must see places");render();break;
    case"copy":copyList();break;
-   case"daymap":mapCity=(ITIN[cur].pl[0]||{}).city||"munich";mapDay=cur;selId=null;go("map");break;
-   case"showmap":{var s=P[id];closeDetail();mapCity=s.city;mapDay=ITD[id]!=null?ITD[id]:"all";selId=id;go("map");break}
-   case"mapcity":mapCity=t.getAttribute("data-c");mapDay="all";selId=null;mapShow();break;
+   case"daymap":mapSg=ITIN[cur].sg;mapDay=cur;selId=null;go("map");break;
+   case"showmap":{var s=P[id];closeDetail();mapSg=ITD[id]!=null?ITIN[ITD[id]].sg:"all";mapDay=ITD[id]!=null?ITD[id]:"all";selId=id;go("map");break}
+   case"mapcity":{var mc=t.getAttribute("data-c");mapSg=mc==="all"?"all":+mc}mapDay="all";selId=null;mapShow();break;
    case"mapday":{var d=t.getAttribute("data-d");mapDay=d==="all"?"all":+d;selId=null;mapShow();break}
    case"zin":if(map)map.zoomIn();break;case"zout":if(map)map.zoomOut();break;
    case"sheetx":closeSheet();break;
@@ -1590,7 +1604,7 @@ document.addEventListener("change",function(e){var t=e.target;if(t.getAttribute&
 
 (function(){var x0=0,y0=0;var dt=$("detail");dt.addEventListener("touchstart",function(e){var t=e.touches[0];x0=t.clientX;y0=t.clientY},{passive:true});dt.addEventListener("touchend",function(e){var t=e.changedTouches[0],dx=t.clientX-x0,dy=t.clientY-y0;if(x0>24&&x0<window.innerWidth-24&&Math.abs(dx)>50&&Math.abs(dx)>Math.abs(dy)*1.4){var ci=dctx.indexOf(detailId),n=dctx[ci+(dx<0?1:-1)];if(n)openDetail(n,true)}},{passive:true})})();
 /* ================= PHASE 1: update, backup, where to stay ================= */
-var APP_VERSION="1.5.0",SCHEMA=3;
+var APP_VERSION="1.5.2",SCHEMA=3;
 function pad2(n){return("0"+n).slice(-2)}
 function today(){var d=new Date();return d.getFullYear()+"-"+pad2(d.getMonth()+1)+"-"+pad2(d.getDate())}
 var WD=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"],MN=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
@@ -1651,7 +1665,7 @@ function migrate(){
 if(typeof loadErr!=="undefined"&&loadErr){var rr=restoreLatest();setTimeout(function(){toast(rr?"Your saved data was recovered from the backup of "+rr:"Saved data could not be read")},600)}
 var wasExisting=!!store.schema;
 migrate();dailyBackup(false);
-var NEWIN={"1.5.0":{trip:"Your days now follow your night-by-night plan: same length and same order, with enough places for every stay."},"1.4.0":{trip:"Where to stay is simpler: journey, family, night plan and route in one page. New: print your whole trip as a PDF with links."},"1.3.0":{trip:"Where to stay is now night by night: pick a city for every night, and the same city can come back later. Each stay gets its own hotel name."},"1.2.0":{trip:"Where to stay: add Hallstatt, Kaprun and St. Gilgen, and pick one of three night plans.",tips:"Updates now install by themselves. You can turn this off."}};
+var NEWIN={"1.5.2":{trip:"The Trip map now follows your stays: a Route view and one tab per stay, with a square pin where you sleep."},"1.5.0":{trip:"Your days now follow your night-by-night plan: same length and same order, with enough places for every stay."},"1.4.0":{trip:"Where to stay is simpler: journey, family, night plan and route in one page. New: print your whole trip as a PDF with links."},"1.3.0":{trip:"Where to stay is now night by night: pick a city for every night, and the same city can come back later. Each stay gets its own hotel name."},"1.2.0":{trip:"Where to stay: add Hallstatt, Kaprun and St. Gilgen, and pick one of three night plans.",tips:"Updates now install by themselves. You can turn this off."}};
 (function(){var seen=store.seenVer;
   if(seen!==APP_VERSION){
     if((seen||wasExisting)&&NEWIN[APP_VERSION]){store.newTabs=store.newTabs||{};Object.keys(NEWIN[APP_VERSION]).forEach(function(k){store.newTabs[k]={v:APP_VERSION,t:NEWIN[APP_VERSION][k]}})}
