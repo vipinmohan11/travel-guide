@@ -951,8 +951,16 @@ select,input[type=date]{margin-left:auto;font:inherit;font-size:.9375rem;color:v
 .msegs{overflow-x:auto;scrollbar-width:none}.msegs::-webkit-scrollbar{display:none}
 .msegs button{flex:0 0 auto!important;white-space:nowrap;padding:0 10px!important}
 .spin{min-width:28px;height:28px;border-radius:7px;background:var(--c);color:#fff;border:2px solid #fff;font:700 13px/24px var(--f);text-align:center;padding:0 5px;box-sizing:border-box;white-space:nowrap}
+
+.ft{display:inline-block;font-size:.6875rem;font-weight:600;padding:2px 8px;border-radius:99px;margin:0 4px 2px 0;border:1px solid var(--line);background:var(--fill);color:var(--fg)}
+.ft-veg{border-color:#1b7f3f;background:rgba(27,127,63,.14)}
+.ft-pork,.ft-maybepork{border-color:#c0392b;background:rgba(192,57,43,.14)}
+.ft-beef{border-color:#8a5a2b;background:rgba(138,90,43,.16)}
+.ft-meat{border-color:#7a4b8c;background:rgba(122,75,140,.14)}
+.ft-fish{border-color:#0b63ce;background:rgba(11,99,206,.14)}
+.ft-alcohol{border-color:#8e8e93}
 </style></head><body>
-<main id="app"><section id="v-trip"></section><section id="v-day" hidden></section><section id="v-map" hidden></section><section id="v-list" hidden></section><section id="v-tips" hidden></section><section id="v-stay" hidden></section></main>
+<main id="app"><section id="v-trip"></section><section id="v-day" hidden></section><section id="v-map" hidden></section><section id="v-list" hidden></section><section id="v-tips" hidden></section><section id="v-stay" hidden></section><section id="v-more" hidden></section></main>
 <div id="detail" class="page" hidden></div>
 <nav class="tabbar" aria-label="Main"><div class="in"><button data-act="tab" data-s="trip"><svg class="ic" viewBox="0 0 24 24"><path d="M5 4h14a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1z"/><path d="M8 9h8M8 13h8M8 17h5"/></svg>Trip<span class="nd" id="nd-trip" hidden></span></button><button data-act="tab" data-s="map"><svg class="ic" viewBox="0 0 24 24"><path d="M9 4 3.5 6v14L9 18l6 2 5.5-2V4L15 6 9 4z"/><path d="M9 4v14M15 6v14"/></svg>Trip map</button><button data-act="tab" data-s="list"><svg class="ic" viewBox="0 0 24 24"><path d="M9 6h11M9 12h11M9 18h11"/><path d="m3.5 6 1.2 1.2L6.8 5M3.5 12l1.2 1.2L6.8 11M3.5 18l1.2 1.2L6.8 17"/></svg>My list<span class="badge" id="tabbadge" hidden></span></button><button data-act="tab" data-s="tips"><svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 11v5.5M12 7.6v.2"/></svg><span class="nd" id="nd-tips" hidden></span>Tips</button></div></nav>
 <div class="toast" id="toast" hidden></div>
@@ -1185,7 +1193,7 @@ X("kx-eis","Eisriesenwelt (ice giant cave, Werfen)",47.5128,13.1905,"see","Cave"
  budget:"€180",budgetNote:"Train Salzburg–Vienna for four from about €70 early, up to €150 later (check oebb.at) · dinner and market snacks ≈€60",
  clim:"Typical: about 0 to 5 °C. Sunset around 16:10.",
  lede:"A light transfer day. Take the direct train, check in, and spend the evening in central Vienna. St. Stephen’s, the Graben and the market at the City Hall are all in the middle of the old town.",
- getting:["Direct trains (Railjet) from Salzburg to Wien Hbf run about every 30 min and take 2 h 20–2 h 30. Reserve seats if you can.","Vienna’s U-Bahn, trams and buses are covered by Wiener Linien tickets: a 24 h, 48 h or 72 h pass is usually best.","On Sundays, public holidays and during Vienna school holidays, children aged 6–14 often ride Wiener Linien for free: check wienerlinien.at.","Today is the evening before Nikolaus (6 December): some places have Krampus parades. See Tips."],
+ getting:["Direct trains (Railjet) from Salzburg to Wien Hbf run about every 30 min and take 2 h 20–2 h 30. Reserve seats if you can.","Vienna’s U-Bahn, trams and buses are covered by Wiener Linien tickets: a 24 h ticket (from about €9.70) or a 7-day ticket is usually best; 48 h and 72 h tickets stopped in 2026.","On Sundays, public holidays and during Vienna school holidays, children aged 6–14 often ride Wiener Linien for free: check wienerlinien.at.","Today is the evening before Nikolaus (6 December): some places have Krampus parades. See Tips."],
  rain:["Stephansdom and the Haus der Musik are indoors.","Cafés on the Graben and Kohlmarkt are good rain stops.","The Rathaus market has covered areas and food stalls."],
  facts:["The roof of St. Stephen’s Cathedral is covered with about 230,000 glazed tiles in a zigzag pattern.","Demel is a pastry shop on the Kohlmarkt, open since 1786.","The Vienna Rathaus (City Hall) is in neo-Gothic style, with a big park lit up as a Christmas market."],
  spot:["Find the colourful tile roof of the cathedral","Spot a horse-drawn carriage (Fiaker)","Find the Pestsäule on the Graben","Look for the big Christmas tree at the City Hall"],
@@ -1289,7 +1297,7 @@ function wxDay(k,wi){if(!WX)return null;var o=WX[wi||0];if(!o||!o.daily)return n
 var deferredInstall=null;window.addEventListener("beforeinstallprompt",function(e){e.preventDefault();deferredInstall=e;if(view==="tips")render(true)});window.addEventListener("appinstalled",function(){deferredInstall=null;if(view==="tips")render(true)});
 /* ---------- state ---------- */
 var view="trip",cur=0,mapSg="all",mapDay="all",selId=null,hotelEdit=null,detailId=null;
-var VIEWS=["trip","day","map","list","tips","stay"];
+var VIEWS=["trip","day","map","list","tips","stay","more"];
 
 /* ---------- views ---------- */
 function addBtn(s,full){var on=inList(s);return '<button class="add'+(on?" on":"")+'" data-act="add" data-id="'+s.id+'" aria-pressed="'+on+'" aria-label="'+(on?"Remove from my list: ":"Add to my list: ")+esc(s.n)+'">'+ic(on?IC.check:IC.plus)+(on?"Added":"Add")+'</button>'}
@@ -1298,7 +1306,7 @@ function vTrip(){
   var s=stay(),cs=[];ITIN.forEach(function(D){if(D.i<s.total&&cs.indexOf(D.b)<0)cs.push(D.b)});
   var h='<div class="head"><div class="headrow"><div><div class="eyebrow">'+fd(s.start)+' – '+fd(stayEnd(s))+' '+s.start.slice(0,4)+'</div><h1>'+esc(cs.map(function(c){return SN(c)}).join(", ")||"Your trip")+'</h1><p class="sub">'+(s.total+1)+' days · '+esc(famSummary(s))+'</p></div><button class="aa" data-act="settings" aria-label="Text size and colours">Aa</button></div></div>';
   if(!store.hideHow)h+='<div class="how"><b class="h">How this guide works</b><ol><li><i>1</i><span>Open a day below.</span></li><li><i>2</i><span>Tap <b>Add</b> next to the places you want to visit.</span></li><li><i>3</i><span>Find your own plan in <b>My list</b> at the bottom.</span></li></ol><button class="btn solid" data-act="hidehow">Got it</button></div>';
-  h+=newBanner('trip')+updNotice()+tripStayRow();
+  h+=newBanner('trip')+updNotice()+tripStayRow()+moreRow();
   if(sumNights(s)<s.total)h+='<div class="callout w"><b>Some nights have no city yet</b>The days below follow your night-by-night plan. <button class="lnk" data-act="stay-open">Finish the plan</button></div>';
   var g=-1;
   ITIN.forEach(function(D){
@@ -1325,6 +1333,7 @@ function vDay(){
   h+='<div class="row"><span class="k">Weather</span><span class="v">'+(w?'<span class="wx">'+ic(wxIcon(w.code))+'<b>'+w.hi+'° / '+w.lo+'°</b> · rain chance '+(w.pp==null?"n/a":w.pp+"%")+(w.sun?' · sunset '+w.sun:'')+'</span>':esc(th.clim)+'<span class="sm" style="display:block">Live forecast appears here about two weeks before the trip.</span>')+'</span></div>';
   if(CKEYS.indexOf(g)>-1)h+=hotelRow({hc:g,startPt:th.startPt});
   h+='</div>';
+  var eo=evOnDay(D);if(eo.length)h+='<div class="callout"><b>Happening today</b>'+eo.map(function(e){return esc(e.t)+(e.f?' (free)':'')}).join(' · ')+' <button class="lnk" data-act="more-open">All events</button></div>';
   if(th.wrule&&D.kind!=="move")h+='<div class="callout w"><b>Weather rule</b>'+esc(th.wrule)+'</div>';
   var n=listCount({stops:D.pl,extras:D.exo});
   h+='<div class="sech"><span>Places</span><span class="r">'+n+' in your list</span></div>';
@@ -1530,7 +1539,7 @@ function openDetail(id,nav){
 function closeDetail(viaPop){var box=$("detail");if(box.hidden)return;box.hidden=true;detailId=null;if(!viaPop&&history.state&&history.state.detail){try{history.back()}catch(e){}}}
 
 /* ---------- render + routing ---------- */
-var TABOF={trip:"trip",day:"trip",stay:"trip",map:"map",list:"list",tips:"tips"};
+var TABOF={trip:"trip",day:"trip",stay:"trip",more:"trip",map:"map",list:"list",tips:"tips"};
 function fixHtml(err){try{console.error(err)}catch(e){}return'<div class="head"><h1>Something went wrong</h1></div><div class="callout w"><b>This page could not open</b>Your saved plan and list are safe. Tap the button to load the newest version of the guide.</div><div class="actions"><button class="btn full solid" data-act="hard-update">Load the newest version</button><button class="btn full" data-act="tab" data-s="trip">Back to Trip</button></div>'}
 function hardUpdate(){try{dailyBackup(true)}catch(e){}var go2=function(){location.reload()};var p=[];if(window.caches)p.push(caches.keys().then(function(ks){return Promise.all(ks.filter(function(k){return k.indexOf("tiles")<0}).map(function(k){return caches.delete(k)}))}));if(navigator.serviceWorker)p.push(navigator.serviceWorker.getRegistrations().then(function(rs){return Promise.all(rs.map(function(r){return r.unregister()}))}));Promise.all(p).then(go2,go2);setTimeout(go2,4000)}
 function render(keepScroll){
@@ -1541,11 +1550,11 @@ function render(keepScroll){
   if(view==="map"){document.body.style.paddingBottom="0";mapShow();return}
   document.body.style.paddingBottom="";
   var el=$("v-"+view);
-  try{el.innerHTML=view==="trip"?vTrip():view==="day"?vDay():view==="list"?vList():view==="stay"?vStay():vTips()}catch(err){el.innerHTML=fixHtml(err)}if(view==="stay")setTimeout(stayMap,0);else if(document.body.style.overflow==="hidden")document.body.style.overflow="";
+  try{el.innerHTML=view==="trip"?vTrip():view==="day"?vDay():view==="list"?vList():view==="stay"?vStay():view==="more"?vMore():vTips()}catch(err){el.innerHTML=fixHtml(err)}if(view==="stay")setTimeout(stayMap,0);else if(document.body.style.overflow==="hidden")document.body.style.overflow="";
   if(keepScroll)window.scrollTo(0,y);else window.scrollTo(0,0)}
 function parseHash(){
   var h=(location.hash||"").replace("#","");var m=h.match(/^day-(\d+)$/);
-  buildItin();if(m&&ITIN[+m[1]-1]){view="day";cur=+m[1]-1;mapSg=ITIN[cur].sg;mapDay="all"}else if(["trip","map","list","tips","stay"].indexOf(h)>-1)view=h;else view="trip"}
+  buildItin();if(m&&ITIN[+m[1]-1]){view="day";cur=+m[1]-1;mapSg=ITIN[cur].sg;mapDay="all"}else if(["trip","map","list","tips","stay","more"].indexOf(h)>-1)view=h;else view="trip"}
 function go(hash){if(location.hash==="#"+hash){parseHash();render();return}location.hash=hash}
 window.addEventListener("hashchange",function(){closeDetail(true);parseHash();render()});
 window.addEventListener("popstate",function(){if(!$("detail").hidden&&!(history.state&&history.state.detail))closeDetail(true)});
@@ -1598,6 +1607,9 @@ document.addEventListener("click",function(e){
    case"hotel-save":{var r=parseHotel($("hin").value);if(r.err){$("hmsg").textContent=r.err;break}store.hotels[t.getAttribute("data-c")]=r;save();hotelEdit=null;render(true);break}
    case"hotel-gps":{var c=t.getAttribute("data-c");gps(function(g){store.hotels[c]={lat:g.lat,lng:g.lng};save();hotelEdit=null;render(true)});break}
    case"hard-update":hardUpdate();break;
+   case"more-open":go("more");break;
+   case"more-tab":moreTab=t.getAttribute("data-t");render(true);break;
+   case"food-nopork":store.foodNoPork=!store.foodNoPork;save();render(true);break;
    case"install":if(deferredInstall){deferredInstall.prompt();deferredInstall=null}break;
    case"theme":store.theme=t.getAttribute("data-t");save();applyAll();render(true);break;
    case"fs":FS+=+t.getAttribute("data-d");store.fs=FS;save();applyAll();render(true);break;
@@ -1606,8 +1618,161 @@ document.addEventListener("click",function(e){
 document.addEventListener("change",function(e){var t=e.target;if(t.getAttribute&&t.getAttribute("data-act")==="spot"){store.spot[t.getAttribute("data-k")]=t.checked;save()}});
 
 (function(){var x0=0,y0=0;var dt=$("detail");dt.addEventListener("touchstart",function(e){var t=e.touches[0];x0=t.clientX;y0=t.clientY},{passive:true});dt.addEventListener("touchend",function(e){var t=e.changedTouches[0],dx=t.clientX-x0,dy=t.clientY-y0;if(x0>24&&x0<window.innerWidth-24&&Math.abs(dx)>50&&Math.abs(dx)>Math.abs(dy)*1.4){var ci=dctx.indexOf(detailId),n=dctx[ci+(dx<0?1:-1)];if(n)openDetail(n,true)}},{passive:true})})();
+/* ===== Events, savings, food ===== */
+var moreTab="events",MORE_ASOF="Checked 9 Nov 2026";
+var SRC={mu:"https://www.muenchen.de/veranstaltungen/events/weihnachtsmarkt-christkindlmarkt.html",tw:"https://www.muenchen.de/veranstaltungen/freizeit/weihnachtsmarkt-christkindlmarkt/tollwood-winterfestival-2026",mum:"https://www.muenchen.de/en/sights/museums/free-museums-munich-here-you-have-free-admission",sk:"https://www.salzburg24.at/news/salzburg/alle-krampuslaeufe-2026-in-salzburg-im-grossen-ueberblick-art-340370",sm:"https://www.salzburg.info/en/events/events-calendar/salzburg-christkindlmarket-on-dom-and-residenzplatz-square_event_42164337?date=20261126100000",hb:"https://www.salzburg.info/en/events/events-calendar/hellbrunn-advent-market_event_41289429?date=20261119130000",ww:"https://www.salzkammergut.at/en/oesterreich-veranstaltung/detail/430005373/wolfgangseer-advent.html?type=2026",hs:"https://www.salzkammergut.at/advent/oesterreich-veranstaltung/detail/430003893/christmas-market-in-hallstatt.html",vm:"https://www.news.at/regional/weihnachtsmaerkte-wien-2026-termine",vu:"https://vienna-unwrapped.com/?p=32617",vk:"https://www.wien.info/en/see-do/families/free-offers-for-children-346288",wl:"https://www.wienerlinien.at/de/24-48-oder-72-stunden-wien",sc:"https://salzburg.info/de/hotels-angebote/salzburg-card/preise"};
+var EVD=[
+ {c:"munich",a:"2026-11-20",b:"2026-12-24",t:"Christkindlmarkt, Marienplatz",n:"The main market. Open daily (it was closed on 22 Nov only).",f:1,k:"m",u:SRC.mu},
+ {c:"munich",a:"2026-11-24",b:"2026-12-23",t:"Tollwood Winter Festival, Theresienwiese",n:"Free entry to the grounds and the Market of Ideas. Mon–Fri from 14:00, Sat–Sun from 11:00. Big-tent shows need tickets. U4 or U5 to Theresienwiese.",f:1,k:"s",u:SRC.tw},
+ {c:"munich",a:"2026-11-20",b:"2026-12-23",t:"Medieval Advent market, Wittelsbacherplatz",n:"Münchner Adventsspektakel. Hours not listed, check before you go.",k:"m",u:SRC.mu},
+ {c:"munich",a:"2026-11-20",b:"2026-12-23",t:"Christmas village at the Residenz",n:"Hours not listed. The Residenz museum is free for under-18s.",k:"m",u:SRC.mu},
+ {c:"munich",a:"2026-11-13",b:"2027-01-10",t:"Ice skating, Münchner Eiszauber (Stachus)",n:"Daily 10:30–22:00. Skating is paid.",kid:1,k:"m",u:SRC.mu},
+ {c:"munich",a:"2026-11-26",b:"2026-12-28",t:"Märchenbazar, Olympiapark",n:"Fairy-tale themed market. Hours not listed.",kid:1,k:"m",u:SRC.mu},
+ {c:"munich",a:"2026-11-29",b:"2026-11-29",t:"€1 museums (Sunday)",n:"Bavarian state museums such as Alte Pinakothek, Pinakothek der Moderne, Egyptian Museum, Museum Five Continents cost €1 on Sundays.",f:1,k:"s",u:SRC.mum},
+ {c:"munich",a:"2026-12-06",b:"2026-12-06",t:"€1 museums (Sunday)",n:"Bavarian state museums cost €1 on Sundays. Also Nikolaus day.",f:1,k:"s",u:SRC.mum},
+ {c:"munich",a:"2026-12-13",b:"2026-12-13",t:"Krampuslauf, Old Town",n:"Just after 12 Dec. Only if you are still in Munich. Loud and dramatic.",k:"s",u:SRC.mu},
+ {c:"salzburg",a:"2026-11-19",b:"2027-01-01",t:"Christkindlmarkt, Dom- and Residenzplatz",n:"Mon–Thu 10–20:30, Fri 10–21, Sat 9–21, Sun and holidays 9–20:30, 8 Dec 9–20:30. The official page does not list 12–13 Dec: check christkindlmarkt.co.at.",k:"m",f:1,u:SRC.sm},
+ {c:"salzburg",a:"2026-11-19",b:"2026-12-24",t:"Hellbrunn Advent Magic",n:"Tue–Fri 13–20, Sat, Sun and 8 Dec 10–20, Monday closed. Entry is paid: prices at hellbrunneradventzauber.at.",kid:1,k:"m",u:SRC.hb},
+ {c:"salzburg",a:"2026-11-28",b:"2026-11-28",t:"Krampus run in Gnigl, 18:30",n:"The 51st Gnigl run. Loud: watch from the side.",k:"s",u:SRC.sk},
+ {c:"salzburg",a:"2026-11-29",b:"2026-11-29",t:"Krampus run at Schloss Aigen, 16:30",n:"Early start, good for families.",k:"s",kid:1,u:SRC.sk},
+ {c:"salzburg",a:"2026-12-03",b:"2026-12-03",t:"Krampus runs at the Sternadvent, Old Town, 18:00",n:"Two runs listed at the same time.",k:"s",u:SRC.sk},
+ {c:"salzburg",a:"2026-12-05",b:"2026-12-05",t:"Krampus night in the Old Town",n:"14:00 Schallmoos · 17:00 Linzer Gasse · 17:30 Getreidegasse · 19:00 at the Christkindlmarkt. Crowded and loud. Kids 6+ may like it from a safe spot at the edge.",k:"s",u:SRC.sk},
+ {c:"salzburg",a:"2026-12-06",b:"2026-12-06",t:"Nikolaus and Kinder-Krampus, Christkindlmarkt, 15:30",n:"The gentle family version. Best choice for children.",k:"s",kid:1,f:1,u:SRC.sk},
+ {c:"salzburg",a:"2026-12-08",b:"2026-12-08",t:"Krampus and Perchten run, Maxglan, 18:00",n:"Public holiday. Loud.",k:"s",u:SRC.sk},
+ {c:"stgilgen",a:"2026-11-20",b:"2026-12-24",t:"Wolfgangseer Advent (St. Wolfgang, St. Gilgen, Strobl)",n:"Free entry. The official page lists 20 Nov 11:00–19:30 and links to more dates. Check wolfgangseer-advent.at for the days you go. You can reach the Advent cake by boat.",f:1,k:"m",u:SRC.ww},
+ {c:"stgilgen",a:"2026-11-29",b:"2026-11-29",t:"Kinder-Krampus run, Strobl, 17:00",n:"The children’s version, at the village square.",k:"s",kid:1,u:SRC.sk},
+ {c:"stgilgen",a:"2026-12-04",b:"2026-12-04",t:"Krampusrummel, St. Gilgen (Abersee), 17:30",n:"At the fire station.",k:"s",u:SRC.sk},
+ {c:"stgilgen",a:"2026-12-06",b:"2026-12-06",t:"Krampus run, St. Gilgen Mozartplatz, 16:30",n:"Early evening start.",k:"s",u:SRC.sk},
+ {c:"hallstatt",a:"2026-12-08",b:"2026-12-08",t:"Christkindlmarkt, Hallstatt Marktplatz, 10–18",n:"Free entry. Kids: magic show 14:00 (Kulturhaus), Christmas crafts 15:00–17:00 for ages 5+ (Seeauer). Public holiday.",f:1,kid:1,k:"s",u:SRC.hs},
+ {c:"vienna",a:"2026-11-13",b:"2026-12-26",t:"Christkindlmarkt, Rathausplatz",n:"Daily 10–22. The classic big market.",f:1,k:"m",u:SRC.vm},
+ {c:"vienna",a:"2026-11-06",b:"2026-12-24",t:"Schönbrunn Christmas market",n:"Daily 10–21.",f:1,k:"m",u:SRC.vm},
+ {c:"vienna",a:"2026-11-13",b:"2026-12-23",t:"Spittelberg market",n:"Mon–Fri 14–21:30, weekends and holidays from 11.",f:1,k:"m",u:SRC.vm},
+ {c:"vienna",a:"2026-11-20",b:"2026-12-31",t:"Belvedere market",n:"The only big market open until New Year’s Eve.",f:1,k:"m",u:SRC.vm},
+ {c:"vienna",a:"2026-11-20",b:"2026-12-26",t:"Christmas village, Maria-Theresien-Platz",n:"Between the two big museums.",f:1,k:"m",u:SRC.vm},
+ {c:"vienna",a:"2026-11-01",b:"2027-01-31",t:"Schönbrunn Imperial Light Garden",n:"About 16:30–21:00, date and hours to be confirmed. Check the Schönbrunn site.",kid:1,k:"m",u:SRC.vu},
+ {c:"vienna",a:"2026-11-14",b:"2027-03-31",t:"Ice skating, Wiener Eislaufverein",n:"Daily 9–20. Skate hire a few euros. Skating is paid.",kid:1,k:"m",u:SRC.vu},
+ {c:"vienna",a:"2026-12-01",b:"2026-12-05",t:"Nikolo puppet show, Freyung market, 10:00",n:"Shows on 1, 2 and 5 Dec.",kid:1,k:"s",u:SRC.vu},
+ {c:"vienna",a:"2026-12-05",b:"2026-12-05",t:"Krampus runs in and around Vienna",n:"No places or times found. Ask at the Tourist Info at Albertinaplatz.",k:"s",u:SRC.vu},
+ {c:"vienna",a:"2026-12-06",b:"2026-12-06",t:"Nikolo at the Schönbrunn Children’s Museum, 10–16",n:"Also Nikolo at the Türkenschanzpark market, 15:00. Free museum entry on the first Sunday at several city museums.",kid:1,k:"s",u:SRC.vu},
+ {c:"vienna",a:"2026-12-06",b:"2026-12-06",t:"Free first Sunday: Wien Museum Karlsplatz and others",n:"Free for everyone at the Wien Museum Karlsplatz, Roman Museum, Clock Museum, Hermesvilla and Military History Museum.",f:1,k:"s",u:SRC.vk}
+];
+function evDates(e){return e.a===e.b?fd(e.a):fd(e.a)+" – "+(e.b>"2026-12-31"?"into Jan":fd(e.b))}
+function evFits(e){var n=[];ITIN.forEach(function(D){if(D.date>=e.a&&D.date<=e.b&&(e.c===D.b||(D.kind==="move"&&e.c===D.mc)))n.push(D.i+1)});return n}
+function evOnDay(D,sp){return EVD.filter(function(e){return(e.k==="s")&&D.date>=e.a&&D.date<=e.b&&(e.c===D.b||(D.kind==="move"&&e.c===D.mc))})}
+var FDET={
+ "Veg":"Vegetarian","Pork":"Usually pork","MaybePork":"Maybe pork","Beef":"Beef","Meat":"Other meat","Fish":"Fish","Alcohol":"Contains alcohol"};
+var FOOD=[
+ {c:"munich",h:"Munich",i:[
+  ["Brezn (soft pretzel)","Fresh, salty, with butter or cheese.",["Veg"]],
+  ["Obatzda","Beer-garden cheese spread with onion, eaten with pretzel.",["Veg"]],
+  ["Weißwurst","White sausage of veal and pork, traditionally eaten before noon.",["Pork","Meat"]],
+  ["Leberkäse","Baked meat loaf in a roll. Usually pork and beef.",["Pork","Beef"]],
+  ["Schweinsbraten","Roast pork with a dumpling and gravy.",["Pork"]],
+  ["Käsespätzle","Egg noodles with melted cheese and fried onions.",["Veg"]],
+  ["Reiberdatschi","Crispy potato pancakes with apple sauce, at the markets.",["Veg"]],
+  ["Dampfnudel","Steamed sweet dumpling with vanilla sauce.",["Veg"]],
+  ["Schmalznudel","Fried dough. Traditionally fried in lard, so ask.",["MaybePork"]]]},
+ {c:"salzburg",h:"Salzburg",i:[
+  ["Salzburger Nockerl","Big sweet soufflé, made to share.",["Veg"]],
+  ["Mozartkugel","Pistachio, marzipan and nougat chocolate ball.",["Veg"]],
+  ["Pinzgauer Kasnocken","Cheese dumplings with fried onions.",["Veg"]],
+  ["Bosna","Salzburg street food: bratwurst in a roll with onions and curry powder.",["Pork"]],
+  ["Käsekrainer","Sausage with cheese, from a Würstelstand.",["Pork"]],
+  ["Frittatensuppe","Clear beef broth with pancake strips.",["Beef"]],
+  ["Brettljause","Cold-cut and cheese board, usually with ham and sausage.",["Pork","Meat"]],
+  ["Bauernkrapfen","Fried yeast doughnut, sold at markets.",["Veg"]]]},
+ {c:"kaprun",h:"Kaprun and Zell am See",i:[
+  ["Kaiserschmarrn","Torn sweet pancake with plum compote.",["Veg"]],
+  ["Kaspressknödel","Cheese dumpling, often served in beef broth.",["Veg","Beef"]],
+  ["Kasnocken","Mountain-hut cheese noodles.",["Veg"]],
+  ["Tiroler Gröstl","Fried potatoes with bacon or beef and an egg.",["MaybePork","Beef"]],
+  ["Hot chocolate on the mountain","Good after the glacier.",["Veg"]]]},
+ {c:"hallstatt",h:"Hallstatt and Wolfgangsee",i:[
+  ["Reinanke","Local lake whitefish, grilled or fried.",["Fish"]],
+  ["Forelle","Trout, often with potatoes and lemon.",["Fish"]],
+  ["Fischsemmel","Fish roll for a quick lunch.",["Fish"]],
+  ["Bratapfel","Baked apple with cinnamon, at the Advent markets.",["Veg"]],
+  ["Kaiserschmarrn","At the lake inns.",["Veg"]]]},
+ {c:"vienna",h:"Vienna",i:[
+  ["Wiener Schnitzel","Breaded cutlet. Real Wiener Schnitzel is veal, but many places use pork. Ask.",["Meat","MaybePork"]],
+  ["Tafelspitz","Boiled beef with apple-horseradish and potatoes.",["Beef"]],
+  ["Wiener Saftgulasch","Beef stew with bread. Some places mix in pork.",["Beef","MaybePork"]],
+  ["Frittatensuppe","Clear beef broth with pancake strips.",["Beef"]],
+  ["Würstelstand sausages","Käsekrainer, Burenwurst, Frankfurter: usually pork, sometimes beef.",["Pork","Beef"]],
+  ["Spinatknödel","Spinach dumplings with butter and cheese.",["Veg"]],
+  ["Erdäpfelsalat","Warm potato salad. Sometimes with bacon.",["Veg","MaybePork"]],
+  ["Apfelstrudel","Apple strudel with vanilla sauce.",["Veg"]],
+  ["Palatschinken","Thin pancakes with jam or chocolate.",["Veg"]],
+  ["Sachertorte","Chocolate cake with apricot jam, with whipped cream.",["Veg"]],
+  ["Powidltascherl","Plum-filled dough pockets.",["Veg"]]]},
+ {c:"all",h:"At every Christmas market",i:[
+  ["Kinderpunsch","Warm fruit punch without alcohol, made for kids.",["Veg"]],
+  ["Glühwein","Hot spiced wine.",["Alcohol"]],
+  ["Lebkuchen","Gingerbread hearts. Some contain gelatine or honey.",["Veg"]],
+  ["Gebrannte Mandeln","Roasted sugar almonds.",["Veg"]],
+  ["Maroni","Roasted chestnuts.",["Veg"]],
+  ["Langos","Fried dough with garlic and cheese.",["Veg"]],
+  ["Bratwurst in a roll","The standard market snack.",["Pork"]],
+  ["Vanillekipferl","Crescent biscuits with vanilla.",["Veg"]]]}];
+function fchip(t){return'<span class="ft ft-'+t.toLowerCase()+'">'+FDET[t]+'</span>'}
+function planCities(){var o=[];ITIN.forEach(function(D){if(o.indexOf(D.b)<0)o.push(D.b)});return o}
+function moreRow(){
+  return'<div class="group"><button class="row tap" data-act="more-open" style="--c:var(--accent)"><span class="dn">'+ic(IC.pin)+'</span><span class="grow"><span class="ttl" style="display:block;font-weight:600">Events, savings and food</span><span class="sm" style="display:block">Markets and events for your dates, ways to save money, food with veg, pork and beef tags</span></span>'+ic(IC.fwd,"chev")+'</button></div>'}
+function vMore(){
+  var s=stay(),pc=planCities();
+  var h='<div class="nav"><button class="nb" data-act="tab" data-s="trip">'+ic(IC.back)+'Trip</button><span class="t">Good to know</span><span style="width:44px"></span></div>';
+  h+='<div class="head"><div class="eyebrow">'+fd(s.start)+' – '+fd(stayEnd(s))+'</div><h1>Events, savings and food</h1><p class="sub">'+MORE_ASOF+'. Dates can change: check the link.</p></div>';
+  h+='<div class="segwrap"><div class="seg">'+[["events","Events"],["save","Save money"],["food","Food"]].map(function(x){return'<button data-act="more-tab" data-t="'+x[0]+'" aria-pressed="'+(moreTab===x[0])+'">'+x[1]+'</button>'}).join("")+'</div></div>';
+  if(moreTab==="events"){
+    h+='<p class="foot" style="margin:6px 20px">Events from 28 Nov to 12 Dec. Cities on your route come first, and “On your trip” shows which days fit.</p>';
+    ["munich","salzburg","stgilgen","hallstatt","vienna"].sort(function(a,b){return(pc.indexOf(a)<0?1:0)-(pc.indexOf(b)<0?1:0)}).forEach(function(c){
+      var ev=EVD.filter(function(e){return e.c===c&&e.b>="2026-11-28"&&e.a<="2026-12-13"}).sort(function(x,y){return(x.k==="s"?0:1)-(y.k==="s"?0:1)||x.a.localeCompare(y.a)});if(!ev.length)return;
+      var on=pc.indexOf(c)>-1;
+      h+='<div class="sech"><span>'+esc(c==="stgilgen"?"Wolfgangsee and St. Gilgen":SN(c))+'</span><span class="r">'+(on?"On your route":"Not on your route")+'</span></div><div class="group">';
+      ev.forEach(function(e){var f=on?evFits(e):[];
+        h+='<div class="row" style="display:block"><b>'+esc(e.t)+'</b><span class="sm" style="display:block">'+evDates(e)+'</span><p style="margin:4px 0">'+esc(e.n)+'</p><div class="tglist">'+(e.f?'<span class="tag g">Free</span>':'')+(e.kid?'<span class="tag m">Good with kids</span>':'')+(f.length?'<span class="tag o">On your trip: day '+(f.length>3?f[0]+'–'+f[f.length-1]:f.join(", "))+'</span>':'')+'</div><a class="lnk" style="padding:4px 0" href="'+e.u+'" target="_blank" rel="noopener">Official source</a></div>'});
+      h+='</div>'});
+    h+='<p class="foot">Krampus runs are loud and can scare young children. The “Kinder” runs and Nikolaus are the gentle versions. Kaprun and Zell am See: no dated events found, check zellamsee-kaprun.com (Star Advent).</p>';
+  }
+  if(moreTab==="save"){
+    var T=[
+     ["Free for your children",[
+      ["Munich: under-18s are free in many museums, including Nymphenburg and the Residenz with the treasury, Alte Pinakothek, Museum Five Continents and Museum Mensch und Natur. Your 6 and 12 year olds pay nothing.",SRC.mum],
+      ["Vienna: under-19s are free in many big museums, such as the Albertina, Belvedere, Natural History Museum, Museum of Fine Arts and the Technical Museum. Bring ID.",SRC.vk],
+      ["Vienna public transport is free for children until the school year in which they turn six, and for children up to 15 on Sundays, public holidays (8 Dec) and school holidays.",SRC.vk],
+      ["Trains: ÖBB children under 6 travel free. On Deutsche Bahn, children under 15 usually travel free with a parent if they are added to the booking. Check this when you book.",SRC.vk]]],
+     ["Free or very cheap",[
+      ["Munich: state museums cost only €1 on Sundays (29 Nov and 6 Dec).",SRC.mum],
+      ["Munich: Tollwood grounds are free to enter. NS-Dokumentationszentrum and the Botanical Garden open-air area are free in winter.",SRC.tw],
+      ["Vienna: first Sunday of the month (6 Dec) is free at several city museums, such as Wien Museum Karlsplatz and the Military History Museum.",SRC.vk],
+      ["Christmas markets are free to walk through. Free in Munich, Vienna and Salzburg: you pay only for food, drinks and activities.",null]]],
+     ["Passes",[
+      ["Salzburg Card, low season: 24 h €35 (child 6–15 €17.50), 48 h €41, 72 h €44. It includes public transport and many sights. It pays off only if you visit several paid sights per day. Check the list of included sights first.",SRC.sc],
+      ["Vienna: 48 h and 72 h tickets were stopped from 1 Jan 2026. A 24 h ticket starts at €9.70. Online tickets are named and need a photo ID.",SRC.wl],
+      ["Mountain trips are costly. Ask whether a family ticket or a lower price for children exists, and buy online when it is cheaper.",null]]],
+     ["Everyday tips",[
+      ["Market mugs have a deposit (usually a few euros). Return the mug to get it back, or keep it as a souvenir.",null],
+      ["Lunch menus (Mittagsmenü) are cheaper than dinner. Supermarkets (Billa, Spar, Hofer, Lidl, Rewe) are good for breakfast and snacks.",null],
+      ["Market portions are big. Share one dish among the four of you and add Kinderpunsch.",null],
+      ["Take the train and walk. A rental car is costly and parking in city centres is hard.",null]]]];
+    T.forEach(function(g){h+='<div class="sech"><span>'+g[0]+'</span></div><div class="group">';g[1].forEach(function(x){h+='<div class="row" style="display:block"><span>'+esc(x[0])+'</span>'+(x[1]?'<br><a class="lnk" style="padding:4px 0" href="'+x[1]+'" target="_blank" rel="noopener">Source</a>':'')+'</div>'});h+='</div>'});
+    h+='<p class="foot">Prices and rules change. Check the official site before you pay.</p>';
+  }
+  if(moreTab==="food"){
+    var np=!!store.foodNoPork;
+    h+='<div class="group"><button class="row tap" data-act="food-nopork" role="switch" aria-checked="'+np+'"><span class="grow"><b>Hide dishes with pork</b><span class="sm" style="display:block">Hides “Usually pork” and “Maybe pork”</span></span><span class="sm" style="font-weight:600;color:var(--accent)">'+(np?"On":"Off")+'</span></button></div>';
+    h+='<p class="foot" style="margin:6px 20px">Tags show the usual recipe. Recipes differ: ask when you order. “Vegetarian” dishes can still use lard or be cooked in meat broth.</p>';
+    FOOD.slice().sort(function(a,b){return(pc.indexOf(a.c)<0&&a.c!=="all"?1:0)-(pc.indexOf(b.c)<0&&b.c!=="all"?1:0)}).forEach(function(g){
+      var items=g.i.filter(function(x){return!(np&&(x[2].indexOf("Pork")>-1||x[2].indexOf("MaybePork")>-1))});
+      h+='<div class="sech"><span>'+esc(g.h)+'</span><span class="r">'+(g.c==="all"?"":(pc.indexOf(g.c)>-1?"On your route":"Not on your route"))+'</span></div><div class="group">';
+      items.forEach(function(x){h+='<div class="row" style="display:block"><b>'+esc(x[0])+'</b><span class="sm" style="display:block">'+esc(x[1])+'</span><div style="margin-top:4px">'+x[2].map(fchip).join("")+'</div></div>'});
+      if(!items.length)h+='<div class="row"><span class="sm">All dishes here are hidden by your filter.</span></div>';
+      h+='</div>'});
+  }
+  return h}
+
 /* ================= PHASE 1: update, backup, where to stay ================= */
-var APP_VERSION="1.5.3",SCHEMA=3;
+var APP_VERSION="1.6.0",SCHEMA=3;
 function pad2(n){return("0"+n).slice(-2)}
 function today(){var d=new Date();return d.getFullYear()+"-"+pad2(d.getMonth()+1)+"-"+pad2(d.getDate())}
 var WD=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"],MN=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
@@ -1668,7 +1833,7 @@ function migrate(){
 if(typeof loadErr!=="undefined"&&loadErr){var rr=restoreLatest();setTimeout(function(){toast(rr?"Your saved data was recovered from the backup of "+rr:"Saved data could not be read")},600)}
 var wasExisting=!!store.schema;
 migrate();dailyBackup(false);
-var NEWIN={"1.5.3":{tips:"Fixed: the Tips tab did not open. Everything you saved is unchanged."},"1.5.2":{trip:"The Trip map now follows your stays: a Route view and one tab per stay, with a square pin where you sleep."},"1.5.0":{trip:"Your days now follow your night-by-night plan: same length and same order, with enough places for every stay."},"1.4.0":{trip:"Where to stay is simpler: journey, family, night plan and route in one page. New: print your whole trip as a PDF with links."},"1.3.0":{trip:"Where to stay is now night by night: pick a city for every night, and the same city can come back later. Each stay gets its own hotel name."},"1.2.0":{trip:"Where to stay: add Hallstatt, Kaprun and St. Gilgen, and pick one of three night plans.",tips:"Updates now install by themselves. You can turn this off."}};
+var NEWIN={"1.6.0":{trip:"New: Events and markets for your dates, ways to save money, and food to try with veg, pork and beef tags."},"1.5.3":{tips:"Fixed: the Tips tab did not open. Everything you saved is unchanged."},"1.5.2":{trip:"The Trip map now follows your stays: a Route view and one tab per stay, with a square pin where you sleep."},"1.5.0":{trip:"Your days now follow your night-by-night plan: same length and same order, with enough places for every stay."},"1.4.0":{trip:"Where to stay is simpler: journey, family, night plan and route in one page. New: print your whole trip as a PDF with links."},"1.3.0":{trip:"Where to stay is now night by night: pick a city for every night, and the same city can come back later. Each stay gets its own hotel name."},"1.2.0":{trip:"Where to stay: add Hallstatt, Kaprun and St. Gilgen, and pick one of three night plans.",tips:"Updates now install by themselves. You can turn this off."}};
 (function(){var seen=store.seenVer;
   if(seen!==APP_VERSION){
     if((seen||wasExisting)&&NEWIN[APP_VERSION]){store.newTabs=store.newTabs||{};Object.keys(NEWIN[APP_VERSION]).forEach(function(k){store.newTabs[k]={v:APP_VERSION,t:NEWIN[APP_VERSION][k]}})}
