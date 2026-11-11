@@ -1080,6 +1080,24 @@ h1.h2{font-size:1.75rem;line-height:1.18}
 .si svg{width:18px;height:18px;fill:none;stroke:var(--accent);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .dn,.prow,.lrow,.pn{--c:var(--accent)!important}
 .tl .tdot:not(.a){background:var(--accent)!important}
+/* Inherit the guide's colours, cards, type scale and touch targets. */
+.car-copy{padding:14px 16px;font-size:.9375rem;line-height:1.45}
+.car-copy h2{font-size:1.0625rem;line-height:1.3;margin:0 0 10px}
+.car-copy h3,.car-providers h3{font-size:1rem;line-height:1.3;margin:0 0 6px}
+.car-copy p{margin:8px 0 0}
+.car-option{margin:12px 0;padding:12px 14px;background:var(--accent-soft);border-radius:12px}
+.car-option b,.car-terms dt{overflow-wrap:anywhere}
+.car-terms{margin:0;padding:0 16px;font-size:.9375rem;line-height:1.45}
+.car-terms dt{font-weight:600;margin-top:12px}
+.car-terms dd{margin:3px 0 0;padding-bottom:12px;border-bottom:.5px solid var(--line)}
+.car-terms dd:last-child{border:0;padding-bottom:0}
+.car-source{margin:12px 16px 0;font-size:.8125rem;line-height:1.45;color:var(--sub)}
+.car-checks label{padding:8px 0;line-height:1.4}
+.car-checks li+li{border-top:.5px solid var(--line)}
+.car-checks input{margin:0}
+.car-providers p{margin:4px 0 0;font-size:.9375rem;line-height:1.4}
+.car-providers p.sm{font-size:.8125rem}
+
 /* tips grid */
 .tgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:4px 2px;padding:12px 6px 10px}
 .tgrid .tile{min-height:76px;padding:4px 2px;gap:6px;font-size:.75rem;font-weight:500;line-height:1.2;color:var(--fg);justify-content:flex-start}
@@ -1691,12 +1709,14 @@ function listGroups(){
   g.forEach(function(x){x.items.sort(function(p,q){return x.D.all.indexOf(p.id)-x.D.all.indexOf(q.id)})});
   return{days:g.filter(function(x){return x.items.length}),un:un}}
 function vTips(){
+  if(tipSec==="Rent a Car")return vCarRental();
   var h='<div class="head"><h1>Tips</h1><p class="sub">Plan ahead, eat well and get around.</p></div>';
   var TS=[],cat="";
   function sec(t,body,open){TS.push({c:cat,t:t,b:body});return''}
   function ul(a){return '<ul class="pl">'+a.map(function(x){return '<li>'+x+'</li>'}).join("")+'</ul>'}
   h+=newBanner('tips');
   cat='Plan ahead';
+  TS.push({t:"Rent a Car"});
   h+=sec("Before you go",ul([
    "<b>Book long trips early.</b> High-speed train prices are dynamic and can be much higher in the last week.",
    "<b>Apps:</b> use <a href=\"https://www.bahn.de/service/mobile/db-navigator\" target=\"_blank\" rel=\"noopener\">DB Navigator</a> for Germany and the <a href=\"https://www.oebb.at/\" target=\"_blank\" rel=\"noopener\">ÖBB app</a> for Austria. Both have English and Android/iOS versions.",
@@ -1776,7 +1796,7 @@ function vTips(){
   if(cur)return navBar("tips")+'<div class="head"><h1 class="h2">'+esc(cur.t)+'</h1></div><div class="prose">'+cur.b+'</div><p class="foot">Prices, hours and train times are estimates. Check the official sites before you go.</p>';
   TS.push({t:"Packing list",act:"pack-open"});TS.push({t:"Print as PDF",act:"print-open"});
   TS.push({t:"Save money",more:"save"});TS.push({t:"Food",more:"food"});TS.push({t:"Events",more:"events"});
-  var TG=[["",["Packing list","Print as PDF"]],["Plan ahead",["Before you go","Hotels","Trains, tickets and transport","Weather","What to wear: everyone, and why"]],
+  var TG=[["",["Packing list","Print as PDF"]],["Plan ahead",["Before you go","Hotels","Trains, tickets and transport","Rent a Car","Weather","What to wear: everyone, and why"]],
    ["Eat and spend",["Food","Restaurants: the unwritten rules","Cash, cards and bottle deposits","Save money","Opening times, water and toilets","Useful German"]],
    ["Out and about",["Christmas markets with children","Krampus and Nikolaus","Mountain days and swapping days","Events"]]];
   TG.forEach(function(g){
@@ -1787,10 +1807,134 @@ function vTips(){
   h+='<div class="callout sos"><b>Emergency: 112</b>Police, fire and ambulance, free from any phone in Europe.</div>';
   return h}
 
-var TIX={"Packing list":["box","Packing list"],"Before you go":["list","Before you go"],"Hotels":["bed","Hotels"],"Trains, tickets and transport":["train","Trains"],"Print as PDF":["print","Print as PDF"],
+var TIX={"Rent a Car":["car","Rent a Car"],"Packing list":["box","Packing list"],"Before you go":["list","Before you go"],"Hotels":["bed","Hotels"],"Trains, tickets and transport":["train","Trains"],"Print as PDF":["print","Print as PDF"],
  "Restaurants: the unwritten rules":["fork","Restaurants"],"Cash, cards and bottle deposits":["card","Cash and cards"],"Opening times, water and toilets":["clock","Opening hours"],"Save money":["coin","Save money"],"Food":["bowl","Food"],
  "Weather":["cloud","Weather"],"What to wear: everyone, and why":["coat","Clothes"],"Christmas markets with children":["tree","Markets"],"Krampus and Nikolaus":["mask","Krampus"],"Mountain days and swapping days":["mount","Mountains"],"Useful German":["chat","German"],"Events":["cal","Events"]};
 var TIS={};Object.keys(TIX).forEach(function(k){TIS[k]=TIX[k][1]});
+
+/* ---------- car rental guide: Munich / Salzburg ---------- */
+var CAR_CHECKS=[
+ {k:"book",t:"Before booking",items:[
+  "Compare at least CHECK24 and Billiger-Mietwagen.",
+  "Confirm pickup and return locations and dates.",
+  "Check the actual rental supplier’s reviews.",
+  "Select appropriate Vollkasko and theft protection.",
+  "Understand direct zero excess versus reimbursement.",
+  "Confirm the deposit and credit-card requirements.",
+  "Check kilometres, fuel and cancellation terms.",
+  "Confirm cross-border permission and additional fees.",
+  "Confirm any international one-way rental fee.",
+  "Review all charges in the final total."
+ ]},
+ {k:"pickup",t:"At vehicle pickup",items:[
+  "Bring driving licence, ID/passport, payment card and booking confirmation.",
+  "Compare the rental contract with the booking confirmation.",
+  "Photograph or video all sides of the vehicle.",
+  "Check tyres, wheels, windscreen and interior.",
+  "Record existing damage in the damage report.",
+  "Check fuel level and mileage.",
+  "Confirm required winter equipment, vignette and emissions sticker where applicable.",
+  "Save the rental company’s emergency and roadside assistance numbers."
+ ]},
+ {k:"return",t:"At vehicle return",items:[
+  "Follow the agreed fuel policy.",
+  "Photograph the vehicle again.",
+  "Record fuel and mileage.",
+  "Keep the return confirmation.",
+  "Retain receipts and damage documentation.",
+  "Check the final invoice and deposit release."
+ ]}
+];
+function carLink(url,label){return '<a href="'+url+'" target="_blank" rel="noopener noreferrer">'+label+'</a>'}
+function carList(items){return '<ul class="pl">'+items.map(function(t){return '<li>'+t+'</li>'}).join('')+'</ul>'}
+function carDetails(title,body){return '<details class="group"><summary>'+title+'</summary><div class="in">'+body+'</div></details>'}
+function vCarRental(){
+ var h=navBar("tips")+'<div class="head"><h1 class="h2">Rent a Car</h1><p class="sub">A car rental guide for Munich, Salzburg and Germany ↔ Austria road trips.</p></div>';
+ h+='<div class="callout"><b>Guide only</b>Find an affordable, reliable car and avoid hidden fees. This guide provides advice and official links; it does not compare live offers or take bookings.</div>';
+ h+='<p class="foot">Last reviewed: <time datetime="2026-11-11">11 November 2026</time>. Check current rules and your specific rental contract before travelling.</p>';
+ h+='<div class="sech"><span>Insurance first</span></div><div class="group car-copy"><h2>Which Car Rental Insurance Should I Choose?</h2><p>Start with comprehensive cover with zero excess, theft protection and adequate third-party liability. Consider glass and tyre cover where appropriate. Avoid paying twice for cover you already have.</p><p><b>“Zero excess” can work in two different ways:</b></p><div class="car-option"><h3>Option A · Direct zero excess</h3><p><b lang="de">Vollkasko ohne Selbstbeteiligung — ohne Zahlung</b></p><p>You generally do not pay a damage excess directly to the rental company for a covered claim.</p></div><div class="car-option"><h3>Option B · Pay first, claim back</h3><p><b lang="de">Vollkasko ohne Selbstbeteiligung — mit Rückerstattung</b></p><p>You may have to pay the excess to the rental company first, then apply to the relevant broker or insurer for reimbursement.</p></div><p>Both can leave you with zero final excess for eligible claims. <b>Reimbursement needs available funds and a successful claim.</b> Confirm how the policy actually works; the label alone is not enough.</p><p><b>Illustrative example:</b> A car has &euro;1,000 of covered damage and a &euro;1,000 excess. With reimbursement cover, you may pay &euro;1,000 upfront and submit the required documents to recover it. With direct zero-excess cover, that excess normally would not be charged for the covered claim.</p></div>';
+ h+='<div class="callout w"><b>Zero excess has limits</b>It does not mean every possible loss is insured. A security deposit may still be required.</div>';
+ h+=carDetails('Insurance terms in plain English', '<dl class="car-terms">'+[
+  ['Vollkasko','Comprehensive rental vehicle damage protection / CDW. Recommended.'],
+  ['Ohne Selbstbeteiligung','Zero damage excess. Strongly preferred; check direct cover versus reimbursement.'],
+  ['Mit Rückerstattung der Selbstbeteiligung','Excess reimbursement. A good budget alternative if you can pay upfront and meet the claim conditions.'],
+  ['Diebstahlschutz','Theft protection. Recommended; check its separate excess and conditions.'],
+  ['Haftpflichtversicherung','Third-party liability insurance. Essential; check the coverage limit.'],
+  ['Glas- und Reifenschutz','Glass and tyre protection. Worth considering. Check whether wheels are included.'],
+  ['Unterbodenschutz','Undercarriage protection. Especially useful for rough roads, but it does not authorise off-road driving.'],
+  ['Pannenhilfe','Roadside assistance. Check what is already included.']
+ ].map(function(x){return '<dt lang="de">'+x[0]+'</dt><dd>'+x[1]+'</dd>'}).join('')+'</dl>');
+ h+=carDetails('Exclusions, deposits and claims',carList([
+  'Glass, tyres, wheels, roof, undercarriage, keys and interior damage may be excluded.',
+  'Check theft coverage and third-party liability separately from damage protection.',
+  'Contract violations, unauthorised drivers and unapproved cross-border travel can affect coverage.',
+  'A security deposit may still be required with zero-excess protection.',
+  'Reimbursement depends on exclusions, required documentation and claim deadlines.'
+ ])+'<p class="car-source">Further reading: '+carLink('https://www.adac.de/verkehr/recht/verkehrsmittel/auto-mieten/','ADAC rental guidance')+' · '+carLink('https://www.billiger-mietwagen.de/mietwagen-ratgeber/a-z/kosten-zahlung/mietwagen-ohne-selbstbeteiligung.html','Billiger-Mietwagen excess guide')+'.</p>');
+ h+='<div class="sech"><span>Cross-border travel</span></div><div class="group car-copy"><h2>Can I Take a Rental Car From Germany to Austria?</h2><p><b>Often yes.</b> Permission depends on the rental company’s specific contract, vehicle category and destination. For Austria → Germany, check the Austrian pickup contract separately.</p></div>';
+ h+='<div class="callout w"><b>Driving abroad ≠ returning abroad</b>A company may allow driving into Austria but charge extra or not allow returning the car there. Munich pickup with Salzburg return is an international one-way rental.</div>';
+ h+=carDetails('Seven checks before crossing a border',carList([
+  '<b>1. Permission:</b> confirm every destination and transit country is allowed. Inform the company before collection if required, and obtain written permission.',
+  '<b>2. Cross-border fees:</b> some companies charge an extra fee for driving outside the pickup country.',
+  '<b>3. One-way fees:</b> returning to a different location or country can cost substantially more. Confirm permission and the total fee first.',
+  '<b>4. Insurance:</b> confirm insurance and roadside assistance apply in every country on your route.',
+  '<b>5. Driving licence:</b> bring a valid physical licence. EU/EEA licences are generally recognised in Germany and Austria. Other licences may require an International Driving Permit or official translation, depending on the country, licence and rental rules. An IDP does not replace your original licence.',
+  '<b>6. Passport / ID:</b> carry appropriate identity and travel documents, including any visa or entry permission required for your circumstances.',
+  '<b>7. Additional drivers:</b> every driver must be authorised and listed in the agreement where required.'
+ ])+'<p class="car-source">Check: '+carLink('https://www.enterprise.com/en/car-rental-faqs/germany-general/driving-rental-cars-abroad.html','Enterprise’s Germany cross-border guidance')+' (other suppliers and pickup countries have their own terms) · '+carLink('https://www.bmv.de/SharedDocs/EN/Documents/StV/auslaendische-fahrerlaubnisse-merkblatt-ausserhalb-eu-und-ewr-staaten-englisch.pdf?__blob=publicationFile','Germany: foreign driving licences')+' · '+carLink('https://www.oesterreich.gv.at/en/themen/persoenliche_dokumente_und_bestaetigungen/fuehrerschein/3/Seite.040500','Austria: foreign driving licences')+'.</p>');
+ h+='<div class="sech"><span>Road rules · Munich & Salzburg</span></div><p class="tips-p">These rules cover Germany and Austria only. Check each additional country and your exact route separately.</p>';
+ h+=carDetails('Austria · tolls and winter equipment',carList([
+  '<b>Vignette:</b> ordinary cars generally need a valid toll sticker or digital vignette on motorways and expressways. Ask whether the rental car already has one.',
+  '<b>A1 exception:</b> the section from the Walserberg border to Salzburg Nord is exempt from the vignette requirement. Other motorway sections may require a vignette.',
+  '<b>Separate tolls:</b> some Alpine routes and tunnels have additional section tolls.',
+  '<b>Winter tyres:</b> between 1 November and 15 April, suitable winter tyres are required on all wheels of ordinary cars when driving in wintry road conditions.',
+  '<b>Snow chains:</b> these may be required or useful on certain mountainous routes. Check signs, conditions, vehicle compatibility and the rental contract.'
+ ])+'<p class="car-source">Official sources: '+carLink('https://help.asfinag.at/en/vignette-and-section-tolls/','ASFINAG tolls and exemptions')+' · '+carLink('https://www.oesterreich.gv.at/en/themen/mobilitaet/kfz/10/2/Seite.063100','Austria winter-tyre rules')+'. Last reviewed 11 November 2026.</p>');
+ h+=carDetails('Germany / Munich · emissions and winter driving',carList([
+  'Germany generally has no nationwide motorway toll for ordinary passenger cars.',
+  '<b>Umweltzone:</b> Munich’s environmental zone generally requires a valid green emissions sticker for applicable cars; exemptions apply. Check that your rental car is eligible.',
+  '<b>Older diesels:</b> additional restrictions apply to some vehicles, even with a green sticker. Check the city’s current rules.',
+  '<b>Winter tyres:</b> tyres must meet Germany’s requirements in wintry conditions, including the Alpine symbol (mountain and snowflake).',
+  '<b>Parking:</b> check city-centre restrictions, signs and fees before leaving the car.'
+ ])+'<p class="car-source">Sources: '+carLink('https://stadt.muenchen.de/infos/umweltzone-muenchen.html','Munich’s official environmental-zone information')+' · '+carLink('https://bmv.de/SharedDocs/DE/Artikel/StV/Strassenverkehr/winterreifen.html','German transport ministry winter-tyre rules')+' · '+carLink('https://www.adac.de/reise-freizeit/maut-vignette/deutschland/','ADAC German toll guide')+'. Last reviewed 11 November 2026.</p>');
+ h+='<div class="sech"><span>Hidden costs & rental conditions</span></div><div class="callout"><b>What Should I Check Before Paying?</b>Compare the total payable rental cost, not just the advertised daily price.</div>';
+ h+=carDetails('Payment, deposit and cancellation',carList([
+  '<b>Kaution (deposit):</b> check how much is blocked, when it is released and which card types are accepted. Allow enough available credit.',
+  '<b>Credit card:</b> many rentals require a physical credit card in the main driver’s name. Debit-card acceptance varies by supplier, location and vehicle.',
+  '<b>Cancellation:</b> read the free-cancellation deadline and any non-refundable conditions.',
+  '<b>Driver age:</b> minimum age, young-driver fees and minimum licence-holding periods may apply.'
+ ]));
+ h+=carDetails('Mileage, fuel, extras and return fees',carList([
+  '<b>Unlimited kilometres:</b> prefer unlimited mileage for road trips, or calculate the mileage limit and extra-kilometre charge carefully.',
+  '<b>Fuel:</b> prefer full-to-full (<span lang="de">Voll/Voll</span>) where available.',
+  '<b>Extra drivers:</b> check each additional driver’s cost.',
+  '<b>Automatic transmission:</b> check whether it costs more than manual.',
+  '<b>Pickup / return times:</b> late returns and after-hours pickup or return may cost extra.',
+  '<b>Location:</b> airport and city pickup locations may have different fees.',
+  '<b>Equipment:</b> child seats, GPS, snow chains and winter equipment may carry fees.',
+  '<b>Roadside assistance:</b> check which breakdowns, towing services and replacement vehicles are included.',
+  '<b>Vehicle category:</b> the advertised model is generally an example, not a guaranteed exact vehicle.'
+ ]));
+ h+='<div class="sech"><span>Booking checklist</span></div><p class="tips-p">Tick these before visiting an external booking site, then use the pickup and return lists. Ticks are saved on this device.</p>';
+ CAR_CHECKS.forEach(function(g){
+  var done=g.items.filter(function(t,i){return store.carRental&&store.carRental[g.k+'.'+i]}).length;
+  h+='<details class="group" open><summary>'+g.t+'<span class="sm" id="car-count-'+g.k+'" aria-live="polite">'+done+' / '+g.items.length+'</span></summary><div class="in"><ul class="spot car-checks">';
+  g.items.forEach(function(t,i){var id=g.k+'.'+i;h+='<li><label><input type="checkbox" data-act="car-check" data-k="'+id+'"'+(store.carRental&&store.carRental[id]?' checked':'')+'><span>'+esc(t)+'</span></label></li>'});
+  h+='</ul></div></details>';
+ });
+ h+='<div class="callout w"><b>If an accident or damage occurs</b>Contact the rental company promptly, follow the contract’s police-report requirements, document the incident and retain all claims documents.</div>';
+ h+='<div class="sech"><span>Recommended rental platforms · Top 5</span></div><p class="tips-p">A suggested starting order for your own research. These links open external sites. Prices, terms and availability vary by dates, city, supplier and vehicle; no provider is always cheapest.</p><div class="group car-providers">';
+ [
+  ['CHECK24','https://mietwagen.check24.de/','Comparison website','A strong first choice when looking for budget deals.'],
+  ['Billiger-Mietwagen','https://www.billiger-mietwagen.de/','Comparison website','Useful for comparing prices and insurance packages.'],
+  ['MietwagenCheck','https://www.mietwagen-check.de/','Comparison website','Additional options and insurance filters.'],
+  ['ADAC Autovermietung','https://autovermietung.adac.de/mietwagen/','Comparison and booking','Worth checking for insurance packages and member benefits; eligibility and terms vary.'],
+  ['Enterprise','https://www.enterprise.de/de/home.html','Direct rental company','An established provider worth comparing with broker offers.']
+ ].forEach(function(x,i){h+='<div class="fact"><h3>'+carLink(x[1],(i+1)+'. '+x[0]+' ↗')+'</h3><p class="sm">'+x[2]+'</p><p>'+x[3]+'</p></div>'});
+ h+='</div><p class="foot">Check availability for your exact pickup and return locations. Not every car or offer is available in both Munich and Salzburg. Booking and payment happen on the external provider’s site.</p>';
+ return h;
+}
+
 
 /* ---------- map ---------- */
 var map=null,layer=null,meLayer=null;
@@ -1985,7 +2129,14 @@ document.addEventListener("click",function(e){
    case"fs":FS+=+t.getAttribute("data-d");store.fs=FS;save();applyAll();render(true);break;
    case"accent":store.accent=t.getAttribute("data-a");save();applyAll();render(true);break;
   }});
-document.addEventListener("change",function(e){var t=e.target;if(t.getAttribute&&t.getAttribute("data-act")==="spot"){store.spot[t.getAttribute("data-k")]=t.checked;save()}});
+document.addEventListener("change",function(e){var t=e.target;
+ if(t.getAttribute&&t.getAttribute("data-act")==="car-check"){
+  var ck=t.getAttribute("data-k"),cg=CAR_CHECKS.filter(function(g){return g.items.some(function(x,i){return g.k+'.'+i===ck})})[0];
+  if(cg){store.carRental=store.carRental||{};if(t.checked)store.carRental[ck]=1;else delete store.carRental[ck];save();
+   var count=$("car-count-"+cg.k);if(count)count.textContent=cg.items.filter(function(x,i){return store.carRental[cg.k+'.'+i]}).length+" / "+cg.items.length;
+  }
+ }
+if(t.getAttribute&&t.getAttribute("data-act")==="spot"){store.spot[t.getAttribute("data-k")]=t.checked;save()}});
 
 (function(){var x0=0,y0=0;var dt=$("detail");dt.addEventListener("touchstart",function(e){var t=e.touches[0];x0=t.clientX;y0=t.clientY},{passive:true});dt.addEventListener("touchend",function(e){var t=e.changedTouches[0],dx=t.clientX-x0,dy=t.clientY-y0;if(x0>24&&x0<window.innerWidth-24&&Math.abs(dx)>50&&Math.abs(dx)>Math.abs(dy)*1.4){var ci=dctx.indexOf(detailId),n=dctx[ci+(dx<0?1:-1)];if(n)openDetail(n,true)}},{passive:true})})();
 /* ===== Events, savings, food ===== */
@@ -2139,7 +2290,7 @@ function vMore(){
   return h}
 
 /* ================= PHASE 1: update, backup, where to stay ================= */
-var APP_VERSION="2.1.0",SCHEMA=3;
+var APP_VERSION="2.2.0",SCHEMA=3;
 function pad2(n){return("0"+n).slice(-2)}
 function today(){var d=new Date();return d.getFullYear()+"-"+pad2(d.getMonth()+1)+"-"+pad2(d.getDate())}
 var WD=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"],MN=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
@@ -2200,7 +2351,7 @@ function migrate(){
 if(typeof loadErr!=="undefined"&&loadErr){var rr=restoreLatest();setTimeout(function(){toast(rr?"Your saved data was recovered from the backup of "+rr:"Saved data could not be read")},600)}
 var wasExisting=!!store.schema;
 migrate();dailyBackup(false);
-var NEWIN={"2.0.0":{list:"New look. Itinerary is now your own day-by-day plan and opens first. Day ideas holds the suggested days.",trip:"Suggested days are now called Day ideas.",map:"Pick a city and the map, pins and days update together."},"1.9.1":{trip:"Currency and temperature switches (€ or SAR, °C or °F) apply to the whole guide. Extended packing list per person, and a Start at home checklist. Plan tiles on Trip."},"1.9.0":{trip:"New: Today card, Packing list, Open in Apple Maps, and a euro and temperature converter at the top of every page."},"1.8.5":{tips:"Tips rewritten in general terms: adults, older kids and younger kids. Weather and clothes tidied up."},"1.8.0":{tips:"Tips are now grouped with icons: tap a tile to open it."},"1.7.0":{settings:"New Settings tab: appearance, updates and backup moved here. New: Share my plan with another phone."},"1.6.1":{tips:"New: What to wear, for adults and both children, with the reason for each item, for the city, the glacier and the lakes."},"1.6.0":{trip:"New: Events and markets for your dates, ways to save money, and food to try with veg, pork and beef tags."},"1.5.3":{tips:"Fixed: the Tips tab did not open. Everything you saved is unchanged."},"1.5.2":{trip:"The Trip map now follows your stays: a Route view and one tab per stay, with a square pin where you sleep."},"1.5.0":{trip:"Your days now follow your night-by-night plan: same length and same order, with enough places for every stay."},"1.4.0":{trip:"Where to stay is simpler: journey, family, night plan and route in one page. New: print your whole trip as a PDF with links."},"1.3.0":{trip:"Where to stay is now night by night: pick a city for every night, and the same city can come back later. Each stay gets its own hotel name."},"1.2.0":{trip:"Where to stay: add Hallstatt, Kaprun and St. Gilgen, and pick one of three night plans.",tips:"Updates now install by themselves. You can turn this off."}};
+var NEWIN={"2.2.0":{tips:"New: Rent a Car under Plan ahead, with insurance guidance, Germany–Austria road rules and saved rental checklists."},"2.0.0":{list:"New look. Itinerary is now your own day-by-day plan and opens first. Day ideas holds the suggested days.",trip:"Suggested days are now called Day ideas.",map:"Pick a city and the map, pins and days update together."},"1.9.1":{trip:"Currency and temperature switches (€ or SAR, °C or °F) apply to the whole guide. Extended packing list per person, and a Start at home checklist. Plan tiles on Trip."},"1.9.0":{trip:"New: Today card, Packing list, Open in Apple Maps, and a euro and temperature converter at the top of every page."},"1.8.5":{tips:"Tips rewritten in general terms: adults, older kids and younger kids. Weather and clothes tidied up."},"1.8.0":{tips:"Tips are now grouped with icons: tap a tile to open it."},"1.7.0":{settings:"New Settings tab: appearance, updates and backup moved here. New: Share my plan with another phone."},"1.6.1":{tips:"New: What to wear, for adults and both children, with the reason for each item, for the city, the glacier and the lakes."},"1.6.0":{trip:"New: Events and markets for your dates, ways to save money, and food to try with veg, pork and beef tags."},"1.5.3":{tips:"Fixed: the Tips tab did not open. Everything you saved is unchanged."},"1.5.2":{trip:"The Trip map now follows your stays: a Route view and one tab per stay, with a square pin where you sleep."},"1.5.0":{trip:"Your days now follow your night-by-night plan: same length and same order, with enough places for every stay."},"1.4.0":{trip:"Where to stay is simpler: journey, family, night plan and route in one page. New: print your whole trip as a PDF with links."},"1.3.0":{trip:"Where to stay is now night by night: pick a city for every night, and the same city can come back later. Each stay gets its own hotel name."},"1.2.0":{trip:"Where to stay: add Hallstatt, Kaprun and St. Gilgen, and pick one of three night plans.",tips:"Updates now install by themselves. You can turn this off."}};
 (function(){var seen=store.seenVer;
   if(seen!==APP_VERSION){
     if((seen||wasExisting)&&NEWIN[APP_VERSION]){store.newTabs=store.newTabs||{};Object.keys(NEWIN[APP_VERSION]).forEach(function(k){store.newTabs[k]={v:APP_VERSION,t:NEWIN[APP_VERSION][k]}})}
@@ -2376,6 +2527,7 @@ function doImport(){
   store.planImported=today();save();pendImp=null;impMsg="";
   try{applyAll()}catch(e){}try{buildItin()}catch(e){}toast("Plan imported");go("trip")}
 var SIC={
+ car:'<path d="m5 10 2-5h10l2 5M4 10h16v8H4zM7 18v2M17 18v2M7 13h.1M17 13h.1"/>',
  route:'<circle cx="6" cy="18" r="2.2"/><circle cx="18" cy="6" r="2.2"/><path d="M8.2 18h7.3a3 3 0 0 0 0-6h-7a3 3 0 0 1 0-6h7.3"/>',
  bowl:'<path d="M4 11.5h16a8 8 0 0 1-16 0z"/><path d="M9.5 8c0-1.6 1.2-1.6 1.2-3.3M13.5 8c0-1.6 1.2-1.6 1.2-3.3"/>',
  coin:'<circle cx="12" cy="12" r="8.5"/><path d="M15.2 9.3a4 4 0 1 0 0 5.4M7.6 11h5.2M7.6 13h5.2"/>',
